@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>曲面と曲率</title>
+<style>
+:root{color-scheme:light dark}body{max-width:34rem;margin:auto;padding:1rem;font:1rem/1.5 system-ui,sans-serif}h1{margin:.35rem 0;font-size:1.5rem}p{margin:.5rem 0}button{padding:.45em .65em;margin:.15em}button[aria-pressed=true]{font-weight:bold;outline:2px solid currentColor}label{display:flex;align-items:center;gap:.6rem;margin-top:.5rem}input{flex:1;min-width:0;height:44px}svg{display:block;width:100%;max-height:200px}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}th,td{text-align:left;padding:.28em;border-bottom:1px solid GrayText}td{text-align:right}details{margin-top:.7em}.curve{stroke:light-dark(#155cab,#83bcff)}
+</style>
+<main>
+<a href="../../">数学の可視化一覧</a>
+<h1>曲面と曲率</h1>
+<div aria-label="曲面を選ぶ">
+<button type="button" data-shape="sphere" aria-pressed="true">球面</button>
+<button type="button" data-shape="cylinder" aria-pressed="false">円柱</button>
+<button type="button" data-shape="saddle" aria-pressed="false">鞍型</button>
+</div>
+<label>切る方向 θ <output id="angle"></output><input id="direction" type="range" min="0" max="180" value="0"></label>
+<p>点 P の法線を含む平面で切った断面</p>
+<svg viewBox="0 0 320 160" role="img" aria-label="点Pでの法線断面。横軸は選んだ接方向、縦軸は法線方向">
+<path d="M20 80H300 M160 145V12" fill="none" stroke="GrayText"/>
+<path id="section" class="curve" fill="none" stroke-width="3"/>
+<circle cx="160" cy="80" r="4" fill="currentColor"/>
+<text x="168" y="75" fill="currentColor" font-size="12">P</text>
+<text x="168" y="17" fill="currentColor" font-size="12">法線方向</text>
+<text x="246" y="74" fill="currentColor" font-size="12">接方向</text>
+</svg>
+<p id="reading" aria-live="polite"></p>
+<table>
+<thead><tr><th scope="col">点 P での曲率</th><th scope="col">値</th></tr></thead>
+<tbody>
+<tr><th scope="row">第1主曲率 k₁（0°）</th><td id="k1"></td></tr>
+<tr><th scope="row">第2主曲率 k₂（90°）</th><td id="k2"></td></tr>
+<tr><th scope="row">選んだ方向の法曲率 kₙ(θ)</th><td id="kn"></td></tr>
+<tr><th scope="row">ガウス曲率 K = k₁ × k₂</th><td id="gauss"></td></tr>
+</tbody>
+</table>
+<details><summary>式と曲面の設定</summary>
+<p>法曲率 kₙ(θ) = k₁ cos²θ + k₂ sin²θ。第1主方向から測った角度が θ。</p>
+<p>球面と円柱は半径 1 で法線を内向きにとる。鞍型は z = (x² − y²)/2 の原点で、法線を上向きにとる。断面は実際にこの平面で切った曲線で、表の曲率は点 P における値。</p>
+</details>
+</main>
+<script>
+const get = id => document.getElementById(id);
+const direction = get("direction");
+const buttons = Array.from(document.querySelectorAll("[data-shape]"));
+const cap = x => 1 - Math.sqrt(1 - x*x);
+const surfaces = {
+  sphere: {k1:1,k2:1,height:x=>cap(x)},
+  cylinder: {k1:1,k2:0,height:(x,c)=>cap(x*c)},
+  saddle: {k1:1,k2:-1,height:(x,c,s)=>x*x*(c*c-s*s)/2}
+};
+let selected = "sphere";
+function draw(){
+  const degrees = Number(direction.value);
+  const t = degrees*Math.PI/180;
+  const c = Math.cos(t), s = Math.sin(t);
+  const surface = surfaces[selected];
+  const k = surface.k1*c*c + surface.k2*s*s;
+  get("angle").textContent = degrees + "°";
+  get("k1").textContent = surface.k1;
+  get("k2").textContent = surface.k2;
+  get("kn").textContent = Math.abs(k)<.0005 ? "0.000" : k.toFixed(3);
+  get("gauss").textContent = surface.k1+" × ("+surface.k2+") = "+surface.k1*surface.k2;
+  get("reading").textContent = Math.abs(k)<1e-10 ? "この方向では、P での法曲率は 0。" : k>0 ? "P の近くで、断面は法線の向きに曲がる。" : "P の近くで、断面は法線と反対向きに曲がる。";
+  const points = Array.from({length:81},(_,i)=>{
+    const x = (i-40)*.018;
+    return (i ? "L" : "M") + (160+180*x) + "," + (80-180*surface.height(x,c,s));
+  });
+  get("section").setAttribute("d",points.join(""));
+}
+for(const button of buttons) button.addEventListener("click",()=>{
+  selected = button.dataset.shape;
+  for(const choice of buttons) choice.setAttribute("aria-pressed",String(choice===button));
+  draw();
+});
+direction.addEventListener("input",draw);
+draw();
+</script>
+</html>
