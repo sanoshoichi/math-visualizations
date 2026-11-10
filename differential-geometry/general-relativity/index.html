@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>一般相対性理論のための微分幾何学</title>
+<style>
+:root{color-scheme:light dark;--blue:light-dark(#175c9d,#91c7ff);--red:light-dark(#a12f45,#ffa0b1);--green:light-dark(#176c4a,#83dfb2)}
+body{max-width:42rem;margin:auto;padding:1rem;font:1rem/1.55 system-ui,sans-serif}
+h1{font-size:1.5rem}h2{font-size:1.25rem}h1,h2,p{margin:.55rem 0}
+label{display:block}select,button,input{font:inherit;min-height:44px}select,input{width:100%;box-sizing:border-box}
+nav,.actions{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center}.controls{position:sticky;top:0;background:Canvas;z-index:1;padding:.25rem 0;border-bottom:1px solid GrayText}
+svg{width:100%;height:auto;max-height:270px;display:block}svg text{font:12px system-ui;fill:CanvasText}
+.formula{text-align:center;font:1.15rem/1.6 serif;overflow-wrap:anywhere}output{font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;padding:.25rem .4rem;text-align:right}th:first-child{text-align:left}
+</style></head><body><main>
+<nav><a href="../../">数学の可視化一覧</a></nav>
+<h1>一般相対性理論のための微分幾何学</h1>
+<label for="topic">学習項目</label><select id="topic"></select>
+<div class="actions"><button id="prev" type="button">前の項目</button><button id="next" type="button">次の項目</button></div>
+<h2 id="title"></h2><p id="intro"></p>
+<div class="controls"><label for="control"><span id="parameter"></span> <output id="setting" for="control"></output></label><input id="control" type="range"></div>
+<svg id="figure" viewBox="0 0 360 240" role="img" aria-labelledby="title readout"></svg>
+<p id="readout"></p><div id="formula" class="formula"></div><div id="extra"></div>
+</main><script>
+const get=id=>document.getElementById(id);
+const blue="var(--blue)",red="var(--red)",green="var(--green)",gray="GrayText";
+const rad=x=>x*Math.PI/180;
+const fmt=x=>(Math.abs(x)<.0005?0:x).toFixed(3);
+const p=(x,y)=>[180+65*x,120-65*y];
+const line=(a,b,color=gray,w=1.4,dash="")=>'<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="'+color+'" stroke-width="'+w+'" stroke-dasharray="'+dash+'"/>';
+const label=(x,y,s)=>'<text x="'+x+'" y="'+y+'">'+s+'</text>';
+const dot=(a,color=blue)=>'<circle cx="'+a[0]+'" cy="'+a[1]+'" r="4" fill="'+color+'"/>';
+const ellipse=(x,y,rx,ry,color=gray)=>'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="none" stroke="'+color+'" stroke-width="2"/>';
+function arrow(a,b,color=blue){
+ const dx=b[0]-a[0],dy=b[1]-a[1],n=Math.hypot(dx,dy);
+ if(n<.1)return dot(a,color);
+ const h=Math.min(8,n/2),x=dx/n,y=dy/n;
+ return line(a,b,color,2.5)+line(b,[b[0]-h*x+h*.45*y,b[1]-h*y-h*.45*x],color,2)+line(b,[b[0]-h*x-h*.45*y,b[1]-h*y+h*.45*x],color,2);
+}
+const trace=(fn,color=blue)=>Array.from({length:65},(_,i)=>fn(i/64)).map((a,i)=>i?line(fn((i-1)/64),a,color,2):"").join("");
+const axes=()=>line([28,120],[332,120])+line([180,218],[180,20])+label(326,113,"x")+label(187,26,"y");
+const info=(diagram,reading,formula="",extra="")=>({diagram,reading,formula,extra});
+const table=(heads,rows)=>"<table><thead><tr>"+heads.map(x=>'<th scope="col">'+x+"</th>").join("")+"</tr></thead><tbody>"+rows.map(row=>"<tr>"+row.map((x,i)=>i?"<td>"+x+"</td>":'<th scope="row">'+x+"</th>").join("")+"</tr>").join("")+"</tbody></table>";
+const topics=[
+["接ベクトル・接空間","曲線上の点 P を固定し、点 Q を P に近づける。赤は割線方向、緑は P での接線。","点の間隔 h",.02,1.3,.02,.9,h=>{
+ const P=p(0,0),Q=p(h,h*h/2);
+ return info(axes()+trace(t=>p(3*t-1.5,(3*t-1.5)**2/2))+line(p(-1.7,0),p(1.7,0),green,3)+arrow(P,p(1.5,.75*h),red)+dot(P)+dot(Q)+label(168,140,"P")+label(Q[0]+5,Q[1]-6,"Q"),"割線の傾きは "+fmt(h/2)+"。間隔を小さくすると 0 に近づく。","γ(<i>t</i>) = (<i>t</i>, <i>t</i>²/2)　　γ′(0) = (1, 0)");}],
+["多様体・座標・座標基底","接平面を拡大した図。ベクトルを固定し、座標基底だけを回す。","基底の回転角",0,180,1,35,a=>{
+ const t=rad(a),c=Math.cos(t),s=Math.sin(t);
+ return info(axes()+arrow(p(0,0),p(1.4*c,1.4*s),green)+arrow(p(0,0),p(-1.4*s,1.4*c),green)+arrow(p(0,0),p(1,.5)), "青の矢印は同じ。回した基底での成分は ("+fmt(c+.5*s)+", "+fmt(-s+.5*c)+")。","<i>v</i> = <i>v</i>¹<i>e</i>₁ + <i>v</i>²<i>e</i>₂");}],
+["ベクトル場・流れ・Lie括弧","平面上で右向きの移動と、高さの増加率が x に等しい移動を順に行う。青と赤で順序が異なる。","各流れの時間 h",.05,1.2,.05,.65,h=>{
+ const A=p(0,0),B=p(h,0),C=p(h,h*h);
+ return info(axes()+arrow(A,B,red)+arrow(A,B,blue)+arrow(B,C,blue)+dot(B,red)+dot(C,blue),"右へ動いてから上へ動くと、逆順より終点が "+fmt(h*h)+" だけ高い。差を h² で割ると 1。","<i>X</i> = ∂ₓ　　<i>Y</i> = <i>x</i>∂ᵧ　　[<i>X</i>, <i>Y</i>] = ∂ᵧ");}],
+["双対空間・余ベクトル","縦の線は関数 f = x の等高線。矢印を回して、余ベクトル df が返す値を見る。","矢印の角度",0,360,1,30,a=>{
+ const t=rad(a);
+ return info([-2,-1,0,1,2].map(x=>line(p(x,-1.4),p(x,1.4))).join("")+arrow(p(0,0),p(1.4*Math.cos(t),1.4*Math.sin(t))),"右向きで正、左向きで負、等高線と平行ならゼロ。現在の値は "+fmt(Math.cos(t))+"。","d<i>f</i>(<i>v</i>) = d<i>x</i>(<i>v</i>) = cos θ");}],
+["テンソル・縮約","同じ対称な双線形形式を、回転する正規直交基底で表示する。楕円はその形式の等値線。","基底の回転角",0,180,1,35,a=>{
+ const c=Math.cos(rad(a)),s=Math.sin(rad(a)),u=2*c*c+s*s,w=2*s*s+c*c,v=-s*c;
+ return info(axes()+ellipse(180,120,65/Math.sqrt(2),65,blue)+arrow(p(0,0),p(c,s),green)+arrow(p(0,0),p(-s,c),green),"成分は変わるが、この正規直交基底での対角成分の和は 3。","tr <i>A</i> = "+fmt(u)+" + "+fmt(w)+" = 3",table(["成分","1","2"],[["1",fmt(u),fmt(v)],["2",fmt(v),fmt(w)]]));}],
+["計量・ローレンツ計量","光速を 1 とした時空図。縦軸を時間、横軸を空間とし、ベクトルの時間成分を固定する。","空間成分",0,1.8,.05,.6,x=>{
+ const g=x*x-1;
+ return info(line(p(-2,0),p(2,0))+line(p(0,-1.45),p(0,1.45))+line(p(-1.45,-1.45),p(1.45,1.45),green)+line(p(-1.45,1.45),p(1.45,-1.45),green)+arrow(p(0,0),p(x,1))+label(187,29,"時間")+label(318,114,"空間"),"現在のベクトルは "+(Math.abs(g)<1e-8?"光的":g<0?"時間的":"空間的")+"。緑は光の方向。","<i>g</i>(<i>v</i>, <i>v</i>) = −1 + "+fmt(x)+"² = "+fmt(g));}],
+["接続・共変微分","単位円の接ベクトルを、角度に応じて伸縮させる。点 P は右端に固定する。","長さの振幅 a",0,.9,.05,.4,a=>{
+ const P=p(1,0);
+ return info(ellipse(180,120,65,65)+line(p(1,-1.3),p(1,1.3),gray,1,"4 4")+arrow(P,p(1,1),blue)+arrow(P,p(0,a),red)+arrow(P,p(1,a),green)+line(p(0,a),p(1,a),gray,1,"4 4")+dot(P),"緑は接線への射影。赤の通常の微分には、左向きの法線成分も含まれる。","d<i>Y</i>/dθ = (−1, "+fmt(a)+")　　D<i>Y</i>/dθ = (0, "+fmt(a)+")",'<p><a href="../covariant-derivative/">単位円と球面の共変微分を詳しく見る</a></p>');}],
+["Levi-Civita 接続・捩率","平坦な平面の極座標を使う。半径を変えて記号の値を比較する。この接続の捩率はゼロで、下付き添字を交換した記号は等しい。","半径 r",.35,2,.05,1,r=>{
+ const P=p(r,0);
+ return info(axes()+ellipse(180,120,65*r,65*r,green)+dot(P)+arrow(P,[P[0],P[1]-55],blue),"直交座標では記号はすべてゼロ。極座標では下の値になるが、平面の曲率はゼロのまま。","Γ<sup><i>r</i></sup><sub>θθ</sub> = −<i>r</i> = "+fmt(-r)+"　　Γ<sup>θ</sup><sub><i>r</i>θ</sub> = Γ<sup>θ</sup><sub>θ<i>r</i></sub> = "+fmt(1/r));}],
+["平行移動","平面内の円弧に沿って、同じ向きの青い矢印を運ぶ。緑は経路の接線方向。","経路上の角度",0,180,1,60,a=>{
+ const t=rad(a),x=Math.cos(t),y=Math.sin(t),P=p(x,y);
+ return info(ellipse(180,120,65,65)+arrow(p(1,0),p(1.7,.3))+arrow(P,p(x+.7,y+.3))+arrow(P,p(x-.55*y,y+.55*x),green)+dot(P),"経路が曲がっても、平面の平行移動では青い矢印の向きと長さが保たれる。","D<i>V</i>/d<i>t</i> = 0");}],
+["測地線・アフィンパラメータ","単位球面を正面から投影した模式図。赤道は大円、選んだ緯線は一般に小円。","緯度",0,70,1,35,a=>{
+ const t=rad(a);
+ return info(ellipse(180,120,88,88)+line([92,120],[268,120],gray,1,"4 4")+line([180-88*Math.cos(t),120-88*Math.sin(t)],[180+88*Math.cos(t),120-88*Math.sin(t)],blue,3),"緯度 0° の赤道は測地線。一定の速さで緯線をたどると、赤道以外では接平面内にも加速度が残る。","<i>k</i><sub><i>g</i></sub> = |tan φ| = "+fmt(Math.tan(t)));}],
+["Riemann 曲率・ホロノミー","単位球の北極と赤道上の二点を結ぶ測地三角形。左は経緯度による経路の模式図、右は出発点の接平面での向きの比較。","赤道上の経度差",10,120,1,90,a=>{
+ const t=rad(a),L=[40,180],R=[40+a*.9,180];
+ return info(line(L,R,blue,3)+line(L,[40,50],green,3)+line(R,[R[0],50],green,3)+line([40,50],[R[0],50],gray,1,"4 4")+label(40,42,"北極（同じ点）")+label(40,203,"赤道")+label(225,70,"帰着時の向き")+arrow([265,139],[315,139],blue)+arrow([265,139],[265+50*Math.cos(t),139-50*Math.sin(t)],red),"この向きに一周すると、平行移動した矢印は回る。単位球で回転角の大きさは囲んだ面積と等しい。","面積 = "+fmt(t)+"　　回転角 = "+a+"°");}],
+["測地線偏差・Jacobi 場","単位球の赤道から北へ進む近接した二本の経線。下の線分は、同じ緯度で測った経線間の距離。","進んだ角度",0,90,1,40,a=>{
+ const t=rad(a),w=52*Math.cos(t);
+ return info(ellipse(180,105,81,81)+trace(z=>[180-52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+trace(z=>[180+52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+dot([180-w,105-81*Math.sin(t)])+dot([180+w,105-81*Math.sin(t)])+line([180-w,207],[180+w,207],red,3),"赤道での間隔を 1 とすると、現在の間隔の比は "+fmt(Math.cos(t))+"。北極で経線は合流する。","<i>J</i>(<i>s</i>)/<i>J</i>(0) = cos <i>s</i>");}],
+["断面曲率・Gauss 曲率","単位球と平面で、同じ測地半径の円の周長を比べる。線分の長さはそれぞれの周長に比例する。","測地半径 r",.1,1.5,.05,.9,r=>{
+ const s=Math.sin(r);
+ return info(label(35,75,"単位球")+line([35,94],[35+175*s,94],blue,5)+label(35,145,"平面")+line([35,164],[35+175*r,164],green,5),"球上の周長は "+fmt(2*Math.PI*s)+"、平面では "+fmt(2*Math.PI*r)+"。球上のほうが短い。","<i>L</i><sub>球</sub> = 2π sin <i>r</i>　　<i>L</i><sub>平面</sub> = 2π<i>r</i>",'<p><a href="../surface-curvature/">法曲率と Gauss 曲率の断面図を開く</a></p>');}],
+["Ricci テンソル","自由落下する粒子群を、局所的な三つの直交方向で見る。青・赤・緑は方向別の相対加速度係数。正は伸び、負は縮み。","第3方向の係数",-.9,.9,.05,-.3,k=>{
+ const values=[.6,-.3,k],total=values.reduce((a,b)=>a+b,0);
+ return info(line([180,28],[180,210])+values.map((v,i)=>label(28,59+i*57,"方向 "+(i+1))+arrow([180,55+i*57],[180+120*v,55+i*57],[blue,red,green][i])).join(""),"三方向の和は "+fmt(total)+"。初期の相対速度がゼロなら、この和は体積の初期加速度を初期体積で割った値になる。","−Ric(<i>u</i>, <i>u</i>) = "+values.map(x=>"("+fmt(x)+")").join(" + ")+" = "+fmt(total));}],
+["スカラー曲率・Einstein テンソル","局所正規直交基底で Ricci テンソルが対角形の例。時間成分は計量の符号が負なので、トレースを取るときに符号を反転する。","Ricci の時間成分", -2,2,.1,1,q=>{
+ const vals=[q,1,2,0],sum=3-q,con=[-q,1,2,0];
+ return info(line([180,25],[180,220])+con.map((v,i)=>label(25,50+i*49,["時間","空間1","空間2","空間3"][i])+arrow([180,46+i*49],[180+60*v,46+i*49],i===0?red:blue)).join(""),"矢印は符号を反映した各成分。足し合わせたスカラー曲率は "+fmt(sum)+"。","<i>R</i> = −<i>R</i>₀₀ + <i>R</i>₁₁ + <i>R</i>₂₂ + <i>R</i>₃₃　　<i>G</i> = Ric − ½<i>R g</i>",table(["方向","Ric の対角成分","G の対角成分"],vals.map((v,i)=>[i===0?"時間":"空間 "+i,fmt(v),fmt(v-(i===0?-1:1)*sum/2)])));}],
+["Weyl 曲率","真空の潮汐作用を表す局所モデル。初期の球を、横に伸ばし縦に縮める。奥行き方向の係数はゼロとする。","経過時間 τ（短時間）",0,.65,.01,.55,t=>{
+ const a=t*t/2;
+ return info(ellipse(180,120,65,65,gray)+ellipse(180,120,65*(1+a),65*(1-a),blue)+line(p(-1.6,0),p(1.6,0),gray,1,"4 4"),"灰色は初期形状、青は短時間近似。方向別の初期相対加速度係数の和はゼロだが、形は変わる。","(+1) + (−1) + 0 = 0");}]
+];
+const select=get("topic"),control=get("control");let current=0;
+topics.forEach(([name],i)=>{const option=document.createElement("option");option.value=String(i);option.textContent=(i+1)+". "+name;select.append(option);});
+function draw(){
+ const x=Number(control.value),model=topics[current][7](x);
+ get("setting").textContent=control.value;
+ get("figure").innerHTML=model.diagram;
+ get("readout").textContent=model.reading;
+ get("formula").innerHTML=model.formula;
+ get("extra").innerHTML=model.extra;
+}
+function show(i){
+ current=i;select.value=String(i);
+ const [name,intro,param,min,max,step,value]=topics[i];
+ get("title").textContent=(i+1)+". "+name;get("intro").textContent=intro;get("parameter").textContent=param;
+ Object.assign(control,{min,max,step,value});
+ get("prev").disabled=i===0;get("next").disabled=i===topics.length-1;
+ history.replaceState(null,"","#"+(i+1));draw();
+}
+select.addEventListener("change",()=>show(Number(select.value)));
+get("prev").addEventListener("click",()=>show(current-1));
+get("next").addEventListener("click",()=>show(current+1));
+control.addEventListener("input",draw);
+function fromHash(){
+ const i=Number(location.hash.slice(1))-1;show(Number.isInteger(i)&&i>=0&&i<topics.length?i:0);
+}
+window.addEventListener("hashchange",fromHash);fromHash();
+</script></body></html>
