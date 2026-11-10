@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>共変微分</title>
+<style>
+
+    :root {
+      color-scheme: light dark;
+      --foreground: CanvasText;
+      --border: light-dark(#d1d5db, #555b66);
+      --muted-foreground: light-dark(#535b67, #b8bec7);
+      --viz-series-1: light-dark(#1765bb, #70b7ff);
+      --viz-series-2: light-dark(#16805b, #5cdbab);
+      --viz-series-3: light-dark(#9246ad, #d6a0ea);
+    }
+    body {
+      max-width: 35rem;
+      margin: 0 auto;
+      padding: .75rem;
+      color: CanvasText;
+      background: Canvas;
+      font: 1rem/1.45 system-ui, sans-serif;
+    }
+    .text-small { font-size: .875rem; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    .form-range { width: 100%; min-width: 0; height: 44px; margin: 0; }
+  
+
+  #sphere-covariant-mobile .sphere-coordinate { margin-top:.35em; }
+  #sphere-covariant-mobile .sphere-gamma { margin-inline-start:.55em; white-space:nowrap; }
+  #sphere-covariant-mobile .sphere-symbols { display:flex; flex-wrap:wrap; gap:.2em 1em; margin-top:.25em; }
+  #sphere-covariant-mobile .sphere-formulas { display:grid; gap:.18em; margin-block:.3em .55em; }
+  #sphere-covariant-mobile .sphere-formulas span { display:inline-block; }
+  #sphere-covariant-mobile .sphere-total { border-top:1px solid var(--border); }
+  #sphere-covariant-mobile .sphere-total :is(th,td), #sphere-covariant-mobile .sphere-equation { font-weight:600; }
+  #sphere-covariant-mobile .sphere-derivation { margin-top:.5em; }
+  #sphere-covariant-mobile .display-equation{text-align:center;margin:.45rem 0;font-family:serif;font-size:1.1em;line-height:1.65;overflow-wrap:anywhere}
+  #sphere-covariant-mobile .sphere-coordinate td { white-space:nowrap; }
+  #sphere-covariant-mobile .sphere-sticky { position:sticky; top:0; z-index:2; background:Canvas; color:CanvasText; border-bottom:1px solid var(--border); }
+  #sphere-covariant-mobile .sphere-control { display:grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); align-items:center; gap:.45em; min-height:44px; }
+  #sphere-covariant-mobile .sphere-control output { white-space:nowrap; }
+  #sphere-covariant-mobile .sphere-diagram { display:block; width:100%; height:170px; }
+  #sphere-covariant-mobile .sphere-values { width:min(100%, 31rem); margin-inline:auto; }
+  #sphere-covariant-mobile table { width:100%; border-collapse:collapse; color:var(--foreground); }
+  #sphere-covariant-mobile th, #sphere-covariant-mobile td { padding:.12em .25em; font-weight:400; }
+  #sphere-covariant-mobile thead { border-bottom:1px solid var(--border); }
+  #sphere-covariant-mobile th:first-child { text-align:left; }
+  #sphere-covariant-mobile th:not(:first-child), #sphere-covariant-mobile td { text-align:right; }
+  #sphere-covariant-mobile [data-key] { display:inline-block; width:.85em; border-top:2px solid currentColor; margin-inline-end:.35em; vertical-align:middle; }
+  #sphere-covariant-mobile :is([data-key="y"],[data-arrow="y"]) { color:var(--viz-series-1); }
+  #sphere-covariant-mobile :is([data-key="t"],[data-arrow="t"]) { color:var(--viz-series-2); }
+  #sphere-covariant-mobile :is([data-key="n"],[data-arrow="n"]) { color:var(--viz-series-3); }
+  #sphere-covariant-mobile [data-key="n"] { border-top-style:dashed; }
+  #sphere-covariant-mobile [data-arrow] line { stroke:currentColor; }
+  #sphere-covariant-mobile [data-arrow] polygon { fill:currentColor; }
+
+#circle-panel{color-scheme:light dark;--vector:light-dark(#1459a4,#8cc5ff);--tangent:light-dark(#08734d,#6ce3b0);--normal:light-dark(#992752,#ff9fbd)}#circle-panel{max-width:34rem;margin:auto;padding:1rem;font:1rem/1.5 system-ui,sans-serif}#circle-panel h1{font-size:1.5rem}#circle-panel .controls{position:sticky;top:0;z-index:2;background:Canvas;padding:.2rem 0;border-bottom:1px solid GrayText}#circle-panel label{display:flex;align-items:center;gap:.5em;min-height:44px}#circle-panel input{flex:1;min-width:0}#circle-panel svg{display:block;width:100%;height:220px}#circle-panel table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}#circle-panel th,#circle-panel td{padding:.3em;text-align:right;border-bottom:1px solid GrayText}#circle-panel th:first-child{text-align:left}#circle-panel .formula{text-align:center;font-family:serif;font-size:1.15em}#circle-panel .vector{color:var(--vector)}#circle-panel .tangent{color:var(--tangent)}#circle-panel .normal{color:var(--normal)}#circle-panel .total{font-weight:600}
+
+#circle-panel{padding:0}
+.tab-list{display:flex;gap:.5rem;margin:1rem 0}
+.tab-list button{min-height:44px;padding:.35rem .7rem;font:inherit}
+.tab-list button[aria-selected=true]{font-weight:bold;border-bottom:3px solid currentColor}
+</style></head><body><main>
+<nav><a href="../../">数学の可視化一覧</a></nav>
+<h1>共変微分</h1>
+<div class="tab-list" role="tablist" aria-label="共変微分の例">
+<button type="button" id="circle-tab" role="tab" aria-controls="circle-panel" aria-selected="true">単位円 S¹</button>
+<button type="button" id="sphere-tab" role="tab" aria-controls="sphere-panel" aria-selected="false" tabindex="-1">単位球面 S²</button>
+</div>
+<section id="circle-panel" role="tabpanel" aria-labelledby="circle-tab">
+
+<h2>単位円の共変微分</h2>
+<p>円周上の点を動かし、その点で円に接する矢印 <i>Y</i> の変化を見る。</p>
+<div class="controls">
+<label>円周上の角度 <output id="angle"></output><input id="theta" type="range" min="0" max="360" value="25"></label>
+<label>長さの変動幅 <i>a</i> <output id="amplitude"></output><input id="a" type="range" min="0" max=".9" step=".1" value="0"></label>
+</div>
+<svg viewBox="0 0 320 220" role="img" aria-label="単位円、選んだ点での接線、接ベクトルとその微分の成分">
+<circle cx="160" cy="110" r="68" fill="none" stroke="GrayText"/>
+<line id="axis" stroke="GrayText" stroke-dasharray="4 4"/>
+<path id="guide" fill="none" stroke="GrayText" stroke-dasharray="3 4"/>
+<path id="vector" class="vector" fill="none" stroke="currentColor" stroke-width="4"/>
+<path id="derivative" fill="none" stroke="currentColor" stroke-width="2"/>
+<path id="normal" class="normal" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2"/>
+<path id="tangent" class="tangent" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle id="point" r="3" fill="currentColor"/>
+</svg>
+<p id="observation" aria-live="polite"></p>
+<table>
+<thead><tr><th scope="col">平面上の成分</th><th scope="col"><i>x</i></th><th scope="col"><i>y</i></th></tr></thead>
+<tbody>
+<tr class="vector" id="row-vector"><th scope="row">接ベクトル <i>Y</i></th><td></td><td></td></tr>
+<tr class="tangent" id="row-tangent"><th scope="row">共変微分（接線成分）</th><td></td><td></td></tr>
+<tr class="normal" id="row-normal"><th scope="row">＋ 法線成分</th><td></td><td></td></tr>
+<tr class="total" id="row-derivative"><th scope="row">＝ 通常の微分</th><td></td><td></td></tr>
+</tbody>
+</table>
+<details><summary>式と記号</summary>
+<p>円周上の角度を <i>θ</i>、接ベクトルの長さを <i>f</i> とする。単位接ベクトルを <i>T</i>、外向き単位法線を <i>N</i> とする。微分はラジアンで測った角度について行う。</p>
+<div class="formula"><i>Y</i> = <i>fT</i>　　<i>f</i> = 1 + <i>a</i> sin <i>θ</i></div>
+<div class="formula">d<i>Y</i>/d<i>θ</i> = <i>f′T</i> − <i>fN</i></div>
+<div class="formula">D<i>Y</i>/d<i>θ</i> = <i>f′T</i></div>
+<p>長さが一定でも、矢印の向きは回る。その変化は法線方向に現れる。接線方向に残るのは、長さの変化による成分である。</p>
+</details>
+</section>
+<section id="sphere-panel" role="tabpanel" aria-labelledby="sphere-tab" hidden><h2>単位球面の共変微分</h2><section id="sphere-covariant-mobile">
+  <div class="sphere-controls text-small sphere-sticky">
+    <label class="sphere-control"><span>経度 <i>θ</i> <output data-out="longitude"></output></span><input class="form-range" type="range" min="0" max="360" value="0" data-input="longitude"></label>
+    <label class="sphere-control"><span>緯度 <i>φ</i> <output data-out="latitude"></output></span><input class="form-range" type="range" min="-65" max="65" value="45" data-input="latitude"></label>
+    <label class="sphere-control"><span><i>Y</i> の長さの最大変化 <i>a</i> <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
+  </div>
+  <div class="sphere-values text-small">
+    <p>経度を <i>θ</i> とする。接ベクトル <i>Y</i> の長さは、基準値 1 から最大で <i>a</i> だけ増減する。</p>
+    <div class="display-equation">‖<i>Y</i>‖ = 1 + <i>a</i> sin <i>θ</i></div>
+    <p>現在の設定における長さの範囲</p>
+    <div class="display-equation"><output data-length-range></output></div>
+  </div>
+  <svg class="sphere-diagram" role="img" aria-label="単位球面の緯線と、その上の接ベクトルの微分を接平面成分と法線成分に分けた図">
+    <circle data-orbit fill="none" stroke="var(--border)" stroke-width="1.5"/>
+    <path data-back fill="none" stroke="var(--muted-foreground)" stroke-opacity=".6" stroke-dasharray="3 4"/>
+    <path data-front fill="none" stroke="var(--muted-foreground)"/>
+    <polygon data-plane fill="var(--viz-series-2)" fill-opacity=".12" stroke="var(--viz-series-2)" stroke-opacity=".55"/>
+    <polyline data-guides fill="none" stroke="var(--muted-foreground)" stroke-opacity=".7" stroke-dasharray="3 4"/>
+    <g data-arrow="y"><line stroke-width="3"/><polygon/></g>
+    <g data-arrow="n"><line stroke-width="2" stroke-dasharray="3 2"/><polygon/></g>
+    <g data-arrow="t"><line stroke-width="2"/><polygon/></g>
+    <g data-arrow="d"><line stroke-width="2"/><polygon/></g>
+    <circle data-point r="2.5" fill="var(--foreground)"/>
+  </svg>
+  <div class="sphere-values text-small tabular-nums" aria-live="polite">
+    <div>接ベクトル <i>Y</i> の実際の長さ <output data-length></output></div>
+    <p>通常の微分を、接平面に沿う成分と法線成分に分解する。</p><div class="display-equation">d<i>Y</i>/d<i>θ</i> = D<i>Y</i>/d<i>θ</i> + 法線成分</div>
+    <table aria-label="ベクトルの座標成分">
+      <thead><tr><th scope="col">空間座標での成分</th><th scope="col"><i>x</i></th><th scope="col"><i>y</i></th><th scope="col"><i>z</i></th></tr></thead>
+      <tbody>
+        <tr data-row="p"><th scope="row">位置 <i>γ</i></th><td></td><td></td><td></td></tr>
+        <tr data-row="y"><th scope="row"><span data-key="y" aria-hidden="true"></span>接ベクトル <i>Y</i></th><td></td><td></td><td></td></tr>
+        <tr data-row="t"><th scope="row"><span data-key="t" aria-hidden="true"></span>共変微分 D<i>Y</i>/d<i>θ</i></th><td></td><td></td><td></td></tr>
+        <tr data-row="n"><th scope="row"><span data-key="n" aria-hidden="true"></span>+ 法線成分</th><td></td><td></td><td></td></tr>
+        <tr class="sphere-total" data-row="d"><th scope="row"><span data-key="d" aria-hidden="true"></span>= 通常の微分 d<i>Y</i>/d<i>θ</i></th><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <details class="sphere-values sphere-coordinate text-small tabular-nums">
+    <summary>球面座標の計算 <span class="sphere-gamma">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = <output data-gamma="phi-theta-theta"></output></span></summary>
+    <table aria-label="球面座標基底での成分。経度をラジアンで微分">
+      <thead><tr><th scope="col">座標基底での成分</th><th scope="col"><i>θ</i></th><th scope="col"><i>φ</i></th></tr></thead>
+      <tbody aria-live="polite">
+        <tr data-coord="vector"><th scope="row">接ベクトル <i>Y</i></th><td></td><td></td></tr>
+        <tr data-coord="rate"><th scope="row">座標成分の微分 d<i>Y</i>ⁱ/d<i>θ</i></th><td></td><td></td></tr>
+        <tr data-coord="connection"><th scope="row">+ 接続による補正</th><td></td><td></td></tr>
+        <tr class="sphere-total" data-coord="covariant"><th scope="row">= 共変微分 D<i>Y</i>/d<i>θ</i></th><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <details class="sphere-derivation"><summary>計量とクリストッフェル記号の導出</summary>
+    <div class="sphere-formulas">
+      <p>単位球面の計量成分は次のとおり。</p><div class="display-equation"><span><i>g</i><sub><i>θθ</i></sub> = cos²<i>φ</i></span>、<span><i>g</i><sub><i>φφ</i></sub> = 1</span>、<span><i>g</i><sub><i>θφ</i></sub> = 0</span></div>
+      <div class="display-equation">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = −½ ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = sin<i>φ</i> cos<i>φ</i></div>
+      <div class="display-equation">Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = ½ <i>g</i><sup><i>θθ</i></sup> ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = −tan<i>φ</i></div>
+      <p>緯度を固定して経度だけを変える。接ベクトルの座標成分を次のように表す。</p><div class="display-equation"><span><i>Y</i><sup><i>θ</i></sup> = <i>f</i> / cos<i>φ</i></span>、<span><i>Y</i><sup><i>φ</i></sup> = 0</span>、<span><i>f</i> = 1 + <i>a</i> sin<i>θ</i></span></div>
+      <div class="display-equation">(D<i>Y</i>/d<i>θ</i>)<sup><i>θ</i></sup> = d<i>Y</i><sup><i>θ</i></sup>/d<i>θ</i> + 0 = <i>f</i>′ / cos<i>φ</i></div>
+      <div class="display-equation">(D<i>Y</i>/d<i>θ</i>)<sup><i>φ</i></sup> = 0 + Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> <i>Y</i><sup><i>θ</i></sup> = <i>f</i> sin<i>φ</i></div>
+      <p>現在の設定を <i>φ</i> 成分の式に代入する。</p><div class="display-equation"><output data-phi-equation></output></div>
+    </div>
+    </details>
+    <div class="sphere-symbols" aria-label="ほかのクリストッフェル記号">
+      <span>Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = Γ<sup><i>θ</i></sup><sub><i>φθ</i></sub> = <output data-gamma="theta-theta-phi"></output></span>
+      <span>その他の Γ = 0</span>
+    </div>
+  </details>
+</section></section>
+</main>
+<script>
+const examples = ["circle", "sphere"];
+function showExample(name) {
+  for (const example of examples) {
+    const selected = name === example;
+    const tab = document.getElementById(example + "-tab");
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    document.getElementById(example + "-panel").hidden = !selected;
+  }
+}
+function fromLocation() {
+  showExample(location.hash === "#sphere" ? "sphere" : "circle");
+}
+function selectExample(name) {
+  history.replaceState(null, "", "#" + name);
+  showExample(name);
+}
+for (const [index, name] of examples.entries()) {
+  const tab = document.getElementById(name + "-tab");
+  tab.addEventListener("click", () => selectExample(name));
+  tab.addEventListener("keydown", event => {
+    const keys = {ArrowLeft: 1-index, ArrowRight: 1-index, Home: 0, End: 1};
+    if (!Object.hasOwn(keys, event.key)) return;
+    event.preventDefault();
+    const next = examples[keys[event.key]];
+    selectExample(next);
+    document.getElementById(next + "-tab").focus();
+  });
+}
+window.addEventListener("hashchange", fromLocation);
+fromLocation();
+(() => {
+const get = id => document.getElementById(id);
+const angle = get("theta"), amplitude = get("a");
+const mul = (v,k) => v.map(x => x*k);
+const add = (v,w) => v.map((x,i) => x+w[i]);
+function draw(){
+  const theta = Number(angle.value)*Math.PI/180;
+  const a = Number(amplitude.value);
+  const normal = [Math.cos(theta),Math.sin(theta)];
+  const tangent = [-normal[1],normal[0]];
+  const f = 1+a*normal[1];
+  const p = add([160,110],[68*normal[0],-68*normal[1]]);
+  const tip = ([x,y]) => add(p,[39*x,-39*y]);
+  const coord = v => v.join(",");
+  const t = mul(tangent,a*normal[0]);
+  const n = mul(normal,-f);
+  const vectors = {vector:mul(tangent,f), tangent:t, normal:n, derivative:add(t,n)};
+  const axis = get("axis");
+  const [x1,y1] = tip(mul(tangent,-2)), [x2,y2] = tip(mul(tangent,2));
+  for (const [key,value] of Object.entries({x1,y1,x2,y2})) axis.setAttribute(key,value);
+  get("point").setAttribute("cx",p[0]);
+  get("point").setAttribute("cy",p[1]);
+  const zero = Math.hypot(...t)<1e-8;
+  get("guide").setAttribute("d",zero ? "" : "M"+coord(tip(t))+"L"+coord(tip(vectors.derivative))+"L"+coord(tip(n)));
+  for(const [key,v] of Object.entries(vectors)){
+    const end = tip(v);
+    const d = end.map((x,i)=>x-p[i]);
+    const size = Math.hypot(...d);
+    const head = Math.min(7,size/2);
+    const [ux,uy] = size ? mul(d,1/size) : [0,0];
+    const back = add(end,mul([ux,uy],-head));
+    const wing = mul([-uy,ux],head*.5);
+    const hidden = size<1e-8 || (zero && key==="derivative");
+    get(key).setAttribute("d",hidden ? "" : "M"+coord(p)+"L"+coord(end)+"M"+coord(add(back,wing))+"L"+coord(end)+"L"+coord(add(back,mul(wing,-1))));
+    get("row-"+key).querySelectorAll("td").forEach((cell,i)=>{cell.textContent=Math.abs(v[i])<.0005 ? "0.000" : v[i].toFixed(3);});
+  }
+  get("angle").textContent=angle.value+"°";
+  get("amplitude").textContent=a.toFixed(1);
+  get("observation").textContent=zero ? "この点では共変微分はゼロ。通常の微分と法線成分は重なる。" : "通常の微分を破線の接線へ正射影すると、共変微分が得られる。";
+}
+for (const input of [angle,amplitude]) input.addEventListener("input",draw);
+draw();
+})();
+
+(() => {
+  const root = document.getElementById("sphere-covariant-mobile");
+  const find = selector => root.querySelector(selector);
+  const svg = find(".sphere-diagram");
+  const input = name => find('[data-input="' + name + '"]');
+  const longitude = input("longitude");
+  const latitude = input("latitude");
+  const amplitude = input("amplitude");
+  const rad = value => Number(value) * Math.PI / 180;
+  const scale = (v, k) => v.map(x => k * x);
+  const add = (v, w) => v.map((x, i) => x + w[i]);
+  const dot = (v, w) => v.reduce((sum, x, i) => sum + x * w[i], 0);
+  const right = [0.5, Math.sqrt(3)/2, 0];
+  const up = [-0.3*Math.sqrt(3)/2, 0.15, Math.sqrt(0.91)];
+  const depth = [Math.sqrt(0.91)*Math.sqrt(3)/2, -Math.sqrt(0.91)/2, 0.3];
+  const format = value => Math.abs(value) < 0.0005 ? "0.000" : value.toFixed(3);
+  function set(element, attrs) {
+    for (const [key, value] of Object.entries(attrs)) element.setAttribute(key, value);
+  }
+  function drawArrow(group, origin, tip, visible) {
+    const dx = tip[0] - origin[0];
+    const dy = tip[1] - origin[1];
+    const distance = Math.hypot(dx, dy);
+    group.style.display = visible && distance > 0.1 ? "" : "none";
+    if (group.style.display) return;
+    const head = Math.min(7, distance * 0.5);
+    const ux = dx / distance;
+    const uy = dy / distance;
+    const bx = tip[0] - ux * head;
+    const by = tip[1] - uy * head;
+    const wing = head * 0.42;
+    set(group.querySelector("line"), {x1:origin[0], y1:origin[1], x2:bx, y2:by});
+    set(group.querySelector("polygon"), {points:[tip,[bx-uy*wing,by+ux*wing],[bx+uy*wing,by-ux*wing]].map(p => p.join(",")).join(" ")});
+  }
+  function draw() {
+    const width = svg.clientWidth;
+    const height = svg.clientHeight;
+    if (!width || !height) return;
+    const cx = width / 2;
+    const cy = height / 2;
+    const radius = Math.min(width, height) * 0.37;
+    const project = v => [cx + radius * dot(v, right), cy - radius * dot(v, up)];
+    const t = rad(longitude.value);
+    const phi = rad(latitude.value);
+    const a = Number(amplitude.value);
+    const c = Math.cos(phi);
+    const s = Math.sin(phi);
+    const point = angle => [c * Math.cos(angle), c * Math.sin(angle), s];
+    const p = point(t);
+    const east = [-Math.sin(t), Math.cos(t), 0];
+    const north = [-s * Math.cos(t), -s * Math.sin(t), c];
+    const length = 1 + a * Math.sin(t);
+    const lengthRate = a * Math.cos(t);
+    const y = scale(east, length);
+    const tangent = add(scale(east, lengthRate), scale(north, length * s));
+    const normal = scale(p, -length * c);
+    const derivative = add(tangent, normal);
+    const origin = project(p);
+    const tip = v => project(add(p, scale(v, 0.4)));
+    const hasTangent = Math.hypot(...tangent) > 1e-8;
+    set(svg, {viewBox:[0,0,width,height].join(" ")});
+    set(find("[data-orbit]"), {cx,cy,r:radius});
+    set(find("[data-point]"), {cx:origin[0],cy:origin[1]});
+    const paths = {front:"", back:""};
+    let lastSide;
+    for (let i = 0; i < 120; i++) {
+      const angle = i * Math.PI / 60;
+      const side = dot(point(angle + Math.PI/120), depth) >= 0 ? "front" : "back";
+      if (lastSide !== side) paths[side] += "M" + project(point(angle)).join(",");
+      paths[side] += "L" + project(point(angle + Math.PI/60)).join(",");
+      lastSide = side;
+    }
+    for (const [side, d] of Object.entries(paths)) set(find("[data-" + side + "]"), {d});
+    const corners = [[-1,-1],[1,-1],[1,1],[-1,1]].map(([u,v]) => project(add(p, add(scale(east, .38*u), scale(north, .38*v)))));
+    set(find("[data-plane]"), {points:corners.map(v => v.join(",")).join(" ")});
+    const guides = find("[data-guides]");
+    guides.style.display = hasTangent ? "" : "none";
+    set(guides, {points:[tangent,derivative,normal].map(v => tip(v).join(",")).join(" ")});
+    for (const [key, vector] of Object.entries({p,y,d:derivative,t:tangent,n:normal})) {
+      find('[data-row="' + key + '"]').querySelectorAll("td").forEach((cell, i) => {cell.textContent = format(vector[i]);});
+      if (key !== "p") drawArrow(find('[data-arrow="' + key + '"]'), origin, tip(vector), hasTangent || key === "y" || key === "n");
+    }
+    find('[data-out="longitude"]').textContent = longitude.value + "°";
+    find('[data-out="latitude"]').textContent = latitude.value + "°";
+    find('[data-out="amplitude"]').textContent = a.toFixed(1);
+    find("[data-length]").textContent = format(length);
+    find("[data-length-range]").textContent = (1 - a).toFixed(1) + "〜" + (1 + a).toFixed(1);
+    const gammaPhiThetaTheta = s * c;
+    const yTheta = length / c;
+    const coordinateRate = lengthRate / c;
+    const connectionTerm = gammaPhiThetaTheta * yTheta;
+    const coordinateRows = {
+      vector: [yTheta, 0],
+      rate: [coordinateRate, 0],
+      connection: [0, connectionTerm],
+      covariant: [coordinateRate, connectionTerm]
+    };
+    for (const [key, values] of Object.entries(coordinateRows)) {
+      find('[data-coord="' + key + '"]').querySelectorAll("td").forEach((cell, i) => {cell.textContent = format(values[i]);});
+    }
+    find('[data-gamma="phi-theta-theta"]').textContent = format(gammaPhiThetaTheta);
+    find('[data-gamma="theta-theta-phi"]').textContent = format(-s / c);
+    find("[data-phi-equation]").textContent =
+      "0 + (" + format(gammaPhiThetaTheta) + " × " + format(yTheta) + ") ≈ " + format(connectionTerm);
+  }
+  for (const control of [longitude,latitude,amplitude]) control.addEventListener("input", draw);
+  new ResizeObserver(draw).observe(svg);
+  draw();
+})();
+
+</script></body></html>
