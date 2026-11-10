@@ -15,7 +15,17 @@
 <button type="button" data-shape="saddle" aria-pressed="false">鞍型</button>
 </div>
 <label>切る方向 θ <output id="angle"></output><input id="direction" type="range" min="0" max="180" value="0"></label>
-<p>点 P の法線を含む平面で切った断面</p>
+<p>曲面を点 P で切る</p>
+<svg viewBox="0 0 320 180" role="img" aria-label="曲面の格子、点Pでの切断平面、曲面との交線を重ねた立体図">
+<path id="surface-grid" fill="none" stroke="GrayText" stroke-opacity=".65"/>
+<polygon id="cut-plane" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-opacity=".7" stroke-dasharray="5 3"/>
+<path id="cut-normal" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path id="cut-curve" class="curve" fill="none" stroke-width="3"/>
+<circle cx="160" cy="105" r="4" fill="currentColor"/>
+<text x="167" y="101" fill="currentColor" font-size="12">P</text>
+</svg>
+<p class="cut-legend">格子は曲面、破線の四角は切断平面、<strong>色のついた実線は交線</strong>です。</p>
+<p>交線を切断平面の正面から見た図</p>
 <svg viewBox="0 0 320 160" role="img" aria-label="点Pでの法線断面。横軸は選んだ接方向、縦軸は法線方向">
 <path d="M20 80H300 M160 145V12" fill="none" stroke="GrayText"/>
 <path id="section" class="curve" fill="none" stroke-width="3"/>
@@ -50,11 +60,46 @@ const surfaces = {
   saddle: {k1:1,k2:-1,height:(x,c,s)=>x*x*(c*c-s*s)/2}
 };
 let selected = "sphere";
+// Orthographic view of a surface patch in the tangent and normal coordinates at P.
+function project(x,y,z){
+  return [160 + 104*(.8*x-.6*y), 105 - 104*(.24*x+.32*y+.9165*z)];
+}
+function path(points){
+  return points.map((p,i)=>(i ? "L" : "M")+p.join(",")).join("");
+}
+function drawCut(surface,c,s){
+  const grid = [];
+  for(let i=-4;i<=4;i++){
+    const fixed=i*.18;
+    const across=[], along=[];
+    for(let j=-20;j<=20;j++){
+      const moving=j*.036;
+      for(const [x,y,line] of [[fixed,moving,across],[moving,fixed,along]]){
+        if(Math.hypot(x,y)<=.81) {
+          const radius=Math.hypot(x,y);
+          const z=radius===0 ? 0 : surface.height(radius,x/radius,y/radius);
+          line.push(project(x,y,z));
+        }
+      }
+    }
+    grid.push(path(across),path(along));
+  }
+  get("surface-grid").setAttribute("d",grid.join(""));
+  const onPlane=(x,z)=>project(x*c,x*s,z);
+  const corners=[[-.75,-.4],[.75,-.4],[.75,.53],[-.75,.53]];
+  get("cut-plane").setAttribute("points",corners.map(([x,z])=>onPlane(x,z).join(",")).join(" "));
+  get("cut-normal").setAttribute("d",path([onPlane(0,0),onPlane(0,.53)]));
+  get("cut-curve").setAttribute("d",path(Array.from({length:81},(_,i)=>{
+    const x=(i-40)*.018;
+    return onPlane(x,surface.height(x,c,s));
+  })));
+}
 function draw(){
   const degrees = Number(direction.value);
   const t = degrees*Math.PI/180;
   const c = Math.cos(t), s = Math.sin(t);
   const surface = surfaces[selected];
+  drawCut(surface,c,s);
   const k = surface.k1*c*c + surface.k2*s*s;
   get("angle").textContent = degrees + "°";
   get("k1").textContent = surface.k1;
