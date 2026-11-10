@@ -6,6 +6,7 @@
 <style>
 :root{color-scheme:light dark}body{max-width:34rem;margin:auto;padding:1rem;font:1rem/1.5 system-ui,sans-serif}h1{margin:.35rem 0;font-size:1.5rem}p{margin:.5rem 0}button{padding:.45em .65em;margin:.15em}button[aria-pressed=true]{font-weight:bold;outline:2px solid currentColor}label{display:flex;align-items:center;gap:.6rem;margin-top:.5rem}input{flex:1;min-width:0;height:44px}svg{display:block;width:100%;max-height:200px}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}th,td{text-align:left;padding:.28em;border-bottom:1px solid GrayText}td{text-align:right}details{margin-top:.7em}.curve{stroke:light-dark(#155cab,#83bcff)}
 .sticky-direction{position:sticky;top:0;z-index:2;background:Canvas;color:CanvasText;padding:.2rem .35rem;border-bottom:1px solid GrayText}
+.display-equation{text-align:center;margin:.45rem 0;font-family:serif;font-size:1.1em;line-height:1.65;overflow-wrap:anywhere}
 </style>
 <main>
 <a href="../../">数学の可視化一覧</a>
@@ -16,7 +17,7 @@
 <button type="button" data-shape="saddle" aria-pressed="false">鞍型</button>
 </div>
 <label class="sticky-direction">切る方向 θ <output id="angle"></output><input id="direction" type="range" min="0" max="180" value="0"></label>
-<p>曲面を点 P で切る</p>
+<h2>法線断面</h2><p>点 P を通り、曲面の法線を含む平面で曲面を切る。</p>
 <svg viewBox="0 0 320 180" role="img" aria-label="曲面の格子、点Pでの切断平面、曲面との交線を重ねた立体図">
 <path id="surface-grid" fill="none" stroke="GrayText" stroke-opacity=".65"/>
 <polygon id="cut-plane" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-opacity=".7" stroke-dasharray="5 3"/>
@@ -46,8 +47,8 @@
 </tbody>
 </table>
 <details><summary>式と曲面の設定</summary>
-<p>法曲率 kₙ(θ) = k₁ cos²θ + k₂ sin²θ。第1主方向から測った角度が θ。</p>
-<p>球面と円柱は半径 1 で法線を内向きにとる。鞍型は z = (x² − y²)/2 の原点で、法線を上向きにとる。断面は実際にこの平面で切った曲線で、表の曲率は点 P における値。</p>
+<p>第1主方向から測った角度を θ とする。その方向の法曲率は、二つの主曲率から求められる。</p><div class="display-equation">kₙ(θ) = k₁ cos²θ + k₂ sin²θ</div><p>点 P におけるガウス曲率は、二つの主曲率の積である。</p><div class="display-equation">K = k₁ k₂</div>
+<p>球面と円柱の半径は 1 とし、法線は内向きにとる。鞍型曲面は次式で定める。</p><div class="display-equation">z = (x² − y²)/2</div><p>鞍型曲面では原点を点 P とし、法線は上向きにとる。表の曲率はいずれも点 P における値である。</p>
 </details>
 </main>
 <script>
