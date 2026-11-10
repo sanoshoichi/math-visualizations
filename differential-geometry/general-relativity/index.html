@@ -9,7 +9,10 @@ nav,.actions{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center}.controls{
 svg{width:100%;height:auto;max-height:270px;display:block}svg text{font:12px system-ui;fill:CanvasText}
 .formula{text-align:center;font:1.15rem/1.6 serif;overflow-wrap:anywhere}output{font-variant-numeric:tabular-nums}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;padding:.25rem .4rem;text-align:right}th:first-child{text-align:left}
-</style></head><body><main>
+.formula .katex-display{overflow-x:auto;overflow-y:hidden;padding:.2rem 0;margin:.55em 0}
+</style><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+</head><body><main>
 <nav><a href="../../">数学の可視化一覧</a></nav>
 <h1>一般相対性理論のための微分幾何学</h1>
 <label for="topic">学習項目</label><select id="topic"></select>
@@ -105,6 +108,43 @@ r=>"Δ<i>L</i> = 2π("+fmt(r)+" − sin "+fmt(r)+") ≈ "+fmt(2*Math.PI*(r-Math.
 k=>"Ric(<i>u</i>,<i>u</i>) = −[0.6 − 0.3 + ("+fmt(k)+")] ≈ "+fmt(-(.3+k)),
 q=>"<i>R</i> = −("+fmt(q)+") + 1 + 2 + 0 ≈ "+fmt(3-q)+"　　<i>G</i>₀₀ = "+fmt(q)+" + ½ × "+fmt(3-q)+" ≈ "+fmt(q+(3-q)/2),
 t=>"<i>r</i><sub>横</sub> = 1 + τ²/2 ≈ "+fmt(1+t*t/2)+"　　<i>r</i><sub>縦</sub> = 1 − τ²/2 ≈ "+fmt(1-t*t/2)];
+
+const identityTex = ["v=\\gamma'(0)=\\lim_{h\\to0}\\frac{\\gamma(h)-\\gamma(0)}{h}","v=\\sum_i v^i\\partial_i,\\qquad v'=Q^\\mathsf{T}v","[X,Y](f)=X(Yf)-Y(Xf)","\\mathrm{d}f_p(v)=\\sum_i(\\partial_i f)(p)v^i","A'=Q^\\mathsf{T}AQ,\\qquad \\operatorname{tr}A=\\sum_i A^i{}_i","g(u,v)=g_{\\mu\\nu}u^\\mu v^\\nu","\\nabla_X(fY)=X(f)Y+f\\nabla_XY","\\begin{aligned}T(X,Y)&=\\nabla_XY-\\nabla_YX-[X,Y]\\\\ \\Gamma^i{}_{jk}&=\\tfrac12g^{i\\ell}(\\partial_jg_{k\\ell}+\\partial_kg_{j\\ell}-\\partial_\\ell g_{jk})\\end{aligned}","\\frac{\\mathrm{D}V^i}{\\mathrm{d}t}=\\frac{\\mathrm{d}V^i}{\\mathrm{d}t}+\\Gamma^i{}_{jk}\\dot\\gamma^j V^k=0","\\nabla_{\\dot\\gamma}\\dot\\gamma=0,\\qquad \\ddot\\gamma^i+\\Gamma^i{}_{jk}\\dot\\gamma^j\\dot\\gamma^k=0","R(X,Y)Z=\\nabla_X\\nabla_YZ-\\nabla_Y\\nabla_XZ-\\nabla_{[X,Y]}Z","\\frac{\\mathrm{D}^2J}{\\mathrm{d}s^2}=R(\\dot\\gamma,J)\\dot\\gamma","K(u,v)=\\frac{g(R(u,v)v,u)}{g(u,u)g(v,v)-g(u,v)^2}","\\operatorname{Ric}_{\\sigma\\nu}=R^\\rho{}_{\\sigma\\rho\\nu}","\\begin{aligned}R&=g^{\\mu\\nu}\\operatorname{Ric}_{\\mu\\nu}\\\\ G_{\\mu\\nu}&=\\operatorname{Ric}_{\\mu\\nu}-\\tfrac12 Rg_{\\mu\\nu}\\end{aligned}","C^\\rho{}_{\\sigma\\rho\\nu}=0,\\qquad \\operatorname{Ric}=0\\ \\Longrightarrow\\ C=R_{\\mathrm{Riemann}}"];
+const texTokens = {
+ "γ̇":"\\dot{\\gamma}", "θ":"\\theta ", "φ":"\\phi ", "γ":"\\gamma ", "π":"\\pi ", "τ":"\\tau ",
+ "μ":"\\mu ", "ν":"\\nu ", "ρ":"\\rho ", "σ":"\\sigma ", "Γ":"\\Gamma ",
+ "∇":"\\nabla ", "∂":"\\partial ", "Δ":"\\Delta ", "∫":"\\int ",
+ "Σ":"\\sum ", "≈":"\\approx ", "→":"\\to ", "⇒":"\\Rightarrow ",
+ "−":"-", "×":"\\times ", "½":"\\tfrac{1}{2}", "‖":"\\Vert ",
+ "′":"'", "″":"''", "°":"^{\\circ}", "　":"\\quad ",
+ "cos":"\\cos ", "sin":"\\sin ", "tan":"\\tan ", "Ric":"\\operatorname{Ric} ",
+ "tr":"\\operatorname{tr} ", "rad":"\\,\\mathrm{rad}"
+};
+const subscript = {"₀":"0","₁":"1","₂":"2","₃":"3","ₓ":"x","ᵧ":"y"};
+const superscript = {"¹":"1","²":"2","³":"3"};
+function equationTex(html) {
+  return html.replace(/<sup>(.*?)<\/sup>/g,"^{$1}")
+    .replace(/<sub>(.*?)<\/sub>/g,"_{$1}").replace(/<\/?i>/g,"")
+    .replace(/γ̇|cos|sin|tan|Ric|\btr\b|\brad\b|[₀₁₂₃ₓᵧ]+|[¹²³]+|[θφγπτμνρσΓ∇∂Δ∫Σ≈→⇒−×½‖′″°　]|[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]+/gu,token=>{
+      if (token in texTokens) return texTokens[token];
+      if (token[0] in subscript) return "_{"+Array.from(token,x=>subscript[x]).join("")+"}";
+      if (token[0] in superscript) return "^{"+Array.from(token,x=>superscript[x]).join("")+"}";
+      return "\\text{"+token+"}";
+    });
+}
+function displayEquation(id, fallback, tex=equationTex(fallback)) {
+  const element=get(id);
+  if (window.katex) {
+    try {
+      window.katex.render(tex,element,{displayMode:true,throwOnError:true});
+      return;
+    } catch (error) {
+      console.warn("TeX rendering failed",id,error);
+    }
+  }
+  element.innerHTML=fallback;
+}
+
 const select=get("topic"),control=get("control");let current=0;
 topics.forEach(([name],i)=>{const option=document.createElement("option");option.value=String(i);option.textContent=(i+1)+". "+name;select.append(option);});
 function draw(){
@@ -112,9 +152,9 @@ function draw(){
  get("setting").textContent=control.value;
  get("figure").innerHTML=model.diagram;
  get("readout").textContent=model.reading;
- get("formula").innerHTML=model.formula;
+ displayEquation("formula",model.formula);
  get("extra").innerHTML=model.extra;
- get("calculation").innerHTML=calculations[current](x);
+ displayEquation("calculation",calculations[current](x));
 }
 function show(i){
  current=i;select.value=String(i);
@@ -123,7 +163,7 @@ function show(i){
  Object.assign(control,{min,max,step,value});
  const [definition, identity, context] = definitions[i];
  get("definition").textContent=definition;
- get("identity").innerHTML=identity;
+ displayEquation("identity",identity,identityTex[i]);
  get("calculation-context").innerHTML=context;
  get("prev").disabled=i===0;get("next").disabled=i===topics.length-1;
  history.replaceState(null,"","#"+(i+1));draw();
@@ -136,4 +176,5 @@ function fromHash(){
  const i=Number(location.hash.slice(1))-1;show(Number.isInteger(i)&&i>=0&&i<topics.length?i:0);
 }
 window.addEventListener("hashchange",fromHash);fromHash();
+window.addEventListener("DOMContentLoaded",()=>{displayEquation("identity",definitions[current][1],identityTex[current]);draw();});
 </script></body></html>
