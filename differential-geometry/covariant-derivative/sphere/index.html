@@ -34,7 +34,12 @@
     <label class="sphere-control"><span>緯度 φ <output data-out="latitude"></output></span><input class="form-range" type="range" min="-65" max="65" value="45" data-input="latitude"></label>
     <label class="sphere-control"><span>Y の長さの最大変化 a <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
   </div>
-  <div class="sphere-values text-small">a は、接ベクトル Y の長さが基準の 1 から最大でどれだけずれるかです。<br>長さ ‖Y‖ = 1 + a sin θ（θ は経度）<br>この設定での長さの範囲 <output data-length-range></output>。a = 0 なら常に 1 です。</div>
+  <div class="sphere-values text-small">
+    <p>経度を θ とする。接ベクトル Y の長さは、基準値 1 から最大で a だけ増減する。</p>
+    <div class="display-equation">‖Y‖ = 1 + a sin θ</div>
+    <p>現在の設定における長さの範囲</p>
+    <div class="display-equation"><output data-length-range></output></div>
+  </div>
   <svg class="sphere-diagram" role="img" aria-label="単位球面の緯線と、その上の接ベクトルの微分を接平面成分と法線成分に分けた図">
     <circle data-orbit fill="none" stroke="var(--border)" stroke-width="1.5"/>
     <path data-back fill="none" stroke="var(--muted-foreground)" stroke-opacity=".6" stroke-dasharray="3 4"/>
@@ -49,7 +54,7 @@
   </svg>
   <div class="sphere-values text-small tabular-nums" aria-live="polite">
     <div>接ベクトル Y の実際の長さ <output data-length></output></div>
-    <div class="sphere-equation">共変微分（接平面）＋ 法線成分 ＝ 通常の微分</div>
+    <p>通常の微分を、接平面に沿う成分と法線成分に分解する。</p><div class="display-equation">dY/dθ = DY/dθ + 法線成分</div>
     <table aria-label="ベクトルの座標成分">
       <thead><tr><th scope="col">空間座標での成分</th><th scope="col">x</th><th scope="col">y</th><th scope="col">z</th></tr></thead>
       <tbody>
@@ -74,13 +79,13 @@
     </table>
     <details class="sphere-derivation"><summary>計量とクリストッフェル記号の導出</summary>
     <div class="sphere-formulas">
-      <div>計量 <span>g<sub>θθ</sub> = cos²φ</span>、<span>g<sub>φφ</sub> = 1</span>、<span>g<sub>θφ</sub> = 0</span></div>
-      <div>Γ<sup>φ</sup><sub>θθ</sub> = −½ ∂<sub>φ</sub>g<sub>θθ</sub> = sinφ cosφ</div>
-      <div>Γ<sup>θ</sup><sub>θφ</sub> = ½ g<sup>θθ</sup> ∂<sub>φ</sub>g<sub>θθ</sub> = −tanφ</div>
-      <div>緯線上では <span>Y<sup>θ</sup> = f / cosφ</span>、<span>Y<sup>φ</sup> = 0</span>、<span>f = 1 + a sinθ</span></div>
-      <div>(DY/dθ)<sup>θ</sup> = dY<sup>θ</sup>/dθ + 0 = f′ / cosφ</div>
-      <div>(DY/dθ)<sup>φ</sup> = 0 + Γ<sup>φ</sup><sub>θθ</sub> Y<sup>θ</sup> = f sinφ</div>
-      <div>φ 成分の計算 <output data-phi-equation></output></div>
+      <p>単位球面の計量成分は次のとおり。</p><div class="display-equation"><span>g<sub>θθ</sub> = cos²φ</span>、<span>g<sub>φφ</sub> = 1</span>、<span>g<sub>θφ</sub> = 0</span></div>
+      <div class="display-equation">Γ<sup>φ</sup><sub>θθ</sub> = −½ ∂<sub>φ</sub>g<sub>θθ</sub> = sinφ cosφ</div>
+      <div class="display-equation">Γ<sup>θ</sup><sub>θφ</sub> = ½ g<sup>θθ</sup> ∂<sub>φ</sub>g<sub>θθ</sub> = −tanφ</div>
+      <p>緯度を固定して経度だけを変える。接ベクトルの座標成分を次のように表す。</p><div class="display-equation"><span>Y<sup>θ</sup> = f / cosφ</span>、<span>Y<sup>φ</sup> = 0</span>、<span>f = 1 + a sinθ</span></div>
+      <div class="display-equation">(DY/dθ)<sup>θ</sup> = dY<sup>θ</sup>/dθ + 0 = f′ / cosφ</div>
+      <div class="display-equation">(DY/dθ)<sup>φ</sup> = 0 + Γ<sup>φ</sup><sub>θθ</sub> Y<sup>θ</sup> = f sinφ</div>
+      <p>現在の設定を φ 成分の式に代入する。</p><div class="display-equation"><output data-phi-equation></output></div>
     </div>
     </details>
     <div class="sphere-symbols" aria-label="ほかのクリストッフェル記号">
@@ -98,6 +103,7 @@
   #sphere-covariant-mobile .sphere-total { border-top:1px solid var(--border); }
   #sphere-covariant-mobile .sphere-total :is(th,td), #sphere-covariant-mobile .sphere-equation { font-weight:600; }
   #sphere-covariant-mobile .sphere-derivation { margin-top:.5em; }
+  #sphere-covariant-mobile .display-equation{text-align:center;margin:.45rem 0;font-family:serif;font-size:1.1em;line-height:1.65;overflow-wrap:anywhere}
   #sphere-covariant-mobile .sphere-coordinate td { white-space:nowrap; }
   #sphere-covariant-mobile .sphere-sticky { position:sticky; top:0; z-index:2; background:Canvas; color:CanvasText; border-bottom:1px solid var(--border); }
   #sphere-covariant-mobile .sphere-control { display:grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); align-items:center; gap:.45em; min-height:44px; }
