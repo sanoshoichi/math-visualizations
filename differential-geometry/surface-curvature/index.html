@@ -48,9 +48,9 @@
 </table>
 <details><summary>式と曲面の設定</summary>
 <p>第1主方向から測った角度を <i>θ</i> とする。その方向の法曲率は、二つの主曲率から求められる。</p><div class="display-equation"><i>k</i><sub><i>n</i></sub>(<i>θ</i>) = <i>k</i><sub>1</sub> cos²<i>θ</i> + <i>k</i><sub>2</sub> sin²<i>θ</i></div><p>点 <i>P</i> におけるガウス曲率は、二つの主曲率の積である。</p><div class="display-equation"><i>K</i> = <i>k</i><sub>1</sub> <i>k</i><sub>2</sub></div>
-<div id="shape-sphere"><p>半径 1 の球面を用いる。法線は球の中心に向ける。</p></div>
-<div id="shape-cylinder" hidden><p>半径 1 の円柱を用いる。法線は円柱の軸に向ける。90° は軸に沿う方向で、断面は直線になる。</p></div>
-<div id="shape-saddle" hidden><p>鞍型曲面は次式で定める。</p><div class="display-equation"><i>z</i> = (<i>x</i>² − <i>y</i>²)/2</div><p>原点を点 <i>P</i> とし、法線は上向きにとる。</p></div>
+<div id="shape-sphere"><p>点 <i>P</i> と球の中心を結ぶ直線が法線である。この直線を含む平面は、切る向きを変えても球の中心を通る。したがって、断面はどの向きでも同じ半径 1 の大円になる。</p><div class="display-equation"><i>k</i><sub>1</sub> = <i>k</i><sub>2</sub> = 1,　<i>K</i> = 1</div><p>スライダーを動かすと上の切断平面は回るが、下の断面の形と法曲率は変わらない。</p></div>
+<div id="shape-cylinder" hidden><p>円柱を周方向（0°）に切ると、断面は半径 1 の円になる。軸方向（90°）に切ると、点 <i>P</i> を通る断面の枝は直線になる。法線は円柱の軸に向ける。</p><div class="display-equation"><i>k</i><sub>1</sub> = 1,　<i>k</i><sub>2</sub> = 0,　<i>K</i> = 1 × 0 = 0</div><p>0° から 90° に動かすと、点 <i>P</i> での法曲率が 1 から 0 に下がる。円柱の側面には周方向の曲がりがあり、ガウス曲率は軸方向の主曲率が 0 なので 0 になる。</p></div>
+<div id="shape-saddle" hidden><p>次式で定める曲面の原点を点 <i>P</i> とし、法線は上向きにとる。</p><div class="display-equation"><i>z</i> = (<i>x</i>² − <i>y</i>²)/2</div><p>0° では断面が上向きに、90° では下向きに曲がる。45° では二つの二乗項が等しくなり、断面は直線になる。</p><div class="display-equation"><i>k</i><sub>1</sub> = 1,　<i>k</i><sub>2</sub> = −1,　<i>K</i> = −1</div><p>45° の方向の法曲率は 0 だが、ガウス曲率は二つの主曲率の積なので −1 のままである。</p></div>
 <p>表の曲率はいずれも点 <i>P</i> における値である。</p>
 </details>
 </main>
