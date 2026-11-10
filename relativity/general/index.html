@@ -1,0 +1,44 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>一般相対性理論</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><style>:root{color-scheme:light dark;--blue:light-dark(#12579c,#8ac6ff);--red:light-dark(#a42f52,#ff9ab6);--green:light-dark(#126947,#7de0ab)}body{max-width:43rem;margin:auto;padding:1rem;font:1rem/1.65 system-ui,sans-serif}h1{font-size:1.65rem}h2{font-size:1.25rem}h1,h2,p{margin:.6rem 0}section{margin:1.4rem 0}nav{display:flex;gap:.7rem;flex-wrap:wrap}.controls{position:sticky;top:0;background:Canvas;z-index:1;border-bottom:1px solid GrayText}label{display:flex;align-items:center;gap:.55rem;min-height:44px;flex-wrap:wrap}input{flex:1;min-width:8rem;min-height:44px}svg{display:block;width:100%;max-height:255px}svg text{fill:CanvasText;font:12px system-ui}.equation{text-align:center;font:1.1rem/1.5 serif}.katex-display{overflow-x:auto;overflow-y:hidden;padding:.15rem 0}.reading{padding:.4rem .65rem;border-inline-start:3px solid var(--blue)}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;text-align:right;padding:.3rem}th:first-child{text-align:left}</style></head><body><main><nav aria-label="相対論の学習ページ"><a href="../../">数学の可視化一覧</a><a href="../special/">特殊相対性理論</a><a href="../general/">一般相対性理論</a><a href="../../differential-geometry/general-relativity/">相対論のための微分幾何学</a></nav><h1>一般相対性理論</h1>
+<p>特殊相対論では慣性座標で計量を一定にできる。一般相対論では計量が時空の場所ごとに異なり、その曲率が近くを自由落下する物体の相対運動に現れる。以下は非回転・球対称な天体の外部を記述する Schwarzschild 時空の例。</p>
+<section><h2>1. 計量から静止時計の速さを読む</h2>
+<p>光速と重力定数を 1 とする。質量を M、Schwarzschild 半径を rₛ = 2M とし、半径 r は球面の面積が 4πr² になるように定める。dΩ² は単位球面の角度部分。図では r &gt; rₛ に固定した時計を、無限遠の静止時計と比べる。</p>
+<div class="equation" data-tex="\begin{aligned}\mathrm ds^2&amp;=-\left(1-\frac{r_s}{r}\right)\mathrm dt^2+\frac{\mathrm dr^2}{1-r_s/r}+r^2\mathrm d\Omega^2,\\ \left.\frac{\mathrm d\tau}{\mathrm dt}\right|_{\text{静止}}&amp;=\sqrt{1-\frac{r_s}{r}}.\end{aligned}">ds² = −(1−rₛ/r) dt² + dr²/(1−rₛ/r) + r²dΩ²。静止時計では dτ/dt = √(1−rₛ/r)。</div>
+<div class="controls"><label>時計の半径 r/rₛ <output id="radius-value"></output><input id="radius" type="range" min="1.1" max="12" step=".1" value="2"></label></div>
+<svg id="clock" viewBox="0 0 360 180" role="img" aria-label="無限遠と半径を固定した時計の進みを比較する棒図"></svg>
+<p class="reading">無限遠の時計が 1 刻む間に、半径を固定した時計は <output id="clock-value"></output> 刻む。半径を 2 にすると、その比は 1/√2。ここでの静止は、天体に向かって自由落下する運動とは区別する。</p></section>
+<section><h2>2. 自由落下と円軌道</h2>
+<p>アフィンパラメータ λ で表した測地線では、速度が自身に沿って平行移動する。赤道面での時間的な円測地線について、座標時刻 t で測った角速度を Ω とすると、Schwarzschild 時空の半径方向の測地線方程式から次を得る。</p>
+<div class="equation" data-tex="\begin{aligned}\nabla_{\dot\gamma}\dot\gamma&amp;=0,\\ \Omega^2=\left(\frac{\mathrm d\phi}{\mathrm dt}\right)^2&amp;=\frac{M}{r^3},\qquad \frac{T}{r_s}=2\pi\sqrt{2}\left(\frac r{r_s}\right)^{3/2}.\end{aligned}">∇γ̇γ̇ = 0。Ω² = M/r³、T/rₛ = 2π√2(r/rₛ)³ᐟ²。</div>
+<div class="controls"><label>円軌道の半径 r/rₛ <output id="orbit-radius"></output><input id="orbit" type="range" min="1.6" max="10" step=".1" value="4"></label></div>
+<svg id="orbit-diagram" viewBox="0 0 360 220" role="img" aria-label="地平面と選んだ円軌道の座標上の模式図"></svg>
+<p>図は赤道面の座標上の模式図。赤い輪が地平面、青い輪が選んだ円軌道。紙面上の半径の差は、そのまま固有距離にはならない。</p>
+<table><tbody><tr><th scope="row">円軌道の安定性</th><td id="stability"></td></tr><tr><th scope="row">一周の座標時間 T/rₛ</th><td id="period"></td></tr></tbody></table>
+<p class="reading">r/rₛ を 3 の前後に動かす。時間的な円測地線は r/rₛ &gt; 1.5 にあり、3 より外側で安定。3 は最内安定円軌道の境界で、内側の円測地線は不安定。</p></section>
+<section><h2>3. 物質・曲率・潮汐作用</h2>
+<p>宇宙定数を省いた Einstein 方程式では、エネルギー運動量テンソル T が Einstein テンソル G と関係する。G は Ricci テンソルとスカラー曲率から作る。</p>
+<div class="equation" data-tex="G_{\mu\nu}=R_{\mu\nu}-\tfrac12Rg_{\mu\nu}=8\pi T_{\mu\nu}">Gμν = Rμν − ½Rgμν = 8πTμν</div>
+<p>Schwarzschild 時空の真空領域では Ricci テンソルはゼロになる。一方で Weyl 曲率が残り、自由落下する物体の集まりには潮汐による変形が現れる。詳しくは<a href="../../differential-geometry/general-relativity/#14">第14項目の Ricci テンソル</a>と<a href="../../differential-geometry/general-relativity/#16">第16項目の Weyl 曲率</a>で見比べられる。</p></section>
+<p><a href="https://www.davidtong.org/teaching/general-relativity/">参考文献：David Tong, General Relativity</a></p></main><script>const get=id=>document.getElementById(id);const fmt=x=>(Math.abs(x)<.0005?0:x).toFixed(3);
+const line=(a,b,c="GrayText",w=1,d="")=>'<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="'+c+'" stroke-width="'+w+'" stroke-dasharray="'+d+'"/>';
+const dot=(p,c)=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="'+c+'"/>';
+const text=(x,y,t)=>'<text x="'+x+'" y="'+y+'">'+t+'</text>';
+const circle=(x,y,r,c,d="")=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="none" stroke="'+c+'" stroke-width="2" stroke-dasharray="'+d+'"/>';
+const blue="var(--blue)",red="var(--red)",green="var(--green)";
+function formulas(){if(window.katex)for(const el of document.querySelectorAll("[data-tex]"))window.katex.render(el.dataset.tex,el,{displayMode:true,throwOnError:false});}
+window.addEventListener("DOMContentLoaded",formulas);
+
+const radius=get("radius"),orbit=get("orbit");
+function drawClock(){
+ const r=Number(radius.value),ratio=Math.sqrt(1-1/r);
+ get("radius-value").textContent=r.toFixed(1);get("clock-value").textContent=fmt(ratio);
+ get("clock").innerHTML=text(32,32,"無限遠の時計")+line([32,55],[297,55],green,7)+text(305,60,"1")+
+  text(32,103,"半径を固定した時計")+line([32,126],[32+265*ratio,126],blue,7)+text(40+265*ratio,132,fmt(ratio));
+}
+function drawOrbit(){
+ const r=Number(orbit.value),px=9*r;
+ get("orbit-radius").textContent=r.toFixed(1);get("period").textContent=fmt(2*Math.PI*Math.sqrt(2)*r**1.5);
+ get("stability").textContent=r===3?"安定性の境界":r>3?"安定":"不安定";
+ get("orbit-diagram").innerHTML=circle(123,105,9,red)+circle(123,105,27,green,"4 4")+circle(123,105,px,blue)+
+  dot([123+px,105],blue)+text(235,65,"赤：地平面")+text(235,95,"緑：安定性の境界")+text(235,125,"青：円軌道");
+}
+radius.addEventListener("input",drawClock);orbit.addEventListener("input",drawOrbit);drawClock();drawOrbit();</script></body></html>
