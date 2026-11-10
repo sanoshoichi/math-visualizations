@@ -32,8 +32,9 @@
   <div class="sphere-controls text-small">
     <label class="sphere-control"><span>経度 θ <output data-out="longitude"></output></span><input class="form-range" type="range" min="0" max="360" value="0" data-input="longitude"></label>
     <label class="sphere-control"><span>緯度 φ <output data-out="latitude"></output></span><input class="form-range" type="range" min="-65" max="65" value="45" data-input="latitude"></label>
-    <label class="sphere-control"><span>接ベクトル Y の長さの振幅 a <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
+    <label class="sphere-control"><span>Y の長さの最大変化 a <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
   </div>
+  <div class="sphere-values text-small">a は、接ベクトル Y の長さが基準の 1 から最大でどれだけずれるかです。<br>長さ ‖Y‖ = 1 + a sin θ（θ は経度）<br>この設定での長さの範囲 <output data-length-range></output>。a = 0 なら常に 1 です。</div>
   <svg class="sphere-diagram" role="img" aria-label="単位球面の緯線と、その上の接ベクトルの微分を接平面成分と法線成分に分けた図">
     <circle data-orbit fill="none" stroke="var(--border)" stroke-width="1.5"/>
     <path data-back fill="none" stroke="var(--muted-foreground)" stroke-opacity=".6" stroke-dasharray="3 4"/>
@@ -196,6 +197,7 @@
     find('[data-out="latitude"]').textContent = latitude.value + "°";
     find('[data-out="amplitude"]').textContent = a.toFixed(1);
     find("[data-length]").textContent = format(length);
+    find("[data-length-range]").textContent = (1 - a).toFixed(1) + "〜" + (1 + a).toFixed(1);
     const gammaPhiThetaTheta = s * c;
     const yTheta = length / c;
     const coordinateRate = lengthRate / c;
