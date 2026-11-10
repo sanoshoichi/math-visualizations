@@ -12,7 +12,7 @@
       --muted-foreground: light-dark(#535b67, #b8bec7);
       --viz-series-1: light-dark(#1765bb, #70b7ff);
       --viz-series-2: light-dark(#16805b, #5cdbab);
-      --viz-series-3: light-dark(#9246ad, #d6a0ea);
+      --viz-series-3: light-dark(#9246ad, #d6<i>a</i>0ea);
     }
     body {
       max-width: 35rem;
@@ -30,13 +30,13 @@
 <body>
 <section id="sphere-covariant-mobile">
   <div class="sphere-controls text-small sphere-sticky">
-    <label class="sphere-control"><span>経度 θ <output data-out="longitude"></output></span><input class="form-range" type="range" min="0" max="360" value="0" data-input="longitude"></label>
-    <label class="sphere-control"><span>緯度 φ <output data-out="latitude"></output></span><input class="form-range" type="range" min="-65" max="65" value="45" data-input="latitude"></label>
-    <label class="sphere-control"><span>Y の長さの最大変化 a <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
+    <label class="sphere-control"><span>経度 <i>θ</i> <output data-out="longitude"></output></span><input class="form-range" type="range" min="0" max="360" value="0" data-input="longitude"></label>
+    <label class="sphere-control"><span>緯度 <i>φ</i> <output data-out="latitude"></output></span><input class="form-range" type="range" min="-65" max="65" value="45" data-input="latitude"></label>
+    <label class="sphere-control"><span><i>Y</i> の長さの最大変化 <i>a</i> <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
   </div>
   <div class="sphere-values text-small">
-    <p>経度を θ とする。接ベクトル Y の長さは、基準値 1 から最大で a だけ増減する。</p>
-    <div class="display-equation">‖Y‖ = 1 + a sin θ</div>
+    <p>経度を <i>θ</i> とする。接ベクトル <i>Y</i> の長さは、基準値 1 から最大で <i>a</i> だけ増減する。</p>
+    <div class="display-equation">‖<i>Y</i>‖ = 1 + <i>a</i> sin <i>θ</i></div>
     <p>現在の設定における長さの範囲</p>
     <div class="display-equation"><output data-length-range></output></div>
   </div>
@@ -53,43 +53,43 @@
     <circle data-point r="2.5" fill="var(--foreground)"/>
   </svg>
   <div class="sphere-values text-small tabular-nums" aria-live="polite">
-    <div>接ベクトル Y の実際の長さ <output data-length></output></div>
-    <p>通常の微分を、接平面に沿う成分と法線成分に分解する。</p><div class="display-equation">dY/dθ = DY/dθ + 法線成分</div>
+    <div>接ベクトル <i>Y</i> の実際の長さ <output data-length></output></div>
+    <p>通常の微分を、接平面に沿う成分と法線成分に分解する。</p><div class="display-equation">d<i>Y</i>/d<i>θ</i> = D<i>Y</i>/d<i>θ</i> + 法線成分</div>
     <table aria-label="ベクトルの座標成分">
-      <thead><tr><th scope="col">空間座標での成分</th><th scope="col">x</th><th scope="col">y</th><th scope="col">z</th></tr></thead>
+      <thead><tr><th scope="col">空間座標での成分</th><th scope="col"><i>x</i></th><th scope="col"><i>y</i></th><th scope="col"><i>z</i></th></tr></thead>
       <tbody>
-        <tr data-row="p"><th scope="row">位置 γ</th><td></td><td></td><td></td></tr>
-        <tr data-row="y"><th scope="row"><span data-key="y" aria-hidden="true"></span>接ベクトル Y</th><td></td><td></td><td></td></tr>
-        <tr data-row="t"><th scope="row"><span data-key="t" aria-hidden="true"></span>共変微分 DY/dθ</th><td></td><td></td><td></td></tr>
+        <tr data-row="p"><th scope="row">位置 <i>γ</i></th><td></td><td></td><td></td></tr>
+        <tr data-row="y"><th scope="row"><span data-key="y" aria-hidden="true"></span>接ベクトル <i>Y</i></th><td></td><td></td><td></td></tr>
+        <tr data-row="t"><th scope="row"><span data-key="t" aria-hidden="true"></span>共変微分 D<i>Y</i>/d<i>θ</i></th><td></td><td></td><td></td></tr>
         <tr data-row="n"><th scope="row"><span data-key="n" aria-hidden="true"></span>+ 法線成分</th><td></td><td></td><td></td></tr>
-        <tr class="sphere-total" data-row="d"><th scope="row"><span data-key="d" aria-hidden="true"></span>= 通常の微分 dY/dθ</th><td></td><td></td><td></td></tr>
+        <tr class="sphere-total" data-row="d"><th scope="row"><span data-key="d" aria-hidden="true"></span>= 通常の微分 d<i>Y</i>/d<i>θ</i></th><td></td><td></td><td></td></tr>
       </tbody>
     </table>
   </div>
   <details class="sphere-values sphere-coordinate text-small tabular-nums">
-    <summary>球面座標の計算 <span class="sphere-gamma">Γ<sup>φ</sup><sub>θθ</sub> = <output data-gamma="phi-theta-theta"></output></span></summary>
+    <summary>球面座標の計算 <span class="sphere-gamma">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = <output data-gamma="phi-theta-theta"></output></span></summary>
     <table aria-label="球面座標基底での成分。経度をラジアンで微分">
-      <thead><tr><th scope="col">座標基底での成分</th><th scope="col">θ</th><th scope="col">φ</th></tr></thead>
+      <thead><tr><th scope="col">座標基底での成分</th><th scope="col"><i>θ</i></th><th scope="col"><i>φ</i></th></tr></thead>
       <tbody aria-live="polite">
-        <tr data-coord="vector"><th scope="row">接ベクトル Y</th><td></td><td></td></tr>
-        <tr data-coord="rate"><th scope="row">座標成分の微分 dYⁱ/dθ</th><td></td><td></td></tr>
+        <tr data-coord="vector"><th scope="row">接ベクトル <i>Y</i></th><td></td><td></td></tr>
+        <tr data-coord="rate"><th scope="row">座標成分の微分 d<i>Y</i>ⁱ/d<i>θ</i></th><td></td><td></td></tr>
         <tr data-coord="connection"><th scope="row">+ 接続による補正</th><td></td><td></td></tr>
-        <tr class="sphere-total" data-coord="covariant"><th scope="row">= 共変微分 DY/dθ</th><td></td><td></td></tr>
+        <tr class="sphere-total" data-coord="covariant"><th scope="row">= 共変微分 D<i>Y</i>/d<i>θ</i></th><td></td><td></td></tr>
       </tbody>
     </table>
     <details class="sphere-derivation"><summary>計量とクリストッフェル記号の導出</summary>
     <div class="sphere-formulas">
-      <p>単位球面の計量成分は次のとおり。</p><div class="display-equation"><span>g<sub>θθ</sub> = cos²φ</span>、<span>g<sub>φφ</sub> = 1</span>、<span>g<sub>θφ</sub> = 0</span></div>
-      <div class="display-equation">Γ<sup>φ</sup><sub>θθ</sub> = −½ ∂<sub>φ</sub>g<sub>θθ</sub> = sinφ cosφ</div>
-      <div class="display-equation">Γ<sup>θ</sup><sub>θφ</sub> = ½ g<sup>θθ</sup> ∂<sub>φ</sub>g<sub>θθ</sub> = −tanφ</div>
-      <p>緯度を固定して経度だけを変える。接ベクトルの座標成分を次のように表す。</p><div class="display-equation"><span>Y<sup>θ</sup> = f / cosφ</span>、<span>Y<sup>φ</sup> = 0</span>、<span>f = 1 + a sinθ</span></div>
-      <div class="display-equation">(DY/dθ)<sup>θ</sup> = dY<sup>θ</sup>/dθ + 0 = f′ / cosφ</div>
-      <div class="display-equation">(DY/dθ)<sup>φ</sup> = 0 + Γ<sup>φ</sup><sub>θθ</sub> Y<sup>θ</sup> = f sinφ</div>
-      <p>現在の設定を φ 成分の式に代入する。</p><div class="display-equation"><output data-phi-equation></output></div>
+      <p>単位球面の計量成分は次のとおり。</p><div class="display-equation"><span><i>g</i><sub><i>θθ</i></sub> = cos²<i>φ</i></span>、<span><i>g</i><sub><i>φφ</i></sub> = 1</span>、<span><i>g</i><sub><i>θφ</i></sub> = 0</span></div>
+      <div class="display-equation">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = −½ ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = sin<i>φ</i> cos<i>φ</i></div>
+      <div class="display-equation">Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = ½ <i>g</i><sup><i>θθ</i></sup> ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = −tan<i>φ</i></div>
+      <p>緯度を固定して経度だけを変える。接ベクトルの座標成分を次のように表す。</p><div class="display-equation"><span><i>Y</i><sup><i>θ</i></sup> = <i>f</i> / cos<i>φ</i></span>、<span><i>Y</i><sup><i>φ</i></sup> = 0</span>、<span><i>f</i> = 1 + <i>a</i> sin<i>θ</i></span></div>
+      <div class="display-equation">(D<i>Y</i>/d<i>θ</i>)<sup><i>θ</i></sup> = d<i>Y</i><sup><i>θ</i></sup>/d<i>θ</i> + 0 = <i>f</i>′ / cos<i>φ</i></div>
+      <div class="display-equation">(D<i>Y</i>/d<i>θ</i>)<sup><i>φ</i></sup> = 0 + Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> <i>Y</i><sup><i>θ</i></sup> = <i>f</i> sin<i>φ</i></div>
+      <p>現在の設定を <i>φ</i> 成分の式に代入する。</p><div class="display-equation"><output data-phi-equation></output></div>
     </div>
     </details>
     <div class="sphere-symbols" aria-label="ほかのクリストッフェル記号">
-      <span>Γ<sup>θ</sup><sub>θφ</sub> = Γ<sup>θ</sup><sub>φθ</sub> = <output data-gamma="theta-theta-phi"></output></span>
+      <span>Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = Γ<sup><i>θ</i></sup><sub><i>φθ</i></sub> = <output data-gamma="theta-theta-phi"></output></span>
       <span>その他の Γ = 0</span>
     </div>
   </details>
@@ -105,7 +105,7 @@
   #sphere-covariant-mobile .sphere-derivation { margin-top:.5em; }
   #sphere-covariant-mobile .display-equation{text-align:center;margin:.45rem 0;font-family:serif;font-size:1.1em;line-height:1.65;overflow-wrap:anywhere}
   #sphere-covariant-mobile .sphere-coordinate td { white-space:nowrap; }
-  #sphere-covariant-mobile .sphere-sticky { position:sticky; top:0; z-index:2; background:Canvas; color:CanvasText; border-bottom:1px solid var(--border); }
+  #sphere-covariant-mobile .sphere-sticky { position:sticky; top:0; <i>z</i>-index:2; background:Canvas; color:CanvasText; border-bottom:1px solid var(--border); }
   #sphere-covariant-mobile .sphere-control { display:grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); align-items:center; gap:.45em; min-height:44px; }
   #sphere-covariant-mobile .sphere-control output { white-space:nowrap; }
   #sphere-covariant-mobile .sphere-diagram { display:block; width:100%; height:170px; }
@@ -116,7 +116,7 @@
   #sphere-covariant-mobile th:first-child { text-align:left; }
   #sphere-covariant-mobile th:not(:first-child), #sphere-covariant-mobile td { text-align:right; }
   #sphere-covariant-mobile [data-key] { display:inline-block; width:.85em; border-top:2px solid currentColor; margin-inline-end:.35em; vertical-align:middle; }
-  #sphere-covariant-mobile :is([data-key="y"],[data-arrow="y"]) { color:var(--viz-series-1); }
+  #sphere-covariant-mobile :is([data-key="<i>y</i>"],[data-arrow="<i>y</i>"]) { color:var(--viz-series-1); }
   #sphere-covariant-mobile :is([data-key="t"],[data-arrow="t"]) { color:var(--viz-series-2); }
   #sphere-covariant-mobile :is([data-key="n"],[data-arrow="n"]) { color:var(--viz-series-3); }
   #sphere-covariant-mobile [data-key="n"] { border-top-style:dashed; }
