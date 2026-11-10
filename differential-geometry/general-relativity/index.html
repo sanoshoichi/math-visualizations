@@ -10,6 +10,7 @@ svg{width:100%;height:auto;max-height:270px;display:block}svg text{font:12px sys
 .formula{text-align:center;font:1.15rem/1.6 serif;overflow-wrap:anywhere}output{font-variant-numeric:tabular-nums}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;padding:.25rem .4rem;text-align:right}th:first-child{text-align:left}
 .formula .katex-display{overflow-x:auto;overflow-y:hidden;padding:.2rem 0;margin:.55em 0}
+.derivation{margin:.8rem 0;border-block:1px solid GrayText;padding:.5rem 0}.derivation summary{font-weight:600}
 </style><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
 </head><body><main>
@@ -17,7 +18,7 @@ table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,t
 <h1>一般相対性理論のための微分幾何学</h1>
 <label for="topic">学習項目</label><select id="topic"></select>
 <div class="actions"><button id="prev" type="button">前の項目</button><button id="next" type="button">次の項目</button></div>
-<h2 id="title"></h2><section aria-labelledby="definition-title"><h3 id="definition-title">定義と基本式</h3><p id="definition"></p><div id="identity" class="formula"></div></section><h3>図で確かめる</h3><p id="intro"></p>
+<h2 id="title"></h2><section aria-labelledby="definition-title"><h3 id="definition-title">定義と基本式</h3><p id="definition"></p><div id="identity" class="formula"></div></section><details class="derivation" open><summary id="steps-title">式の読み方と途中計算</summary><p id="steps-text"></p><div id="steps-math" class="formula"></div></details><h3>図で確かめる</h3><p id="intro"></p>
 <div class="controls"><label for="control"><span id="parameter"></span> <output id="setting" for="control"></output></label><input id="control" type="range"></div>
 <svg id="figure" viewBox="0 0 360 240" role="img" aria-labelledby="title readout"></svg>
 <p id="readout"></p><div id="formula" class="formula"></div><section id="calculation-section" aria-labelledby="calculation-title"><h3 id="calculation-title">現在の値で計算</h3><p id="calculation-context"></p><div id="calculation" class="formula"></div></section><section id="basis-matrices" hidden><h3>元の行列と基底の回転</h3><div id="basis-values" class="formula"></div></section><div id="extra"></div>
@@ -181,6 +182,13 @@ function draw(){
  showBasisMatrices(x);
  if (current !== 5) displayEquation("calculation",calculations[current](x));
 }
+const workedSteps = [["割線から接ベクトルへ","差商は点 P から Q への変位を、パラメータの差で割ったもの。接空間はこの曲線の接線一本ではなく、点 P を通るすべての曲線の速度を集めた空間である。","\\begin{aligned}\\gamma(h)-\\gamma(0)&=(h,h^2/2),\\\\ \\frac{\\gamma(h)-\\gamma(0)}h&=(1,h/2)\\xrightarrow{h\\to0}(1,0).\\end{aligned}"],["基底を回したときの成分","新しい基底の二本を列に並べた行列を Q とする。矢印そのものを固定して、その成分だけを求め直す。座標基底 ∂ᵢ は座標関数 xʲ に作用すると、添字が一致する場合だけ 1 を返す。","\\begin{aligned}\\partial_i x^j&=\\delta_i{}^j,\\\\ v&=Qv',\\quad Q^{-1}=Q^{\\mathsf T},\\\\ v'&=\\binom{\\cos\\theta+\\tfrac12\\sin\\theta}{-\\sin\\theta+\\tfrac12\\cos\\theta}.\\end{aligned}"],["二つの流れの順序を入れ替える","Φ は指定したベクトル場に沿って時間 h だけ進める写像。合成は右から適用する。Y の上下方向の速さは、その時点の x 座標で決まる。","\\begin{aligned}\\Phi_X^h(x,y)&=(x+h,y),\\\\ \\Phi_Y^h(x,y)&=(x,y+hx),\\\\ \\Phi_Y^h\\Phi_X^h(0,0)&=(h,h^2),\\\\ \\Phi_X^h\\Phi_Y^h(0,0)&=(h,0),\\\\ [\\partial_x,x\\partial_y]f&=(\\partial_x x)\\partial_y f=\\partial_y f.\\end{aligned}"],["余ベクトルは矢印に数を返す","dx と dy はそれぞれ矢印の横成分と縦成分を取り出す。図の等高線は x が一定の線なので、縦方向に進んでも f は変わらない。","\\begin{aligned}v&=\\cos\\theta\\,\\partial_x+\\sin\\theta\\,\\partial_y,\\\\ \\mathrm df&=\\partial_x f\\,\\mathrm dx+\\partial_y f\\,\\mathrm dy=\\mathrm dx,\\\\ \\mathrm df(v)&=\\cos\\theta.\\end{aligned}"],["基底変換と縮約","Q の列は新しい基底ベクトル。双線形形式にその二本を入力した値が A′ の各成分になる。対角成分を足すときは、正規直交基底なので逆計量が単位行列になる。","\\begin{aligned}A'_{ij}&=\\sum_{a,b}Q_{ai}A_{ab}Q_{bj},\\\\ A'_{11}&=2\\cos^2\\theta+\\sin^2\\theta,\\\\ A'_{22}&=2\\sin^2\\theta+\\cos^2\\theta,\\\\ \\operatorname{tr}A'&=A'_{11}+A'_{22}=3.\\end{aligned}"],["光円錐を分ける境界","図では時間成分が 1。空間成分を動かして、矢印が光の方向と一致する境界を探す。","\\begin{aligned}v&=v^t e_t+v^x e_x,\\quad v^t=1,\\\\ g(v,v)&=(v^x-1)(v^x+1),\\\\ g(v,v)=0&\\iff |v^x|=1.\\end{aligned}"],["単位円で法線成分を取り除く","N は外向き単位法線、T は進行方向の単位接ベクトル。点 P は角度 0 に固定し、角度はラジアンで微分する。","\\begin{aligned}N&=(\\cos\\theta,\\sin\\theta),\\\\ T&=(-\\sin\\theta,\\cos\\theta),\\quad T'=-N,\\\\ Y&=(1+a\\sin\\theta)T=fT,\\\\ Y'&=f'T-fN,\\\\ \\frac{\\mathrm DY}{\\mathrm d\\theta}&=f'T.\\end{aligned}"],["平面を極座標で測る","角度方向の座標基底は半径に比例して長くなる。逆計量は計量行列の逆行列。座標基底では交換子がゼロなので、捩率は接続係数の反対称部分になる。","\\begin{aligned}\\mathrm ds^2&=\\mathrm dr^2+r^2\\mathrm d\\theta^2,\\\\ \\Gamma^r_{\\theta\\theta}&=-\\tfrac12\\partial_r(r^2)=-r,\\\\ \\Gamma^\\theta_{r\\theta}=\\Gamma^\\theta_{\\theta r}&=\\tfrac1{2r^2}\\partial_r(r^2)=1/r,\\\\ T^i{}_{jk}&=\\Gamma^i{}_{jk}-\\Gamma^i{}_{kj}=0.\\end{aligned}"],["経路の接線と運ぶ矢印を区別する","この図は平面の直交座標なので、基底ベクトルの向きは場所で変わらない。緑は円弧の速度、青は平行移動する別のベクトル。","\\begin{aligned}\\gamma(t)&=(\\cos t,\\sin t),\\\\ \\dot\\gamma(t)&=(-\\sin t,\\cos t),\\\\ V(t)&=(0.7,0.3),\\\\ \\frac{\\mathrm DV}{\\mathrm dt}&=\\frac{\\mathrm dV}{\\mathrm dt}=(0,0).\\end{aligned}"],["緯線の加速度を接平面へ射影する","単位球の緯線で、φ は緯度、s は弧長。経度の変化率を使って空間内の加速度を求め、外向き法線 N に沿う成分を引く。","\\begin{aligned}\\frac{\\mathrm d\\theta}{\\mathrm ds}&=\\frac1{\\cos\\phi},\\\\ \\gamma''(s)&=-\\frac{(\\cos\\theta,\\sin\\theta,0)}{\\cos\\phi},\\\\ \\gamma''\\cdot N&=-1,\\\\ \\nabla_{\\gamma'}\\gamma'&=\\gamma''+N,\\quad \\|\\nabla_{\\gamma'}\\gamma'\\|=|\\tan\\phi|.\\end{aligned}"],["三角形の面積と平行移動の回転","経度差を Δθ とし、二本の経線と赤道で囲む。赤道の二つの内角は直角。北極の内角は Δθ。単位球では曲率は 1 なので、角度超過・面積・回転角の大きさが一致する。","\\begin{aligned}A&=\\tfrac\\pi2+\\tfrac\\pi2+\\Delta\\theta-\\pi=\\Delta\\theta,\\\\ |\\Delta\\psi|&=\\int_A K\\,\\mathrm dA=A\\quad(K=1).\\end{aligned}"],["測地線の間隔がどう変わるか","弧長 s を赤道から測る。j は近接する経線の隔たりを初期値で割った、平行な横方向基底での成分。北極に近づくと j がゼロに向かう。","\\begin{aligned}j''+j&=0,\\qquad j(0)=1,\\quad j'(0)=0,\\\\ j(s)&=\\cos s,\\quad j''(s)=-\\cos s.\\end{aligned}"],["測地円の周長に現れる曲率","r は曲面に沿って中心から測る半径。球面では、その測地円を空間内で見た半径は sin r。小さな r では、平面との差の最初の項が曲率に対応する。","\\begin{aligned}L_{\\rm sphere}(r)&=2\\pi\\sin r=2\\pi r-\\tfrac\\pi3r^3+O(r^5),\\\\ L_{\\rm plane}(r)&=2\\pi r,\\\\ L_{\\rm plane}(r)-L_{\\rm sphere}(r)&=\\tfrac\\pi3r^3+O(r^5).\\end{aligned}"],["三方向の潮汐加速度を足す","u は自由落下する基準観測者の四元速度。eᵢ はその観測者と直交する空間の正規直交基底。λᵢ は eᵢ 方向の隔たり一単位あたりの相対加速度。最初に粒子間の相対速度をゼロにして体積の加速度を読む。","\\begin{aligned}\\lambda_i&=g(R(u,e_i)u,e_i),\\\\ \\sum_{i=1}^3\\lambda_i&=-\\operatorname{Ric}(u,u),\\\\ V(\\tau)/V(0)&=1+\\tfrac12(\\lambda_1+\\lambda_2+\\lambda_3)\\tau^2+o(\\tau^2).\\end{aligned}"],["符号付きのトレースから G へ","時間と三つの空間方向を並べた正規直交基底で計算する。時間成分は逆計量で縮約すると負号が付き、G₀₀ を作るときは計量の時間成分が −1 になる。","\\begin{aligned}g^{00}&=-1,\\qquad g^{11}=g^{22}=g^{33}=1,\\\\ R&=-\\operatorname{Ric}_{00}+\\sum_{i=1}^3\\operatorname{Ric}_{ii},\\\\ G_{00}&=\\operatorname{Ric}_{00}+\\tfrac12R.\\end{aligned}"],["トレースゼロでも形は変わる","τ は基準観測者の固有時間。図の三方向の係数は 1、−1、0。時間の二次までなら、横の伸びと縦の縮みが体積では相殺される。","\\begin{aligned}r_i(\\tau)&=1+\\tfrac12\\lambda_i\\tau^2+o(\\tau^2),\\\\ \\lambda_1+\\lambda_2+\\lambda_3&=1-1+0=0,\\\\ V(\\tau)/V(0)&=1+o(\\tau^2).\\end{aligned}"]];
+function showWorkedSteps(i) {
+ const [title, text, tex] = workedSteps[i];
+ get("steps-title").textContent=title;
+ get("steps-text").textContent=text;
+ displayEquation("steps-math","",tex);
+}
 function show(i){
  current=i;select.value=String(i);
  const [name,intro,param,min,max,step,value]=topics[i];
@@ -189,6 +197,7 @@ function show(i){
  const [definition, identity, context] = definitions[i];
  get("definition").textContent=definition;
  displayEquation("identity",identity,identityTex[i]);
+ showWorkedSteps(i);
  get("calculation-context").innerHTML=context;
  get("calculation-section").hidden=i===5;
  get("prev").disabled=i===0;get("next").disabled=i===topics.length-1;
@@ -202,5 +211,5 @@ function fromHash(){
  const i=Number(location.hash.slice(1))-1;show(Number.isInteger(i)&&i>=0&&i<topics.length?i:0);
 }
 window.addEventListener("hashchange",fromHash);fromHash();
-window.addEventListener("DOMContentLoaded",()=>{displayEquation("identity",definitions[current][1],identityTex[current]);draw();});
+window.addEventListener("DOMContentLoaded",()=>{displayEquation("identity",definitions[current][1],identityTex[current]);showWorkedSteps(current);draw();});
 </script></body></html>
