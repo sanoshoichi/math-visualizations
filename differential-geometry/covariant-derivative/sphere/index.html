@@ -49,19 +49,30 @@
   </svg>
   <div class="sphere-values text-small tabular-nums" aria-live="polite">
     <div>接ベクトル Y の実際の長さ <output data-length></output></div>
+    <div class="sphere-equation">共変微分（接平面）＋ 法線成分 ＝ 通常の微分</div>
     <table aria-label="ベクトルの座標成分">
-      <thead><tr><th scope="col">単位球面 S²</th><th scope="col">x</th><th scope="col">y</th><th scope="col">z</th></tr></thead>
+      <thead><tr><th scope="col">空間座標での成分</th><th scope="col">x</th><th scope="col">y</th><th scope="col">z</th></tr></thead>
       <tbody>
         <tr data-row="p"><th scope="row">位置 γ</th><td></td><td></td><td></td></tr>
         <tr data-row="y"><th scope="row"><span data-key="y" aria-hidden="true"></span>接ベクトル Y</th><td></td><td></td><td></td></tr>
-        <tr data-row="d"><th scope="row"><span data-key="d" aria-hidden="true"></span>通常の微分 dY/dθ</th><td></td><td></td><td></td></tr>
         <tr data-row="t"><th scope="row"><span data-key="t" aria-hidden="true"></span>共変微分 DY/dθ</th><td></td><td></td><td></td></tr>
-        <tr data-row="n"><th scope="row"><span data-key="n" aria-hidden="true"></span>法線成分</th><td></td><td></td><td></td></tr>
+        <tr data-row="n"><th scope="row"><span data-key="n" aria-hidden="true"></span>+ 法線成分</th><td></td><td></td><td></td></tr>
+        <tr class="sphere-total" data-row="d"><th scope="row"><span data-key="d" aria-hidden="true"></span>= 通常の微分 dY/dθ</th><td></td><td></td><td></td></tr>
       </tbody>
     </table>
   </div>
   <details class="sphere-values sphere-coordinate text-small tabular-nums">
     <summary>球面座標の計算 <span class="sphere-gamma">Γ<sup>φ</sup><sub>θθ</sub> = <output data-gamma="phi-theta-theta"></output></span></summary>
+    <table aria-label="球面座標基底での成分。経度をラジアンで微分">
+      <thead><tr><th scope="col">座標基底での成分</th><th scope="col">θ</th><th scope="col">φ</th></tr></thead>
+      <tbody aria-live="polite">
+        <tr data-coord="vector"><th scope="row">接ベクトル Y</th><td></td><td></td></tr>
+        <tr data-coord="rate"><th scope="row">座標成分の微分 dYⁱ/dθ</th><td></td><td></td></tr>
+        <tr data-coord="connection"><th scope="row">+ 接続による補正</th><td></td><td></td></tr>
+        <tr class="sphere-total" data-coord="covariant"><th scope="row">= 共変微分 DY/dθ</th><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <details class="sphere-derivation"><summary>計量とクリストッフェル記号の導出</summary>
     <div class="sphere-formulas">
       <div>計量 <span>g<sub>θθ</sub> = cos²φ</span>、<span>g<sub>φφ</sub> = 1</span>、<span>g<sub>θφ</sub> = 0</span></div>
       <div>Γ<sup>φ</sup><sub>θθ</sub> = −½ ∂<sub>φ</sub>g<sub>θθ</sub> = sinφ cosφ</div>
@@ -71,15 +82,7 @@
       <div>(DY/dθ)<sup>φ</sup> = 0 + Γ<sup>φ</sup><sub>θθ</sub> Y<sup>θ</sup> = f sinφ</div>
       <div>φ 成分の計算 <output data-phi-equation></output></div>
     </div>
-    <table aria-label="球面座標基底での成分。経度をラジアンで微分">
-      <thead><tr><th scope="col">座標基底での成分</th><th scope="col">θ</th><th scope="col">φ</th></tr></thead>
-      <tbody aria-live="polite">
-        <tr data-coord="vector"><th scope="row">接ベクトル Y</th><td></td><td></td></tr>
-        <tr data-coord="rate"><th scope="row">座標成分の微分 dYⁱ/dθ</th><td></td><td></td></tr>
-        <tr data-coord="connection"><th scope="row">クリストッフェル記号による補正</th><td></td><td></td></tr>
-        <tr data-coord="covariant"><th scope="row">共変微分 DY/dθ</th><td></td><td></td></tr>
-      </tbody>
-    </table>
+    </details>
     <div class="sphere-symbols" aria-label="ほかのクリストッフェル記号">
       <span>Γ<sup>θ</sup><sub>θφ</sub> = Γ<sup>θ</sup><sub>φθ</sub> = <output data-gamma="theta-theta-phi"></output></span>
       <span>その他の Γ = 0</span>
@@ -92,6 +95,9 @@
   #sphere-covariant-mobile .sphere-symbols { display:flex; flex-wrap:wrap; gap:.2em 1em; margin-top:.25em; }
   #sphere-covariant-mobile .sphere-formulas { display:grid; gap:.18em; margin-block:.3em .55em; }
   #sphere-covariant-mobile .sphere-formulas span { display:inline-block; }
+  #sphere-covariant-mobile .sphere-total { border-top:1px solid var(--border); }
+  #sphere-covariant-mobile .sphere-total :is(th,td), #sphere-covariant-mobile .sphere-equation { font-weight:600; }
+  #sphere-covariant-mobile .sphere-derivation { margin-top:.5em; }
   #sphere-covariant-mobile .sphere-coordinate td { white-space:nowrap; }
   #sphere-covariant-mobile .sphere-control { display:grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); align-items:center; gap:.45em; min-height:44px; }
   #sphere-covariant-mobile .sphere-control output { white-space:nowrap; }
