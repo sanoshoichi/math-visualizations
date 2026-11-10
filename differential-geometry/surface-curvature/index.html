@@ -48,7 +48,10 @@
 </table>
 <details><summary>式と曲面の設定</summary>
 <p>第1主方向から測った角度を <i>θ</i> とする。その方向の法曲率は、二つの主曲率から求められる。</p><div class="display-equation"><i>k</i><sub><i>n</i></sub>(<i>θ</i>) = <i>k</i><sub>1</sub> cos²<i>θ</i> + <i>k</i><sub>2</sub> sin²<i>θ</i></div><p>点 <i>P</i> におけるガウス曲率は、二つの主曲率の積である。</p><div class="display-equation"><i>K</i> = <i>k</i><sub>1</sub> <i>k</i><sub>2</sub></div>
-<p>球面と円柱の半径は 1 とし、法線は内向きにとる。鞍型曲面は次式で定める。</p><div class="display-equation"><i>z</i> = (<i>x</i>² − <i>y</i>²)/2</div><p>鞍型曲面では原点を点 <i>P</i> とし、法線は上向きにとる。表の曲率はいずれも点 <i>P</i> における値である。</p>
+<div id="shape-sphere"><p>半径 1 の球面を用いる。法線は球の中心に向ける。</p></div>
+<div id="shape-cylinder" hidden><p>半径 1 の円柱を用いる。法線は円柱の軸に向ける。90° は軸に沿う方向で、断面は直線になる。</p></div>
+<div id="shape-saddle" hidden><p>鞍型曲面は次式で定める。</p><div class="display-equation"><i>z</i> = (<i>x</i>² − <i>y</i>²)/2</div><p>原点を点 <i>P</i> とし、法線は上向きにとる。</p></div>
+<p>表の曲率はいずれも点 <i>P</i> における値である。</p>
 </details>
 </main>
 <script>
@@ -101,6 +104,7 @@ function draw(){
   const t = degrees*Math.PI/180;
   const c = Math.cos(t), s = Math.sin(t);
   const surface = surfaces[selected];
+  for (const name of Object.keys(surfaces)) get("shape-" + name).hidden = name !== selected;
   drawCut(surface,c,s);
   const k = surface.k1*c*c + surface.k2*s*s;
   get("angle").textContent = degrees + "°";
