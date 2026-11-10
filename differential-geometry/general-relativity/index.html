@@ -42,6 +42,24 @@ const trace=(fn,color=blue)=>Array.from({length:65},(_,i)=>fn(i/64)).map((a,i)=>
 const axes=()=>line([28,120],[332,120])+line([180,218],[180,20])+label(326,113,"x")+label(187,26,"y");
 const info=(diagram,reading,formula="",extra="")=>({diagram,reading,formula,extra});
 const table=(heads,rows)=>"<table><thead><tr>"+heads.map(x=>'<th scope="col">'+x+"</th>").join("")+"</tr></thead><tbody>"+rows.map(row=>"<tr>"+row.map((x,i)=>i?"<td>"+x+"</td>":'<th scope="row">'+x+"</th>").join("")+"</tr>").join("")+"</tbody></table>";
+
+function bracketFigure(h) {
+ const result=h*h, y=185-95*result;
+ const bars=line([30,185],[335,185])+line([30,185],[30,42])+
+   line([90,185],[90,y],blue,10)+dot([225,185],red)+
+   line([90,y],[320,y],gray,1,"4 4")+
+   arrow([318,185],[318,y],green)+
+   label(43,25,"f = y の値を比較")+
+   label(49,205,"青：X → Y")+label(184,205,"赤：Y → X")+
+   label(101,y-7,result.toFixed(4))+label(238,178,"0")+
+   label(291,222,"緑：差");
+ return '<section aria-labelledby="bracket-title"><h3 id="bracket-title">関数に作用する Lie 括弧</h3>'+
+   '<p>ここでは高さを返す関数 <i>f</i>(<i>x</i>, <i>y</i>) = <i>y</i> を使う。上の二つの終点でこの関数を評価し、青から赤を引く。</p>'+
+   '<svg viewBox="0 0 360 235" role="img" aria-label="青の終点の関数値 '+result.toFixed(4)+' と赤の終点の関数値 0 の差">'+bars+'</svg>'+
+   '<p>緑の矢印は関数値の差。その差を二つの操作の時間幅の積で割ると、この例では常に 1。下の式は、流れを使わずに方向微分を二回行って同じ値を求める計算である。</p>'+
+   '<div class="formula" id="bracket-operator"></div></section>';
+}
+
 const topics=[
 ["接ベクトル・接空間","曲線上の点 P を固定し、点 Q を P に近づける。赤は割線方向、緑は P での接線。","点の間隔 h",.02,1.3,.02,.9,h=>{
  const P=p(0,0),Q=p(h,h*h/2);
@@ -60,7 +78,7 @@ const topics=[
    arrow(right,E,red)+dot(right,red)+dot(E,red)+
    label(20,192,"原点")+label(192,192,"原点")+label(199,211,"① Y：x = 0 なので動かない");
  return info(diagram,"左：① X で (h, 0) に進み、② Y で高さが h × h だけ増える。右：① Y の時点では x = 0 なので原点に留まり、② X で (h, 0) に進む。終点の x 座標は同じで、高さの差だけが残る。","<i>X</i> = ∂ₓ　　<i>Y</i> = <i>x</i>∂ᵧ　　[<i>X</i>, <i>Y</i>] = ∂ᵧ",
- table(["経路","終点 x","終点 y"],[["青：X → Y",fmt(h),fmt(h*h)],["赤：Y → X",fmt(h),fmt(0)]]));}],
+ table(["経路","終点 x","終点 y"],[["青：X → Y",fmt(h),fmt(h*h)],["赤：Y → X",fmt(h),fmt(0)]])+bracketFigure(h));}],
 ["双対空間・余ベクトル","縦の線は関数 f = x の等高線。矢印を回して、余ベクトル df が返す値を見る。","矢印の角度",0,360,1,30,a=>{
  const t=rad(a);
  return info([-2,-1,0,1,2].map(x=>line(p(x,-1.4),p(x,1.4))).join("")+arrow(p(0,0),p(1.4*Math.cos(t),1.4*Math.sin(t))),"右向きで正、左向きで負、等高線と平行ならゼロ。現在の値は "+fmt(Math.cos(t))+"。","d<i>f</i>(<i>v</i>) = d<i>x</i>(<i>v</i>) = cos θ");}],
@@ -179,6 +197,7 @@ function draw(){
  get("readout").textContent=model.reading;
  displayEquation("formula",model.formula);
  get("extra").innerHTML=model.extra;
+ if (current === 2) displayEquation("bracket-operator","Yf = x → X(Yf) = 1<br>Xf = 0 → Y(Xf) = 0<br>[X,Y]f = 1 − 0 = 1","\\begin{aligned}Yf&=x\\,\\partial_y y=x,& X(Yf)&=\\partial_x x=1,\\\\ Xf&=\\partial_x y=0,& Y(Xf)&=x\\,\\partial_y 0=0,\\\\ [X,Y]f&=X(Yf)-Y(Xf)=1-0=1.\\end{aligned}");
  showBasisMatrices(x);
  if (current !== 5) displayEquation("calculation",calculations[current](x));
 }
