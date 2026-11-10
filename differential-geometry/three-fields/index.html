@@ -1,0 +1,53 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>微分幾何学を三つの分野で比べる</title>
+<style>
+:root{color-scheme:light dark;--v:light-dark(#174e9a,#8bc5ff);--level:light-dark(#9a315a,#ffa2c3)}
+body{max-width:55rem;margin:auto;padding:1rem;font:1rem/1.55 system-ui,sans-serif}h1{font-size:1.55rem}
+.controls{display:grid;gap:.35rem}label{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}input{flex:1;min-width:7rem;min-height:44px}.views{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media(max-width:650px){.views{grid-template-columns:1fr}}figure{margin:0}figcaption{font-weight:600}svg{width:100%;height:155px;display:block}svg text{fill:CanvasText;font:11px system-ui}
+.formula{text-align:center;font:1.1rem/1.5 serif}.scroll{overflow-x:auto}table{border-collapse:collapse;min-width:43rem}td,th{text-align:left;vertical-align:top;padding:.45rem;border-bottom:1px solid GrayText}output{font-variant-numeric:tabular-nums}
+</style></head><body><main>
+<nav><a href="../../">数学の可視化一覧</a></nav><h1>微分幾何学を三つの分野で比べる</h1>
+<p>同じ数の組を接ベクトルの成分として与え、それぞれの計量で測る。青い矢印は各図で同じ成分を表す。図ごとに点や座標の意味は異なる。</p>
+<div class="controls">
+<label>成分の角度 <output id="angle-value"></output><input id="angle" type="range" min="0" max="180" value="30"></label>
+<label>成功確率 <i>p</i> <output id="prob-value"></output><input id="prob" type="range" min=".02" max=".98" step=".01" value=".2"></label>
+</div>
+<div class="formula"><i>v</i> = (cos <i>θ</i>, sin <i>θ</i>)</div>
+<div class="views">
+<figure><figcaption>純粋数学：Euclid 平面</figcaption><svg id="euclid" viewBox="0 0 220 155" role="img" aria-label="Euclid 計量の単位円と接ベクトル"></svg><div class="formula"><i>g</i>(<i>v</i>,<i>v</i>) = <output id="e"></output></div><p>赤は長さ 1 のベクトルの集合。方向を変えても、青い矢印の長さは 1。</p></figure>
+<figure><figcaption>相対論：Minkowski 時空</figcaption><svg id="lorentz" viewBox="0 0 220 155" role="img" aria-label="横が空間、縦が時間の光円錐と接ベクトル"></svg><div class="formula"><i>g</i>(<i>v</i>,<i>v</i>) = <output id="l"></output> <output id="kind"></output></div><p>赤は光的な方向。計量の符号で方向を分類する。</p></figure>
+<figure><figcaption>情報幾何：Fisher 計量</figcaption><svg id="fisher" viewBox="0 0 220 155" role="img" aria-label="Fisher 計量の単位楕円と接ベクトル"></svg><div class="formula"><i>g</i>(<i>v</i>,<i>v</i>) = <output id="f"></output></div><p>赤は Fisher 計量で長さ 1 の集合。二つの成功確率を <i>p</i> と <i>q</i> とし、計量を評価する点では <i>q</i> = 0.5 に固定する。</p></figure>
+</div>
+<details><summary>三つの計量の式</summary>
+<div class="formula"><i>g</i><sub>E</sub>(<i>v</i>,<i>v</i>) = (<i>v</i>¹)² + (<i>v</i>²)²</div>
+<div class="formula"><i>g</i><sub>M</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>x</sup>)² − (<i>v</i><sup>t</sup>)²</div>
+<div class="formula"><i>g</i><sub>F</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>p</sup>)² / [<i>p</i>(1−<i>p</i>)] + (<i>v</i><sup>q</sup>)² / [<i>q</i>(1−<i>q</i>)]</div>
+<p>成功確率が端に近づくほど、同じ母数の変化が Fisher 計量では大きく測られる。角度を 0° にして <i>p</i> を動かすと、その違いが見やすい。</p>
+</details>
+<h2>概念の対応表</h2><div class="scroll" tabindex="0" aria-label="横にスクロールできる概念の対応表"><table><thead><tr><th scope="col">概念</th><th scope="col">純粋数学</th><th scope="col">一般相対性理論</th><th scope="col">情報幾何学</th></tr></thead><tbody><tr><th scope="row">点・多様体</th><td>曲面上の点など</td><td>時空の出来事</td><td>確率分布。ここでは独立な二つのベルヌーイ分布の組</td></tr><tr><th scope="row">接ベクトル</th><td>曲線の瞬間速度</td><td>世界線の接ベクトル</td><td>分布をどの方向へ変えるか</td></tr><tr><th scope="row">計量</th><td>Riemann 計量なら長さの二乗は正</td><td>Lorentz 計量。符号によって時間的・光的・空間的を区別</td><td>Fisher 計量。近い分布がどれほど区別しやすいか</td></tr><tr><th scope="row">接続・共変微分</th><td>異なる点の接空間を比べる規則</td><td>通常は時空計量の Levi-Civita 接続</td><td>Fisher 計量の Levi-Civita 接続と、一般には異なる α 接続</td></tr><tr><th scope="row">測地線</th><td>選んだ接続で速度が平行移動される曲線</td><td>自由落下する試験粒子や、幾何光学近似での光の軌道</td><td>接続によって異なる。独立なベルヌーイの積モデルでは、誘導された混合接続のアフィン座標は各成功確率</td></tr><tr><th scope="row">曲率</th><td>選んだ接続の曲率。円柱の例では内在的曲率と外から見た曲がり方を区別できる</td><td>近くを自由落下する粒子の相対加速度に現れる</td><td>選んだ接続に依存。平坦性を述べるときは接続を明示する</td></tr></tbody></table></div>
+<p><a href="../general-relativity/">相対論に向けた16項目</a> · <a href="../covariant-derivative/">共変微分</a> · <a href="../surface-curvature/">曲面と曲率</a></p>
+<p><a href="https://arxiv.org/abs/1808.08271">参考文献：Frank Nielsen, An Elementary Introduction to Information Geometry</a></p>
+</main><script>
+const get=id=>document.getElementById(id);
+const angle=get("angle"),prob=get("prob");
+const line=(x,y,X,Y,color="GrayText",w=1)=>'<line x1="'+x+'" y1="'+y+'" x2="'+X+'" y2="'+Y+'" stroke="'+color+'" stroke-width="'+w+'"/>';
+function diagram(x,y,h,v,level){
+ const X=110+53*x,Y=77-53*y,dx=X-110,dy=Y-77;
+ const head=(a,b)=>line(X,Y,X-7*dx/53+a*dy/53,Y-7*dy/53+b*dx/53,"var(--v)",2.5);
+ return line(30,77,190,77)+line(110,8,110,146)+'<text x="195" y="81">'+h+'</text><text x="115" y="13">'+v+'</text>'+level+line(110,77,X,Y,"var(--v)",2.5)+head(4,-4)+head(-4,4);
+}
+const ellipse=(x,y)=>'<ellipse cx="110" cy="77" rx="'+x+'" ry="'+y+'" fill="none" stroke="var(--level)" stroke-width="2"/>';
+const fmt=x=>(Math.abs(x)<.0005?0:x).toFixed(3);
+function draw(){
+ const theta=Number(angle.value)*Math.PI/180,p=Number(prob.value);
+ const x=Math.cos(theta),y=Math.sin(theta),l=x*x-y*y;
+ get("angle-value").textContent=angle.value+"°";get("prob-value").textContent=p.toFixed(2);
+ get("euclid").innerHTML=diagram(x,y,"x","y",ellipse(53,53));
+ get("lorentz").innerHTML=diagram(x,y,"x","t",line(50,137,170,17,"var(--level)",2)+line(50,17,170,137,"var(--level)",2));
+ get("fisher").innerHTML=diagram(x,y,"p","q",ellipse(53*Math.sqrt(p*(1-p)),26.5));
+ get("e").textContent=fmt(1);get("l").textContent=fmt(l);
+ get("kind").textContent=Math.abs(l)<1e-8?"（光的）":l<0?"（時間的）":"（空間的）";
+ get("f").textContent=fmt(x*x/(p*(1-p))+4*y*y);
+}
+angle.addEventListener("input",draw);prob.addEventListener("input",draw);draw();
+</script></body></html>
