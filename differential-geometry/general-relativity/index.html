@@ -21,7 +21,7 @@ table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,t
 <h2 id="title"></h2><section aria-labelledby="definition-title"><h3 id="definition-title">定義と基本式</h3><p id="definition"></p><div id="identity" class="formula"></div></section><details class="derivation" open><summary id="steps-title">式の読み方と途中計算</summary><p id="steps-text"></p><div id="steps-math" class="formula"></div></details><h3>図で確かめる</h3><p id="intro"></p>
 <div class="controls"><label for="control"><span id="parameter"></span> <output id="setting" for="control"></output></label><input id="control" type="range"></div>
 <svg id="figure" viewBox="0 0 360 240" role="img" aria-labelledby="title readout"></svg>
-<p id="readout"></p><div id="formula" class="formula"></div><section id="calculation-section" aria-labelledby="calculation-title"><h3 id="calculation-title">現在の値で計算</h3><p id="calculation-context"></p><div id="calculation" class="formula"></div></section><section id="basis-matrices" hidden><h3>元の行列と基底の回転</h3><div id="basis-values" class="formula"></div></section><div id="extra"></div>
+<ul id="diagram-notes" aria-label="図の見方"></ul><p id="readout"></p><div id="formula" class="formula"></div><section id="calculation-section" aria-labelledby="calculation-title"><h3 id="calculation-title">現在の値で計算</h3><p id="calculation-context"></p><div id="calculation" class="formula"></div></section><section id="basis-matrices" hidden><h3>元の行列と基底の回転</h3><div id="basis-values" class="formula"></div></section><div id="extra"></div>
 </main><script>
 const get=id=>document.getElementById(id);
 const blue="var(--blue)",red="var(--red)",green="var(--green)",gray="GrayText";
@@ -59,6 +59,53 @@ function bracketFigure(h) {
    '<p>緑の矢印は関数値の差。その差を二つの操作の時間幅の積で割ると、この例では常に 1。下の式は、流れを使わずに方向微分を二回行って同じ値を求める計算である。</p>'+
    '<div class="formula" id="bracket-operator"></div></section>';
 }
+
+
+function sphereCircle(radius,latitudeMode=false) {
+ const R=89, cx=119, cy=115, tilt=.36;
+ const project=(x,y,z)=>[cx+R*x,cy+R*(Math.sin(tilt)*y-Math.cos(tilt)*z)];
+ const point=(r,t)=>project(Math.sin(r)*Math.cos(t),Math.sin(r)*Math.sin(t),Math.cos(r));
+ const north=point(0,0), end=point(radius,Math.PI/2);
+ const ring=(r,front)=>Array.from({length:96},(_,i)=>{
+   const start=i*2*Math.PI/96,end=(i+1)*2*Math.PI/96;
+   const depth=Math.cos(tilt)*Math.sin(r)*Math.sin((start+end)/2)+Math.sin(tilt)*Math.cos(r);
+   return (depth>=0)===front ? line(point(r,start),point(r,end),blue,2,front?"":"2 3") : "";
+ }).join("");
+ const equator=trace(t=>point(Math.PI/2,2*Math.PI*t),gray);
+ const meridian=trace(t=>point(radius*t,Math.PI/2),green);
+ return ellipse(cx,cy,R,R)+equator+ring(radius,false)+ring(radius,true)+
+   (latitudeMode?"":meridian)+dot(north,green)+dot(end,blue)+
+   label(north[0]+8,north[1]+2,latitudeMode?"北極":"北極 P")+
+   (latitudeMode?"":label(225,81,"緑：球面に沿う半径 r"))+
+   label(225,110,latitudeMode?"青：選んだ緯線":"青：測地円")+
+   label(225,139,"灰：赤道。青の破線：背面");
+}
+function tidalShape(k,weyl=false) {
+ const values=weyl?[1,-1,0]:[.6,-.3,k],t=weyl?k:.5;
+ const radii=values.map(v=>38*(1+.5*v*t*t));
+ return label(44,36,"方向 1・2 の断面")+label(203,36,"方向 1・3 の断面")+
+   ellipse(93,101,38,38,gray)+ellipse(263,101,38,38,gray)+
+   ellipse(93,101,radii[0],radii[1],blue)+ellipse(263,101,radii[0],radii[2],blue)+
+   label(41,170,"灰：初期形状")+label(196,170,"青：短時間近似");
+}
+const diagramNotes=[
+ ["青：曲線と点 P・Q","赤：P と Q を結ぶ割線の方向","緑：P での接線。赤の傾きがこれに近づく"],
+ ["灰：元の座標軸","緑：回した基底 e′₁, e′₂","青：同じベクトル v。緑の基底で測ると成分が変わる"],
+ ["左・青：X のあと Y","右・赤：Y のあと X。原点では Y による移動はゼロ","下の図：両終点の関数値の差"],
+ ["縦線：f = x が一定の場所","青：方向 v。縦線と平行なとき df(v) はゼロ"],
+ ["青い楕円：vᵀAv = 1 の集合","灰：元の基底。緑：回した基底 Q の列","下の表：緑の基底で測った A′"],
+ ["縦：時間、横：空間","緑の斜線：光的な方向","青：空間成分を変えるベクトル。上側の斜線を境に符号が変わる"],
+ ["青：点 P での接ベクトル Y","赤：平面内で求めた通常の微分","緑：赤を縦の接線へ射影した共変微分"],
+ ["灰：平面の直交座標","緑：原点から半径 r の円","青：点 P で角度を増やす方向。記号は座標の取り方で変わる"],
+ ["青：運ぶベクトル。出発点と現在地で同じ向き","緑：円弧の現在地での接線。青とは別のベクトル"],
+ ["青：現在の緯線","灰：赤道。緯度 0° では青と重なる","緯線が赤道から離れると接平面内の加速度が残る"],
+ ["左：北極と赤道上の二点を回る閉経路","右：同じ点で比べた出発時（青）と帰着時（赤）の矢印"],
+ ["青：赤道から北極へ進む二本の経線","青い点：現在の位置。赤い線分：同じ緯度での間隔"],
+ ["北極 P：測地円の中心","緑の弧：球面上を P から測った半径 r","青い輪：P からの距離が r の点の集合。赤道までの距離は π/2"],
+ ["横向きの矢印：方向別の相対加速度係数","右向き：粒子間隔を広げる。左向き：狭める","下の断面図：初期形状と短時間後の近似を比較"],
+ ["時間の行は符号を反転して描く","矢印を符号付きで足すとスカラー曲率。表で Einstein テンソルの成分も確認できる"],
+ ["灰：初期の円形断面。青：短時間後の近似","下の二断面で、伸びる方向・縮む方向・係数がゼロの方向を比べる"]
+];
 
 const topics=[
 ["接ベクトル・接空間","曲線上の点 P を固定し、点 Q を P に近づける。赤は割線方向、緑は P での接線。","点の間隔 h",.02,1.3,.02,.9,h=>{
@@ -99,16 +146,16 @@ const topics=[
  return info(ellipse(180,120,65,65)+arrow(p(1,0),p(1.7,.3))+arrow(P,p(x+.7,y+.3))+arrow(P,p(x-.55*y,y+.55*x),green)+dot(P),"経路が曲がっても、平面の平行移動では青い矢印の向きと長さが保たれる。","D<i>V</i>/d<i>t</i> = 0");}],
 ["測地線・アフィンパラメータ","単位球面を正面から投影した模式図。赤道は大円、選んだ緯線は一般に小円。","緯度",0,70,1,35,a=>{
  const t=rad(a);
- return info(ellipse(180,120,88,88)+line([92,120],[268,120],gray,1,"4 4")+line([180-88*Math.cos(t),120-88*Math.sin(t)],[180+88*Math.cos(t),120-88*Math.sin(t)],blue,3),"緯度 0° の赤道は測地線。一定の速さで緯線をたどると、赤道以外では接平面内にも加速度が残る。","<i>k</i><sub><i>g</i></sub> = |tan φ| = "+fmt(Math.tan(t)));}],
+ return info(sphereCircle(Math.PI/2-t,true),"緯度 0° の赤道は測地線。一定の速さで緯線をたどると、赤道以外では接平面内にも加速度が残る。","<i>k</i><sub><i>g</i></sub> = |tan φ| = "+fmt(Math.tan(t)));}],
 ["Riemann 曲率・ホロノミー","単位球の北極と赤道上の二点を結ぶ測地三角形。左は経緯度による経路の模式図、右は出発点の接平面での向きの比較。","赤道上の経度差",10,120,1,90,a=>{
  const t=rad(a),L=[40,180],R=[40+a*.9,180];
  return info(line(L,R,blue,3)+line(L,[40,50],green,3)+line(R,[R[0],50],green,3)+line([40,50],[R[0],50],gray,1,"4 4")+label(40,42,"北極（同じ点）")+label(40,203,"赤道")+label(225,70,"帰着時の向き")+arrow([265,139],[315,139],blue)+arrow([265,139],[265+50*Math.cos(t),139-50*Math.sin(t)],red),"この向きに一周すると、平行移動した矢印は回る。単位球で回転角の大きさは囲んだ面積と等しい。","面積 = "+fmt(t)+"　　回転角 = "+a+"°");}],
 ["測地線偏差・Jacobi 場","単位球の赤道から北へ進む近接した二本の経線。下の線分は、同じ緯度で測った経線間の距離。","進んだ角度",0,90,1,40,a=>{
  const t=rad(a),w=52*Math.cos(t);
  return info(ellipse(180,105,81,81)+trace(z=>[180-52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+trace(z=>[180+52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+dot([180-w,105-81*Math.sin(t)])+dot([180+w,105-81*Math.sin(t)])+line([180-w,207],[180+w,207],red,3),"赤道での間隔を 1 とすると、現在の間隔の比は "+fmt(Math.cos(t))+"。北極で経線は合流する。","<i>J</i>(<i>s</i>)/<i>J</i>(0) = cos <i>s</i>");}],
-["断面曲率・Gauss 曲率","単位球と平面で、同じ測地半径の円の周長を比べる。線分の長さはそれぞれの周長に比例する。","測地半径 r",.1,1.5,.05,.9,r=>{
+["断面曲率・Gauss 曲率","北極 P を中心に、球面上で距離 r だけ離れた点を集める。緑の弧は球面に沿って測る半径、青い輪はその距離にある点の集合。下の線分で、同じ半径の平面の円と周長を比べる。","測地半径 r",.1,1.5,.05,.9,r=>{
  const s=Math.sin(r);
- return info(label(35,75,"単位球")+line([35,94],[35+175*s,94],blue,5)+label(35,145,"平面")+line([35,164],[35+175*r,164],green,5),"球上の周長は "+fmt(2*Math.PI*s)+"、平面では "+fmt(2*Math.PI*r)+"。球上のほうが短い。","<i>L</i><sub>球</sub> = 2π sin <i>r</i>　　<i>L</i><sub>平面</sub> = 2π<i>r</i>",'<p><a href="../surface-curvature/">法曲率と Gauss 曲率の断面図を開く</a></p>');}],
+ return info(sphereCircle(r),"球上の周長は "+fmt(2*Math.PI*s)+"、平面では "+fmt(2*Math.PI*r)+"。球上のほうが短い。","<i>L</i><sub>球</sub> = 2π sin <i>r</i>　　<i>L</i><sub>平面</sub> = 2π<i>r</i>",'<p>同じ測地半径での周長を比較する。</p><svg viewBox="0 0 360 125" role="img" aria-label="単位球と平面での測地円の周長を比較">'+label(25,26,"単位球")+line([25,42],[25+195*s,42],blue,5)+label(25,77,"平面")+line([25,93],[25+195*r,93],green,5)+'</svg><p><a href="../surface-curvature/">法曲率と Gauss 曲率の断面図を開く</a></p>');}],
 ["Ricci テンソル","自由落下する粒子群を、局所的な三つの直交方向で見る。青・赤・緑は方向別の相対加速度係数。正は伸び、負は縮み。","第3方向の係数",-.9,.9,.05,-.3,k=>{
  const values=[.6,-.3,k],total=values.reduce((a,b)=>a+b,0);
  return info(line([180,28],[180,210])+values.map((v,i)=>label(28,59+i*57,"方向 "+(i+1))+arrow([180,55+i*57],[180+120*v,55+i*57],[blue,red,green][i])).join(""),"三方向の和は "+fmt(total)+"。初期の相対速度がゼロなら、この和は体積の初期加速度を初期体積で割った値になる。","−Ric(<i>u</i>, <i>u</i>) = "+values.map(x=>"("+fmt(x)+")").join(" + ")+" = "+fmt(total));}],
@@ -194,9 +241,11 @@ function draw(){
  const x=Number(control.value),model=topics[current][7](x);
  get("setting").textContent=control.value;
  get("figure").innerHTML=model.diagram;
+ get("diagram-notes").innerHTML=diagramNotes[current].map(note=>"<li>"+note+"</li>").join("");
  get("readout").textContent=model.reading;
  displayEquation("formula",model.formula);
  get("extra").innerHTML=model.extra;
+ if (current === 13 || current === 15) get("extra").innerHTML += '<h3>粒子群の二つの断面</h3><p>初期の相対速度をゼロとし、方向別の加速度から短時間後の形を近似する。'+(current===13?" 図では経過時間を 0.5 に固定する。":"") + '</p><svg viewBox="0 0 360 190" role="img" aria-label="初期形状と変形後の粒子群の直交二断面">'+tidalShape(x,current===15)+'</svg>';
  if (current === 2) displayEquation("bracket-operator","Yf = x → X(Yf) = 1<br>Xf = 0 → Y(Xf) = 0<br>[X,Y]f = 1 − 0 = 1","\\begin{aligned}Yf&=x\\,\\partial_y y=x,& X(Yf)&=\\partial_x x=1,\\\\ Xf&=\\partial_x y=0,& Y(Xf)&=x\\,\\partial_y 0=0,\\\\ [X,Y]f&=X(Yf)-Y(Xf)=1-0=1.\\end{aligned}");
  showBasisMatrices(x);
  if (current !== 5) displayEquation("calculation",calculations[current](x));
