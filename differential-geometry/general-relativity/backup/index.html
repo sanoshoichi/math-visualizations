@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>一般相対性理論のための微分幾何学</title>
+<style>
+:root{color-scheme:light dark;--blue:light-dark(#175c9d,#91c7ff);--red:light-dark(#a12f45,#ffa0b1);--green:light-dark(#176c4a,#83dfb2)}
+body{max-width:42rem;margin:auto;padding:1rem;font:1rem/1.55 system-ui,sans-serif}
+h1{font-size:1.5rem}h2{font-size:1.25rem}h1,h2,p{margin:.55rem 0}
+label{display:block}select,button,input{font:inherit;min-height:44px}select,input{width:100%;box-sizing:border-box}
+nav,.actions{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center}.controls{position:sticky;top:0;background:Canvas;z-index:1;padding:.25rem 0;border-bottom:1px solid GrayText}
+svg:not(.katex svg){width:100%;height:auto;max-height:270px;display:block}svg:not(.katex svg) text{font:12px system-ui;fill:CanvasText}
+.formula{text-align:center;font:1.15rem/1.6 serif;overflow-wrap:anywhere}output{font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;padding:.25rem .4rem;text-align:right}th:first-child{text-align:left}
+.formula .katex-display{overflow-x:auto;overflow-y:hidden;padding:.2rem 0;margin:.55em 0}
+.derivation{margin:.8rem 0;border-block:1px solid GrayText;padding:.5rem 0}.derivation summary{font-weight:600}
+.try-first{padding:.45rem .65rem;border-inline-start:3px solid var(--blue);margin:.6rem 0}
+</style><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<link rel="stylesheet" href="../../../assets/eman-archive/lesson.css"><script defer src="../../../assets/eman-archive/lesson.js"></script><script defer src="../../../assets/eman-archive/geometry-lessons.js"></script><link rel="stylesheet" href="../../../assets/eman-archive/figure-theme.css">
+<link rel="stylesheet" href="../../../assets/eman-archive/math-layout.css">
+</head><body><main><p class="reading">旧版のバックアップ · <a href="../">現行版へ</a></p>
+<nav aria-label="相対論の学習ページ"><a href="../../../">数学の可視化一覧</a><a href="../../../relativity/special/">特殊相対性理論</a><a href="../../../relativity/general/backup/">一般相対性理論</a></nav>
+<h1>一般相対性理論のための微分幾何学</h1>
+<p class="lead">矢印の意味から始め、比較の規則を作り、曲率を計算する。最後に、その曲率が重力としてどう現れるかを結び付ける。</p><div class="learning-goal"><strong>学び方</strong><p>まず「意味と記号」を読み、図を一度動かす。次に「定義をたどる」で式を確かめる。「別の例・確認」は理解を試したいときに使う。</p><p>初めてなら <a href="#1">1–6 対象と測定</a> → <a href="#7">7–10 比較と運動</a> → <a href="#11">11–16 曲率と重力</a> の順で進む。</p></div><details class="convention"><summary>全項目で使う添字と符号</summary><p>同じ項で上と下に一回ずつ現れる添字は全範囲の和を取る。<span class="inline-math" data-tex="i,j">i,j</span> は幾何学での座標、<span class="inline-math" data-tex="\mu ,\nu">μ,ν</span> は時空の 0,1,2,3。時空計量は (−,+,+,+)。接続は特記しない限り Levi-Civita 接続。</p><div class="equation" data-tex="R(X,Y)Z=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z"></div><p>曲率の符号は文献によって異なる。ここでは単位球の Gauss 曲率が +1 になる上の規約を一貫して使う。</p></details><div class="chapter-bar"><label for="topic">16項目</label><select id="topic"></select></div>
+<div class="actions"><button id="prev" type="button">前の項目</button><button id="next" type="button">次の項目</button></div>
+<h2 id="title"></h2><div id="concept-guide"></div><section aria-labelledby="definition-title"><h3 id="definition-title">定義と基本式</h3><p id="definition"></p><div id="identity" class="formula"></div></section><details class="derivation" open><summary id="steps-title">式の読み方と途中計算</summary><p id="steps-text"></p><div id="steps-math" class="formula"></div></details><h3>図で確かめる</h3><p id="intro"></p><p class="try-first"><strong>まず試す</strong> <span id="try-first"></span></p>
+<div class="controls"><label for="control"><span id="parameter"></span> <output id="setting" for="control"></output></label><input id="control" type="range"></div>
+<svg id="figure" viewBox="0 0 360 240" role="img" aria-labelledby="title readout"></svg>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul id="diagram-notes"></ul></div><p id="readout"></p><div id="formula" class="formula"></div><section id="calculation-section" aria-labelledby="calculation-title"><h3 id="calculation-title">現在の値で計算</h3><p id="calculation-context"></p><div id="calculation" class="formula"></div></section><section id="basis-matrices" hidden><h3>元の行列と基底の回転</h3><div id="basis-values" class="formula"></div></section><div id="extra"></div>
+<footer>定義と符号の照合先　<a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S2">Tong §2</a> · <a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S3">§3</a><p>図の有限な大きさ、局所的な計算、短時間近似は、それぞれ本文の条件と一緒に読む。</p><a href="../../../relativity/general/backup/">この道具で一般相対論を読む →</a></footer></main><script>
+const get=id=>document.getElementById(id);
+const blue="var(--blue)",red="var(--red)",green="var(--green)",gray="GrayText";
+const rad=x=>x*Math.PI/180;
+const fmt=x=>(Math.abs(x)<.0005?0:x).toFixed(3);
+const p=(x,y)=>[180+65*x,120-65*y];
+const line=(a,b,color=gray,w=1.4,dash="")=>'<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="'+color+'" stroke-width="'+w+'" stroke-dasharray="'+dash+'"/>';
+const label=(x,y,s)=>'<text x="'+x+'" y="'+y+'">'+s+'</text>';
+const dot=(a,color=blue)=>'<circle cx="'+a[0]+'" cy="'+a[1]+'" r="4" fill="'+color+'"/>';
+const ellipse=(x,y,rx,ry,color=gray)=>'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="none" stroke="'+color+'" stroke-width="2"/>';
+function arrow(a,b,color=blue){
+ const dx=b[0]-a[0],dy=b[1]-a[1],n=Math.hypot(dx,dy);
+ if(n<.1)return dot(a,color);
+ const h=Math.min(8,n/2),x=dx/n,y=dy/n;
+ return line(a,b,color,2.5)+line(b,[b[0]-h*x+h*.45*y,b[1]-h*y-h*.45*x],color,2)+line(b,[b[0]-h*x-h*.45*y,b[1]-h*y+h*.45*x],color,2);
+}
+const trace=(fn,color=blue)=>Array.from({length:65},(_,i)=>fn(i/64)).map((a,i)=>i?line(fn((i-1)/64),a,color,2):"").join("");
+const axes=()=>line([28,120],[332,120])+line([180,218],[180,20])+label(326,113,"x")+label(187,26,"y");
+const info=(diagram,reading,formula="",extra="")=>({diagram,reading,formula,extra});
+const table=(heads,rows)=>"<table><thead><tr>"+heads.map(x=>'<th scope="col">'+x+"</th>").join("")+"</tr></thead><tbody>"+rows.map(row=>"<tr>"+row.map((x,i)=>i?"<td>"+x+"</td>":'<th scope="row">'+x+"</th>").join("")+"</tr>").join("")+"</tbody></table>";
+
+function bracketFigure(h) {
+ const result=h*h, y=185-95*result;
+ const bars=line([30,185],[335,185])+line([30,185],[30,42])+
+   line([90,185],[90,y],blue,10)+dot([225,185],red)+
+   line([90,y],[320,y],gray,1,"4 4")+
+   arrow([318,185],[318,y],green)+
+   label(43,25,"f = y の値を比較")+
+   label(49,205,"青：X → Y")+label(184,205,"赤：Y → X")+
+   label(101,y-7,result.toFixed(4))+label(238,178,"0")+
+   label(291,222,"緑：差");
+ return '<section aria-labelledby="bracket-title"><h3 id="bracket-title">関数に作用する Lie 括弧</h3>'+
+   '<p>ここでは高さを返す関数 <i>f</i>(<i>x</i>, <i>y</i>) = <i>y</i> を使う。上の二つの終点でこの関数を評価し、青から赤を引く。</p>'+
+   '<svg viewBox="0 0 360 235" role="img" aria-label="青の終点の関数値 '+result.toFixed(4)+' と赤の終点の関数値 0 の差">'+bars+'</svg><div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>X → Y の終点での関数値</span></li><li><span class="figure-key point" style="--key:var(--red)" aria-hidden="true"></span><span>Y → X の終点での関数値</span></li><li><span class="figure-key arrow" style="--key:var(--green)" aria-hidden="true"></span><span>関数値の差</span></li></ul></div>'+
+   '<p>緑の矢印は関数値の差。その差を二つの操作の時間幅の積で割ると、この例では常に 1。下の式は、流れを使わずに方向微分を二回行って同じ値を求める計算である。</p>'+
+   '<div class="formula" id="bracket-operator"></div></section>';
+}
+
+
+function sphereCircle(radius,latitudeMode=false) {
+ const R=89, cx=119, cy=115, tilt=.36;
+ const project=(x,y,z)=>[cx+R*x,cy+R*(Math.sin(tilt)*y-Math.cos(tilt)*z)];
+ const point=(r,t)=>project(Math.sin(r)*Math.cos(t),Math.sin(r)*Math.sin(t),Math.cos(r));
+ const north=point(0,0), end=point(radius,Math.PI/2);
+ const ring=(r,front)=>Array.from({length:96},(_,i)=>{
+   const start=i*2*Math.PI/96,end=(i+1)*2*Math.PI/96;
+   const depth=Math.cos(tilt)*Math.sin(r)*Math.sin((start+end)/2)+Math.sin(tilt)*Math.cos(r);
+   return (depth>=0)===front ? line(point(r,start),point(r,end),blue,2,front?"":"2 3") : "";
+ }).join("");
+ const equator=trace(t=>point(Math.PI/2,2*Math.PI*t),gray);
+ const meridian=trace(t=>point(radius*t,Math.PI/2),green);
+ return ellipse(cx,cy,R,R)+equator+ring(radius,false)+ring(radius,true)+
+   (latitudeMode?"":meridian)+dot(north,green)+dot(end,blue)+
+   label(north[0]+8,north[1]+2,latitudeMode?"北極":"北極 P")+
+   (latitudeMode?"":label(225,81,"緑：測地半径 r"))+
+   label(225,110,latitudeMode?"青：選んだ緯線":"青：測地円")+
+   label(225,139,"灰：赤道")+label(225,161,"破線：輪の背面");
+}
+
+function transportLoop(a) {
+ const delta=rad(a),mid=delta/2;
+ const project=(x,y,z)=>[105+76*(y*Math.cos(mid)-x*Math.sin(mid)),123+76*(.28*(x*Math.cos(mid)+y*Math.sin(mid))-.96*z)];
+ const P=project(1,0,0),Q=project(Math.cos(delta),Math.sin(delta),0),N=project(0,0,1);
+ const equator=t=>project(Math.cos(delta*t),Math.sin(delta*t),0);
+ const north=t=>project(Math.cos(delta)*Math.cos(t*Math.PI/2),Math.sin(delta)*Math.cos(t*Math.PI/2),Math.sin(t*Math.PI/2));
+ const south=t=>project(Math.sin(t*Math.PI/2),0,Math.cos(t*Math.PI/2));
+ const along=(path,color)=>trace(path,color)+arrow(path(.45),path(.60),color);
+ return ellipse(105,123,76,76)+along(equator,blue)+along(north,green)+along(south,green)+
+  dot(P)+dot(Q)+dot(N)+label(P[0]-14,P[1]+17,"P")+label(Q[0]+6,Q[1]+17,"Q")+label(N[0]+8,N[1],"北極 N")+
+  label(207,63,"P の接平面で比較")+line([225,143],[333,143])+line([270,183],[270,91])+
+  arrow([270,143],[322,143],blue)+arrow([270,143],[270+52*Math.cos(delta),143-52*Math.sin(delta)],red)+
+  label(217,207,"青：出発時／赤：帰着時");
+}
+
+function tidalShape(k,weyl=false) {
+ const values=weyl?[1,-1,0]:[.6,-.3,k],t=weyl?k:.5;
+ const radii=values.map(v=>38*(1+.5*v*t*t));
+ return label(44,36,"方向 1・2 の断面")+label(203,36,"方向 1・3 の断面")+
+   ellipse(93,101,38,38,gray)+ellipse(263,101,38,38,gray)+
+   ellipse(93,101,radii[0],radii[1],blue)+ellipse(263,101,radii[0],radii[2],blue)+
+   label(41,170,"灰：初期形状")+label(196,170,"青：短時間近似");
+}
+const diagramNotes = [
+  [
+    "青：曲線と点 <span class=\"inline-math\" data-tex=\"P\">P</span>・<span class=\"inline-math\" data-tex=\"Q\">Q</span>",
+    "赤：<span class=\"inline-math\" data-tex=\"P\">P</span> と <span class=\"inline-math\" data-tex=\"Q\">Q</span> を結ぶ割線の方向",
+    "緑：<span class=\"inline-math\" data-tex=\"P\">P</span> での接線。赤の傾きがこれに近づく"
+  ],
+  [
+    "灰：元の座標軸",
+    "緑：回した基底 <span class=\"inline-math\" data-tex=\"e&#x27;_{1}, e&#x27;_{2}\">e′₁, e′₂</span>",
+    "青：同じベクトル <span class=\"inline-math\" data-tex=\"v\">v</span>。緑の基底で測ると成分が変わる"
+  ],
+  [
+    "左・青：<span class=\"inline-math\" data-tex=\"X\">X</span> のあと <span class=\"inline-math\" data-tex=\"Y\">Y</span>",
+    "右・赤：<span class=\"inline-math\" data-tex=\"Y\">Y</span> のあと <span class=\"inline-math\" data-tex=\"X\">X</span>。原点では <span class=\"inline-math\" data-tex=\"Y\">Y</span> による移動はゼロ",
+    "下の図：両終点の関数値の差"
+  ],
+  [
+    "縦線：<span class=\"inline-math\" data-tex=\"f = x\">f = x</span> が一定の場所",
+    "青：方向 <span class=\"inline-math\" data-tex=\"v\">v</span>。縦線と平行なとき df<span class=\"inline-math\" data-tex=\"(v)\">(v)</span> はゼロ"
+  ],
+  [
+    "青い楕円：<span class=\"inline-math\" data-tex=\"v\">v</span>ᵀAv <span class=\"inline-math\" data-tex=\"= 1\">= 1</span> の集合",
+    "灰：元の基底。緑：回した基底 <span class=\"inline-math\" data-tex=\"Q\">Q</span> の列",
+    "下の表：緑の基底で測った <span class=\"inline-math\" data-tex=\"A&#x27;\">A′</span>"
+  ],
+  [
+    "縦：時間、横：空間",
+    "緑の斜線：光的な方向",
+    "青：空間成分を変えるベクトル。上側の斜線を境に符号が変わる"
+  ],
+  [
+    "青：点 <span class=\"inline-math\" data-tex=\"P\">P</span> での接ベクトル <span class=\"inline-math\" data-tex=\"Y\">Y</span>",
+    "赤：平面内で求めた通常の微分",
+    "緑：赤を縦の接線へ射影した共変微分"
+  ],
+  [
+    "灰：平面の直交座標",
+    "緑：原点から半径 <span class=\"inline-math\" data-tex=\"r\">r</span> の円",
+    "青：角度方向の座標基底 <span class=\"inline-math\" data-tex=\"\\partial \\theta\">∂θ</span>。矢印の長さは半径 <span class=\"inline-math\" data-tex=\"r\">r</span> に比例する"
+  ],
+  [
+    "青：運ぶベクトル。出発点と現在地で同じ向き",
+    "緑：円弧の現在地での接線。青とは別のベクトル"
+  ],
+  [
+    "青：現在の緯線",
+    "灰：赤道。緯度 <span class=\"inline-math\" data-tex=\"0^{\\circ}\">0°</span> では青と重なる",
+    "緯線が赤道から離れると接平面内の加速度が残る"
+  ],
+  [
+    "左：北極と赤道上の二点を回る閉経路",
+    "右：同じ点で比べた出発時（青）と帰着時（赤）の矢印"
+  ],
+  [
+    "青：赤道から北極へ進む二本の経線",
+    "青い点：現在の位置。赤い線分：同じ緯度での間隔"
+  ],
+  [
+    "北極 <span class=\"inline-math\" data-tex=\"P\">P</span>：測地円の中心",
+    "緑の弧：球面上を <span class=\"inline-math\" data-tex=\"P\">P</span> から測った半径 <span class=\"inline-math\" data-tex=\"r\">r</span>",
+    "青い輪：<span class=\"inline-math\" data-tex=\"P\">P</span> からの距離が <span class=\"inline-math\" data-tex=\"r\">r</span> の点の集合。赤道までの距離は <span class=\"inline-math\" data-tex=\"\\pi /2\">π/2</span>"
+  ],
+  [
+    "横向きの矢印：方向別の相対加速度係数",
+    "右向き：粒子間隔を広げる。左向き：狭める",
+    "下の断面図：初期形状と短時間後の近似を比較"
+  ],
+  [
+    "時間の行は符号を反転して描く",
+    "矢印を符号付きで足すとスカラー曲率。表で Einstein テンソルの成分も確認できる"
+  ],
+  [
+    "灰：初期の円形断面。青：短時間後の近似",
+    "下の二断面で、伸びる方向・縮む方向・係数がゼロの方向を比べる"
+  ]
+];
+
+const topics=[
+["接ベクトル・接空間","曲線上の点 <span class=\"inline-math\" data-tex=\"P\">P</span> を固定し、点 <span class=\"inline-math\" data-tex=\"Q\">Q</span> を <span class=\"inline-math\" data-tex=\"P\">P</span> に近づける。赤は割線方向、緑は <span class=\"inline-math\" data-tex=\"P\">P</span> での接線。","点の間隔 <span class=\"inline-math\" data-tex=\"h\">h</span>",.02,1.3,.02,.9,h=>{
+ const P=p(0,0),Q=p(h,h*h/2);
+ return info(axes()+trace(t=>p(3*t-1.5,(3*t-1.5)**2/2))+line(p(-1.7,0),p(1.7,0),green,3)+arrow(P,p(1.5,.75*h),red)+dot(P)+dot(Q)+label(168,140,"P")+label(Q[0]+5,Q[1]-6,"Q"),"割線の傾きは "+fmt(h/2)+"。間隔を小さくすると 0 に近づく。","γ(<i>t</i>) = (<i>t</i>, <i>t</i>²/2)　　γ′(0) = (1, 0)");}],
+["多様体・座標・座標基底","接平面を拡大した図。ベクトルを固定し、座標基底だけを回す。","基底の回転角",0,180,1,35,a=>{
+ const t=rad(a),c=Math.cos(t),s=Math.sin(t);
+ return info(axes()+arrow(p(0,0),p(1.4*c,1.4*s),green)+arrow(p(0,0),p(-1.4*s,1.4*c),green)+arrow(p(0,0),p(1,.5)), "青の矢印は同じ。回した基底での成分は ("+fmt(c+.5*s)+", "+fmt(-s+.5*c)+")。","<i>v</i> = <i>v</i>¹<i>e</i>₁ + <i>v</i>²<i>e</i>₂");}],
+["ベクトル場・流れ・Lie括弧","青は <span class=\"inline-math\" data-tex=\"X\">X</span> を先に、赤は <span class=\"inline-math\" data-tex=\"Y\">Y</span> を先に行う。<span class=\"inline-math\" data-tex=\"X\">X</span> は右への移動、<span class=\"inline-math\" data-tex=\"Y\">Y</span> は今いる <span class=\"inline-math\" data-tex=\"x\">x</span> 座標に応じた上下の移動。どちらも原点から始め、それぞれの操作を時間 <span class=\"inline-math\" data-tex=\"h\">h</span> だけ行う。","各流れの時間 <span class=\"inline-math\" data-tex=\"h\">h</span>",.05,1.2,.05,.65,h=>{
+ const left=[35,170],right=[210,170],dx=86*h,dy=65*h*h;
+ const B=[left[0]+dx,170],C=[B[0],170-dy],E=[right[0]+dx,170];
+ const diagram=line([180,24],[180,216],gray,1,"4 4")+
+   label(25,27,"青：① X → ② Y")+label(200,27,"赤：① Y → ② X")+
+   line([22,170],[160,170])+line([35,190],[35,45])+
+   line([197,170],[335,170])+line([210,190],[210,45])+
+   arrow(left,B,blue)+arrow(B,C,blue)+dot(C,blue)+
+   arrow(right,E,red)+dot(right,red)+dot(E,red)+
+   label(20,192,"原点")+label(192,192,"原点")+label(199,211,"① Y：x = 0 なので動かない");
+ return info(diagram,"左：① X で (h, 0) に進み、② Y で高さが h × h だけ増える。右：① Y の時点では x = 0 なので原点に留まり、② X で (h, 0) に進む。終点の x 座標は同じで、高さの差だけが残る。","<i>X</i> = ∂ₓ　　<i>Y</i> = <i>x</i>∂ᵧ　　[<i>X</i>, <i>Y</i>] = ∂ᵧ",
+ table(["経路","終点 x","終点 y"],[["青：X → Y",fmt(h),fmt(h*h)],["赤：Y → X",fmt(h),fmt(0)]])+bracketFigure(h));}],
+["双対空間・余ベクトル","縦の線は関数 <span class=\"inline-math\" data-tex=\"f = x\">f = x</span> の等高線。矢印を回して、余ベクトル df が返す値を見る。","矢印の角度",0,360,1,30,a=>{
+ const t=rad(a);
+ return info([-2,-1,0,1,2].map(x=>line(p(x,-1.4),p(x,1.4))).join("")+arrow(p(0,0),p(1.4*Math.cos(t),1.4*Math.sin(t))),"右向きで正、左向きで負、等高線と平行ならゼロ。現在の値は "+fmt(Math.cos(t))+"。","d<i>f</i>(<i>v</i>) = d<i>x</i>(<i>v</i>) = cos θ");}],
+["テンソル・縮約","同じ対称な双線形形式を、回転する正規直交基底で表示する。楕円はその形式の等値線。","基底の回転角",0,180,1,35,a=>{
+ const c=Math.cos(rad(a)),s=Math.sin(rad(a)),u=2*c*c+s*s,w=2*s*s+c*c,v=-s*c;
+ return info(axes()+ellipse(180,120,65/Math.sqrt(2),65,blue)+arrow(p(0,0),p(c,s),green)+arrow(p(0,0),p(-s,c),green),"成分は変わるが、この正規直交基底での対角成分の和は 3。","tr <i>A</i> = "+fmt(u)+" + "+fmt(w)+" = 3","<h3>回転後の行列 A′</h3>"+table(["成分","1","2"],[["1",fmt(u),fmt(v)],["2",fmt(v),fmt(w)]]));}],
+["計量・ローレンツ計量","光速を 1 とした時空図。縦軸を時間、横軸を空間とし、ベクトルの時間成分を固定する。","空間成分",0,1.8,.05,.6,x=>{
+ const g=x*x-1;
+ return info(line(p(-2,0),p(2,0))+line(p(0,-1.45),p(0,1.45))+line(p(-1.45,-1.45),p(1.45,1.45),green)+line(p(-1.45,1.45),p(1.45,-1.45),green)+arrow(p(0,0),p(x,1))+label(187,29,"時間")+label(318,114,"空間"),"現在のベクトルは "+(Math.abs(g)<1e-8?"光的":g<0?"時間的":"空間的")+"。緑は光の方向。","<i>g</i>(<i>v</i>, <i>v</i>) = −1 + "+fmt(x)+"² = "+fmt(g));}],
+["接続・共変微分","単位円の接ベクトルを、角度に応じて伸縮させる。点 <span class=\"inline-math\" data-tex=\"P\">P</span> は右端に固定する。","長さの振幅 <span class=\"inline-math\" data-tex=\"a\">a</span>",0,.9,.05,.4,a=>{
+ const P=p(1,0);
+ return info(ellipse(180,120,65,65)+line(p(1,-1.3),p(1,1.3),gray,1,"4 4")+arrow(P,p(1,1),blue)+arrow(P,p(0,a),red)+arrow(P,p(1,a),green)+line(p(0,a),p(1,a),gray,1,"4 4")+dot(P),"緑は接線への射影。赤の通常の微分には、左向きの法線成分も含まれる。","d<i>Y</i>/dθ = (−1, "+fmt(a)+")　　D<i>Y</i>/dθ = (0, "+fmt(a)+")",'<p><a href="../covariant-derivative/">単位円と球面の共変微分を詳しく見る</a></p>');}],
+["Levi-Civita 接続・捩率","平坦な平面の極座標を使う。半径を変えて記号の値を比較する。この接続の捩率はゼロで、下付き添字を交換した記号は等しい。","半径 <span class=\"inline-math\" data-tex=\"r\">r</span>",.35,2,.05,1,r=>{
+ const P=[180+44*r,120];
+ return info(axes()+ellipse(180,120,44*r,44*r,green)+dot(P)+arrow(P,[P[0],P[1]-44*r],blue)+label(P[0]+7,P[1]+15,"P")+label(P[0]+7,P[1]-44*r,"∂θ"),"直交座標では記号はすべてゼロ。極座標では下の値になるが、平面の曲率はゼロのまま。","Γ<sup><i>r</i></sup><sub>θθ</sub> = −<i>r</i> = "+fmt(-r)+"　　Γ<sup>θ</sup><sub><i>r</i>θ</sub> = Γ<sup>θ</sup><sub>θ<i>r</i></sub> = "+fmt(1/r));}],
+["平行移動","平面内の円弧に沿って、同じ向きの青い矢印を運ぶ。緑は経路の接線方向。","経路上の角度",0,180,1,60,a=>{
+ const t=rad(a),x=Math.cos(t),y=Math.sin(t),P=p(x,y);
+ return info(ellipse(180,120,65,65)+arrow(p(1,0),p(1.7,.3))+arrow(P,p(x+.7,y+.3))+arrow(P,p(x-.55*y,y+.55*x),green)+dot(P),"経路が曲がっても、平面の平行移動では青い矢印の向きと長さが保たれる。","D<i>V</i>/d<i>t</i> = 0");}],
+["測地線・アフィンパラメータ","単位球面を正面から投影した模式図。赤道は大円、選んだ緯線は一般に小円。","緯度",0,70,1,35,a=>{
+ const t=rad(a);
+ return info(sphereCircle(Math.PI/2-t,true),"緯度 0° の赤道は測地線。一定の速さで緯線をたどると、赤道以外では接平面内にも加速度が残る。","<i>k</i><sub><i>g</i></sub> = |tan φ| = "+fmt(Math.tan(t)));}],
+["Riemann 曲率・ホロノミー","赤道上の <span class=\"inline-math\" data-tex=\"P\">P</span> を出発し、赤道を東へ進んで <span class=\"inline-math\" data-tex=\"Q\">Q</span>、経線を北へ進んで <span class=\"inline-math\" data-tex=\"N\">N</span>（北極）、別の経線を南へ進んで <span class=\"inline-math\" data-tex=\"P\">P</span> に戻る。右図は <span class=\"inline-math\" data-tex=\"P\">P</span> での矢印を、横が東、縦が北の座標で示す。","赤道上の経度差",10,120,1,90,a=>{
+ const t=rad(a);
+ return info(transportLoop(a),"この向きに一周すると、平行移動した矢印は回る。単位球で回転角の大きさは囲んだ面積と等しい。","面積 = "+fmt(t)+"　　回転角 = "+a+"°");}],
+["測地線偏差・Jacobi 場","単位球の赤道から北へ進む近接した二本の経線。下の線分は、同じ緯度で測った経線間の距離。","進んだ角度",0,90,1,40,a=>{
+ const t=rad(a),w=52*Math.cos(t);
+ return info(ellipse(180,105,81,81)+trace(z=>[180-52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+trace(z=>[180+52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+dot([180-w,105-81*Math.sin(t)])+dot([180+w,105-81*Math.sin(t)])+line([180-w,207],[180+w,207],red,3),"赤道での微小な間隔を 1 とすると、一次近似での比は "+fmt(Math.cos(t))+"。北極で経線は合流する。","<i>j</i>(<i>s</i>)/<i>j</i>(0) = cos <i>s</i>");}],
+["断面曲率・Gauss 曲率","北極 <span class=\"inline-math\" data-tex=\"P\">P</span> を中心に、球面上で距離 <span class=\"inline-math\" data-tex=\"r\">r</span> だけ離れた点を集める。緑の弧は球面に沿って測る半径、青い輪はその距離にある点の集合。下の線分で、同じ半径の平面の円と周長を比べる。","測地半径 <span class=\"inline-math\" data-tex=\"r\">r</span>",.1,1.5,.05,.9,r=>{
+ const s=Math.sin(r);
+ return info(sphereCircle(r),"球上の周長は "+fmt(2*Math.PI*s)+"、平面では "+fmt(2*Math.PI*r)+"。球上のほうが短い。","<i>L</i><sub>球</sub> = 2π sin <i>r</i>　　<i>L</i><sub>平面</sub> = 2π<i>r</i>",'<p>同じ測地半径での周長を比較する。</p><svg viewBox="0 0 360 125" role="img" aria-label="単位球と平面での測地円の周長を比較">'+label(25,26,"単位球")+line([25,42],[25+195*s,42],blue,5)+label(25,77,"平面")+line([25,93],[25+195*r,93],green,5)+'</svg><div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>単位球上の周長</span></li><li><span class="figure-key " style="--key:var(--green)" aria-hidden="true"></span><span>平面上の周長</span></li></ul></div><p><a href="../surface-curvature/">法曲率と Gauss 曲率の断面図を開く</a></p>');}],
+["Ricci テンソル","自由落下する粒子群を、局所的な三つの直交方向で見る。青・赤・緑は方向別の相対加速度係数。正は伸び、負は縮み。","第3方向の係数",-.9,.9,.05,-.3,k=>{
+ const values=[.6,-.3,k],total=values.reduce((a,b)=>a+b,0);
+ return info(line([180,28],[180,210])+values.map((v,i)=>label(28,59+i*57,"方向 "+(i+1))+arrow([180,55+i*57],[180+120*v,55+i*57],[blue,red,green][i])).join(""),"三方向の和は "+fmt(total)+"。初期の相対速度がゼロなら、この和は体積の初期加速度を初期体積で割った値になる。","−Ric(<i>u</i>, <i>u</i>) = "+values.map(x=>"("+fmt(x)+")").join(" + ")+" = "+fmt(total));}],
+["スカラー曲率・Einstein テンソル","局所正規直交基底で Ricci テンソルが対角形の例。時間成分は計量の符号が負なので、トレースを取るときに符号を反転する。","Ricci の時間成分", -2,2,.1,1,q=>{
+ const vals=[q,1,2,0],sum=3-q,con=[-q,1,2,0];
+ return info(line([180,25],[180,220])+con.map((v,i)=>label(25,50+i*49,["時間","空間1","空間2","空間3"][i])+arrow([180,46+i*49],[180+60*v,46+i*49],i===0?red:blue)).join(""),"矢印は符号を反映した各成分。足し合わせたスカラー曲率は "+fmt(sum)+"。","<i>R</i> = −<i>R</i>₀₀ + <i>R</i>₁₁ + <i>R</i>₂₂ + <i>R</i>₃₃　　<i>G</i> = Ric − ½<i>R g</i>",table(["方向","Ric の対角成分","G の対角成分"],vals.map((v,i)=>[i===0?"時間":"空間 "+i,fmt(v),fmt(v-(i===0?-1:1)*sum/2)])));}],
+["Weyl 曲率","真空の潮汐作用を表す局所モデル。初期の球を、横に伸ばし縦に縮める。奥行き方向の係数はゼロとする。","経過時間 <span class=\"inline-math\" data-tex=\"\\tau\">τ</span>（短時間）",0,.65,.01,.55,t=>{
+ const a=t*t/2;
+ return info(ellipse(180,120,65,65,gray)+ellipse(180,120,65*(1+a),65*(1-a),blue)+line(p(-1.6,0),p(1.6,0),gray,1,"4 4"),"灰色は初期形状、青は短時間近似。方向別の初期相対加速度係数の和はゼロだが、形は変わる。","(+1) + (−1) + 0 = 0");}]
+];
+const definitions = [
+  [
+    "曲線の速度として接ベクトルを表す。同じ点を通る曲線のうち、その点での速度が同じものは同じ接ベクトルを表す。点 <span class=\"inline-math\" data-tex=\"P\">P</span> で可能な速度全体が接空間である。",
+    "<i>v</i> = γ′(0) = lim<sub><i>h</i>→0</sub> [γ(<i>h</i>) − γ(0)]/<i>h</i>",
+    "曲線 <span class=\"inline-math\" data-tex=\"\\gamma (t) = (t, t^{2}/2)\">γ(<i>t</i>) = (<i>t</i>, <i>t</i>²/2)</span> の差商を計算する。"
+  ],
+  [
+    "座標は多様体の近傍を開集合へ写す。座標基底は各座標だけを変えた曲線の速度である。図では接平面上の正規直交基底を回す。",
+    "<i>v</i> = Σ<sub><i>i</i></sub> <i>v</i><sup><i>i</i></sup> ∂<sub><i>i</i></sub>　　<i>v</i>′ = <i>Q</i><sup>T</sup><i>v</i>",
+    "元の基底で (1, 0.5) の矢印を、新しい基底に射影する。"
+  ],
+  [
+    "流れはベクトル場を速度とする移動である。Lie 括弧は、二つのベクトル場を微分作用素として作用させたときの交換子である。",
+    "[<i>X</i>, <i>Y</i>](<i>f</i>) = <i>X</i>(<i>Yf</i>) − <i>Y</i>(<i>Xf</i>)",
+    "青の終点の高さから赤の終点の高さを引く。右への移動量も、上下に動く時間も <span class=\"inline-math\" data-tex=\"h\">h</span> なので、高さの差は <span class=\"inline-math\" data-tex=\"h^{2}\">h²</span> になる。両方の操作の時間幅で割ると、この例ではいつでも 1 になる。"
+  ],
+  [
+    "余ベクトルは接ベクトルを実数に写す線形写像。関数の微分は、その方向に沿う変化率を返す余ベクトルである。",
+    "d<i>f</i><sub><i>p</i></sub>(<i>v</i>) = Σ<sub><i>i</i></sub> (∂<sub><i>i</i></sub><i>f</i>)(<i>p</i>) <i>v</i><sup><i>i</i></sup>",
+    "図では <span class=\"inline-math\" data-tex=\"f = x\">f = x</span> なので、矢印の <span class=\"inline-math\" data-tex=\"x\">x</span> 成分だけが寄与する。"
+  ],
+  [
+    "この例の <span class=\"inline-math\" data-tex=\"A\">A</span> は、元の基底（灰色の横軸と縦軸）で対称な双線形形式を表す行列。横方向の係数は 2、縦方向は 1、交差項は 0。<span class=\"inline-math\" data-tex=\"Q\">Q</span> は基底を回す回転行列で、第1列と第2列は緑の矢印を元の基底で表した成分。<span class=\"inline-math\" data-tex=\"A&#x27;\">A′</span> は、同じ双線形形式を回転後の基底で表した行列。 縮約では上付きと下付きの添字を一組選んで和を取る。この例ではトレースがそれにあたる。",
+    "<i>A</i>′ = <i>Q</i><sup>T</sup><i>AQ</i>　　tr <i>A</i> = Σ<sub><i>i</i></sub> <i>A</i><sup><i>i</i></sup><sub><i>i</i></sub>",
+    "角度を変えて対角成分の変化と、その和を比べる。"
+  ],
+  [
+    "計量は二つの接ベクトル <span class=\"inline-math\" data-tex=\"u, v\">u, v</span> に一つの数 <span class=\"inline-math\" data-tex=\"g(u,v)\">g(u,v)</span> を対応させる。添字 <span class=\"inline-math\" data-tex=\"\\mu , \\nu\">μ, ν</span> は基底の方向を表し、<span class=\"inline-math\" data-tex=\"g_{\\mu\\nu}\">gμν</span> は <span class=\"inline-math\" data-tex=\"\\mu\">μ</span> 方向と <span class=\"inline-math\" data-tex=\"\\nu\">ν</span> 方向の基底ベクトルを計量に入れた値。この図では基底を時間 <span class=\"inline-math\" data-tex=\"t\">t</span>、空間 <span class=\"inline-math\" data-tex=\"x\">x</span> の順に並べ、時間同士は −1、空間同士は +1、時間と空間の交差項は 0 とする。",
+    "<i>g</i><sub>tt</sub> = −1, <i>g</i><sub>xx</sub> = 1, <i>g</i><sub>tx</sub> = <i>g</i><sub>xt</sub> = 0<br><i>g</i>(<i>u</i>,<i>v</i>) = −<i>u</i><sup>t</sup><i>v</i><sup>t</sup> + <i>u</i><sup>x</sup><i>v</i><sup>x</sup>",
+    "時間成分は 1。空間成分だけを動かして、光円錐の内外と符号を比べる。"
+  ],
+  [
+    "接続はベクトル場を別のベクトル場の方向に微分する規則。微分する場を関数倍するときは Leibniz 則に従う。",
+    "∇<sub><i>X</i></sub>(<i>fY</i>) = <i>X</i>(<i>f</i>)<i>Y</i> + <i>f</i>∇<sub><i>X</i></sub><i>Y</i>",
+    "単位円では、周囲の平面での微分から法線成分を除く。"
+  ],
+  [
+    "Levi-Civita 接続は計量を保つ捩率ゼロの接続。座標基底の交換子はゼロなので、捩率ゼロならクリストッフェル記号の下付き添字は対称になる。",
+    "<i>T</i>(<i>X</i>,<i>Y</i>) = ∇<sub><i>X</i></sub><i>Y</i> − ∇<sub><i>Y</i></sub><i>X</i> − [<i>X</i>,<i>Y</i>]<br>Γ<sup><i>i</i></sup><sub><i>jk</i></sub> = ½ <i>g</i><sup><i>iℓ</i></sup>(∂<sub><i>j</i></sub><i>g</i><sub><i>kℓ</i></sub> + ∂<sub><i>k</i></sub><i>g</i><sub><i>jℓ</i></sub> − ∂<sub><i>ℓ</i></sub><i>g</i><sub><i>jk</i></sub>)",
+    "極座標では <span class=\"inline-math\" data-tex=\"g\">g</span><sub><span class=\"inline-math\" data-tex=\"\\theta \\theta\">θθ</span></sub> <span class=\"inline-math\" data-tex=\"= r^{2}\">= r²</span> を微分して記号を求める。"
+  ],
+  [
+    "曲線に沿うベクトルの共変微分がゼロなら、そのベクトルは平行移動されている。",
+    "D<i>V</i><sup><i>i</i></sup>/d<i>t</i> = d<i>V</i><sup><i>i</i></sup>/d<i>t</i> + Γ<sup><i>i</i></sup><sub><i>jk</i></sub>γ̇<sup><i>j</i></sup><i>V</i><sup><i>k</i></sup> = 0",
+    "平面の直交座標では接続の補正はゼロ。経路の接線と、運ぶ矢印の成分を比べる。"
+  ],
+  [
+    "アフィンパラメータで表した測地線では、速度が曲線に沿って平行移動される。単位球の空間的な例では弧長がアフィンパラメータになる。",
+    "∇<sub>γ̇</sub>γ̇ = 0　　γ̈<sup><i>i</i></sup> + Γ<sup><i>i</i></sup><sub><i>jk</i></sub>γ̇<sup><i>j</i></sup>γ̇<sup><i>k</i></sup> = 0",
+    "緯線を単位速度で進むとき、接平面内の加速度の大きさを求める。"
+  ],
+  [
+    "Riemann 曲率は共変微分の交換差から、微分方向の非可換性による項を引いたもの。ホロノミーは閉経路に沿う平行移動が出発点の接空間に及ぼす変換である。",
+    "<i>R</i>(<i>X</i>,<i>Y</i>)<i>Z</i> = ∇<sub><i>X</i></sub>∇<sub><i>Y</i></sub><i>Z</i> − ∇<sub><i>Y</i></sub>∇<sub><i>X</i></sub><i>Z</i> − ∇<sub>[<i>X</i>,<i>Y</i>]</sub><i>Z</i>",
+    "図の測地三角形では単位球の <span class=\"inline-math\" data-tex=\"K\">K</span> が 1。回転角の大きさは面積に等しい。"
+  ],
+  [
+    "Jacobi 場は、測地線の族を変化させたときの無限小の隔たり。測地線偏差方程式は、その隔たりの共変加速度を曲率で与える。",
+    "D²<i>J</i>/d<i>s</i>² = <i>R</i>(γ̇,<i>J</i>)γ̇",
+    "単位球の経線では、横方向の符号付き成分 <span class=\"inline-math\" data-tex=\"j\">j</span> が <span class=\"inline-math\" data-tex=\"j&#x27;&#x27; = -j\">j″ = −j</span> を満たす。赤道で <span class=\"inline-math\" data-tex=\"j(0)=1\">j(0)=1</span>、<span class=\"inline-math\" data-tex=\"j&#x27;(0)=0\">j′(0)=0</span> とする。"
+  ],
+  [
+    "断面曲率は接空間の二次元平面に割り当てる曲率。以下の式は Riemann 計量の場合。二次元では接平面全体の断面曲率が Gauss 曲率になる。",
+    "<i>K</i>(<i>u</i>,<i>v</i>) = <i>g</i>(<i>R</i>(<i>u</i>,<i>v</i>)<i>v</i>,<i>u</i>) / [<i>g</i>(<i>u</i>,<i>u</i>)<i>g</i>(<i>v</i>,<i>v</i>) − <i>g</i>(<i>u</i>,<i>v</i>)²]",
+    "図では、同じ測地半径での周長の差を計算する。"
+  ],
+  [
+    "Ricci テンソルは Riemann 曲率の一つの縮約。ここでは <span class=\"inline-math\" data-tex=\"R(X,Y)Z\">R(X,Y)Z</span> の成分を <span class=\"inline-math\" data-tex=\"R\">R</span><sup><span class=\"inline-math\" data-tex=\"\\rho\">ρ</span></sup><sub><span class=\"inline-math\" data-tex=\"\\sigma \\mu \\nu\">σμν</span></sub> とし、<span class=\"inline-math\" data-tex=\"\\mu\">μ</span>、<span class=\"inline-math\" data-tex=\"\\nu\">ν</span> が <span class=\"inline-math\" data-tex=\"X\">X</span>、<span class=\"inline-math\" data-tex=\"Y\">Y</span> に対応する。",
+    "Ric<sub>σν</sub> = <i>R</i><sup>ρ</sup><sub>σρν</sub>",
+    "時間的単位ベクトル <span class=\"inline-math\" data-tex=\"u\">u</span> に沿う観測者が測った、三方向の潮汐加速度係数を足す。"
+  ],
+  [
+    "スカラー曲率は逆計量を使って Ricci を縮約したもの。Einstein テンソルは Ricci から計量に比例する項を引いて作る。",
+    "<i>R</i> = <i>g</i><sup>μν</sup> Ric<sub>μν</sub>　　<i>G</i><sub>μν</sub> = Ric<sub>μν</sub> − ½ <i>R g</i><sub>μν</sub>",
+    "表の時間成分には <span class=\"inline-math\" data-tex=\"g_{00} = -1\">g₀₀ = −1</span> を使う。"
+  ],
+  [
+    "Weyl テンソルは Riemann 曲率の全トレースを除いた部分。四次元で Ricci がゼロの真空領域では Riemann 曲率と一致する。",
+    "<i>C</i><sup>ρ</sup><sub>σρν</sub> = 0　　Ric = 0 ⇒ <i>C</i> = Riemann",
+    "図は方向別の初期係数が (+1, −1, 0) の短時間モデル。球の半径を 1 とし、横と縦の半径を時間の二次まで計算する。"
+  ]
+];
+const calculations = [h=>"Δγ/<i>h</i> = (1, "+fmt(h/2)+") → (1, 0)",
+a=>{const c=Math.cos(rad(a)),s=Math.sin(rad(a));return "<i>v</i>′ = ("+fmt(c)+" + 0.5 × "+fmt(s)+", "+fmt(-s)+" + 0.5 × "+fmt(c)+") ≈ ("+fmt(c+.5*s)+", "+fmt(-s+.5*c)+")";},
+h=>"Δ<i>y</i>/<i>h</i>² = ("+(h*h).toFixed(4)+" − 0) / "+(h*h).toFixed(4)+" = 1",
+a=>"d<i>f</i>(<i>v</i>) = 1 × cos "+a+"° + 0 × sin "+a+"° ≈ "+fmt(Math.cos(rad(a))),
+a=>{const c=Math.cos(rad(a))**2,s=Math.sin(rad(a))**2;return "tr <i>A</i> = (2 × "+fmt(c)+" + "+fmt(s)+") + (2 × "+fmt(s)+" + "+fmt(c)+") ≈ 3";},
+x=>"<i>g</i>(<i>v</i>,<i>v</i>) = "+fmt(x)+"² − 1 ≈ "+fmt(x*x-1),
+a=>"(−1, "+fmt(a)+") − (−1, 0) = (0, "+fmt(a)+")",
+r=>"Γ<sup><i>r</i></sup><sub>θθ</sub> = −½(2 × "+fmt(r)+") = "+fmt(-r)+"　　<i>T</i><sup>θ</sup><sub><i>r</i>θ</sub> ≈ "+fmt(1/r)+" − "+fmt(1/r)+" = 0",
+a=>"<i>V</i> = (0.7, 0.3)　　経路の単位接線 = ("+fmt(-Math.sin(rad(a)))+", "+fmt(Math.cos(rad(a)))+")",
+a=>"‖∇<sub>γ̇</sub>γ̇‖ = |tan "+a+"°| ≈ "+fmt(Math.tan(rad(a))),
+a=>"回転角の大きさ = ∫ <i>K</i> d<i>A</i> = 1 × ("+a+"π/180) ≈ "+fmt(rad(a))+" rad",
+a=>"<i>j</i>(<i>s</i>) = cos("+a+"π/180) ≈ "+fmt(Math.cos(rad(a)))+"　　<i>j</i>″(<i>s</i>) ≈ "+fmt(-Math.cos(rad(a))),
+r=>"Δ<i>L</i> = 2π("+fmt(r)+" − sin "+fmt(r)+") ≈ "+fmt(2*Math.PI*(r-Math.sin(r))),
+k=>"Ric(<i>u</i>,<i>u</i>) = −[0.6 − 0.3 + ("+fmt(k)+")] ≈ "+fmt(-(.3+k)),
+q=>"<i>R</i> = −("+fmt(q)+") + 1 + 2 + 0 ≈ "+fmt(3-q)+"　　<i>G</i>₀₀ = "+fmt(q)+" + ½ × "+fmt(3-q)+" ≈ "+fmt(q+(3-q)/2),
+t=>"<i>r</i><sub>横</sub> = 1 + τ²/2 ≈ "+fmt(1+t*t/2)+"　　<i>r</i><sub>縦</sub> = 1 − τ²/2 ≈ "+fmt(1-t*t/2)];
+
+const identityTex = ["v=\\gamma'(0)=\\lim_{h\\to0}\\frac{\\gamma(h)-\\gamma(0)}{h}","v=\\sum_i v^i\\partial_i,\\qquad v'=Q^\\mathsf{T}v","[X,Y](f)=X(Yf)-Y(Xf)","\\mathrm{d}f_p(v)=\\sum_i(\\partial_i f)(p)v^i","A'=Q^\\mathsf{T}AQ,\\qquad \\operatorname{tr}_g A=g^{ij}A_{ij}","\\begin{aligned}g_{\\mu\\nu}&=g(e_\\mu,e_\\nu)\\\\ (g_{\\mu\\nu})&=\\begin{pmatrix}-1&0\\\\0&1\\end{pmatrix}\\quad (t,x)\\\\ g(u,v)&=-u^t v^t+u^x v^x\\end{aligned}","\\nabla_X(fY)=X(f)Y+f\\nabla_XY","\\begin{aligned}T(X,Y)&=\\nabla_XY-\\nabla_YX-[X,Y]\\\\ \\Gamma^i{}_{jk}&=\\tfrac12g^{i\\ell}(\\partial_jg_{k\\ell}+\\partial_kg_{j\\ell}-\\partial_\\ell g_{jk})\\end{aligned}","\\frac{\\mathrm{D}V^i}{\\mathrm{d}t}=\\frac{\\mathrm{d}V^i}{\\mathrm{d}t}+\\Gamma^i{}_{jk}\\dot\\gamma^j V^k=0","\\nabla_{\\dot\\gamma}\\dot\\gamma=0,\\qquad \\ddot\\gamma^i+\\Gamma^i{}_{jk}\\dot\\gamma^j\\dot\\gamma^k=0","R(X,Y)Z=\\nabla_X\\nabla_YZ-\\nabla_Y\\nabla_XZ-\\nabla_{[X,Y]}Z","\\frac{\\mathrm{D}^2J}{\\mathrm{d}s^2}=R(\\dot\\gamma,J)\\dot\\gamma","K(u,v)=\\frac{g(R(u,v)v,u)}{g(u,u)g(v,v)-g(u,v)^2}","\\operatorname{Ric}_{\\sigma\\nu}=R^\\rho{}_{\\sigma\\rho\\nu}","\\begin{aligned}R&=g^{\\mu\\nu}\\operatorname{Ric}_{\\mu\\nu}\\\\ G_{\\mu\\nu}&=\\operatorname{Ric}_{\\mu\\nu}-\\tfrac12 Rg_{\\mu\\nu}\\end{aligned}","C^\\rho{}_{\\sigma\\rho\\nu}=0,\\qquad \\operatorname{Ric}=0\\ \\Longrightarrow\\ C=R_{\\mathrm{Riemann}}"];
+const texTokens = {
+ "γ̇":"\\dot{\\gamma}", "θ":"\\theta ", "φ":"\\phi ", "γ":"\\gamma ", "π":"\\pi ", "τ":"\\tau ",
+ "μ":"\\mu ", "ν":"\\nu ", "ρ":"\\rho ", "σ":"\\sigma ", "Γ":"\\Gamma ",
+ "∇":"\\nabla ", "∂":"\\partial ", "Δ":"\\Delta ", "∫":"\\int ",
+ "Σ":"\\sum ", "≈":"\\approx ", "→":"\\to ", "⇒":"\\Rightarrow ",
+ "−":"-", "×":"\\times ", "½":"\\tfrac{1}{2}", "‖":"\\Vert ",
+ "′":"'", "″":"''", "°":"^{\\circ}", "　":"\\quad ",
+ "cos":"\\cos ", "sin":"\\sin ", "tan":"\\tan ", "Ric":"\\operatorname{Ric} ",
+ "tr":"\\operatorname{tr} ", "rad":"\\,\\mathrm{rad}"
+};
+const subscript = {"₀":"0","₁":"1","₂":"2","₃":"3","ₓ":"x","ᵧ":"y"};
+const superscript = {"¹":"1","²":"2","³":"3"};
+function equationTex(html) {
+  return html.replace(/<sup>(.*?)<\/sup>/g,"^{$1}")
+    .replace(/<sub>(.*?)<\/sub>/g,"_{$1}").replace(/<\/?i>/g,"")
+    .replace(/γ̇|cos|sin|tan|Ric|\btr\b|\brad\b|[₀₁₂₃ₓᵧ]+|[¹²³]+|[θφγπτμνρσΓ∇∂Δ∫Σ≈→⇒−×½‖′″°　]|[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]+/gu,token=>{
+      if (token in texTokens) return texTokens[token];
+      if (token[0] in subscript) return "_{"+Array.from(token,x=>subscript[x]).join("")+"}";
+      if (token[0] in superscript) return "^{"+Array.from(token,x=>superscript[x]).join("")+"}";
+      return "\\text{"+token+"}";
+    });
+}
+function displayEquation(id, fallback, tex=equationTex(fallback)) {
+  const element=get(id);
+  if (window.katex) {
+    try {
+      window.katex.render(tex,element,{displayMode:true,throwOnError:true});
+      return;
+    } catch (error) {
+      console.warn("TeX rendering failed",id,error);
+    }
+  }
+  element.innerHTML=fallback;
+}
+
+const select=get("topic"),control=get("control");let current=0;
+topics.forEach(([name],i)=>{const option=document.createElement("option");option.value=String(i);option.textContent=(i+1)+". "+name;select.append(option);});
+
+function showBasisMatrices(angle) {
+  const box = get("basis-matrices");
+  box.hidden = current !== 4;
+  if (box.hidden) return;
+  const c = fmt(Math.cos(rad(angle)));
+  const s = fmt(Math.sin(rad(angle)));
+  const negativeS = fmt(-Math.sin(rad(angle)));
+  displayEquation("basis-values",
+    "A = [[2, 0], [0, 1]]　 Q = [["+c+", "+negativeS+"], ["+s+", "+c+"]]",
+    "\\begin{aligned} A &= \\begin{pmatrix}2&0\\\\0&1\\end{pmatrix} \\\\ " +
+    "Q(\\theta) &= \\begin{pmatrix}\\cos\\theta&-\\sin\\theta\\\\\\sin\\theta&\\cos\\theta\\end{pmatrix}" +
+    "\\approx \\begin{pmatrix}"+c+"&"+negativeS+"\\\\"+s+"&"+c+"\\end{pmatrix}\\end{aligned}");
+}
+
+function draw(){
+ const x=Number(control.value),model=topics[current][7](x);
+ get("setting").textContent=control.value;
+ get("figure").innerHTML=model.diagram;
+ const keyColors = {青: blue, 赤: red, 緑: green, 灰: gray};
+ get("diagram-notes").innerHTML = diagramNotes[current].map(note => {
+   const leadingColor = note.match(/^(?:左・|右・)?([青赤緑灰])/);
+   const color = leadingColor && keyColors[leadingColor[1]];
+   const shape = note.includes("い点") ? "point" : note.includes("矢印") || note.includes("ベクトル") ? "arrow" : "";
+   const key = color ? '<span class="figure-key ' + shape + '" style="--key:' + color + '" aria-hidden="true"></span>' : "";
+   return "<li>" + key + "<span>" + note + "</span></li>";
+ }).join("");
+ window.renderLessonMath?.(get("diagram-notes"));
+ get("readout").textContent=model.reading;
+ displayEquation("formula",model.formula);
+ get("extra").innerHTML=model.extra;
+ if (current === 13 || current === 15) get("extra").innerHTML += '<h3>粒子群の二つの断面</h3><p>初期の相対速度をゼロとし、方向別の加速度から短時間後の形を近似する。'+(current===13?" 図では経過時間を 0.5 に固定する。":"") + '</p><svg viewBox="0 0 360 190" role="img" aria-label="初期形状と変形後の粒子群の直交二断面">'+tidalShape(x,current===15)+'</svg><div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>粒子群の初期断面</span></li><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>短時間後の断面</span></li></ul></div>';
+ if (current === 2) displayEquation("bracket-operator","Yf = x → X(Yf) = 1<br>Xf = 0 → Y(Xf) = 0<br>[X,Y]f = 1 − 0 = 1","\\begin{aligned}Yf&=x\\,\\partial_y y=x,& X(Yf)&=\\partial_x x=1,\\\\ Xf&=\\partial_x y=0,& Y(Xf)&=x\\,\\partial_y 0=0,\\\\ [X,Y]f&=X(Yf)-Y(Xf)=1-0=1.\\end{aligned}");
+ showBasisMatrices(x);
+ if (current !== 5) displayEquation("calculation",calculations[current](x));
+}
+const workedSteps = [
+  [
+    "割線から接ベクトルへ",
+    "差商は点 <span class=\"inline-math\" data-tex=\"P\">P</span> から <span class=\"inline-math\" data-tex=\"Q\">Q</span> への変位を、パラメータの差で割ったもの。接空間はこの曲線の接線一本ではなく、点 <span class=\"inline-math\" data-tex=\"P\">P</span> を通るすべての曲線の速度を集めた空間である。",
+    "\\begin{aligned}\\gamma(h)-\\gamma(0)&=(h,h^2/2),\\\\ \\frac{\\gamma(h)-\\gamma(0)}h&=(1,h/2)\\xrightarrow{h\\to0}(1,0).\\end{aligned}"
+  ],
+  [
+    "基底を回したときの成分",
+    "新しい基底の二本を列に並べた行列を <span class=\"inline-math\" data-tex=\"Q\">Q</span> とする。矢印そのものを固定して、その成分だけを求め直す。座標基底 <span class=\"inline-math\" data-tex=\"\\partial _{i}\">∂ᵢ</span> は座標関数 <span class=\"inline-math\" data-tex=\"x^{j}\">xʲ</span> に作用すると、添字が一致する場合だけ 1 を返す。",
+    "\\begin{aligned}\\partial_i x^j&=\\delta_i{}^j,\\\\ v&=Qv',\\quad Q^{-1}=Q^{\\mathsf T},\\\\ v'&=\\binom{\\cos\\theta+\\tfrac12\\sin\\theta}{-\\sin\\theta+\\tfrac12\\cos\\theta}.\\end{aligned}"
+  ],
+  [
+    "二つの流れの順序を入れ替える",
+    "<span class=\"inline-math\" data-tex=\"\\Phi\">Φ</span> は指定したベクトル場に沿って時間 <span class=\"inline-math\" data-tex=\"h\">h</span> だけ進める写像。合成は右から適用する。<span class=\"inline-math\" data-tex=\"Y\">Y</span> の上下方向の速さは、その時点の <span class=\"inline-math\" data-tex=\"x\">x</span> 座標で決まる。",
+    "\\begin{aligned}\\Phi_X^h(x,y)&=(x+h,y),\\\\ \\Phi_Y^h(x,y)&=(x,y+hx),\\\\ \\Phi_Y^h\\Phi_X^h(0,0)&=(h,h^2),\\\\ \\Phi_X^h\\Phi_Y^h(0,0)&=(h,0),\\\\ [\\partial_x,x\\partial_y]f&=(\\partial_x x)\\partial_y f=\\partial_y f.\\end{aligned}"
+  ],
+  [
+    "余ベクトルは矢印に数を返す",
+    "<span class=\"inline-math\" data-tex=\"\\mathrm d x\">dx</span> と dy はそれぞれ矢印の横成分と縦成分を取り出す。図の等高線は <span class=\"inline-math\" data-tex=\"x\">x</span> が一定の線なので、縦方向に進んでも <span class=\"inline-math\" data-tex=\"f\">f</span> は変わらない。",
+    "\\begin{aligned}v&=\\cos\\theta\\,\\partial_x+\\sin\\theta\\,\\partial_y,\\\\ \\mathrm df&=\\partial_x f\\,\\mathrm dx+\\partial_y f\\,\\mathrm dy=\\mathrm dx,\\\\ \\mathrm df(v)&=\\cos\\theta.\\end{aligned}"
+  ],
+  [
+    "基底変換と縮約",
+    "<span class=\"inline-math\" data-tex=\"Q\">Q</span> の列は新しい基底ベクトル。双線形形式にその二本を入力した値が <span class=\"inline-math\" data-tex=\"A&#x27;\">A′</span> の各成分になる。対角成分を足すときは、正規直交基底なので逆計量が単位行列になる。",
+    "\\begin{aligned}A'_{ij}&=\\sum_{a,b}Q_{ai}A_{ab}Q_{bj},\\\\ A'_{11}&=2\\cos^2\\theta+\\sin^2\\theta,\\\\ A'_{22}&=2\\sin^2\\theta+\\cos^2\\theta,\\\\ \\operatorname{tr}A'&=A'_{11}+A'_{22}=3.\\end{aligned}"
+  ],
+  [
+    "光円錐を分ける境界",
+    "図では時間成分が 1。空間成分を動かして、矢印が光の方向と一致する境界を探す。",
+    "\\begin{aligned}v&=v^t e_t+v^x e_x,\\quad v^t=1,\\\\ g(v,v)&=(v^x-1)(v^x+1),\\\\ g(v,v)=0&\\iff |v^x|=1.\\end{aligned}"
+  ],
+  [
+    "単位円で法線成分を取り除く",
+    "<span class=\"inline-math\" data-tex=\"N\">N</span> は外向き単位法線、<span class=\"inline-math\" data-tex=\"T\">T</span> は進行方向の単位接ベクトル。点 <span class=\"inline-math\" data-tex=\"P\">P</span> は角度 0 に固定し、角度はラジアンで微分する。",
+    "\\begin{aligned}N&=(\\cos\\theta,\\sin\\theta),\\\\ T&=(-\\sin\\theta,\\cos\\theta),\\quad T'=-N,\\\\ Y&=(1+a\\sin\\theta)T=fT,\\\\ Y'&=f'T-fN,\\\\ \\frac{\\mathrm DY}{\\mathrm d\\theta}&=f'T.\\end{aligned}"
+  ],
+  [
+    "平面を極座標で測る",
+    "角度方向の座標基底は半径に比例して長くなる。逆計量は計量行列の逆行列。座標基底では交換子がゼロなので、捩率は接続係数の反対称部分になる。",
+    "\\begin{aligned}\\mathrm ds^2&=\\mathrm dr^2+r^2\\mathrm d\\theta^2,\\\\ \\Gamma^r_{\\theta\\theta}&=-\\tfrac12\\partial_r(r^2)=-r,\\\\ \\Gamma^\\theta_{r\\theta}=\\Gamma^\\theta_{\\theta r}&=\\tfrac1{2r^2}\\partial_r(r^2)=1/r,\\\\ T^i{}_{jk}&=\\Gamma^i{}_{jk}-\\Gamma^i{}_{kj}=0.\\end{aligned}"
+  ],
+  [
+    "経路の接線と運ぶ矢印を区別する",
+    "この図は平面の直交座標なので、基底ベクトルの向きは場所で変わらない。緑は円弧の速度、青は平行移動する別のベクトル。",
+    "\\begin{aligned}\\gamma(t)&=(\\cos t,\\sin t),\\\\ \\dot\\gamma(t)&=(-\\sin t,\\cos t),\\\\ V(t)&=(0.7,0.3),\\\\ \\frac{\\mathrm DV}{\\mathrm dt}&=\\frac{\\mathrm dV}{\\mathrm dt}=(0,0).\\end{aligned}"
+  ],
+  [
+    "緯線の加速度を接平面へ射影する",
+    "単位球の緯線で、<span class=\"inline-math\" data-tex=\"\\phi\">φ</span> は緯度、<span class=\"inline-math\" data-tex=\"s\">s</span> は弧長。経度の変化率を使って空間内の加速度を求め、外向き法線 <span class=\"inline-math\" data-tex=\"N\">N</span> に沿う成分を引く。",
+    "\\begin{aligned}\\frac{\\mathrm d\\theta}{\\mathrm ds}&=\\frac1{\\cos\\phi},\\\\ \\gamma''(s)&=-\\frac{(\\cos\\theta,\\sin\\theta,0)}{\\cos\\phi},\\\\ \\gamma''\\cdot N&=-1,\\\\ \\nabla_{\\gamma'}\\gamma'&=\\gamma''+N,\\quad \\|\\nabla_{\\gamma'}\\gamma'\\|=|\\tan\\phi|.\\end{aligned}"
+  ],
+  [
+    "三角形の面積と平行移動の回転",
+    "経度差を <span class=\"inline-math\" data-tex=\"\\Delta \\theta\">Δθ</span> とし、二本の経線と赤道で囲む。赤道の二つの内角は直角。北極の内角は <span class=\"inline-math\" data-tex=\"\\Delta \\theta\">Δθ</span>。単位球では曲率は 1 なので、角度超過・面積・回転角の大きさが一致する。",
+    "\\begin{aligned}A&=\\tfrac\\pi2+\\tfrac\\pi2+\\Delta\\theta-\\pi=\\Delta\\theta,\\\\ |\\Delta\\psi|&=\\int_A K\\,\\mathrm dA=A\\quad(K=1).\\end{aligned}"
+  ],
+  [
+    "測地線の間隔がどう変わるか",
+    "弧長 <span class=\"inline-math\" data-tex=\"s\">s</span> を赤道から測る。<span class=\"inline-math\" data-tex=\"j\">j</span> は近接する経線の隔たりを初期値で割った、平行な横方向基底での成分。北極に近づくと <span class=\"inline-math\" data-tex=\"j\">j</span> がゼロに向かう。",
+    "\\begin{aligned}j''+j&=0,\\qquad j(0)=1,\\quad j'(0)=0,\\\\ j(s)&=\\cos s,\\quad j''(s)=-\\cos s.\\end{aligned}"
+  ],
+  [
+    "測地円の周長に現れる曲率",
+    "<span class=\"inline-math\" data-tex=\"r\">r</span> は曲面に沿って中心から測る半径。球面では、その測地円を空間内で見た半径は <span class=\"inline-math\" data-tex=\"\\sin  r\">sin r</span>。小さな <span class=\"inline-math\" data-tex=\"r\">r</span> では、平面との差の最初の項が曲率に対応する。",
+    "\\begin{aligned}L_{\\rm sphere}(r)&=2\\pi\\sin r=2\\pi r-\\tfrac\\pi3r^3+O(r^5),\\\\ L_{\\rm plane}(r)&=2\\pi r,\\\\ L_{\\rm plane}(r)-L_{\\rm sphere}(r)&=\\tfrac\\pi3r^3+O(r^5).\\end{aligned}"
+  ],
+  [
+    "三方向の潮汐加速度を足す",
+    "<span class=\"inline-math\" data-tex=\"u\">u</span> は自由落下する基準観測者の四元速度。<span class=\"inline-math\" data-tex=\"e_{i}\">eᵢ</span> はその観測者と直交する空間の正規直交基底。<span class=\"inline-math\" data-tex=\"\\lambda _{i}\">λᵢ</span> は <span class=\"inline-math\" data-tex=\"e_{i}\">eᵢ</span> 方向の隔たり一単位あたりの相対加速度。最初に粒子間の相対速度をゼロにして体積の加速度を読む。",
+    "\\begin{aligned}\\lambda_i&=g(R(u,e_i)u,e_i),\\\\ \\operatorname{Ric}(u,u)&=\\sum_{i=1}^3 g(R(e_i,u)u,e_i),\\\\ &=-\\sum_{i=1}^3\\lambda_i,\\\\ V(\\tau)/V(0)&=1+\\tfrac12(\\lambda_1+\\lambda_2+\\lambda_3)\\tau^2+o(\\tau^2).\\end{aligned}"
+  ],
+  [
+    "符号付きのトレースから <span class=\"inline-math\" data-tex=\"G\">G</span> へ",
+    "時間と三つの空間方向を並べた正規直交基底で計算する。時間成分は逆計量で縮約すると負号が付き、<span class=\"inline-math\" data-tex=\"G_{00}\">G₀₀</span> を作るときは計量の時間成分が −1 になる。",
+    "\\begin{aligned}g^{00}&=-1,\\qquad g^{11}=g^{22}=g^{33}=1,\\\\ R&=-\\operatorname{Ric}_{00}+\\sum_{i=1}^3\\operatorname{Ric}_{ii},\\\\ G_{00}&=\\operatorname{Ric}_{00}+\\tfrac12R.\\end{aligned}"
+  ],
+  [
+    "トレースゼロでも形は変わる",
+    "<span class=\"inline-math\" data-tex=\"\\tau\">τ</span> は基準観測者の固有時間。図の三方向の係数は 1、−1、0。時間の二次までなら、横の伸びと縦の縮みが体積では相殺される。",
+    "\\begin{aligned}r_i(\\tau)&=1+\\tfrac12\\lambda_i\\tau^2+o(\\tau^2),\\\\ \\lambda_1+\\lambda_2+\\lambda_3&=1-1+0=0,\\\\ V(\\tau)/V(0)&=1+o(\\tau^2).\\end{aligned}"
+  ]
+];
+function showWorkedSteps(i) {
+ const [title, text, tex] = workedSteps[i];
+ get("steps-title").innerHTML=title;
+ get("steps-text").innerHTML=text;
+ displayEquation("steps-math","",tex);
+}
+const firstExperiments = [
+  "<span class=\"inline-math\" data-tex=\"h\">h</span> を最小にする。赤い割線の方向が緑の接線とほぼ一致し、差商の縦成分も 0 に近づく。",
+  "<span class=\"inline-math\" data-tex=\"90^{\\circ}\">90°</span> にする。青い矢印はその場に残り、緑の基底での成分は (0.5, −1) になる。",
+  "<span class=\"inline-math\" data-tex=\"h\">h</span> を半分にする。終点での高さの差は 1/4 になるが、その差を <span class=\"inline-math\" data-tex=\"h^{2}\">h²</span> で割った値は 1 のまま。",
+  "矢印を <span class=\"inline-math\" data-tex=\"0^{\\circ}\">0°</span>、<span class=\"inline-math\" data-tex=\"90^{\\circ}\">90°</span>、<span class=\"inline-math\" data-tex=\"180^{\\circ}\">180°</span> に向ける。等高線に直交する方向と平行な方向で、値が 1、0、−1 に変わる。",
+  "<span class=\"inline-math\" data-tex=\"0^{\\circ}\">0°</span> と <span class=\"inline-math\" data-tex=\"90^{\\circ}\">90°</span> を比べる。行列の対角成分は入れ替わるが、和は 3 のまま。",
+  "空間成分を 1 にする。青い矢印が緑の斜線と重なり、計量の値は 0 になる。",
+  "<span class=\"inline-math\" data-tex=\"a\">a</span> を 0 にする。赤い微分の矢印は左向きのまま、緑の接線成分はゼロになる。",
+  "半径を 1 から 2 にする。青い座標基底の長さは倍になる。二種類の接続係数はそれぞれ −2 と 1/2 になる。",
+  "角度を <span class=\"inline-math\" data-tex=\"90^{\\circ}\">90°</span> にする。緑の接線は左を向くが、運んだ青い矢印は出発時と同じ向き。",
+  "緯度を <span class=\"inline-math\" data-tex=\"0^{\\circ}\">0°</span> にする。青い緯線が赤道と重なり、接平面内の加速度がゼロになる。",
+  "経度差を <span class=\"inline-math\" data-tex=\"90^{\\circ}\">90°</span> にする。赤道から北極を回って出発点に戻ると、右の二本の矢印は直角になる。",
+  "進んだ角度を <span class=\"inline-math\" data-tex=\"60^{\\circ}\">60°</span> にする。赤い間隔は出発時の半分。<span class=\"inline-math\" data-tex=\"90^{\\circ}\">90°</span> で二本の経線が合流する。",
+  "<span class=\"inline-math\" data-tex=\"r\">r</span> を小さくする。北極を囲む輪が縮み、球と平面の周長差も小さくなる。",
+  "第3方向の係数を −0.3 にする。三方向の和はゼロだが、二つの断面では形が変わる。",
+  "Ricci の時間成分を増やす。時間の行は負号を付けて足すので、スカラー曲率は下がる。",
+  "時間を 0 から増やす。灰色の初期形状に対し、青は横に伸びて縦に縮む。係数の和はゼロのまま。"
+];
+function show(i){
+ current=i;select.value=String(i);
+ const [name,intro,param,min,max,step,value]=topics[i];
+ get("title").textContent=(i+1)+". "+name;get("intro").innerHTML=intro;get("parameter").innerHTML=param;
+ Object.assign(control,{min,max,step,value});
+ const [definition, identity, context] = definitions[i];
+ get("definition").innerHTML=definition;
+ displayEquation("identity",identity,identityTex[i]);
+ showWorkedSteps(i);
+ get("calculation-context").innerHTML=context;
+ get("calculation-section").hidden=i===5;
+ get("try-first").innerHTML=firstExperiments[i];
+ get("prev").disabled=i===0;get("next").disabled=i===topics.length-1;
+ window.renderLessonMath?.(document.querySelector("main"));
+ history.replaceState(null,"","#"+(i+1));draw();document.dispatchEvent(new CustomEvent("geometrychange"));
+}
+select.addEventListener("change",()=>show(Number(select.value)));
+get("prev").addEventListener("click",()=>show(current-1));
+get("next").addEventListener("click",()=>show(current+1));
+control.addEventListener("input",draw);
+function fromHash(){
+ const i=Number(location.hash.slice(1))-1;show(Number.isInteger(i)&&i>=0&&i<topics.length?i:0);
+}
+window.addEventListener("hashchange",fromHash);fromHash();
+window.addEventListener("DOMContentLoaded",()=>{displayEquation("identity",definitions[current][1],identityTex[current]);showWorkedSteps(current);draw();});
+</script></body></html>
+
+

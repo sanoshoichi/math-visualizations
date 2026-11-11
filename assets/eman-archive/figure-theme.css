@@ -1,0 +1,84 @@
+:root {
+  color-scheme: dark;
+  --paper: #000;
+  --ink: #f1f3f5;
+  --muted: #b9c3ca;
+  --line: #46515a;
+  --wash: #151c21;
+  --blue: #8bc5ff;
+  --red: #ff9aaf;
+  --green: #83dfb2;
+  --gold: #ffd479;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body { background: var(--paper); color: var(--ink); }
+a { color: var(--blue); }
+a:hover { color: var(--red); }
+.chapter-bar, .controls { background: var(--paper); }
+select, button { background: #14191e; color: var(--ink); border-color: #697782; }
+.tabs button[aria-selected=true] { background: var(--blue); color: #061521; }
+.review { background: #201b12; }
+.review summary { color: var(--gold); }
+#circle-panel { color-scheme: dark; }
+
+.figure-legend {
+  padding: .55rem .7rem;
+  margin: .35rem 0 1rem;
+  border: 1px solid var(--line);
+  border-radius: .45rem;
+  background: var(--wash);
+  font-size: .87rem;
+  line-height: 1.55;
+}
+.figure-legend strong { display: block; margin-bottom: .25rem; }
+.figure-legend ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.figure-legend li { display: flex; gap: .45rem; align-items: baseline; }
+.figure-key {
+  display: inline-block;
+  position: relative;
+  flex: 0 0 1.35rem;
+  width: 1.35rem;
+  border-top: 2px solid var(--key, var(--muted));
+  transform: translateY(-.2em);
+}
+.figure-key.dash { border-top-style: dashed; }
+.figure-key.point { border: 0; }
+.figure-key.point::after {
+  content: "";
+  position: absolute;
+  left: .42rem;
+  top: -.23rem;
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--key, var(--muted));
+}
+.figure-key.arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -.32rem;
+  width: .45rem;
+  height: .45rem;
+  border-top: 2px solid var(--key, var(--muted));
+  border-right: 2px solid var(--key, var(--muted));
+  transform: rotate(45deg);
+}
+.figure-key.plane {
+  height: .58em;
+  border: 1px dashed var(--key, var(--muted));
+  background: color-mix(in srgb, var(--key, var(--muted)) 25%, transparent);
+  transform: none;
+}
+#train-coordinates text { font-size: 13px; }
+.train-time-control { min-height: 44px; }
+.train-time-control input { accent-color: var(--gold); }
