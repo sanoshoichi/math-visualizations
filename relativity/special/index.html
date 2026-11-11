@@ -20,7 +20,13 @@
 <div class="equation" data-tex="\begin{aligned}\gamma&amp;=(1-\beta^2)^{-1/2},\\ t'&amp;=\gamma(t-\beta x),\qquad x'=\gamma(x-\beta t).\end{aligned}">γ = 1/√(1−β²),　 t′ = γ(t−βx),　 x′ = γ(x−βt)</div>
 <div class="controls"><label>相対速度 β <output id="beta-value"></output><input id="beta" type="range" min="-.8" max=".8" step=".05" value=".5"></label></div>
 <svg id="diagram" viewBox="0 0 360 240" role="img" aria-label="光円錐、二つの座標軸、同時刻の出来事 A と B"></svg>
+<p><strong>点 C</strong> は、線路の時計が <i>t</i> = 1 を示すときに列車の原点が通る出来事。青い <i>t</i>′ 軸上の O から C までを、第3節で列車の時計の固有時を計算する例に使う。</p>
 <h3>二つのランプの時刻を比べる</h3><p>赤い A と B が左と右のランプの発光。線路では両方が時刻 0.6 に光る。表の時刻は、発光した場所に対応する同期時計の読みを示す。図の灰色は線路の軸、青は列車の軸、緑の破線は光の軌跡。</p><p>B の座標から A の座標を引く。線路では時間差がゼロなので、列車での時間差には位置差の項だけが残る。</p><div class="equation" data-tex="\Delta t'=\gamma(\Delta t-\beta\Delta x)=-1.6\,\gamma\beta.">Δt′ = γ(Δt−βΔx) = −1.6γβ。</div>
+<h4>図で A・B の時刻を読む</h4>
+<p>赤い点 A・B から、<strong><i>x</i>′ 軸に平行な線</strong>を引く。その線と <i>t</i>′ 軸が交わるところが、列車の原点の時計で同じ時刻を示す点。<i>t</i>′ 軸への紙面上の垂線で読む方法は、二つの軸が直角に見える β = 0 の場合に一致する。</p>
+<div class="equation" data-tex="\begin{aligned}t'&amp;=\gamma(t-\beta x),\\ t'=\text{一定}&amp;\quad\Longleftrightarrow\quad t=\beta x+t'/\gamma.\end{aligned}">t′ = γ(t−βx)。t′ を一定にすると、t = βx+t′/γ。</div>
+<p>下の図の赤い破線は、それぞれ A・B と同じ <i>t</i>′ の出来事を結ぶ。青い軸の目盛り 1 は、列車の原点の時計が <i>t</i>′ = 1 を示す点。表と図の値は同じ式から求める。</p>
+<svg id="time-projection" viewBox="0 0 360 316" role="img" aria-label="AとBからx′軸に平行な線を引き、t′軸で列車の時刻を読む図"></svg>
 <table><thead><tr><th scope="col">出来事</th><th scope="col">t</th><th scope="col">x</th><th scope="col">t′</th><th scope="col">x′</th></tr></thead><tbody>
 <tr><th scope="row">A</th><td>0.6</td><td>−0.8</td><td id="at"></td><td id="ax"></td></tr><tr><th scope="row">B</th><td>0.6</td><td>0.8</td><td id="bt"></td><td id="bx"></td></tr></tbody></table>
 <p class="reading">β を 0 にすると A と B は同時。β の符号を反転すると Δt′ の符号も反転し、順序が入れ替わる。<output id="simul"></output></p></section>
@@ -82,10 +88,38 @@ function formulas(){if(window.katex)for(const el of document.querySelectorAll("[
 window.addEventListener("DOMContentLoaded",formulas);
 
 const beta=get("beta"),P=(x,t)=>[180+61*x,122-61*t];
+
+function drawTimeProjection(beta,gamma,timeA,timeB){
+ const toAxis=time=>[beta*gamma*time,gamma*time];
+ const A=toAxis(timeA),B=toAxis(timeB);
+ const top=Math.max(1.6,A[1],B[1],gamma)+.27;
+ const scale=Math.min(68,217/top,132/Math.max(1,Math.abs(beta)*top));
+ const point=(x,t)=>[157+scale*x,266-scale*t];
+ const xEnd=Math.abs(beta)>0?.5/Math.abs(beta):2;
+ const left=beta>0?-Math.min(2,xEnd):-2;
+ const right=beta<0?Math.min(2,xEnd):2;
+ const axisA=point(...A),axisB=point(...B),mark=point(beta*gamma,gamma);
+ const coincide=Math.abs(timeA-timeB)<1e-8;
+ const axisLabel=(p,name)=>text(p[0]+7,p[1]-7,name);
+ get("time-projection").innerHTML=
+  line(point(-2,0),point(2,0))+line(point(0,-.5),point(0,top))+
+  line(point(left,beta*left),point(right,beta*right),blue,2)+
+  line(point(-.5*beta,-.5),point(beta*top,top),blue,2)+
+  line(point(-.8,.6),axisA,red,2,"5 4")+line(point(.8,.6),axisB,red,2,"5 4")+
+  dot(point(-.8,.6),red)+dot(point(.8,.6),red)+dot(axisA,red)+dot(axisB,red)+
+  line([mark[0]-4,mark[1]],[mark[0]+4,mark[1]],blue,2)+text(mark[0]-15,mark[1]+4,"1")+
+  text(point(-.8,.6)[0]-15,point(-.8,.6)[1]+15,"A")+text(point(.8,.6)[0]+6,point(.8,.6)[1]+15,"B")+
+  (coincide?axisLabel(axisA,"t′(A) = t′(B) = "+fmt(timeA)):
+    axisLabel(axisA,"t′(A) = "+fmt(timeA))+axisLabel(axisB,"t′(B) = "+fmt(timeB)))+
+  text(point(beta*top,top)[0]+7,point(beta*top,top)[1]+2,"t′")+
+  text(point(right,beta*right)[0]+5,point(right,beta*right)[1]+13,"x′");
+}
+
 function draw(){
  const b=Number(beta.value),g=1/Math.sqrt(1-b*b);
  const boost=(t,x)=>[g*(t-b*x),g*(x-b*t)];
  const A=boost(.6,-.8),B=boost(.6,.8);
+ drawTimeProjection(b,g,A[0],B[0]);
  get("beta-value").textContent=fmt(b);
  for(const [id,value] of [["at",A[0]],["ax",A[1]],["bt",B[0]],["bx",B[1]]])get(id).textContent=fmt(value);
  get("simul").textContent=" 現在の Δt′（B − A）= "+fmt(B[0]-A[0])+"。";
@@ -95,7 +129,7 @@ function draw(){
   line(P(-1.55,-1.55),P(1.55,1.55),green,1.3,"4 4")+line(P(1.55,-1.55),P(-1.55,1.55),green,1.3,"4 4")+
   line(P(-2,-2*b),P(2,2*b),blue,2)+line(P(-1.55*b,-1.55),P(1.55*b,1.55),blue,2)+
   line(P(-.8,.6),P(.8,.6),red,1,"4 4")+dot(P(-.8,.6),red)+dot(P(.8,.6),red)+dot(P(b,1),blue)+
-  text(123,79,"A")+text(234,79,"B")+text(P(b,1)[0]+7,59,"C")+text(321,126,"x")+text(185,19,"t")+
+  text(166,140,"O")+text(123,79,"A")+text(234,79,"B")+text(P(b,1)[0]+7,59,"C")+text(321,126,"x")+text(185,19,"t")+
   text(P(2,2*b)[0]+4,P(2,2*b)[1]-6,"x′")+text(P(1.55*b,1.55)[0]+8,32,"t′");
 }
 beta.addEventListener("input",draw);draw();
