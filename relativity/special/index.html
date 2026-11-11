@@ -1,37 +1,38 @@
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>特殊相対性理論</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><style>:root{color-scheme:light dark;--blue:light-dark(#12579c,#8ac6ff);--red:light-dark(#a42f52,#ff9ab6);--green:light-dark(#126947,#7de0ab)}body{max-width:43rem;margin:auto;padding:1rem;font:1rem/1.65 system-ui,sans-serif}h1{font-size:1.65rem}h2{font-size:1.25rem}h1,h2,p{margin:.6rem 0}section{margin:1.4rem 0}nav{display:flex;gap:.7rem;flex-wrap:wrap}.controls{position:sticky;top:0;background:Canvas;z-index:1;border-bottom:1px solid GrayText}label{display:flex;align-items:center;gap:.55rem;min-height:44px;flex-wrap:wrap}input{flex:1;min-width:8rem;min-height:44px}svg{display:block;width:100%;max-height:255px}svg text{fill:CanvasText;font:12px system-ui}.equation{text-align:center;font:1.1rem/1.5 serif}.katex-display{overflow-x:auto;overflow-y:hidden;padding:.15rem 0}.reading{padding:.4rem .65rem;border-inline-start:3px solid var(--blue)}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;text-align:right;padding:.3rem}th:first-child{text-align:left}.derivation-figure{margin:1rem 0}.derivation-figure figcaption{font-size:.92rem}.derivation-figure svg{height:auto}
 </style></head><body><main><nav aria-label="相対論の学習ページ"><a href="../../">数学の可視化一覧</a><a href="../special/">特殊相対性理論</a><a href="../general/">一般相対性理論</a><a href="../../differential-geometry/general-relativity/">相対論のための微分幾何学</a></nav><h1>特殊相対性理論</h1>
-<p>慣性系で出来事を座標化し、光の伝わり方から座標変換を求める。その変換が保つ間隔から、時計の読みと粒子の運動量を導く。</p>
+<p>線路の左右に置いたランプが、線路に静止した時計では同時に光った。走る列車に固定した時計でも、二つの発光は同時になるだろうか。この問いから、時刻の付け方、時計が実際に刻む時間、粒子のエネルギーと運動量へ進む。</p>
 <nav aria-label="ページ内の目次"><a href="#coordinates">四次元座標</a><a href="#boost">ローレンツ変換</a><a href="#proper-time">固有時</a><a href="#twins">往復する時計</a><a href="#momentum">四元運動量</a></nav>
 <section id="coordinates"><h2>1. 出来事と四次元座標</h2>
-<p>時計が鳴る瞬間や粒子が衝突する瞬間を、時空の一点（出来事）として扱う。慣性系を一つ選ぶと、出来事に時刻と三つの位置座標を付けられる。時間に光速を掛けるのは、四成分を長さの単位でそろえるため。</p>
+<p>ランプが光る瞬間を一つの「出来事」と呼ぶ。線路に沿って物差しと同期した時計を並べれば、発光した場所と、その場所の時計が示した時刻を記録できる。列車にも同じように物差しと時計を並べる。どちらも等速運動する座標系なので、慣性系として扱える。</p>
 <div class="equation" data-tex="\begin{aligned}x^\mu&amp;=(ct,x,y,z),\quad \mu=0,1,2,3,\\ \Delta s^2&amp;=-(c\Delta t)^2+(\Delta x)^2+(\Delta y)^2+(\Delta z)^2.\end{aligned}">xμ = (ct, x, y, z)。Δs² = −(cΔt)² + Δx² + Δy² + Δz²。</div>
-<p>同じ粒子の出来事を順に結ぶと世界線になる。光では隣り合う出来事の間隔はゼロ。質量を持つ粒子では間隔は負になり、その世界線に沿って固有時が進む。以下の時空図では運動を x 方向に限り、光速を 1 とする。</p></section><section id="boost"><h2>2. ローレンツ変換と同時性</h2>
-<p>系 S′ は S に対して x 軸に沿う速度 β で動く。γ はローレンツ因子。S′ の原点が描く世界線が t′ 軸で、S′ で時刻ゼロの出来事を結ぶ線が x′ 軸になる。</p><h3>公準から変換を求める</h3>
-<p>相対性原理によれば、すべての慣性系で物理法則は同じ形をとる。真空中の光速はどの慣性系でも <i>c</i> である。原点がすれ違うとき両系で時刻をゼロにし、慣性運動を保つ線形な変換を考える。以下の導出では <i>c</i> = 1 とする。</p>
+<details><summary>離れた時計をどう同期するか</summary><p>A の時計で時刻 t₁ に光を送り、B で反射した光が A に時刻 t₂ に戻るとする。A と B が同じ慣性系で静止し、光の往復の速さが同じなら、B の反射時刻を往復の中点 (t₁ + t₂)/2 に合わせる。以下で使う「同時」は、この手順で同期した時計の読みが一致することを指す。</p></details>
+<p>時刻に光速を掛けた <i>ct</i> は長さの単位を持つ。<i>μ</i> は四つの座標のうちどれを指すかを示す添字。上の間隔は二つの出来事の座標差から作る量で、次節で慣性系を変えても値が保たれることを示す。</p><p>一つの時計や粒子について、時々刻々の位置をつないだ線が世界線。以下の図では、縦が時刻、横が線路方向の位置。光速を 1 とする単位を使うので、光は傾き ±1 の直線になる。</p></section><section id="boost"><h2>2. ローレンツ変換と同時性</h2>
+<p>線路の慣性系を <i>S</i>、列車の慣性系を <i>S</i>′ とする。<i>β</i> は列車の速度を光速で割った値で、右向きを正とする。<i>t</i>′ 軸は列車の原点がたどる線。<i>x</i>′ 軸は、列車の各場所にある同期時計が一斉にゼロを示す出来事を結んだ線。</p><h3>公準から変換を求める</h3>
+<p>相対性原理によれば、すべての慣性系で物理法則は同じ形をとる。真空中の光速はどの慣性系でも <i>c</i> である。両系で原点がすれ違う出来事を時刻ゼロとする。空間と時間の一様性を仮定し、座標差の変換が原点の選び方に依存しない線形変換を使う。以下の導出では <i>c</i> = 1 とする。</p>
 <p><i>S</i> で見ると、動く系の原点は <i>x</i> = <i>βt</i> をたどる。この世界線で <i>x</i>′ = 0 になるように空間座標を置き、時間座標も <i>t</i> と <i>x</i> の一次式で表す。</p>
-<div class="equation" data-tex="x'=A(x-\beta t),\qquad t'=Bt+Cx.">x′ = A(x−βt)、t′ = Bt+Cx。</div>
+<div class="equation" data-tex="x'=a(x-\beta t),\qquad t'=Bt+Cx.">x′ = a(x−βt)、t′ = Bt+Cx。</div>
 <figure class="derivation-figure"><svg viewBox="0 0 360 210" role="img" aria-label="原点から左右へ進む光と、速度 0.5 の S′ の原点"><line x1="35" y1="170" x2="325" y2="170" stroke="GrayText" stroke-width="2"/><line x1="180" y1="188" x2="180" y2="24" stroke="GrayText" stroke-width="2"/><line x1="180" y1="170" x2="68" y2="58" stroke="var(--green)" stroke-width="2"/><line x1="180" y1="170" x2="292" y2="58" stroke="var(--green)" stroke-width="2"/><line x1="180" y1="170" x2="236" y2="58" stroke="var(--blue)" stroke-width="2"/><circle cx="180" cy="170" r="4" fill="var(--blue)"/><text x="185" y="185">O</text><text x="326" y="174">x</text><text x="187" y="24">t</text><text x="31" y="48">左向きの光</text><text x="32" y="64">x = −t</text><text x="257" y="34">右向きの光</text><text x="281" y="50">x = t</text><text x="193" y="75">S′ の原点</text><text x="215" y="93">x = βt</text></svg><figcaption>左右の光は、どちらの慣性系でも同じ速さで進む。緑の二本に課した条件で時間座標の係数が決まり、青い世界線上では x′ = 0 になる。</figcaption></figure>
-<p>右向きの光では <i>x</i> = <i>t</i> と <i>x</i>′ = <i>t</i>′、左向きの光では <i>x</i> = −<i>t</i> と <i>x</i>′ = −<i>t</i>′ が成り立つ。両方を代入すると、<i>B</i> と <i>C</i> が決まる。</p>
-<div class="equation" data-tex="\begin{aligned}B+C&amp;=A(1-\beta),\\ B-C&amp;=A(1+\beta),\\ B&amp;=A,\qquad C=-A\beta.\end{aligned}">B+C = A(1−β)、B−C = A(1+β)。よって B = A、C = −Aβ。</div>
-<p>逆変換では速度を −<i>β</i> に変える。空間の向きを反転しても尺度係数は同じなので、逆変換にも同じ <i>A</i> が現れる。往復の変換で元の座標に戻ることから、正の係数 <i>A</i> が決まる。</p>
-<div class="equation" data-tex="\begin{aligned}x&amp;=A(x'+\beta t')=A^2(1-\beta^2)x,\\ A&amp;=(1-\beta^2)^{-1/2}=\gamma.\end{aligned}">x = A(x′+βt′) = A²(1−β²)x。よって A = 1/√(1−β²) = γ。</div>
-<p>これを最初の二式に戻すと、ローレンツ変換になる。</p>
+<p>右向きの光では <i>x</i> = <i>t</i> と <i>x</i>′ = <i>t</i>′、左向きの光では <i>x</i> = −<i>t</i> と <i>x</i>′ = −<i>t</i>′ が成り立つ。両方を代入すると、<i>b</i> と <i>d</i> が決まる。</p>
+<div class="equation" data-tex="\begin{aligned}b+d&amp;=a(1-\beta),\\ b-d&amp;=a(1+\beta),\\ b&amp;=a,\qquad d=-a\beta.\end{aligned}">b+d = a(1−β)、b−d = a(1+β)。よって b = a、d = −aβ。</div>
+<p>逆変換では速度を −<i>β</i> に変える。空間の向きを反転しても尺度係数は同じなので、逆変換にも同じ <i>a</i> が現れる。往復の変換で元の座標に戻ることから、正の係数 <i>a</i> が決まる。</p>
+<div class="equation" data-tex="\begin{aligned}x&amp;=a(x'+\beta t')=a^2(1-\beta^2)x,\\ a&amp;=(1-\beta^2)^{-1/2}=\gamma.\end{aligned}">x = a(x′+βt′) = a²(1−β²)x。よって a = 1/√(1−β²) = γ。</div>
+<p>係数を最初の二式に代入する。速度がゼロなら両系の座標は一致する。</p>
 <div class="equation" data-tex="\begin{aligned}\gamma&amp;=(1-\beta^2)^{-1/2},\\ t'&amp;=\gamma(t-\beta x),\qquad x'=\gamma(x-\beta t).\end{aligned}">γ = 1/√(1−β²),　 t′ = γ(t−βx),　 x′ = γ(x−βt)</div>
 <div class="controls"><label>相対速度 β <output id="beta-value"></output><input id="beta" type="range" min="-.8" max=".8" step=".05" value=".5"></label></div>
 <svg id="diagram" viewBox="0 0 360 240" role="img" aria-label="光円錐、二つの座標軸、同時刻の出来事 A と B"></svg>
-<p>灰色は S の軸、青は S′ の軸、緑の破線は光の軌跡。赤い A と B は S では同時刻。図上の点を固定したまま、表で S′ の時刻を比べる。</p>
+<h3>二つのランプの時刻を比べる</h3><p>赤い A と B が左と右のランプの発光。線路では両方が時刻 0.6 に光る。表の時刻は、発光した場所に対応する同期時計の読みを示す。図の灰色は線路の軸、青は列車の軸、緑の破線は光の軌跡。</p><p>B の座標から A の座標を引く。線路では時間差がゼロなので、列車での時間差には位置差の項だけが残る。</p><div class="equation" data-tex="\Delta t'=\gamma(\Delta t-\beta\Delta x)=-1.6\,\gamma\beta.">Δt′ = γ(Δt−βΔx) = −1.6γβ。</div>
 <table><thead><tr><th scope="col">出来事</th><th scope="col">t</th><th scope="col">x</th><th scope="col">t′</th><th scope="col">x′</th></tr></thead><tbody>
 <tr><th scope="row">A</th><td>0.6</td><td>−0.8</td><td id="at"></td><td id="ax"></td></tr><tr><th scope="row">B</th><td>0.6</td><td>0.8</td><td id="bt"></td><td id="bx"></td></tr></tbody></table>
 <p class="reading">β を 0 にすると A と B は同時。β の符号を反転すると Δt′ の符号も反転し、順序が入れ替わる。<output id="simul"></output></p></section>
 <section id="proper-time"><h2>3. 不変間隔と固有時</h2>
-<p><h3>変換しても間隔が保たれる理由</h3>
-<p>二つの出来事の座標差にも同じ線形変換が成り立つ。平方を展開すると、時間差と位置差の積を含む項が相殺される。</p>
+<h3>変換しても間隔が保たれる理由</h3>
+<p>ランプの時刻差と位置差は慣性系によって変わる。その二つから作る間隔はどうか。座標差をローレンツ変換し、平方を展開すると、時間差と位置差の積を含む二項が相殺される。</p>
 <div class="equation" data-tex="\begin{aligned}-(\Delta t')^2+(\Delta x')^2
 &amp;=\gamma^2[-(\Delta t-\beta\Delta x)^2+(\Delta x-\beta\Delta t)^2]\\
 &amp;=\gamma^2(1-\beta^2)[-(\Delta t)^2+(\Delta x)^2]\\
 &amp;=-(\Delta t)^2+(\Delta x)^2.\end{aligned}">変換後の間隔は γ²(1−β²)(−Δt²+Δx²)。γ²(1−β²) = 1 なので変換前の値に等しい。</div>
 <h3>時計の読みを間隔から求める</h3>
-<p>質量を持つ粒子の一瞬の静止系では、粒子の位置の微小変化がゼロになる。その系の時間差を固有時 <i>dτ</i> と呼ぶ。間隔はどの慣性系でも同じなので、任意の系での座標時間と速度から <i>dτ</i> を計算できる。ここでは光速 <i>c</i> を式に戻す。</p>
+<p>質量を持つ粒子の一瞬の静止系では、粒子の位置の微小変化がゼロになる。その瞬間の時間差を固有時 <i>dτ</i> と呼ぶ。これは粒子と一緒に動く時計が刻む時間である。間隔はどの慣性系でも同じなので、任意の系での座標時間と速度から <i>dτ</i> を計算できる。ここでは光速 <i>c</i> を式に戻す。</p>
 <div class="equation" data-tex="\begin{aligned}-c^2\,\mathrm d\tau^2
 &amp;=-c^2\,\mathrm dt^2+|\mathrm d\mathbf x|^2,\\
 \mathrm d\tau&amp;=\sqrt{1-|\mathbf v|^2/c^2}\,\mathrm dt,
@@ -39,23 +40,23 @@
 <figure class="derivation-figure"><svg viewBox="0 0 360 210" role="img" aria-label="同じ固有時を刻む二本の慣性世界線"><line x1="32" y1="174" x2="329" y2="174" stroke="GrayText" stroke-width="2"/><line x1="140" y1="189" x2="140" y2="20" stroke="GrayText" stroke-width="2"/><polyline points="85.4,73.81437228823687 88.592,75.51760327855541 91.78399999999999,77.14555944098382 94.976,78.69438329248375 98.168,80.16015652186967 101.36,81.53892927290967 104.55199999999999,82.82675445066134 107.744,84.01972696196127 110.93599999999999,85.11402756340009 114.128,86.10597071472944 117.32,86.99205553514092 120.512,87.76901865338652 123.704,88.43388745537167 126.896,88.98403199398363 130.088,89.41721366613653 133.28,89.73162870922448 136.472,89.92594464402231 139.664,89.99932800268797 142.856,89.95146202342363 146.048,89.78255344645031 149.24,89.49332807405085 152.432,89.0850153153167 155.624,88.55932247459643 158.81599999999997,87.9184000148696 162.00799999999998,87.16479939563679 165.2,86.3014253251514 168.392,85.33148437015538 171.584,84.25843183897442 174.77599999999998,83.08591871442577 177.968,81.81774018825533 181.16,80.45778706915257 184.35199999999998,79.01000103168755 187.54399999999998,77.47833436994573 190.736,75.86671463769288 193.928,74.17901431061703 197.12,72.41902540337585 200.31199999999998,70.59043881729312 203.504,68.69682808196139 206.696,66.74163708129795 209.88799999999998,64.72817131575037 213.07999999999998,62.65959224073231 216.272,60.53891423047284 219.464,58.369003740346514 222.656,56.1525802743225 225.84799999999998,53.892218803276535 229.04000000000002,51.590353321317025 232.23199999999997,49.249281268603525 235.424,46.87116858871077 238.61599999999999,44.45805522534411 241.808,42.01186089651844 245,39.53439101391018" fill="none" stroke="var(--green)" stroke-width="2"/><line x1="140" y1="174" x2="140" y2="90" stroke="var(--blue)" stroke-width="2"/><line x1="140" y1="174" x2="203" y2="69" stroke="var(--red)" stroke-width="2"/><line x1="140" y1="69" x2="203" y2="69" stroke="GrayText" stroke-width="2" stroke-dasharray="4 4"/><circle cx="140" cy="90" r="4" fill="var(--blue)"/><circle cx="203" cy="69" r="4" fill="var(--red)"/><text x="118" y="192">O</text><text x="122" y="23">t</text><text x="328" y="190">x</text><text x="38" y="72">t = 1.25</text><text x="57" y="94">t = 1</text><text x="220" y="63">動く時計</text><text x="62" y="112">静止時計</text><text x="202" y="126">緑：t² − x² = 1</text></svg><figcaption>原点 O から各世界線上の点までの固有時はいずれも 1。動く時計が同じ固有時を刻むまでに、S の座標時間では 1.25 が経過する。図は c = 1。</figcaption></figure>
 <p>速度が一定なら、平方根を積分の外に出せる。青い世界線の時計が刻む時間は、<i>S</i> の座標時間を <i>γ</i> で割った値になる。</p>
 <div class="equation" data-tex="\begin{aligned}-(\Delta t')^2+(\Delta x')^2&amp;=-(\Delta t)^2+(\Delta x)^2,\\ \Delta\tau&amp;=\sqrt{(\Delta t)^2-(\Delta x)^2}\quad\text{（慣性運動）}.\end{aligned}">−Δt′²+Δx′² = −Δt²+Δx²。慣性運動の固有時 Δτ = √(Δt²−Δx²)。</div>
-<p>A と B の間隔は正で空間的。時刻の順序は変えられる。原点 O と、S′ の原点が S で時刻 1 にいる出来事 C は時間的に隔たる。青い t′ 軸上の点 C が、その時計の読みを表す。</p>
+<p>ランプ A と B の間隔は正で、光でも片方の発光からもう片方に間に合わない。下の二行目では別の二つの出来事を比べる。出発点 O と、線路の時刻 1 に列車の原点が通る点 C である。O から C までに列車の原点の時計が刻む時間が固有時になる。</p>
 <table><tbody><tr><th scope="row">A → B の間隔の二乗（S / S′）</th><td id="space-interval"></td></tr><tr><th scope="row">O → C で S′ の時計が測る固有時</th><td id="proper"></td></tr></tbody></table>
 <p>O から C まで、S の座標時間は 1。β を 0 から離すほど、S′ の時計が刻む時間は短くなる。</p></section>
 <section id="twins"><h2>4. 往復した時計は何を測るか</h2>
-<p>出発と再会は両者に共通する出来事。青い時計は出発地点で静止し、赤い時計は一定の速さで遠ざかり、中間時刻で反転して戻る。反転にかかる時間を無視したモデルで、静止系では出発から再会まで 10 秒とする。</p>
+<p>今度は二つの時計を同じ場所で出発させ、同じ場所で読みを比べる。青は出発地点に留まり、赤は線路の時計で 5 秒進んだところで折り返し、同じ速さで戻る。折り返しにかかる時間を無視し、往路と復路で固有時をそれぞれ計算して足す。</p>
 <div class="equation" data-tex="\begin{aligned}\mathrm d\tau&amp;=\sqrt{1-\frac{|\mathbf v(t)|^2}{c^2}}\,\mathrm dt,\\ \tau_{\mathrm{静止}}&amp;=10\ \mathrm{s},\\ \tau_{\mathrm{往復}}&amp;=\int_0^{10\,\mathrm s}\sqrt{1-\beta(t)^2}\,\mathrm dt=10\sqrt{1-\beta^2}\ \mathrm{s}.\end{aligned}">dτ = √(1−|v|²/c²) dt。静止時計は 10 秒、往復時計は 10√(1−β²) 秒。</div>
 <div class="controls"><label>往復の速さ β = |v|/c <output id="trip-speed"></output><input id="trip" type="range" min="0" max=".95" step=".05" value=".6"></label></div>
 <svg id="trip-diagram" viewBox="0 0 360 245" role="img" aria-label="出発と再会を結ぶ静止時計と往復時計の世界線"></svg>
 <table><thead><tr><th scope="col">時計</th><th scope="col">再会までに刻む時間（秒）</th></tr></thead><tbody><tr><th scope="row">青：静止</th><td>10.000</td></tr><tr><th scope="row">赤：往復</th><td id="trip-proper"></td></tr><tr><th scope="row">青と赤の差</th><td id="trip-gap"></td></tr></tbody></table>
 <p class="reading">β を 0.6 にすると、赤は往路と復路で各 4 秒、合計 8 秒を刻む。同じ出発点と再会点を結んでも、固有時は途中の世界線に沿って積分する量なので、時計の読みは経路に依存する。</p></section><section id="momentum"><h2>5. 四元速度・四元運動量</h2>
-<p>質量 m の粒子について、四次元座標を粒子自身の時計の読み τ で微分すると四元速度になる。それに質量を掛けた四元運動量の時間成分が E/c、空間成分が運動量 p。</p><h3>固有時で微分する</h3>
+<p>ニュートン力学では、位置を時刻で微分して速度を作り、質量を掛けて運動量を求める。相対論では、微分する対象を四次元座標に広げ、分母に粒子自身の時計が測る固有時を使う。固有時は慣性系によらないので、この微分で作った四元速度は座標差と同じローレンツ変換に従う。</p><h3>固有時で微分する</h3>
 <p>前節で求めた <i>dτ</i> を使うと、<i>dt/dτ</i> は <i>γ</i> になる。連鎖律を使えば、四元速度の時間成分と空間成分が同時に得られる。</p>
 <div class="equation" data-tex="\begin{aligned}\frac{\mathrm dt}{\mathrm d\tau}&amp;=\gamma,\\
 \frac{\mathrm d x^\mu}{\mathrm d\tau}
 &amp;=\frac{\mathrm d x^\mu}{\mathrm dt}\frac{\mathrm dt}{\mathrm d\tau}
 =\gamma(c,\mathbf v).\end{aligned}">dt/dτ = γ。連鎖律から dxμ/dτ = (dxμ/dt)γ = γ(c,v)。</div>
-<p>質量 <i>m</i> を掛けて四元運動量を作る。時間成分を <i>E/c</i> と書くと、低速での展開から、全エネルギーのうち静止時にも残る項と、ニュートン力学の運動エネルギーに一致する項が分かる。</p>
+<p>四元速度に質量 <i>m</i> を掛ける。空間成分は運動量で、時間成分に光速を掛けた量が全エネルギーになる。速さが光速より十分小さいときに展開し、古典力学で見慣れた式がどこに現れるかを確かめる。</p>
 <div class="equation" data-tex="\begin{aligned}\gamma&amp;=1+\tfrac12|\mathbf v|^2/c^2+O(|\mathbf v|^4/c^4),\\
 E=\gamma mc^2&amp;=mc^2+\tfrac12m|\mathbf v|^2+O(m|\mathbf v|^4/c^2),\\
 \mathbf p=\gamma m\mathbf v&amp;\simeq m\mathbf v\quad (|\mathbf v|\ll c).\end{aligned}">低速では E ≈ mc² + ½m|v|²、p ≈ mv。</div>
