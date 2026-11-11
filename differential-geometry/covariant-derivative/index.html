@@ -58,7 +58,8 @@
 .tab-list{display:flex;gap:.5rem;margin:1rem 0}
 .tab-list button{min-height:44px;padding:.35rem .7rem;font:inherit}
 .tab-list button[aria-selected=true]{font-weight:bold;border-bottom:3px solid currentColor}
-</style></head><body><main>
+</style><link rel="stylesheet" href="../../assets/figure-theme.css">
+</head><body><main>
 <nav><a href="../../">数学の可視化一覧</a></nav>
 <h1>共変微分</h1>
 <div class="tab-list" role="tablist" aria-label="共変微分の例">
@@ -83,6 +84,7 @@
 <path id="tangent" class="tangent" fill="none" stroke="currentColor" stroke-width="2"/>
 <circle id="point" r="3" fill="currentColor"/>
 </svg>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--vector)" aria-hidden="true"></span><span>接ベクトル Y</span></li><li><span class="figure-key arrow" style="--key:var(--tangent)" aria-hidden="true"></span><span>共変微分（接線成分）</span></li><li><span class="figure-key dash arrow" style="--key:var(--normal)" aria-hidden="true"></span><span>法線成分</span></li><li><span class="figure-key arrow" style="--key:var(--ink)" aria-hidden="true"></span><span>通常の微分</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>点 P</span></li><li><span class="figure-key dash" style="--key:var(--muted)" aria-hidden="true"></span><span>接線と分解の補助線</span></li></ul></div>
 <p id="observation" aria-live="polite"></p>
 <table>
 <thead><tr><th scope="col">平面上の成分</th><th scope="col"><i>x</i></th><th scope="col"><i>y</i></th></tr></thead>
@@ -125,6 +127,7 @@
     <g data-arrow="d"><line stroke-width="2"/><polygon/></g>
     <circle data-point r="2.5" fill="var(--foreground)"/>
   </svg>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--viz-series-1)" aria-hidden="true"></span><span>接ベクトル Y</span></li><li><span class="figure-key arrow" style="--key:var(--viz-series-2)" aria-hidden="true"></span><span>共変微分（接平面成分）</span></li><li><span class="figure-key dash arrow" style="--key:var(--viz-series-3)" aria-hidden="true"></span><span>法線成分</span></li><li><span class="figure-key arrow" style="--key:var(--ink)" aria-hidden="true"></span><span>通常の微分</span></li><li><span class="figure-key plane" style="--key:var(--viz-series-2)" aria-hidden="true"></span><span>接平面</span></li><li><span class="figure-key dash" style="--key:var(--muted)" aria-hidden="true"></span><span>緯線の奥側・分解の補助線</span></li></ul></div>
   <div class="sphere-values text-small tabular-nums" aria-live="polite">
     <div>接ベクトル <i>Y</i> の実際の長さ <output data-length></output></div>
     <p>通常の微分を、接平面に沿う成分と法線成分に分解する。</p><div class="display-equation">d<i>Y</i>/d<i>θ</i> = D<i>Y</i>/d<i>θ</i> + 法線成分</div>
@@ -355,3 +358,4 @@ draw();
 })();
 
 </script></body></html>
+
