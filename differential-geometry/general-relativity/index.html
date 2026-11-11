@@ -14,7 +14,8 @@ table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,t
 .try-first{padding:.45rem .65rem;border-inline-start:3px solid var(--blue);margin:.6rem 0}
 </style><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-<link rel="stylesheet" href="../../assets/lesson.css"><script defer src="../../assets/lesson.js"></script><script defer src="../../assets/geometry-lessons.js"></script></head><body><main>
+<link rel="stylesheet" href="../../assets/lesson.css"><script defer src="../../assets/lesson.js"></script><script defer src="../../assets/geometry-lessons.js"></script><link rel="stylesheet" href="../../assets/figure-theme.css">
+</head><body><main>
 <nav aria-label="相対論の学習ページ"><a href="../../">数学の可視化一覧</a><a href="../../relativity/special/">特殊相対性理論</a><a href="../../relativity/general/">一般相対性理論</a></nav>
 <h1>一般相対性理論のための微分幾何学</h1>
 <p class="lead">矢印の意味から始め、比較の規則を作り、曲率を計算する。最後に、その曲率が重力としてどう現れるかを結び付ける。</p><div class="learning-goal"><strong>学び方</strong><p>まず「意味と記号」を読み、図を一度動かす。次に「定義をたどる」で式を確かめる。「別の例・確認」は理解を試したいときに使う。</p><p>初めてなら <a href="#1">1–6 対象と測定</a> → <a href="#7">7–10 比較と運動</a> → <a href="#11">11–16 曲率と重力</a> の順で進む。</p></div><details class="convention"><summary>全項目で使う添字と符号</summary><p>同じ項で上と下に一回ずつ現れる添字は全範囲の和を取る。i,j は幾何学での座標、μ,ν は時空の 0,1,2,3。時空計量は (−,+,+,+)。接続は特記しない限り Levi-Civita 接続。</p><div class="equation" data-tex="R(X,Y)Z=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z"></div><p>曲率の符号は文献によって異なる。ここでは単位球の Gauss 曲率が +1 になる上の規約を一貫して使う。</p></details><div class="chapter-bar"><label for="topic">16項目</label><select id="topic"></select></div>
@@ -22,7 +23,7 @@ table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,t
 <h2 id="title"></h2><div id="concept-guide"></div><section aria-labelledby="definition-title"><h3 id="definition-title">定義と基本式</h3><p id="definition"></p><div id="identity" class="formula"></div></section><details class="derivation" open><summary id="steps-title">式の読み方と途中計算</summary><p id="steps-text"></p><div id="steps-math" class="formula"></div></details><h3>図で確かめる</h3><p id="intro"></p><p class="try-first"><strong>まず試す</strong> <span id="try-first"></span></p>
 <div class="controls"><label for="control"><span id="parameter"></span> <output id="setting" for="control"></output></label><input id="control" type="range"></div>
 <svg id="figure" viewBox="0 0 360 240" role="img" aria-labelledby="title readout"></svg>
-<ul id="diagram-notes" aria-label="図の見方"></ul><p id="readout"></p><div id="formula" class="formula"></div><section id="calculation-section" aria-labelledby="calculation-title"><h3 id="calculation-title">現在の値で計算</h3><p id="calculation-context"></p><div id="calculation" class="formula"></div></section><section id="basis-matrices" hidden><h3>元の行列と基底の回転</h3><div id="basis-values" class="formula"></div></section><div id="extra"></div>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul id="diagram-notes"></ul></div><p id="readout"></p><div id="formula" class="formula"></div><section id="calculation-section" aria-labelledby="calculation-title"><h3 id="calculation-title">現在の値で計算</h3><p id="calculation-context"></p><div id="calculation" class="formula"></div></section><section id="basis-matrices" hidden><h3>元の行列と基底の回転</h3><div id="basis-values" class="formula"></div></section><div id="extra"></div>
 <footer>定義と符号の照合先　<a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S2">Tong §2</a> · <a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S3">§3</a><p>図の有限な大きさ、局所的な計算、短時間近似は、それぞれ本文の条件と一緒に読む。</p><a href="../../relativity/general/">この道具で一般相対論を読む →</a></footer></main><script>
 const get=id=>document.getElementById(id);
 const blue="var(--blue)",red="var(--red)",green="var(--green)",gray="GrayText";
@@ -56,7 +57,7 @@ function bracketFigure(h) {
    label(291,222,"緑：差");
  return '<section aria-labelledby="bracket-title"><h3 id="bracket-title">関数に作用する Lie 括弧</h3>'+
    '<p>ここでは高さを返す関数 <i>f</i>(<i>x</i>, <i>y</i>) = <i>y</i> を使う。上の二つの終点でこの関数を評価し、青から赤を引く。</p>'+
-   '<svg viewBox="0 0 360 235" role="img" aria-label="青の終点の関数値 '+result.toFixed(4)+' と赤の終点の関数値 0 の差">'+bars+'</svg>'+
+   '<svg viewBox="0 0 360 235" role="img" aria-label="青の終点の関数値 '+result.toFixed(4)+' と赤の終点の関数値 0 の差">'+bars+'</svg><div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>X → Y の終点での関数値</span></li><li><span class="figure-key point" style="--key:var(--red)" aria-hidden="true"></span><span>Y → X の終点での関数値</span></li><li><span class="figure-key arrow" style="--key:var(--green)" aria-hidden="true"></span><span>関数値の差</span></li></ul></div>'+
    '<p>緑の矢印は関数値の差。その差を二つの操作の時間幅の積で割ると、この例では常に 1。下の式は、流れを使わずに方向微分を二回行って同じ値を求める計算である。</p>'+
    '<div class="formula" id="bracket-operator"></div></section>';
 }
@@ -172,7 +173,7 @@ const topics=[
  return info(ellipse(180,105,81,81)+trace(z=>[180-52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+trace(z=>[180+52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+dot([180-w,105-81*Math.sin(t)])+dot([180+w,105-81*Math.sin(t)])+line([180-w,207],[180+w,207],red,3),"赤道での微小な間隔を 1 とすると、一次近似での比は "+fmt(Math.cos(t))+"。北極で経線は合流する。","<i>j</i>(<i>s</i>)/<i>j</i>(0) = cos <i>s</i>");}],
 ["断面曲率・Gauss 曲率","北極 P を中心に、球面上で距離 r だけ離れた点を集める。緑の弧は球面に沿って測る半径、青い輪はその距離にある点の集合。下の線分で、同じ半径の平面の円と周長を比べる。","測地半径 r",.1,1.5,.05,.9,r=>{
  const s=Math.sin(r);
- return info(sphereCircle(r),"球上の周長は "+fmt(2*Math.PI*s)+"、平面では "+fmt(2*Math.PI*r)+"。球上のほうが短い。","<i>L</i><sub>球</sub> = 2π sin <i>r</i>　　<i>L</i><sub>平面</sub> = 2π<i>r</i>",'<p>同じ測地半径での周長を比較する。</p><svg viewBox="0 0 360 125" role="img" aria-label="単位球と平面での測地円の周長を比較">'+label(25,26,"単位球")+line([25,42],[25+195*s,42],blue,5)+label(25,77,"平面")+line([25,93],[25+195*r,93],green,5)+'</svg><p><a href="../surface-curvature/">法曲率と Gauss 曲率の断面図を開く</a></p>');}],
+ return info(sphereCircle(r),"球上の周長は "+fmt(2*Math.PI*s)+"、平面では "+fmt(2*Math.PI*r)+"。球上のほうが短い。","<i>L</i><sub>球</sub> = 2π sin <i>r</i>　　<i>L</i><sub>平面</sub> = 2π<i>r</i>",'<p>同じ測地半径での周長を比較する。</p><svg viewBox="0 0 360 125" role="img" aria-label="単位球と平面での測地円の周長を比較">'+label(25,26,"単位球")+line([25,42],[25+195*s,42],blue,5)+label(25,77,"平面")+line([25,93],[25+195*r,93],green,5)+'</svg><div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>単位球上の周長</span></li><li><span class="figure-key " style="--key:var(--green)" aria-hidden="true"></span><span>平面上の周長</span></li></ul></div><p><a href="../surface-curvature/">法曲率と Gauss 曲率の断面図を開く</a></p>');}],
 ["Ricci テンソル","自由落下する粒子群を、局所的な三つの直交方向で見る。青・赤・緑は方向別の相対加速度係数。正は伸び、負は縮み。","第3方向の係数",-.9,.9,.05,-.3,k=>{
  const values=[.6,-.3,k],total=values.reduce((a,b)=>a+b,0);
  return info(line([180,28],[180,210])+values.map((v,i)=>label(28,59+i*57,"方向 "+(i+1))+arrow([180,55+i*57],[180+120*v,55+i*57],[blue,red,green][i])).join(""),"三方向の和は "+fmt(total)+"。初期の相対速度がゼロなら、この和は体積の初期加速度を初期体積で割った値になる。","−Ric(<i>u</i>, <i>u</i>) = "+values.map(x=>"("+fmt(x)+")").join(" + ")+" = "+fmt(total));}],
@@ -258,11 +259,18 @@ function draw(){
  const x=Number(control.value),model=topics[current][7](x);
  get("setting").textContent=control.value;
  get("figure").innerHTML=model.diagram;
- get("diagram-notes").innerHTML=diagramNotes[current].map(note=>"<li>"+note+"</li>").join("");
+ const keyColors = {青: blue, 赤: red, 緑: green, 灰: gray};
+ get("diagram-notes").innerHTML = diagramNotes[current].map(note => {
+   const leadingColor = note.match(/^(?:左・|右・)?([青赤緑灰])/);
+   const color = leadingColor && keyColors[leadingColor[1]];
+   const shape = note.includes("い点") ? "point" : note.includes("矢印") || note.includes("ベクトル") ? "arrow" : "";
+   const key = color ? '<span class="figure-key ' + shape + '" style="--key:' + color + '" aria-hidden="true"></span>' : "";
+   return "<li>" + key + "<span>" + note + "</span></li>";
+ }).join("");
  get("readout").textContent=model.reading;
  displayEquation("formula",model.formula);
  get("extra").innerHTML=model.extra;
- if (current === 13 || current === 15) get("extra").innerHTML += '<h3>粒子群の二つの断面</h3><p>初期の相対速度をゼロとし、方向別の加速度から短時間後の形を近似する。'+(current===13?" 図では経過時間を 0.5 に固定する。":"") + '</p><svg viewBox="0 0 360 190" role="img" aria-label="初期形状と変形後の粒子群の直交二断面">'+tidalShape(x,current===15)+'</svg>';
+ if (current === 13 || current === 15) get("extra").innerHTML += '<h3>粒子群の二つの断面</h3><p>初期の相対速度をゼロとし、方向別の加速度から短時間後の形を近似する。'+(current===13?" 図では経過時間を 0.5 に固定する。":"") + '</p><svg viewBox="0 0 360 190" role="img" aria-label="初期形状と変形後の粒子群の直交二断面">'+tidalShape(x,current===15)+'</svg><div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>粒子群の初期断面</span></li><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>短時間後の断面</span></li></ul></div>';
  if (current === 2) displayEquation("bracket-operator","Yf = x → X(Yf) = 1<br>Xf = 0 → Y(Xf) = 0<br>[X,Y]f = 1 − 0 = 1","\\begin{aligned}Yf&=x\\,\\partial_y y=x,& X(Yf)&=\\partial_x x=1,\\\\ Xf&=\\partial_x y=0,& Y(Xf)&=x\\,\\partial_y 0=0,\\\\ [X,Y]f&=X(Yf)-Y(Xf)=1-0=1.\\end{aligned}");
  showBasisMatrices(x);
  if (current !== 5) displayEquation("calculation",calculations[current](x));
