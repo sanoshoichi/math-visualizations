@@ -1,4 +1,5 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>特殊相対性理論</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><style>:root{color-scheme:light dark;--blue:light-dark(#12579c,#8ac6ff);--red:light-dark(#a42f52,#ff9ab6);--green:light-dark(#126947,#7de0ab)}body{max-width:43rem;margin:auto;padding:1rem;font:1rem/1.65 system-ui,sans-serif}h1{font-size:1.65rem}h2{font-size:1.25rem}h1,h2,p{margin:.6rem 0}section{margin:1.4rem 0}nav{display:flex;gap:.7rem;flex-wrap:wrap}.controls{position:sticky;top:0;background:Canvas;z-index:1;border-bottom:1px solid GrayText}label{display:flex;align-items:center;gap:.55rem;min-height:44px;flex-wrap:wrap}input{flex:1;min-width:8rem;min-height:44px}svg{display:block;width:100%;max-height:255px}svg text{fill:CanvasText;font:12px system-ui}.equation{text-align:center;font:1.1rem/1.5 serif}.katex-display{overflow-x:auto;overflow-y:hidden;padding:.15rem 0}.reading{padding:.4rem .65rem;border-inline-start:3px solid var(--blue)}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;text-align:right;padding:.3rem}th:first-child{text-align:left}</style></head><body><main><nav aria-label="相対論の学習ページ"><a href="../../">数学の可視化一覧</a><a href="../special/">特殊相対性理論</a><a href="../general/">一般相対性理論</a><a href="../../differential-geometry/general-relativity/">相対論のための微分幾何学</a></nav><h1>特殊相対性理論</h1>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>特殊相対性理論</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><style>:root{color-scheme:light dark;--blue:light-dark(#12579c,#8ac6ff);--red:light-dark(#a42f52,#ff9ab6);--green:light-dark(#126947,#7de0ab)}body{max-width:43rem;margin:auto;padding:1rem;font:1rem/1.65 system-ui,sans-serif}h1{font-size:1.65rem}h2{font-size:1.25rem}h1,h2,p{margin:.6rem 0}section{margin:1.4rem 0}nav{display:flex;gap:.7rem;flex-wrap:wrap}.controls{position:sticky;top:0;background:Canvas;z-index:1;border-bottom:1px solid GrayText}label{display:flex;align-items:center;gap:.55rem;min-height:44px;flex-wrap:wrap}input{flex:1;min-width:8rem;min-height:44px}svg{display:block;width:100%;max-height:255px}svg text{fill:CanvasText;font:12px system-ui}.equation{text-align:center;font:1.1rem/1.5 serif}.katex-display{overflow-x:auto;overflow-y:hidden;padding:.15rem 0}.reading{padding:.4rem .65rem;border-inline-start:3px solid var(--blue)}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;text-align:right;padding:.3rem}th:first-child{text-align:left}.derivation-figure{margin:1rem 0}.derivation-figure figcaption{font-size:.92rem}.derivation-figure svg{height:auto}
+</style></head><body><main><nav aria-label="相対論の学習ページ"><a href="../../">数学の可視化一覧</a><a href="../special/">特殊相対性理論</a><a href="../general/">一般相対性理論</a><a href="../../differential-geometry/general-relativity/">相対論のための微分幾何学</a></nav><h1>特殊相対性理論</h1>
 <p>慣性系で出来事を座標化し、光の伝わり方から座標変換を求める。その変換が保つ間隔から、時計の読みと粒子の運動量を導く。</p>
 <nav aria-label="ページ内の目次"><a href="#coordinates">四次元座標</a><a href="#boost">ローレンツ変換</a><a href="#proper-time">固有時</a><a href="#twins">往復する時計</a><a href="#momentum">四元運動量</a></nav>
 <section id="coordinates"><h2>1. 出来事と四次元座標</h2>
@@ -9,18 +10,19 @@
 <p>相対性原理によれば、すべての慣性系で物理法則は同じ形をとる。真空中の光速はどの慣性系でも <i>c</i> である。原点がすれ違うとき両系で時刻をゼロにし、慣性運動を保つ線形な変換を考える。以下の導出では <i>c</i> = 1 とする。</p>
 <p><i>S</i> で見ると、動く系の原点は <i>x</i> = <i>βt</i> をたどる。この世界線で <i>x</i>′ = 0 になるように空間座標を置き、時間座標も <i>t</i> と <i>x</i> の一次式で表す。</p>
 <div class="equation" data-tex="x'=A(x-\beta t),\qquad t'=Bt+Cx.">x′ = A(x−βt)、t′ = Bt+Cx。</div>
+<figure class="derivation-figure"><svg viewBox="0 0 360 210" role="img" aria-label="原点から左右へ進む光と、速度 0.5 の S′ の原点"><line x1="35" y1="170" x2="325" y2="170" stroke="GrayText" stroke-width="2"/><line x1="180" y1="188" x2="180" y2="24" stroke="GrayText" stroke-width="2"/><line x1="180" y1="170" x2="68" y2="58" stroke="var(--green)" stroke-width="2"/><line x1="180" y1="170" x2="292" y2="58" stroke="var(--green)" stroke-width="2"/><line x1="180" y1="170" x2="236" y2="58" stroke="var(--blue)" stroke-width="2"/><circle cx="180" cy="170" r="4" fill="var(--blue)"/><text x="185" y="185">O</text><text x="326" y="174">x</text><text x="187" y="24">t</text><text x="31" y="48">左向きの光</text><text x="32" y="64">x = −t</text><text x="257" y="34">右向きの光</text><text x="281" y="50">x = t</text><text x="193" y="75">S′ の原点</text><text x="215" y="93">x = βt</text></svg><figcaption>左右の光は、どちらの慣性系でも同じ速さで進む。緑の二本に課した条件で時間座標の係数が決まり、青い世界線上では x′ = 0 になる。</figcaption></figure>
 <p>右向きの光では <i>x</i> = <i>t</i> と <i>x</i>′ = <i>t</i>′、左向きの光では <i>x</i> = −<i>t</i> と <i>x</i>′ = −<i>t</i>′ が成り立つ。両方を代入すると、<i>B</i> と <i>C</i> が決まる。</p>
 <div class="equation" data-tex="\begin{aligned}B+C&amp;=A(1-\beta),\\ B-C&amp;=A(1+\beta),\\ B&amp;=A,\qquad C=-A\beta.\end{aligned}">B+C = A(1−β)、B−C = A(1+β)。よって B = A、C = −Aβ。</div>
 <p>逆変換では速度を −<i>β</i> に変える。空間の向きを反転しても尺度係数は同じなので、逆変換にも同じ <i>A</i> が現れる。往復の変換で元の座標に戻ることから、正の係数 <i>A</i> が決まる。</p>
 <div class="equation" data-tex="\begin{aligned}x&amp;=A(x'+\beta t')=A^2(1-\beta^2)x,\\ A&amp;=(1-\beta^2)^{-1/2}=\gamma.\end{aligned}">x = A(x′+βt′) = A²(1−β²)x。よって A = 1/√(1−β²) = γ。</div>
 <p>これを最初の二式に戻すと、ローレンツ変換になる。</p>
 <div class="equation" data-tex="\begin{aligned}\gamma&amp;=(1-\beta^2)^{-1/2},\\ t'&amp;=\gamma(t-\beta x),\qquad x'=\gamma(x-\beta t).\end{aligned}">γ = 1/√(1−β²),　 t′ = γ(t−βx),　 x′ = γ(x−βt)</div>
-<div class="controls"><label>相対速度 β <output id="beta-value"></output><input id="beta" type="range" min="-.8" max=".8" step=".05" value=".5"></label></div>
+<p>例として、S′ の相対速度を β = 0.5 にとる。</p>
 <svg id="diagram" viewBox="0 0 360 240" role="img" aria-label="光円錐、二つの座標軸、同時刻の出来事 A と B"></svg>
 <p>灰色は S の軸、青は S′ の軸、緑の破線は光の軌跡。赤い A と B は S では同時刻。図上の点を固定したまま、表で S′ の時刻を比べる。</p>
 <table><thead><tr><th scope="col">出来事</th><th scope="col">t</th><th scope="col">x</th><th scope="col">t′</th><th scope="col">x′</th></tr></thead><tbody>
 <tr><th scope="row">A</th><td>0.6</td><td>−0.8</td><td id="at"></td><td id="ax"></td></tr><tr><th scope="row">B</th><td>0.6</td><td>0.8</td><td id="bt"></td><td id="bx"></td></tr></tbody></table>
-<p class="reading">まず β を 0 にし、次に正・負に振る。A と B の時刻の順序が変わる。<output id="simul"></output></p></section>
+<p class="reading">この例では B が A より先に起きる。β の符号を反転すると Δt′ の符号も反転し、順序が入れ替わる。<output id="simul"></output></p></section>
 <section id="proper-time"><h2>3. 不変間隔と固有時</h2>
 <p><h3>変換しても間隔が保たれる理由</h3>
 <p>二つの出来事の座標差にも同じ線形変換が成り立つ。平方を展開すると、時間差と位置差の積を含む項が相殺される。</p>
@@ -34,6 +36,7 @@
 &amp;=-c^2\,\mathrm dt^2+|\mathrm d\mathbf x|^2,\\
 \mathrm d\tau&amp;=\sqrt{1-|\mathbf v|^2/c^2}\,\mathrm dt,
 \qquad \mathbf v=\frac{\mathrm d\mathbf x}{\mathrm dt}.\end{aligned}">−c²dτ² = −c²dt²+|dx|²。よって dτ = √(1−|v|²/c²) dt。</div>
+<figure class="derivation-figure"><svg viewBox="0 0 360 210" role="img" aria-label="同じ固有時を刻む二本の慣性世界線"><line x1="32" y1="174" x2="329" y2="174" stroke="GrayText" stroke-width="2"/><line x1="140" y1="189" x2="140" y2="20" stroke="GrayText" stroke-width="2"/><polyline points="85.4,73.81437228823687 88.592,75.51760327855541 91.78399999999999,77.14555944098382 94.976,78.69438329248375 98.168,80.16015652186967 101.36,81.53892927290967 104.55199999999999,82.82675445066134 107.744,84.01972696196127 110.93599999999999,85.11402756340009 114.128,86.10597071472944 117.32,86.99205553514092 120.512,87.76901865338652 123.704,88.43388745537167 126.896,88.98403199398363 130.088,89.41721366613653 133.28,89.73162870922448 136.472,89.92594464402231 139.664,89.99932800268797 142.856,89.95146202342363 146.048,89.78255344645031 149.24,89.49332807405085 152.432,89.0850153153167 155.624,88.55932247459643 158.81599999999997,87.9184000148696 162.00799999999998,87.16479939563679 165.2,86.3014253251514 168.392,85.33148437015538 171.584,84.25843183897442 174.77599999999998,83.08591871442577 177.968,81.81774018825533 181.16,80.45778706915257 184.35199999999998,79.01000103168755 187.54399999999998,77.47833436994573 190.736,75.86671463769288 193.928,74.17901431061703 197.12,72.41902540337585 200.31199999999998,70.59043881729312 203.504,68.69682808196139 206.696,66.74163708129795 209.88799999999998,64.72817131575037 213.07999999999998,62.65959224073231 216.272,60.53891423047284 219.464,58.369003740346514 222.656,56.1525802743225 225.84799999999998,53.892218803276535 229.04000000000002,51.590353321317025 232.23199999999997,49.249281268603525 235.424,46.87116858871077 238.61599999999999,44.45805522534411 241.808,42.01186089651844 245,39.53439101391018" fill="none" stroke="var(--green)" stroke-width="2"/><line x1="140" y1="174" x2="140" y2="90" stroke="var(--blue)" stroke-width="2"/><line x1="140" y1="174" x2="203" y2="69" stroke="var(--red)" stroke-width="2"/><line x1="140" y1="69" x2="203" y2="69" stroke="GrayText" stroke-width="2" stroke-dasharray="4 4"/><circle cx="140" cy="90" r="4" fill="var(--blue)"/><circle cx="203" cy="69" r="4" fill="var(--red)"/><text x="118" y="192">O</text><text x="122" y="23">t</text><text x="328" y="190">x</text><text x="38" y="72">t = 1.25</text><text x="57" y="94">t = 1</text><text x="220" y="63">動く時計</text><text x="62" y="112">静止時計</text><text x="202" y="126">緑：t² − x² = 1</text></svg><figcaption>原点 O から各世界線上の点までの固有時はいずれも 1。動く時計が同じ固有時を刻むまでに、S の座標時間では 1.25 が経過する。図は c = 1。</figcaption></figure>
 <p>速度が一定なら、平方根を積分の外に出せる。青い世界線の時計が刻む時間は、<i>S</i> の座標時間を <i>γ</i> で割った値になる。</p>
 <div class="equation" data-tex="\begin{aligned}-(\Delta t')^2+(\Delta x')^2&amp;=-(\Delta t)^2+(\Delta x)^2,\\ \Delta\tau&amp;=\sqrt{(\Delta t)^2-(\Delta x)^2}\quad\text{（慣性運動）}.\end{aligned}">−Δt′²+Δx′² = −Δt²+Δx²。慣性運動の固有時 Δτ = √(Δt²−Δx²)。</div>
 <p>A と B の間隔は正で空間的。時刻の順序は変えられる。原点 O と、S′ の原点が S で時刻 1 にいる出来事 C は時間的に隔たる。青い t′ 軸上の点 C が、その時計の読みを表す。</p>
@@ -42,7 +45,7 @@
 <section id="twins"><h2>4. 往復した時計は何を測るか</h2>
 <p>出発と再会は両者に共通する出来事。青い時計は出発地点で静止し、赤い時計は一定の速さで遠ざかり、中間時刻で反転して戻る。反転にかかる時間を無視したモデルで、静止系では出発から再会まで 10 秒とする。</p>
 <div class="equation" data-tex="\begin{aligned}\mathrm d\tau&amp;=\sqrt{1-\frac{|\mathbf v(t)|^2}{c^2}}\,\mathrm dt,\\ \tau_{\mathrm{静止}}&amp;=10\ \mathrm{s},\\ \tau_{\mathrm{往復}}&amp;=\int_0^{10\,\mathrm s}\sqrt{1-\beta(t)^2}\,\mathrm dt=10\sqrt{1-\beta^2}\ \mathrm{s}.\end{aligned}">dτ = √(1−|v|²/c²) dt。静止時計は 10 秒、往復時計は 10√(1−β²) 秒。</div>
-<div class="controls"><label>往復の速さ β = |v|/c <output id="trip-speed"></output><input id="trip" type="range" min="0" max=".95" step=".05" value=".6"></label></div>
+<p>往復の速さは β = 0.6 とする。</p>
 <svg id="trip-diagram" viewBox="0 0 360 245" role="img" aria-label="出発と再会を結ぶ静止時計と往復時計の世界線"></svg>
 <table><thead><tr><th scope="col">時計</th><th scope="col">再会までに刻む時間（秒）</th></tr></thead><tbody><tr><th scope="row">青：静止</th><td>10.000</td></tr><tr><th scope="row">赤：往復</th><td id="trip-proper"></td></tr><tr><th scope="row">青と赤の差</th><td id="trip-gap"></td></tr></tbody></table>
 <p class="reading">β を 0.6 にすると、赤は往路と復路で各 4 秒、合計 8 秒を刻む。同じ出発点と再会点を結んでも、固有時は途中の世界線に沿って積分する量なので、時計の読みは経路に依存する。</p></section><section id="momentum"><h2>5. 四元速度・四元運動量</h2>
@@ -56,12 +59,13 @@
 <div class="equation" data-tex="\begin{aligned}\gamma&amp;=1+\tfrac12|\mathbf v|^2/c^2+O(|\mathbf v|^4/c^4),\\
 E=\gamma mc^2&amp;=mc^2+\tfrac12m|\mathbf v|^2+O(m|\mathbf v|^4/c^2),\\
 \mathbf p=\gamma m\mathbf v&amp;\simeq m\mathbf v\quad (|\mathbf v|\ll c).\end{aligned}">低速では E ≈ mc² + ½m|v|²、p ≈ mv。</div>
+<figure class="derivation-figure"><svg viewBox="0 0 360 210" role="img" aria-label="四元運動量の時間成分と空間成分"><line x1="32" y1="174" x2="328" y2="174" stroke="GrayText" stroke-width="2"/><line x1="140" y1="190" x2="140" y2="18" stroke="GrayText" stroke-width="2"/><polyline points="68,72.17662350913714 71.816,74.83822381582709 75.632,77.42236581899513 79.44800000000001,79.92266636431495 83.264,82.33226469471387 87.08,84.64382282125091 90.89599999999999,86.84953920947979 94.712,88.94117950500372 98.52799999999999,90.91012827064901 102.344,92.74746566414068 106.16,94.44407250242129 109.976,95.99076608503324 113.792,97.37846736066943 117.608,98.59839747061075 121.424,99.64229847554458 125.24000000000001,100.50266943623055 129.05599999999998,101.17300544440955 132.87199999999999,101.64802432552376 136.688,101.92386425452597 140.50400000000002,101.99823602160846 144.32,101.8705164305192 148.136,101.5417741315729 151.952,101.01472543039932 155.768,100.29362426492536 159.58399999999997,99.38409649411193 163.4,98.29293295867288 167.216,97.0278579224925 171.032,95.59728943461202 174.848,94.01010623835035 178.664,92.27543272674978 182.48000000000002,90.4024497966597 186.296,88.40023588817549 190.112,86.27763942984663 193.928,84.04318155915028 197.74399999999997,81.70498639688057 201.56,79.27073525039899 205.37599999999998,76.74764076897672 209.192,74.14243712166815 213.008,71.46138257222304 216.82399999999998,68.71027127017565 220.64000000000001,65.89445157624887 224.45600000000002,63.01884873547219 228.272,60.087990167849284 232.088,57.106032046131645 235.904,54.07678616714777 239.71999999999997,51.00374639851832 243.53599999999997,47.89011420193897 247.352,44.73882290494177 251.16799999999998,41.552560523051284 254.98399999999998,38.333791031075094 258.8,35.084774052661885" fill="none" stroke="var(--blue)" stroke-width="2"/><line x1="140" y1="84" x2="194" y2="84" stroke="GrayText" stroke-width="2" stroke-dasharray="4 4"/><line x1="194" y1="174" x2="194" y2="84" stroke="GrayText" stroke-width="2" stroke-dasharray="4 4"/><circle cx="140" cy="102" r="4" fill="var(--red)"/><circle cx="194" cy="84" r="4" fill="var(--blue)"/><text x="105" y="21">E/c</text><text x="325" y="191">pₓ</text><text x="50" y="104">静止：mc</text><text x="205" y="83">運動中</text><text x="182" y="191">pₓ</text><text x="67" y="84">E/c</text></svg><figcaption>運動が x 方向だけの場合。青い点は、質量が同じ粒子を測る慣性系を変えたときの E と pₓ の組。赤い静止点でも、時間成分には mc が残る。</figcaption></figure>
 <p>四元運動量の計量による二乗は、静止系で計算できる。静止系では空間成分がゼロ、時間成分が <i>mc</i>。同じ二乗を任意の慣性系で計算し、両式を等置する。</p>
 <div class="equation" data-tex="\begin{aligned}P_\mu P^\mu&amp;=-(mc)^2\\&amp;=-(E/c)^2+|\mathbf p|^2,\\
 E^2&amp;=|\mathbf p|^2c^2+m^2c^4.\end{aligned}">PμPμ = −m²c² = −(E/c)² + |p|²。よって E² = |p|²c² + m²c⁴。</div>
 <div class="equation" data-tex="\begin{aligned}U^\mu&amp;=\frac{\mathrm d x^\mu}{\mathrm d\tau}=\gamma(c,\mathbf v),\\ P^\mu&amp;=mU^\mu=(E/c,\mathbf p),\\ E&amp;=\gamma mc^2,\qquad \mathbf p=\gamma m\mathbf v,\\ -(E/c)^2+|\mathbf p|^2&amp;=-m^2c^2,\quad E^2=|\mathbf p|^2c^2+m^2c^4.\end{aligned}">U = γ(c,v)、P = mU = (E/c,p)。E = γmc²、p = γmv、E² = |p|²c² + m²c⁴。</div>
 <p>図では c = 1、m = 1 とする。青は全エネルギー、緑は運動量の大きさ、赤は運動エネルギー。灰色の基準線は静止エネルギー 1 を示す。</p>
-<div class="controls"><label>粒子の速さ β <output id="particle-speed"></output><input id="particle" type="range" min="0" max=".95" step=".05" value=".6"></label></div>
+<p>棒図では粒子の速さを β = 0.6 とする。</p>
 <svg id="particle-diagram" viewBox="0 0 360 165" role="img" aria-label="全エネルギー、運動量、運動エネルギーの大きさを比べる棒図"></svg>
 <table><tbody><tr><th scope="row">ローレンツ因子 γ</th><td id="particle-gamma"></td></tr><tr><th scope="row">不変量 E² − |p|²</th><td id="particle-invariant"></td></tr></tbody></table>
 <p class="reading">速度を上げると E と |p| はともに増えるが、E² − |p|² は 1 のまま。静止すると運動量と運動エネルギーはゼロで、全エネルギーには静止エネルギー mc² が残る。</p>
@@ -76,12 +80,12 @@ const blue="var(--blue)",red="var(--red)",green="var(--green)";
 function formulas(){if(window.katex)for(const el of document.querySelectorAll("[data-tex]"))window.katex.render(el.dataset.tex,el,{displayMode:true,throwOnError:false});}
 window.addEventListener("DOMContentLoaded",formulas);
 
-const beta=get("beta"),P=(x,t)=>[180+61*x,122-61*t];
+const P=(x,t)=>[180+61*x,122-61*t];
 function draw(){
- const b=Number(beta.value),g=1/Math.sqrt(1-b*b);
+ const b=.5,g=1/Math.sqrt(1-b*b);
  const boost=(t,x)=>[g*(t-b*x),g*(x-b*t)];
  const A=boost(.6,-.8),B=boost(.6,.8);
- get("beta-value").textContent=fmt(b);
+
  for(const [id,value] of [["at",A[0]],["ax",A[1]],["bt",B[0]],["bx",B[1]]])get(id).textContent=fmt(value);
  get("simul").textContent=" 現在の Δt′（B − A）= "+fmt(B[0]-A[0])+"。";
  get("space-interval").textContent=fmt(1.6**2)+" / "+fmt((B[1]-A[1])**2-(B[0]-A[0])**2);
@@ -93,12 +97,12 @@ function draw(){
   text(123,79,"A")+text(234,79,"B")+text(P(b,1)[0]+7,59,"C")+text(321,126,"x")+text(185,19,"t")+
   text(P(2,2*b)[0]+4,P(2,2*b)[1]-6,"x′")+text(P(1.55*b,1.55)[0]+8,32,"t′");
 }
-beta.addEventListener("input",draw);draw();
+draw();
 
-const trip=get("trip");
+
 function drawTrip(){
- const beta=Number(trip.value), elapsed=10*Math.sqrt(1-beta*beta);
- get("trip-speed").textContent=fmt(beta);
+ const beta=.6, elapsed=10*Math.sqrt(1-beta*beta);
+
  get("trip-proper").textContent=fmt(elapsed);
  get("trip-gap").textContent=fmt(10-elapsed);
  const start=[73,205],turn=[73+beta*87.5,117.5],end=[73,30];
@@ -107,16 +111,16 @@ function drawTrip(){
    dot(start,blue)+dot(end,blue)+dot(turn,red)+text(30,225,"出発")+
    text(86,33,"再会（10 秒）")+text(turn[0]+10,turn[1]+4,"折り返し（5 秒）")+text(289,225,"位置 x")+text(17,20,"時刻 t");
 }
-const particle=get("particle");
+
 function drawParticle(){
- const beta=Number(particle.value),gamma=1/Math.sqrt(1-beta*beta);
+ const beta=.6,gamma=1/Math.sqrt(1-beta*beta);
  const energy=gamma,momentum=gamma*beta,kinetic=energy-1;
- get("particle-speed").textContent=fmt(beta);
+
  get("particle-gamma").textContent=fmt(gamma);
  get("particle-invariant").textContent=fmt(energy*energy-momentum*momentum);
  const bars=[["全エネルギー E",energy,blue],["運動量の大きさ |p|",momentum,green],["運動エネルギー",kinetic,red]];
  get("particle-diagram").innerHTML=line([116,17],[116,150])+line([176,17],[176,150],"GrayText",1.4,"4 4")+
    bars.map(([label,value,color],i)=>{const y=43+46*i,x=116+60*value;return text(6,y+4,label)+line([116,y],[x,y],color,6)+text(x+7,y+4,fmt(value));}).join("");
 }
-trip.addEventListener("input",drawTrip);particle.addEventListener("input",drawParticle);drawTrip();drawParticle();
+drawTrip();drawParticle();
 </script></body></html>
