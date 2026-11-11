@@ -9,6 +9,10 @@
 .display-equation{text-align:center;margin:.45rem 0;font-family:serif;font-size:1.1em;line-height:1.65;overflow-wrap:anywhere}
 </style>
 <link rel="stylesheet" href="../../assets/figure-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script defer src="../../assets/lesson.js"></script>
+<link rel="stylesheet" href="../../assets/math-layout.css">
 <main>
 <a href="../../">数学の可視化一覧</a>
 <h1>曲面と曲率</h1>
@@ -17,8 +21,8 @@
 <button type="button" data-shape="cylinder" aria-pressed="false">円柱</button>
 <button type="button" data-shape="saddle" aria-pressed="false">鞍型</button>
 </div>
-<label class="sticky-direction">切る方向 <i>θ</i> <output id="angle"></output><input id="direction" type="range" min="0" max="180" value="0"></label>
-<h2>法線断面</h2><p>点 <i>P</i> を通り、曲面の法線を含む平面で曲面を切る。</p>
+<label class="sticky-direction">切る方向 <span class="inline-math" data-tex="\theta"><i>θ</i></span> <output id="angle"></output><input id="direction" type="range" min="0" max="180" value="0"></label>
+<h2>法線断面</h2><p>点 <span class="inline-math" data-tex="P"><i>P</i></span> を通り、曲面の法線を含む平面で曲面を切る。</p>
 <svg viewBox="0 0 320 180" role="img" aria-label="曲面の格子、点Pでの切断平面、曲面との交線を重ねた立体図">
 <path id="surface-grid" fill="none" stroke="GrayText" stroke-opacity=".65"/>
 <polygon id="cut-plane" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-opacity=".7" stroke-dasharray="5 3"/>
@@ -27,7 +31,7 @@
 <circle cx="160" cy="105" r="4" fill="currentColor"/>
 <text x="167" y="101" fill="currentColor" font-size="12"><i>P</i></text>
 </svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>曲面の格子</span></li><li><span class="figure-key plane" style="--key:var(--ink)" aria-hidden="true"></span><span>切断平面</span></li><li><span class="figure-key " style="--key:#83bcff" aria-hidden="true"></span><span>切断平面と曲面の交線</span></li><li><span class="figure-key " style="--key:var(--ink)" aria-hidden="true"></span><span>点 P の法線</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>切断の基準点 P</span></li></ul></div>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>曲面の格子</span></li><li><span class="figure-key plane" style="--key:var(--ink)" aria-hidden="true"></span><span>切断平面</span></li><li><span class="figure-key " style="--key:#83bcff" aria-hidden="true"></span><span>切断平面と曲面の交線</span></li><li><span class="figure-key " style="--key:var(--ink)" aria-hidden="true"></span><span>点 <span class="inline-math" data-tex="P">P</span> の法線</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>切断の基準点 <span class="inline-math" data-tex="P">P</span></span></li></ul></div>
 
 <p>交線を切断平面の正面から見た図</p>
 <svg viewBox="0 0 320 160" role="img" aria-label="点Pでの法線断面。横軸は選んだ接方向、縦軸は法線方向">
@@ -38,23 +42,23 @@
 <text x="168" y="17" fill="currentColor" font-size="12">法線方向</text>
 <text x="246" y="74" fill="currentColor" font-size="12">接方向</text>
 </svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:#83bcff" aria-hidden="true"></span><span>切断平面と曲面の交線</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>接方向・法線方向の軸</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>切断の基準点 P</span></li></ul></div>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:#83bcff" aria-hidden="true"></span><span>切断平面と曲面の交線</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>接方向・法線方向の軸</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>切断の基準点 <span class="inline-math" data-tex="P">P</span></span></li></ul></div>
 <p id="reading" aria-live="polite"></p>
 <table>
-<thead><tr><th scope="col">点 <i>P</i> での曲率</th><th scope="col">値</th></tr></thead>
+<thead><tr><th scope="col">点 <span class="inline-math" data-tex="P"><i>P</i></span> での曲率</th><th scope="col">値</th></tr></thead>
 <tbody>
-<tr><th scope="row">第1主曲率 <i>k</i><sub>1</sub>（0°）</th><td id="k1"></td></tr>
-<tr><th scope="row">第2主曲率 <i>k</i><sub>2</sub>（90°）</th><td id="k2"></td></tr>
-<tr><th scope="row">選んだ方向の法曲率 <i>k</i><sub><i>n</i></sub>(<i>θ</i>)</th><td id="kn"></td></tr>
-<tr><th scope="row">ガウス曲率 <i>K</i> = <i>k</i><sub>1</sub> × <i>k</i><sub>2</sub></th><td id="gauss"></td></tr>
+<tr><th scope="row">第1主曲率 <span class="inline-math" data-tex="k_{1}"><i>k</i><sub>1</sub></span>（<span class="inline-math" data-tex="0^{\circ}">0°</span>）</th><td id="k1"></td></tr>
+<tr><th scope="row">第2主曲率 <span class="inline-math" data-tex="k_{2}"><i>k</i><sub>2</sub></span>（<span class="inline-math" data-tex="90^{\circ}">90°</span>）</th><td id="k2"></td></tr>
+<tr><th scope="row">選んだ方向の法曲率 <span class="inline-math" data-tex="k_{n}(\theta )"><i>k</i><sub><i>n</i></sub>(<i>θ</i>)</span></th><td id="kn"></td></tr>
+<tr><th scope="row">ガウス曲率 <span class="inline-math" data-tex="K = k_{1} \times  k_{2}"><i>K</i> = <i>k</i><sub>1</sub> × <i>k</i><sub>2</sub></span></th><td id="gauss"></td></tr>
 </tbody>
 </table>
 <details><summary>式と曲面の設定</summary>
-<p>第1主方向から測った角度を <i>θ</i> とする。その方向の法曲率は、二つの主曲率から求められる。</p><div class="display-equation"><i>k</i><sub><i>n</i></sub>(<i>θ</i>) = <i>k</i><sub>1</sub> cos²<i>θ</i> + <i>k</i><sub>2</sub> sin²<i>θ</i></div><p>点 <i>P</i> におけるガウス曲率は、二つの主曲率の積である。</p><div class="display-equation"><i>K</i> = <i>k</i><sub>1</sub> <i>k</i><sub>2</sub></div>
-<div id="shape-sphere"><p>点 <i>P</i> と球の中心を結ぶ直線が法線である。この直線を含む平面は、切る向きを変えても球の中心を通る。したがって、断面はどの向きでも同じ半径 1 の大円になる。</p><div class="display-equation"><i>k</i><sub>1</sub> = <i>k</i><sub>2</sub> = 1,　<i>K</i> = 1</div><p>スライダーを動かすと上の切断平面は回るが、下の断面の形と法曲率は変わらない。</p></div>
-<div id="shape-cylinder" hidden><p>円柱を周方向（0°）に切ると、断面は半径 1 の円になる。軸方向（90°）に切ると、点 <i>P</i> を通る断面の枝は直線になる。法線は円柱の軸に向ける。</p><div class="display-equation"><i>k</i><sub>1</sub> = 1,　<i>k</i><sub>2</sub> = 0,　<i>K</i> = 1 × 0 = 0</div><p>0° から 90° に動かすと、点 <i>P</i> での法曲率が 1 から 0 に下がる。円柱の側面には周方向の曲がりがあり、ガウス曲率は軸方向の主曲率が 0 なので 0 になる。</p></div>
-<div id="shape-saddle" hidden><p>次式で定める曲面の原点を点 <i>P</i> とし、法線は上向きにとる。</p><div class="display-equation"><i>z</i> = (<i>x</i>² − <i>y</i>²)/2</div><p>0° では断面が上向きに、90° では下向きに曲がる。45° では二つの二乗項が等しくなり、断面は直線になる。</p><div class="display-equation"><i>k</i><sub>1</sub> = 1,　<i>k</i><sub>2</sub> = −1,　<i>K</i> = −1</div><p>45° の方向の法曲率は 0 だが、ガウス曲率は二つの主曲率の積なので −1 のままである。</p></div>
-<p>表の曲率はいずれも点 <i>P</i> における値である。</p>
+<p>第1主方向から測った角度を <span class="inline-math" data-tex="\theta"><i>θ</i></span> とする。その方向の法曲率は、二つの主曲率から求められる。</p><div class="display-equation" data-tex="k_{n}(\theta ) = k_{1} \cos ^{2}\theta  + k_{2} \sin ^{2}\theta"><i>k</i><sub><i>n</i></sub>(<i>θ</i>) = <i>k</i><sub>1</sub> cos²<i>θ</i> + <i>k</i><sub>2</sub> sin²<i>θ</i></div><p>点 <span class="inline-math" data-tex="P"><i>P</i></span> におけるガウス曲率は、二つの主曲率の積である。</p><div class="display-equation" data-tex="K = k_{1} k_{2}"><i>K</i> = <i>k</i><sub>1</sub> <i>k</i><sub>2</sub></div>
+<div id="shape-sphere"><p>点 <span class="inline-math" data-tex="P"><i>P</i></span> と球の中心を結ぶ直線が法線である。この直線を含む平面は、切る向きを変えても球の中心を通る。したがって、断面はどの向きでも同じ半径 1 の大円になる。</p><div class="display-equation" data-tex="k_{1} = k_{2} = 1,\quad K = 1"><i>k</i><sub>1</sub> = <i>k</i><sub>2</sub> = 1,　<i>K</i> = 1</div><p>スライダーを動かすと上の切断平面は回るが、下の断面の形と法曲率は変わらない。</p></div>
+<div id="shape-cylinder" hidden><p>円柱を周方向（<span class="inline-math" data-tex="0^{\circ}">0°</span>）に切ると、断面は半径 1 の円になる。軸方向（<span class="inline-math" data-tex="90^{\circ}">90°</span>）に切ると、点 <span class="inline-math" data-tex="P"><i>P</i></span> を通る断面の枝は直線になる。法線は円柱の軸に向ける。</p><div class="display-equation" data-tex="k_{1} = 1,\quad k_{2} = 0,\quad K = 1 \times  0 = 0"><i>k</i><sub>1</sub> = 1,　<i>k</i><sub>2</sub> = 0,　<i>K</i> = 1 × 0 = 0</div><p><span class="inline-math" data-tex="0^{\circ}">0°</span> から <span class="inline-math" data-tex="90^{\circ}">90°</span> に動かすと、点 <span class="inline-math" data-tex="P"><i>P</i></span> での法曲率が 1 から 0 に下がる。円柱の側面には周方向の曲がりがあり、ガウス曲率は軸方向の主曲率が 0 なので 0 になる。</p></div>
+<div id="shape-saddle" hidden><p>次式で定める曲面の原点を点 <span class="inline-math" data-tex="P"><i>P</i></span> とし、法線は上向きにとる。</p><div class="display-equation" data-tex="z = (x^{2} - y^{2})/2"><i>z</i> = (<i>x</i>² − <i>y</i>²)/2</div><p><span class="inline-math" data-tex="0^{\circ}">0°</span> では断面が上向きに、<span class="inline-math" data-tex="90^{\circ}">90°</span> では下向きに曲がる。<span class="inline-math" data-tex="45^{\circ}">45°</span> では二つの二乗項が等しくなり、断面は直線になる。</p><div class="display-equation" data-tex="k_{1} = 1,\quad k_{2} = -1,\quad K = -1"><i>k</i><sub>1</sub> = 1,　<i>k</i><sub>2</sub> = −1,　<i>K</i> = −1</div><p><span class="inline-math" data-tex="45^{\circ}">45°</span> の方向の法曲率は 0 だが、ガウス曲率は二つの主曲率の積なので −1 のままである。</p></div>
+<p>表の曲率はいずれも点 <span class="inline-math" data-tex="P"><i>P</i></span> における値である。</p>
 </details>
 </main>
 <script>
@@ -131,4 +135,5 @@ direction.addEventListener("input",draw);
 draw();
 </script>
 </html>
+
 

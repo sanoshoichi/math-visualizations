@@ -6,29 +6,33 @@ body{max-width:55rem;margin:auto;padding:1rem;font:1rem/1.55 system-ui,sans-seri
 @media(max-width:650px){.views{grid-template-columns:1fr}}figure{margin:0}figcaption{font-weight:600}svg{width:100%;height:155px;display:block}svg text{fill:CanvasText;font:11px system-ui}
 .formula{text-align:center;font:1.1rem/1.5 serif}.scroll{overflow-x:auto}table{border-collapse:collapse;min-width:43rem}td,th{text-align:left;vertical-align:top;padding:.45rem;border-bottom:1px solid GrayText}output{font-variant-numeric:tabular-nums}
 </style><link rel="stylesheet" href="../../assets/figure-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script defer src="../../assets/lesson.js"></script>
+<link rel="stylesheet" href="../../assets/math-layout.css">
 </head><body><main>
 <nav><a href="../../">数学の可視化一覧</a></nav><h1>微分幾何学を三つの分野で比べる</h1>
 <p>同じ数の組を接ベクトルの成分として与え、それぞれの計量で測る。青い矢印は各図で同じ成分を表す。図ごとに点や座標の意味は異なる。</p>
 <div class="controls">
 <label>成分の角度 <output id="angle-value"></output><input id="angle" type="range" min="0" max="180" value="30"></label>
-<label>成功確率 <i>p</i> <output id="prob-value"></output><input id="prob" type="range" min=".02" max=".98" step=".01" value=".2"></label>
+<label>成功確率 <span class="inline-math" data-tex="p"><i>p</i></span> <output id="prob-value"></output><input id="prob" type="range" min=".02" max=".98" step=".01" value=".2"></label>
 </div>
-<div class="formula"><i>v</i> = (cos <i>θ</i>, sin <i>θ</i>)</div>
+<div class="formula" data-tex="v = (\cos  \theta , \sin  \theta )"><i>v</i> = (cos <i>θ</i>, sin <i>θ</i>)</div>
 <div class="views">
 <figure><figcaption>純粋数学：Euclid 平面</figcaption><svg id="euclid" viewBox="0 0 220 155" role="img" aria-label="Euclid 計量の単位円と接ベクトル"></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル v</span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>Euclid 計量の単位円</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><i>g</i>(<i>v</i>,<i>v</i>) = <output id="e"></output></div><p>赤は長さ 1 のベクトルの集合。方向を変えても、青い矢印の長さは 1。</p></figure>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>Euclid 計量の単位円</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="e"></output></div><p>赤は長さ 1 のベクトルの集合。方向を変えても、青い矢印の長さは 1。</p></figure>
 <figure><figcaption>相対論：Minkowski 時空</figcaption><svg id="lorentz" viewBox="0 0 220 155" role="img" aria-label="横が空間、縦が時間の光円錐と接ベクトル"></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル v</span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>光的な方向</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><i>g</i>(<i>v</i>,<i>v</i>) = <output id="l"></output> <output id="kind"></output></div><p>赤は光的な方向。計量の符号で方向を分類する。</p></figure>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>光的な方向</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="l"></output> <output id="kind"></output></div><p>赤は光的な方向。計量の符号で方向を分類する。</p></figure>
 <figure><figcaption>情報幾何：Fisher 計量</figcaption><svg id="fisher" viewBox="0 0 220 155" role="img" aria-label="Fisher 計量の単位楕円と接ベクトル"></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル v</span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>Fisher 計量の単位楕円</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><i>g</i>(<i>v</i>,<i>v</i>) = <output id="f"></output></div><p>赤は Fisher 計量で長さ 1 の集合。二つの成功確率を <i>p</i> と <i>q</i> とし、計量を評価する点では <i>q</i> = 0.5 に固定する。</p></figure>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>Fisher 計量の単位楕円</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="f"></output></div><p>赤は Fisher 計量で長さ 1 の集合。二つの成功確率を <span class="inline-math" data-tex="p"><i>p</i></span> と <span class="inline-math" data-tex="q"><i>q</i></span> とし、計量を評価する点では <span class="inline-math" data-tex="q = 0.5"><i>q</i> = 0.5</span> に固定する。</p></figure>
 </div>
 <details><summary>三つの計量の式</summary>
-<div class="formula"><i>g</i><sub>E</sub>(<i>v</i>,<i>v</i>) = (<i>v</i>¹)² + (<i>v</i>²)²</div>
-<div class="formula"><i>g</i><sub>M</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>x</sup>)² − (<i>v</i><sup>t</sup>)²</div>
-<div class="formula"><i>g</i><sub>F</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>p</sup>)² / [<i>p</i>(1−<i>p</i>)] + (<i>v</i><sup>q</sup>)² / [<i>q</i>(1−<i>q</i>)]</div>
-<p>成功確率が端に近づくほど、同じ母数の変化が Fisher 計量では大きく測られる。角度を 0° にして <i>p</i> を動かすと、その違いが見やすい。</p>
+<div class="formula" data-tex="g_{E}(v,v) = (v^{1})^{2} + (v^{2})^{2}"><i>g</i><sub>E</sub>(<i>v</i>,<i>v</i>) = (<i>v</i>¹)² + (<i>v</i>²)²</div>
+<div class="formula" data-tex="g_{M}(v,v) = (v^{x})^{2} - (v^{t})^{2}"><i>g</i><sub>M</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>x</sup>)² − (<i>v</i><sup>t</sup>)²</div>
+<div class="formula" data-tex="g_{F}(v,v) = (v^{p})^{2} / [p(1-p)] + (v^{q})^{2} / [q(1-q)]"><i>g</i><sub>F</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>p</sup>)² / [<i>p</i>(1−<i>p</i>)] + (<i>v</i><sup>q</sup>)² / [<i>q</i>(1−<i>q</i>)]</div>
+<p>成功確率が端に近づくほど、同じ母数の変化が Fisher 計量では大きく測られる。角度を <span class="inline-math" data-tex="0^{\circ}">0°</span> にして <span class="inline-math" data-tex="p"><i>p</i></span> を動かすと、その違いが見やすい。</p>
 </details>
-<h2>概念の対応表</h2><div class="scroll" tabindex="0" aria-label="横にスクロールできる概念の対応表"><table><thead><tr><th scope="col">概念</th><th scope="col">純粋数学</th><th scope="col">一般相対性理論</th><th scope="col">情報幾何学</th></tr></thead><tbody><tr><th scope="row">点・多様体</th><td>曲面上の点など</td><td>時空の出来事</td><td>確率分布。ここでは独立な二つのベルヌーイ分布の組</td></tr><tr><th scope="row">接ベクトル</th><td>曲線の瞬間速度</td><td>世界線の接ベクトル</td><td>分布をどの方向へ変えるか</td></tr><tr><th scope="row">計量</th><td>Riemann 計量なら長さの二乗は正</td><td>Lorentz 計量。符号によって時間的・光的・空間的を区別</td><td>Fisher 計量。近い分布がどれほど区別しやすいか</td></tr><tr><th scope="row">接続・共変微分</th><td>異なる点の接空間を比べる規則</td><td>通常は時空計量の Levi-Civita 接続</td><td>Fisher 計量の Levi-Civita 接続と、一般には異なる α 接続</td></tr><tr><th scope="row">測地線</th><td>選んだ接続で速度が平行移動される曲線</td><td>自由落下する試験粒子や、幾何光学近似での光の軌道</td><td>接続によって異なる。独立なベルヌーイの積モデルでは、誘導された混合接続のアフィン座標は各成功確率</td></tr><tr><th scope="row">曲率</th><td>選んだ接続の曲率。円柱の例では内在的曲率と外から見た曲がり方を区別できる</td><td>近くを自由落下する粒子の相対加速度に現れる</td><td>選んだ接続に依存。平坦性を述べるときは接続を明示する</td></tr></tbody></table></div>
+<h2>概念の対応表</h2><div class="scroll" tabindex="0" aria-label="横にスクロールできる概念の対応表"><table><thead><tr><th scope="col">概念</th><th scope="col">純粋数学</th><th scope="col">一般相対性理論</th><th scope="col">情報幾何学</th></tr></thead><tbody><tr><th scope="row">点・多様体</th><td>曲面上の点など</td><td>時空の出来事</td><td>確率分布。ここでは独立な二つのベルヌーイ分布の組</td></tr><tr><th scope="row">接ベクトル</th><td>曲線の瞬間速度</td><td>世界線の接ベクトル</td><td>分布をどの方向へ変えるか</td></tr><tr><th scope="row">計量</th><td>Riemann 計量なら長さの二乗は正</td><td>Lorentz 計量。符号によって時間的・光的・空間的を区別</td><td>Fisher 計量。近い分布がどれほど区別しやすいか</td></tr><tr><th scope="row">接続・共変微分</th><td>異なる点の接空間を比べる規則</td><td>通常は時空計量の Levi-Civita 接続</td><td>Fisher 計量の Levi-Civita 接続と、一般には異なる <span class="inline-math" data-tex="\alpha">α</span> 接続</td></tr><tr><th scope="row">測地線</th><td>選んだ接続で速度が平行移動される曲線</td><td>自由落下する試験粒子や、幾何光学近似での光の軌道</td><td>接続によって異なる。独立なベルヌーイの積モデルでは、誘導された混合接続のアフィン座標は各成功確率</td></tr><tr><th scope="row">曲率</th><td>選んだ接続の曲率。円柱の例では内在的曲率と外から見た曲がり方を区別できる</td><td>近くを自由落下する粒子の相対加速度に現れる</td><td>選んだ接続に依存。平坦性を述べるときは接続を明示する</td></tr></tbody></table></div>
 <p><a href="../general-relativity/">相対論に向けた16項目</a> · <a href="../covariant-derivative/">共変微分</a> · <a href="../surface-curvature/">曲面と曲率</a></p>
 <p><a href="https://arxiv.org/abs/1808.08271">参考文献：Frank Nielsen, An Elementary Introduction to Information Geometry</a></p>
 </main><script>
@@ -55,3 +59,4 @@ function draw(){
 }
 angle.addEventListener("input",draw);prob.addEventListener("input",draw);draw();
 </script></body></html>
+

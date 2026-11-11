@@ -28,7 +28,6 @@
   #sphere-covariant-mobile .sphere-gamma { margin-inline-start:.55em; white-space:nowrap; }
   #sphere-covariant-mobile .sphere-symbols { display:flex; flex-wrap:wrap; gap:.2em 1em; margin-top:.25em; }
   #sphere-covariant-mobile .sphere-formulas { display:grid; gap:.18em; margin-block:.3em .55em; }
-  #sphere-covariant-mobile .sphere-formulas span { display:inline-block; }
   #sphere-covariant-mobile .sphere-total { border-top:1px solid var(--border); }
   #sphere-covariant-mobile .sphere-total :is(th,td), #sphere-covariant-mobile .sphere-equation { font-weight:600; }
   #sphere-covariant-mobile .sphere-derivation { margin-top:.5em; }
@@ -59,20 +58,24 @@
 .tab-list button{min-height:44px;padding:.35rem .7rem;font:inherit}
 .tab-list button[aria-selected=true]{font-weight:bold;border-bottom:3px solid currentColor}
 </style><link rel="stylesheet" href="../../assets/figure-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script defer src="../../assets/lesson.js"></script>
+<link rel="stylesheet" href="../../assets/math-layout.css">
 </head><body><main>
 <nav><a href="../../">数学の可視化一覧</a></nav>
 <h1>共変微分</h1>
 <div class="tab-list" role="tablist" aria-label="共変微分の例">
-<button type="button" id="circle-tab" role="tab" aria-controls="circle-panel" aria-selected="true">単位円 S¹</button>
-<button type="button" id="sphere-tab" role="tab" aria-controls="sphere-panel" aria-selected="false" tabindex="-1">単位球面 S²</button>
+<button type="button" id="circle-tab" role="tab" aria-controls="circle-panel" aria-selected="true">単位円 <span class="inline-math" data-tex="S^{1}">S¹</span></button>
+<button type="button" id="sphere-tab" role="tab" aria-controls="sphere-panel" aria-selected="false" tabindex="-1">単位球面 <span class="inline-math" data-tex="S^{2}">S²</span></button>
 </div>
 <section id="circle-panel" role="tabpanel" aria-labelledby="circle-tab">
 
 <h2>単位円の共変微分</h2>
-<p>円周上の点を動かし、その点で円に接する矢印 <i>Y</i> の変化を見る。</p>
+<p>円周上の点を動かし、その点で円に接する矢印 <span class="inline-math" data-tex="Y"><i>Y</i></span> の変化を見る。</p>
 <div class="controls">
 <label>円周上の角度 <output id="angle"></output><input id="theta" type="range" min="0" max="360" value="25"></label>
-<label>長さの変動幅 <i>a</i> <output id="amplitude"></output><input id="a" type="range" min="0" max=".9" step=".1" value="0"></label>
+<label>長さの変動幅 <span class="inline-math" data-tex="a"><i>a</i></span> <output id="amplitude"></output><input id="a" type="range" min="0" max=".9" step=".1" value="0"></label>
 </div>
 <svg viewBox="0 0 320 220" role="img" aria-label="単位円、選んだ点での接線、接ベクトルとその微分の成分">
 <circle cx="160" cy="110" r="68" fill="none" stroke="GrayText"/>
@@ -84,34 +87,34 @@
 <path id="tangent" class="tangent" fill="none" stroke="currentColor" stroke-width="2"/>
 <circle id="point" r="3" fill="currentColor"/>
 </svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--vector)" aria-hidden="true"></span><span>接ベクトル Y</span></li><li><span class="figure-key arrow" style="--key:var(--tangent)" aria-hidden="true"></span><span>共変微分（接線成分）</span></li><li><span class="figure-key dash arrow" style="--key:var(--normal)" aria-hidden="true"></span><span>法線成分</span></li><li><span class="figure-key arrow" style="--key:var(--ink)" aria-hidden="true"></span><span>通常の微分</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>点 P</span></li><li><span class="figure-key dash" style="--key:var(--muted)" aria-hidden="true"></span><span>接線と分解の補助線</span></li></ul></div>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--vector)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="Y">Y</span></span></li><li><span class="figure-key arrow" style="--key:var(--tangent)" aria-hidden="true"></span><span>共変微分（接線成分）</span></li><li><span class="figure-key dash arrow" style="--key:var(--normal)" aria-hidden="true"></span><span>法線成分</span></li><li><span class="figure-key arrow" style="--key:var(--ink)" aria-hidden="true"></span><span>通常の微分</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>点 <span class="inline-math" data-tex="P">P</span></span></li><li><span class="figure-key dash" style="--key:var(--muted)" aria-hidden="true"></span><span>接線と分解の補助線</span></li></ul></div>
 <p id="observation" aria-live="polite"></p>
 <table>
-<thead><tr><th scope="col">平面上の成分</th><th scope="col"><i>x</i></th><th scope="col"><i>y</i></th></tr></thead>
+<thead><tr><th scope="col">平面上の成分</th><th scope="col"><span class="inline-math" data-tex="x"><i>x</i></span></th><th scope="col"><span class="inline-math" data-tex="y"><i>y</i></span></th></tr></thead>
 <tbody>
-<tr class="vector" id="row-vector"><th scope="row">接ベクトル <i>Y</i></th><td></td><td></td></tr>
+<tr class="vector" id="row-vector"><th scope="row">接ベクトル <span class="inline-math" data-tex="Y"><i>Y</i></span></th><td></td><td></td></tr>
 <tr class="tangent" id="row-tangent"><th scope="row">共変微分（接線成分）</th><td></td><td></td></tr>
 <tr class="normal" id="row-normal"><th scope="row">＋ 法線成分</th><td></td><td></td></tr>
 <tr class="total" id="row-derivative"><th scope="row">＝ 通常の微分</th><td></td><td></td></tr>
 </tbody>
 </table>
 <details><summary>式と記号</summary>
-<p>円周上の角度を <i>θ</i>、接ベクトルの長さを <i>f</i> とする。単位接ベクトルを <i>T</i>、外向き単位法線を <i>N</i> とする。微分はラジアンで測った角度について行う。</p>
-<div class="formula"><i>Y</i> = <i>fT</i>　　<i>f</i> = 1 + <i>a</i> sin <i>θ</i></div>
-<div class="formula">d<i>Y</i>/d<i>θ</i> = <i>f′T</i> − <i>fN</i></div>
-<div class="formula">D<i>Y</i>/d<i>θ</i> = <i>f′T</i></div>
+<p>円周上の角度を <span class="inline-math" data-tex="\theta"><i>θ</i></span>、接ベクトルの長さを <span class="inline-math" data-tex="f"><i>f</i></span> とする。単位接ベクトルを <span class="inline-math" data-tex="T"><i>T</i></span>、外向き単位法線を <span class="inline-math" data-tex="N"><i>N</i></span> とする。微分はラジアンで測った角度について行う。</p>
+<div class="formula" data-tex="Y = fT\qquad f = 1 + a \sin  \theta"><i>Y</i> = <i>fT</i>　　<i>f</i> = 1 + <i>a</i> sin <i>θ</i></div>
+<div class="formula" data-tex="\mathrm d Y/d\theta  = f&#x27;T - fN">d<i>Y</i>/d<i>θ</i> = <i>f′T</i> − <i>fN</i></div>
+<div class="formula" data-tex="\mathrm D Y/d\theta  = f&#x27;T">D<i>Y</i>/d<i>θ</i> = <i>f′T</i></div>
 <p>長さが一定でも、矢印の向きは回る。その変化は法線方向に現れる。接線方向に残るのは、長さの変化による成分である。</p>
 </details>
 </section>
 <section id="sphere-panel" role="tabpanel" aria-labelledby="sphere-tab" hidden><h2>単位球面の共変微分</h2><section id="sphere-covariant-mobile">
   <div class="sphere-controls text-small sphere-sticky">
-    <label class="sphere-control"><span>経度 <i>θ</i> <output data-out="longitude"></output></span><input class="form-range" type="range" min="0" max="360" value="0" data-input="longitude"></label>
-    <label class="sphere-control"><span>緯度 <i>φ</i> <output data-out="latitude"></output></span><input class="form-range" type="range" min="-65" max="65" value="45" data-input="latitude"></label>
-    <label class="sphere-control"><span><i>Y</i> の長さの最大変化 <i>a</i> <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
+    <label class="sphere-control"><span>経度 <span class="inline-math" data-tex="\theta"><i>θ</i></span> <output data-out="longitude"></output></span><input class="form-range" type="range" min="0" max="360" value="0" data-input="longitude"></label>
+    <label class="sphere-control"><span>緯度 <span class="inline-math" data-tex="\phi"><i>φ</i></span> <output data-out="latitude"></output></span><input class="form-range" type="range" min="-65" max="65" value="45" data-input="latitude"></label>
+    <label class="sphere-control"><span><span class="inline-math" data-tex="Y"><i>Y</i></span> の長さの最大変化 <span class="inline-math" data-tex="a"><i>a</i></span> <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
   </div>
   <div class="sphere-values text-small">
-    <p>経度を <i>θ</i> とする。接ベクトル <i>Y</i> の長さは、基準値 1 から最大で <i>a</i> だけ増減する。</p>
-    <div class="display-equation">‖<i>Y</i>‖ = 1 + <i>a</i> sin <i>θ</i></div>
+    <p>経度を <span class="inline-math" data-tex="\theta"><i>θ</i></span> とする。接ベクトル <span class="inline-math" data-tex="Y"><i>Y</i></span> の長さは、基準値 1 から最大で <span class="inline-math" data-tex="a"><i>a</i></span> だけ増減する。</p>
+    <div class="display-equation" data-tex="\lVert Y\rVert = 1 + a \sin  \theta">‖<i>Y</i>‖ = 1 + <i>a</i> sin <i>θ</i></div>
     <p>現在の設定における長さの範囲</p>
     <div class="display-equation"><output data-length-range></output></div>
   </div>
@@ -127,46 +130,46 @@
     <g data-arrow="d"><line stroke-width="2"/><polygon/></g>
     <circle data-point r="2.5" fill="var(--foreground)"/>
   </svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--viz-series-1)" aria-hidden="true"></span><span>接ベクトル Y</span></li><li><span class="figure-key arrow" style="--key:var(--viz-series-2)" aria-hidden="true"></span><span>共変微分（接平面成分）</span></li><li><span class="figure-key dash arrow" style="--key:var(--viz-series-3)" aria-hidden="true"></span><span>法線成分</span></li><li><span class="figure-key arrow" style="--key:var(--ink)" aria-hidden="true"></span><span>通常の微分</span></li><li><span class="figure-key plane" style="--key:var(--viz-series-2)" aria-hidden="true"></span><span>接平面</span></li><li><span class="figure-key dash" style="--key:var(--muted)" aria-hidden="true"></span><span>緯線の奥側・分解の補助線</span></li></ul></div>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--viz-series-1)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="Y">Y</span></span></li><li><span class="figure-key arrow" style="--key:var(--viz-series-2)" aria-hidden="true"></span><span>共変微分（接平面成分）</span></li><li><span class="figure-key dash arrow" style="--key:var(--viz-series-3)" aria-hidden="true"></span><span>法線成分</span></li><li><span class="figure-key arrow" style="--key:var(--ink)" aria-hidden="true"></span><span>通常の微分</span></li><li><span class="figure-key plane" style="--key:var(--viz-series-2)" aria-hidden="true"></span><span>接平面</span></li><li><span class="figure-key dash" style="--key:var(--muted)" aria-hidden="true"></span><span>緯線の奥側・分解の補助線</span></li></ul></div>
   <div class="sphere-values text-small tabular-nums" aria-live="polite">
-    <div>接ベクトル <i>Y</i> の実際の長さ <output data-length></output></div>
-    <p>通常の微分を、接平面に沿う成分と法線成分に分解する。</p><div class="display-equation">d<i>Y</i>/d<i>θ</i> = D<i>Y</i>/d<i>θ</i> + 法線成分</div>
+    <div>接ベクトル <span class="inline-math" data-tex="Y"><i>Y</i></span> の実際の長さ <output data-length></output></div>
+    <p>通常の微分を、接平面に沿う成分と法線成分に分解する。</p><div class="display-equation" data-tex="\mathrm d Y/d\theta  = \mathrm D Y/d\theta  + \text{法線成分}">d<i>Y</i>/d<i>θ</i> = D<i>Y</i>/d<i>θ</i> + 法線成分</div>
     <table aria-label="ベクトルの座標成分">
-      <thead><tr><th scope="col">空間座標での成分</th><th scope="col"><i>x</i></th><th scope="col"><i>y</i></th><th scope="col"><i>z</i></th></tr></thead>
+      <thead><tr><th scope="col">空間座標での成分</th><th scope="col"><span class="inline-math" data-tex="x"><i>x</i></span></th><th scope="col"><span class="inline-math" data-tex="y"><i>y</i></span></th><th scope="col"><span class="inline-math" data-tex="z"><i>z</i></span></th></tr></thead>
       <tbody>
-        <tr data-row="p"><th scope="row">位置 <i>γ</i></th><td></td><td></td><td></td></tr>
-        <tr data-row="y"><th scope="row"><span data-key="y" aria-hidden="true"></span>接ベクトル <i>Y</i></th><td></td><td></td><td></td></tr>
-        <tr data-row="t"><th scope="row"><span data-key="t" aria-hidden="true"></span>共変微分 D<i>Y</i>/d<i>θ</i></th><td></td><td></td><td></td></tr>
+        <tr data-row="p"><th scope="row">位置 <span class="inline-math" data-tex="\gamma"><i>γ</i></span></th><td></td><td></td><td></td></tr>
+        <tr data-row="y"><th scope="row"><span data-key="y" aria-hidden="true"></span>接ベクトル <span class="inline-math" data-tex="Y"><i>Y</i></span></th><td></td><td></td><td></td></tr>
+        <tr data-row="t"><th scope="row"><span data-key="t" aria-hidden="true"></span>共変微分 <span class="inline-math" data-tex="\mathrm D Y/d\theta">D<i>Y</i>/d<i>θ</i></span></th><td></td><td></td><td></td></tr>
         <tr data-row="n"><th scope="row"><span data-key="n" aria-hidden="true"></span>+ 法線成分</th><td></td><td></td><td></td></tr>
-        <tr class="sphere-total" data-row="d"><th scope="row"><span data-key="d" aria-hidden="true"></span>= 通常の微分 d<i>Y</i>/d<i>θ</i></th><td></td><td></td><td></td></tr>
+        <tr class="sphere-total" data-row="d"><th scope="row"><span data-key="d" aria-hidden="true"></span>= 通常の微分 <span class="inline-math" data-tex="\mathrm d Y/d\theta">d<i>Y</i>/d<i>θ</i></span></th><td></td><td></td><td></td></tr>
       </tbody>
     </table>
   </div>
   <details class="sphere-values sphere-coordinate text-small tabular-nums">
-    <summary>球面座標の計算 <span class="sphere-gamma">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = <output data-gamma="phi-theta-theta"></output></span></summary>
+    <summary>球面座標の計算 <span class="sphere-gamma"><span class="inline-math" data-tex="\Gamma ^{\phi}_{\theta \theta} =">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> =</span> <output data-gamma="phi-theta-theta"></output></span></summary>
     <table aria-label="球面座標基底での成分。経度をラジアンで微分">
-      <thead><tr><th scope="col">座標基底での成分</th><th scope="col"><i>θ</i></th><th scope="col"><i>φ</i></th></tr></thead>
+      <thead><tr><th scope="col">座標基底での成分</th><th scope="col"><span class="inline-math" data-tex="\theta"><i>θ</i></span></th><th scope="col"><span class="inline-math" data-tex="\phi"><i>φ</i></span></th></tr></thead>
       <tbody aria-live="polite">
-        <tr data-coord="vector"><th scope="row">接ベクトル <i>Y</i></th><td></td><td></td></tr>
-        <tr data-coord="rate"><th scope="row">座標成分の微分 d<i>Y</i>ⁱ/d<i>θ</i></th><td></td><td></td></tr>
+        <tr data-coord="vector"><th scope="row">接ベクトル <span class="inline-math" data-tex="Y"><i>Y</i></span></th><td></td><td></td></tr>
+        <tr data-coord="rate"><th scope="row">座標成分の微分 <span class="inline-math" data-tex="\mathrm d Y^{i}/d\theta">d<i>Y</i>ⁱ/d<i>θ</i></span></th><td></td><td></td></tr>
         <tr data-coord="connection"><th scope="row">+ 接続による補正</th><td></td><td></td></tr>
-        <tr class="sphere-total" data-coord="covariant"><th scope="row">= 共変微分 D<i>Y</i>/d<i>θ</i></th><td></td><td></td></tr>
+        <tr class="sphere-total" data-coord="covariant"><th scope="row">= 共変微分 <span class="inline-math" data-tex="\mathrm D Y/d\theta">D<i>Y</i>/d<i>θ</i></span></th><td></td><td></td></tr>
       </tbody>
     </table>
     <details class="sphere-derivation"><summary>計量とクリストッフェル記号の導出</summary>
     <div class="sphere-formulas">
-      <p>単位球面の計量成分は次のとおり。</p><div class="display-equation"><span><i>g</i><sub><i>θθ</i></sub> = cos²<i>φ</i></span>、<span><i>g</i><sub><i>φφ</i></sub> = 1</span>、<span><i>g</i><sub><i>θφ</i></sub> = 0</span></div>
-      <div class="display-equation">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = −½ ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = sin<i>φ</i> cos<i>φ</i></div>
-      <div class="display-equation">Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = ½ <i>g</i><sup><i>θθ</i></sup> ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = −tan<i>φ</i></div>
-      <p>緯度を固定して経度だけを変える。接ベクトルの座標成分を次のように表す。</p><div class="display-equation"><span><i>Y</i><sup><i>θ</i></sup> = <i>f</i> / cos<i>φ</i></span>、<span><i>Y</i><sup><i>φ</i></sup> = 0</span>、<span><i>f</i> = 1 + <i>a</i> sin<i>θ</i></span></div>
-      <div class="display-equation">(D<i>Y</i>/d<i>θ</i>)<sup><i>θ</i></sup> = d<i>Y</i><sup><i>θ</i></sup>/d<i>θ</i> + 0 = <i>f</i>′ / cos<i>φ</i></div>
-      <div class="display-equation">(D<i>Y</i>/d<i>θ</i>)<sup><i>φ</i></sup> = 0 + Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> <i>Y</i><sup><i>θ</i></sup> = <i>f</i> sin<i>φ</i></div>
-      <p>現在の設定を <i>φ</i> 成分の式に代入する。</p><div class="display-equation"><output data-phi-equation></output></div>
+      <p>単位球面の計量成分は次のとおり。</p><div class="display-equation" data-tex="g_{\theta \theta} = \cos ^{2}\phi ,\quad g_{\phi \phi} = 1,\quad g_{\theta \phi} = 0"><span><i>g</i><sub><i>θθ</i></sub> = cos²<i>φ</i></span>、<span><i>g</i><sub><i>φφ</i></sub> = 1</span>、<span><i>g</i><sub><i>θφ</i></sub> = 0</span></div>
+      <div class="display-equation" data-tex="\Gamma ^{\phi}_{\theta \theta} = -\tfrac12  \partial _{\phi}g_{\theta \theta} = \sin \phi  \cos \phi">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = −½ ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = sin<i>φ</i> cos<i>φ</i></div>
+      <div class="display-equation" data-tex="\Gamma ^{\theta}_{\theta \phi} = \tfrac12  g^{\theta \theta} \partial _{\phi}g_{\theta \theta} = -\tan \phi">Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = ½ <i>g</i><sup><i>θθ</i></sup> ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = −tan<i>φ</i></div>
+      <p>緯度を固定して経度だけを変える。接ベクトルの座標成分を次のように表す。</p><div class="display-equation" data-tex="Y^{\theta} = f / \cos \phi ,\quad Y^{\phi} = 0,\quad f = 1 + a \sin \theta"><span><i>Y</i><sup><i>θ</i></sup> = <i>f</i> / cos<i>φ</i></span>、<span><i>Y</i><sup><i>φ</i></sup> = 0</span>、<span><i>f</i> = 1 + <i>a</i> sin<i>θ</i></span></div>
+      <div class="display-equation" data-tex="(\mathrm D Y/d\theta )^{\theta} = \mathrm d Y^{\theta}/d\theta  + 0 = f&#x27; / \cos \phi">(D<i>Y</i>/d<i>θ</i>)<sup><i>θ</i></sup> = d<i>Y</i><sup><i>θ</i></sup>/d<i>θ</i> + 0 = <i>f</i>′ / cos<i>φ</i></div>
+      <div class="display-equation" data-tex="(\mathrm D Y/d\theta )^{\phi} = 0 + \Gamma ^{\phi}_{\theta \theta} Y^{\theta} = f \sin \phi">(D<i>Y</i>/d<i>θ</i>)<sup><i>φ</i></sup> = 0 + Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> <i>Y</i><sup><i>θ</i></sup> = <i>f</i> sin<i>φ</i></div>
+      <p>現在の設定を <span class="inline-math" data-tex="\phi"><i>φ</i></span> 成分の式に代入する。</p><div class="display-equation"><output data-phi-equation></output></div>
     </div>
     </details>
     <div class="sphere-symbols" aria-label="ほかのクリストッフェル記号">
-      <span>Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = Γ<sup><i>θ</i></sup><sub><i>φθ</i></sub> = <output data-gamma="theta-theta-phi"></output></span>
-      <span>その他の Γ = 0</span>
+      <span><span class="inline-math" data-tex="\Gamma ^{\theta}_{\theta \phi} = \Gamma ^{\theta}_{\phi \theta} =">Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = Γ<sup><i>θ</i></sup><sub><i>φθ</i></sub> =</span> <output data-gamma="theta-theta-phi"></output></span>
+      <span>その他の <span class="inline-math" data-tex="\Gamma  = 0">Γ = 0</span></span>
     </div>
   </details>
 </section></section>
@@ -358,4 +361,5 @@ draw();
 })();
 
 </script></body></html>
+
 
