@@ -14,16 +14,16 @@ table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,t
 .try-first{padding:.45rem .65rem;border-inline-start:3px solid var(--blue);margin:.6rem 0}
 </style><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-</head><body><main>
+<link rel="stylesheet" href="../../assets/lesson.css"><script defer src="../../assets/lesson.js"></script><script defer src="../../assets/geometry-lessons.js"></script></head><body><main>
 <nav aria-label="相対論の学習ページ"><a href="../../">数学の可視化一覧</a><a href="../../relativity/special/">特殊相対性理論</a><a href="../../relativity/general/">一般相対性理論</a></nav>
 <h1>一般相対性理論のための微分幾何学</h1>
-<label for="topic">学習項目</label><select id="topic"></select>
+<p class="lead">矢印の意味から始め、比較の規則を作り、曲率を計算する。最後に、その曲率が重力としてどう現れるかを結び付ける。</p><div class="learning-goal"><strong>学び方</strong><p>まず「意味と記号」を読み、図を一度動かす。次に「定義をたどる」で式を確かめる。「別の例・確認」は理解を試したいときに使う。</p><p>初めてなら <a href="#1">1–6 対象と測定</a> → <a href="#7">7–10 比較と運動</a> → <a href="#11">11–16 曲率と重力</a> の順で進む。</p></div><details class="convention"><summary>全項目で使う添字と符号</summary><p>同じ項で上と下に一回ずつ現れる添字は全範囲の和を取る。i,j は幾何学での座標、μ,ν は時空の 0,1,2,3。時空計量は (−,+,+,+)。接続は特記しない限り Levi-Civita 接続。</p><div class="equation" data-tex="R(X,Y)Z=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z"></div><p>曲率の符号は文献によって異なる。ここでは単位球の Gauss 曲率が +1 になる上の規約を一貫して使う。</p></details><div class="chapter-bar"><label for="topic">16項目</label><select id="topic"></select></div>
 <div class="actions"><button id="prev" type="button">前の項目</button><button id="next" type="button">次の項目</button></div>
-<h2 id="title"></h2><section aria-labelledby="definition-title"><h3 id="definition-title">定義と基本式</h3><p id="definition"></p><div id="identity" class="formula"></div></section><details class="derivation" open><summary id="steps-title">式の読み方と途中計算</summary><p id="steps-text"></p><div id="steps-math" class="formula"></div></details><h3>図で確かめる</h3><p id="intro"></p><p class="try-first"><strong>まず試す</strong> <span id="try-first"></span></p>
+<h2 id="title"></h2><div id="concept-guide"></div><section aria-labelledby="definition-title"><h3 id="definition-title">定義と基本式</h3><p id="definition"></p><div id="identity" class="formula"></div></section><details class="derivation" open><summary id="steps-title">式の読み方と途中計算</summary><p id="steps-text"></p><div id="steps-math" class="formula"></div></details><h3>図で確かめる</h3><p id="intro"></p><p class="try-first"><strong>まず試す</strong> <span id="try-first"></span></p>
 <div class="controls"><label for="control"><span id="parameter"></span> <output id="setting" for="control"></output></label><input id="control" type="range"></div>
 <svg id="figure" viewBox="0 0 360 240" role="img" aria-labelledby="title readout"></svg>
 <ul id="diagram-notes" aria-label="図の見方"></ul><p id="readout"></p><div id="formula" class="formula"></div><section id="calculation-section" aria-labelledby="calculation-title"><h3 id="calculation-title">現在の値で計算</h3><p id="calculation-context"></p><div id="calculation" class="formula"></div></section><section id="basis-matrices" hidden><h3>元の行列と基底の回転</h3><div id="basis-values" class="formula"></div></section><div id="extra"></div>
-</main><script>
+<footer>定義と符号の照合先　<a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S2">Tong §2</a> · <a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S3">§3</a><p>図の有限な大きさ、局所的な計算、短時間近似は、それぞれ本文の条件と一緒に読む。</p><a href="../../relativity/general/">この道具で一般相対論を読む →</a></footer></main><script>
 const get=id=>document.getElementById(id);
 const blue="var(--blue)",red="var(--red)",green="var(--green)",gray="GrayText";
 const rad=x=>x*Math.PI/180;
@@ -77,9 +77,9 @@ function sphereCircle(radius,latitudeMode=false) {
  return ellipse(cx,cy,R,R)+equator+ring(radius,false)+ring(radius,true)+
    (latitudeMode?"":meridian)+dot(north,green)+dot(end,blue)+
    label(north[0]+8,north[1]+2,latitudeMode?"北極":"北極 P")+
-   (latitudeMode?"":label(225,81,"緑：球面に沿う半径 r"))+
+   (latitudeMode?"":label(225,81,"緑：測地半径 r"))+
    label(225,110,latitudeMode?"青：選んだ緯線":"青：測地円")+
-   label(225,139,"灰：赤道")+label(225,161,"青の破線：輪の背面");
+   label(225,139,"灰：赤道")+label(225,161,"破線：輪の背面");
 }
 
 function transportLoop(a) {
@@ -169,7 +169,7 @@ const topics=[
  return info(transportLoop(a),"この向きに一周すると、平行移動した矢印は回る。単位球で回転角の大きさは囲んだ面積と等しい。","面積 = "+fmt(t)+"　　回転角 = "+a+"°");}],
 ["測地線偏差・Jacobi 場","単位球の赤道から北へ進む近接した二本の経線。下の線分は、同じ緯度で測った経線間の距離。","進んだ角度",0,90,1,40,a=>{
  const t=rad(a),w=52*Math.cos(t);
- return info(ellipse(180,105,81,81)+trace(z=>[180-52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+trace(z=>[180+52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+dot([180-w,105-81*Math.sin(t)])+dot([180+w,105-81*Math.sin(t)])+line([180-w,207],[180+w,207],red,3),"赤道での間隔を 1 とすると、現在の間隔の比は "+fmt(Math.cos(t))+"。北極で経線は合流する。","<i>J</i>(<i>s</i>)/<i>J</i>(0) = cos <i>s</i>");}],
+ return info(ellipse(180,105,81,81)+trace(z=>[180-52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+trace(z=>[180+52*Math.cos(z*Math.PI/2),105-81*Math.sin(z*Math.PI/2)],blue)+dot([180-w,105-81*Math.sin(t)])+dot([180+w,105-81*Math.sin(t)])+line([180-w,207],[180+w,207],red,3),"赤道での微小な間隔を 1 とすると、一次近似での比は "+fmt(Math.cos(t))+"。北極で経線は合流する。","<i>j</i>(<i>s</i>)/<i>j</i>(0) = cos <i>s</i>");}],
 ["断面曲率・Gauss 曲率","北極 P を中心に、球面上で距離 r だけ離れた点を集める。緑の弧は球面に沿って測る半径、青い輪はその距離にある点の集合。下の線分で、同じ半径の平面の円と周長を比べる。","測地半径 r",.1,1.5,.05,.9,r=>{
  const s=Math.sin(r);
  return info(sphereCircle(r),"球上の周長は "+fmt(2*Math.PI*s)+"、平面では "+fmt(2*Math.PI*r)+"。球上のほうが短い。","<i>L</i><sub>球</sub> = 2π sin <i>r</i>　　<i>L</i><sub>平面</sub> = 2π<i>r</i>",'<p>同じ測地半径での周長を比較する。</p><svg viewBox="0 0 360 125" role="img" aria-label="単位球と平面での測地円の周長を比較">'+label(25,26,"単位球")+line([25,42],[25+195*s,42],blue,5)+label(25,77,"平面")+line([25,93],[25+195*r,93],green,5)+'</svg><p><a href="../surface-curvature/">法曲率と Gauss 曲率の断面図を開く</a></p>');}],
@@ -201,7 +201,7 @@ k=>"Ric(<i>u</i>,<i>u</i>) = −[0.6 − 0.3 + ("+fmt(k)+")] ≈ "+fmt(-(.3+k)),
 q=>"<i>R</i> = −("+fmt(q)+") + 1 + 2 + 0 ≈ "+fmt(3-q)+"　　<i>G</i>₀₀ = "+fmt(q)+" + ½ × "+fmt(3-q)+" ≈ "+fmt(q+(3-q)/2),
 t=>"<i>r</i><sub>横</sub> = 1 + τ²/2 ≈ "+fmt(1+t*t/2)+"　　<i>r</i><sub>縦</sub> = 1 − τ²/2 ≈ "+fmt(1-t*t/2)];
 
-const identityTex = ["v=\\gamma'(0)=\\lim_{h\\to0}\\frac{\\gamma(h)-\\gamma(0)}{h}","v=\\sum_i v^i\\partial_i,\\qquad v'=Q^\\mathsf{T}v","[X,Y](f)=X(Yf)-Y(Xf)","\\mathrm{d}f_p(v)=\\sum_i(\\partial_i f)(p)v^i","A'=Q^\\mathsf{T}AQ,\\qquad \\operatorname{tr}A=\\sum_i A^i{}_i","\\begin{aligned}g_{\\mu\\nu}&=g(e_\\mu,e_\\nu)\\\\ (g_{\\mu\\nu})&=\\begin{pmatrix}-1&0\\\\0&1\\end{pmatrix}\\quad (t,x)\\\\ g(u,v)&=-u^t v^t+u^x v^x\\end{aligned}","\\nabla_X(fY)=X(f)Y+f\\nabla_XY","\\begin{aligned}T(X,Y)&=\\nabla_XY-\\nabla_YX-[X,Y]\\\\ \\Gamma^i{}_{jk}&=\\tfrac12g^{i\\ell}(\\partial_jg_{k\\ell}+\\partial_kg_{j\\ell}-\\partial_\\ell g_{jk})\\end{aligned}","\\frac{\\mathrm{D}V^i}{\\mathrm{d}t}=\\frac{\\mathrm{d}V^i}{\\mathrm{d}t}+\\Gamma^i{}_{jk}\\dot\\gamma^j V^k=0","\\nabla_{\\dot\\gamma}\\dot\\gamma=0,\\qquad \\ddot\\gamma^i+\\Gamma^i{}_{jk}\\dot\\gamma^j\\dot\\gamma^k=0","R(X,Y)Z=\\nabla_X\\nabla_YZ-\\nabla_Y\\nabla_XZ-\\nabla_{[X,Y]}Z","\\frac{\\mathrm{D}^2J}{\\mathrm{d}s^2}=R(\\dot\\gamma,J)\\dot\\gamma","K(u,v)=\\frac{g(R(u,v)v,u)}{g(u,u)g(v,v)-g(u,v)^2}","\\operatorname{Ric}_{\\sigma\\nu}=R^\\rho{}_{\\sigma\\rho\\nu}","\\begin{aligned}R&=g^{\\mu\\nu}\\operatorname{Ric}_{\\mu\\nu}\\\\ G_{\\mu\\nu}&=\\operatorname{Ric}_{\\mu\\nu}-\\tfrac12 Rg_{\\mu\\nu}\\end{aligned}","C^\\rho{}_{\\sigma\\rho\\nu}=0,\\qquad \\operatorname{Ric}=0\\ \\Longrightarrow\\ C=R_{\\mathrm{Riemann}}"];
+const identityTex = ["v=\\gamma'(0)=\\lim_{h\\to0}\\frac{\\gamma(h)-\\gamma(0)}{h}","v=\\sum_i v^i\\partial_i,\\qquad v'=Q^\\mathsf{T}v","[X,Y](f)=X(Yf)-Y(Xf)","\\mathrm{d}f_p(v)=\\sum_i(\\partial_i f)(p)v^i","A'=Q^\\mathsf{T}AQ,\\qquad \\operatorname{tr}_g A=g^{ij}A_{ij}","\\begin{aligned}g_{\\mu\\nu}&=g(e_\\mu,e_\\nu)\\\\ (g_{\\mu\\nu})&=\\begin{pmatrix}-1&0\\\\0&1\\end{pmatrix}\\quad (t,x)\\\\ g(u,v)&=-u^t v^t+u^x v^x\\end{aligned}","\\nabla_X(fY)=X(f)Y+f\\nabla_XY","\\begin{aligned}T(X,Y)&=\\nabla_XY-\\nabla_YX-[X,Y]\\\\ \\Gamma^i{}_{jk}&=\\tfrac12g^{i\\ell}(\\partial_jg_{k\\ell}+\\partial_kg_{j\\ell}-\\partial_\\ell g_{jk})\\end{aligned}","\\frac{\\mathrm{D}V^i}{\\mathrm{d}t}=\\frac{\\mathrm{d}V^i}{\\mathrm{d}t}+\\Gamma^i{}_{jk}\\dot\\gamma^j V^k=0","\\nabla_{\\dot\\gamma}\\dot\\gamma=0,\\qquad \\ddot\\gamma^i+\\Gamma^i{}_{jk}\\dot\\gamma^j\\dot\\gamma^k=0","R(X,Y)Z=\\nabla_X\\nabla_YZ-\\nabla_Y\\nabla_XZ-\\nabla_{[X,Y]}Z","\\frac{\\mathrm{D}^2J}{\\mathrm{d}s^2}=R(\\dot\\gamma,J)\\dot\\gamma","K(u,v)=\\frac{g(R(u,v)v,u)}{g(u,u)g(v,v)-g(u,v)^2}","\\operatorname{Ric}_{\\sigma\\nu}=R^\\rho{}_{\\sigma\\rho\\nu}","\\begin{aligned}R&=g^{\\mu\\nu}\\operatorname{Ric}_{\\mu\\nu}\\\\ G_{\\mu\\nu}&=\\operatorname{Ric}_{\\mu\\nu}-\\tfrac12 Rg_{\\mu\\nu}\\end{aligned}","C^\\rho{}_{\\sigma\\rho\\nu}=0,\\qquad \\operatorname{Ric}=0\\ \\Longrightarrow\\ C=R_{\\mathrm{Riemann}}"];
 const texTokens = {
  "γ̇":"\\dot{\\gamma}", "θ":"\\theta ", "φ":"\\phi ", "γ":"\\gamma ", "π":"\\pi ", "τ":"\\tau ",
  "μ":"\\mu ", "ν":"\\nu ", "ρ":"\\rho ", "σ":"\\sigma ", "Γ":"\\Gamma ",
@@ -288,7 +288,7 @@ function show(i){
  get("calculation-section").hidden=i===5;
  get("try-first").textContent=firstExperiments[i];
  get("prev").disabled=i===0;get("next").disabled=i===topics.length-1;
- history.replaceState(null,"","#"+(i+1));draw();
+ history.replaceState(null,"","#"+(i+1));draw();document.dispatchEvent(new CustomEvent("geometrychange"));
 }
 select.addEventListener("change",()=>show(Number(select.value)));
 get("prev").addEventListener("click",()=>show(current-1));
@@ -300,3 +300,4 @@ function fromHash(){
 window.addEventListener("hashchange",fromHash);fromHash();
 window.addEventListener("DOMContentLoaded",()=>{displayEquation("identity",definitions[current][1],identityTex[current]);showWorkedSteps(current);draw();});
 </script></body></html>
+
