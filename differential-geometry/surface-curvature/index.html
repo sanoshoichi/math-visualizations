@@ -8,6 +8,7 @@
 .sticky-direction{position:sticky;top:0;z-index:2;background:Canvas;color:CanvasText;padding:.2rem .35rem;border-bottom:1px solid GrayText}
 .display-equation{text-align:center;margin:.45rem 0;font-family:serif;font-size:1.1em;line-height:1.65;overflow-wrap:anywhere}
 </style>
+<link rel="stylesheet" href="../../assets/figure-theme.css">
 <main>
 <a href="../../">数学の可視化一覧</a>
 <h1>曲面と曲率</h1>
@@ -26,7 +27,8 @@
 <circle cx="160" cy="105" r="4" fill="currentColor"/>
 <text x="167" y="101" fill="currentColor" font-size="12"><i>P</i></text>
 </svg>
-<p class="cut-legend">格子は曲面、破線の四角は切断平面、<strong>色のついた実線は交線</strong>です。</p>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>曲面の格子</span></li><li><span class="figure-key plane" style="--key:var(--ink)" aria-hidden="true"></span><span>切断平面</span></li><li><span class="figure-key " style="--key:#83bcff" aria-hidden="true"></span><span>切断平面と曲面の交線</span></li><li><span class="figure-key " style="--key:var(--ink)" aria-hidden="true"></span><span>点 P の法線</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>切断の基準点 P</span></li></ul></div>
+
 <p>交線を切断平面の正面から見た図</p>
 <svg viewBox="0 0 320 160" role="img" aria-label="点Pでの法線断面。横軸は選んだ接方向、縦軸は法線方向">
 <path d="M20 80H300 M160 145V12" fill="none" stroke="GrayText"/>
@@ -36,6 +38,7 @@
 <text x="168" y="17" fill="currentColor" font-size="12">法線方向</text>
 <text x="246" y="74" fill="currentColor" font-size="12">接方向</text>
 </svg>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:#83bcff" aria-hidden="true"></span><span>切断平面と曲面の交線</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>接方向・法線方向の軸</span></li><li><span class="figure-key point" style="--key:var(--ink)" aria-hidden="true"></span><span>切断の基準点 P</span></li></ul></div>
 <p id="reading" aria-live="polite"></p>
 <table>
 <thead><tr><th scope="col">点 <i>P</i> での曲率</th><th scope="col">値</th></tr></thead>
@@ -128,3 +131,4 @@ direction.addEventListener("input",draw);
 draw();
 </script>
 </html>
+
