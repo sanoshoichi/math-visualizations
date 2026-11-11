@@ -21,11 +21,11 @@
 <div class="controls"><label>相対速度 β <output id="beta-value"></output><input id="beta" type="range" min="-.8" max=".8" step=".05" value=".5"></label></div>
 <svg id="diagram" viewBox="0 0 360 240" role="img" aria-label="光円錐、二つの座標軸、同時刻の出来事 A と B"></svg>
 <p><strong>点 C</strong> は、線路の時計が <i>t</i> = 1 を示すときに列車の原点が通る出来事。青い <i>t</i>′ 軸上の O から C までを、第3節で列車の時計の固有時を計算する例に使う。</p>
-<h3>二つのランプの時刻を比べる</h3><p>赤い A と B が左と右のランプの発光。線路では両方が時刻 0.6 に光る。表の時刻は、発光した場所に対応する同期時計の読みを示す。図の灰色は線路の軸、青は列車の軸、緑の破線は光の軌跡。</p><p>B の座標から A の座標を引く。線路では時間差がゼロなので、列車での時間差には位置差の項だけが残る。</p><div class="equation" data-tex="\Delta t'=\gamma(\Delta t-\beta\Delta x)=-1.6\,\gamma\beta.">Δt′ = γ(Δt−βΔx) = −1.6γβ。</div>
+<h3>二つのランプの時刻を比べる</h3><p>赤い A と B が左と右のランプの発光。線路の時刻は図の縦軸 t で読む。A と B を結ぶ水平の破線が t = 0.6 の高さで、線路の時計では二つのランプが同時に光る。表の時刻は、発光した場所に対応する同期時計の読みを示す。図の灰色は線路の軸、青は列車の軸、緑の破線は光の軌跡。</p><p>B の座標から A の座標を引く。線路では時間差がゼロなので、列車での時間差には位置差の項だけが残る。</p><div class="equation" data-tex="\Delta t'=\gamma(\Delta t-\beta\Delta x)=-1.6\,\gamma\beta.">Δt′ = γ(Δt−βΔx) = −1.6γβ。</div>
 <h4>図で A・B の時刻を読む</h4>
 <p>赤い点 A・B から、<strong><i>x</i>′ 軸に平行な線</strong>を引く。その線と <i>t</i>′ 軸が交わるところが、列車の原点の時計で同じ時刻を示す点。<i>t</i>′ 軸への紙面上の垂線で読む方法は、二つの軸が直角に見える β = 0 の場合に一致する。</p>
 <div class="equation" data-tex="\begin{aligned}t'&amp;=\gamma(t-\beta x),\\ t'=\text{一定}&amp;\quad\Longleftrightarrow\quad t=\beta x+t'/\gamma.\end{aligned}">t′ = γ(t−βx)。t′ を一定にすると、t = βx+t′/γ。</div>
-<p>下の図の赤い破線は、それぞれ A・B と同じ <i>t</i>′ の出来事を結ぶ。青い軸の目盛り 1 は、列車の原点の時計が <i>t</i>′ = 1 を示す点。表と図の値は同じ式から求める。</p>
+<p>下の図では、灰色の水平線が線路の時刻 t = 0.6。赤い破線は、それぞれ A・B と同じ <i>t</i>′ の出来事を結ぶ。青い軸の目盛り 1 は、列車の原点の時計が <i>t</i>′ = 1 を示す点。表と図の値は同じ式から求める。</p>
 <svg id="time-projection" viewBox="0 0 360 316" role="img" aria-label="AとBからx′軸に平行な線を引き、t′軸で列車の時刻を読む図"></svg>
 <table><thead><tr><th scope="col">出来事</th><th scope="col">t</th><th scope="col">x</th><th scope="col">t′</th><th scope="col">x′</th></tr></thead><tbody>
 <tr><th scope="row">A</th><td>0.6</td><td>−0.8</td><td id="at"></td><td id="ax"></td></tr><tr><th scope="row">B</th><td>0.6</td><td>0.8</td><td id="bt"></td><td id="bx"></td></tr></tbody></table>
@@ -109,6 +109,8 @@ function drawTimeProjection(beta,gamma,timeA,timeB){
   line(point(-2,0),point(2,0))+line(point(0,-.5),point(0,top))+
   line(point(left,beta*left),point(right,beta*right),blue,2)+
   line(point(-.5*beta,-.5),point(beta*top,top),blue,2)+
+  line(point(-.8,.6),point(.8,.6),"GrayText",1,"2 4")+
+  text(point(-.8,.6)[0]-47,point(-.8,.6)[1]+4,"t = 0.6")+
   line(point(-.8,.6),axisA,red,2,"5 4")+line(point(.8,.6),axisB,red,2,"5 4")+
   dot(point(-.8,.6),red)+dot(point(.8,.6),red)+dot(axisA,red)+dot(axisB,red)+
   line([mark[0]-4,mark[1]],[mark[0]+4,mark[1]],blue,2)+text(mark[0]-15,mark[1]+4,"1")+
@@ -132,7 +134,10 @@ function draw(){
  get("diagram").innerHTML=line(P(-2.2,0),P(2.2,0))+line(P(0,-1.6),P(0,1.65))+
   line(P(-1.55,-1.55),P(1.55,1.55),green,1.3,"4 4")+line(P(1.55,-1.55),P(-1.55,1.55),green,1.3,"4 4")+
   line(P(-2,-2*b),P(2,2*b),blue,2)+line(P(-1.55*b,-1.55),P(1.55*b,1.55),blue,2)+
-  line(P(-.8,.6),P(.8,.6),red,1,"4 4")+dot(P(-.8,.6),red)+dot(P(.8,.6),red)+dot(P(b,1),blue)+
+  line(P(-.8,.6),P(.8,.6),red,1,"4 4")+
+  line(P(-.8,.6),P(-.8,0),"GrayText",1,"2 4")+line(P(.8,.6),P(.8,0),"GrayText",1,"2 4")+
+  line(P(-.07,.6),P(.07,.6),red,2)+text(184,100,"t = 0.6")+
+  text(116,139,"−0.8")+text(219,139,"0.8")+dot(P(-.8,.6),red)+dot(P(.8,.6),red)+dot(P(b,1),blue)+
   text(166,140,"O")+text(123,79,"A")+text(234,79,"B")+text(P(b,1)[0]+7,59,"C")+text(321,126,"x")+text(185,19,"t")+
   text(P(2,2*b)[0]+4,P(2,2*b)[1]-6,"x′")+text(P(1.55*b,1.55)[0]+8,32,"t′");
 }
