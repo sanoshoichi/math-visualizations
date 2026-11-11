@@ -100,7 +100,11 @@ function drawTimeProjection(beta,gamma,timeA,timeB){
  const right=beta<0?Math.min(2,xEnd):2;
  const axisA=point(...A),axisB=point(...B),mark=point(beta*gamma,gamma);
  const coincide=Math.abs(timeA-timeB)<1e-8;
- const axisLabel=(p,name)=>text(p[0]+7,p[1]-7,name);
+ const near=Math.abs(axisA[1]-axisB[1])<17;
+ const axisLabel=(p,name,leftSide=false)=>{
+  const left=leftSide||p[0]>254;
+  return '<text x="'+(p[0]+(left?-7:7))+'" y="'+(p[1]-7)+'" text-anchor="'+(left?"end":"start")+'">'+name+'</text>';
+ };
  get("time-projection").innerHTML=
   line(point(-2,0),point(2,0))+line(point(0,-.5),point(0,top))+
   line(point(left,beta*left),point(right,beta*right),blue,2)+
@@ -110,7 +114,7 @@ function drawTimeProjection(beta,gamma,timeA,timeB){
   line([mark[0]-4,mark[1]],[mark[0]+4,mark[1]],blue,2)+text(mark[0]-15,mark[1]+4,"1")+
   text(point(-.8,.6)[0]-15,point(-.8,.6)[1]+15,"A")+text(point(.8,.6)[0]+6,point(.8,.6)[1]+15,"B")+
   (coincide?axisLabel(axisA,"t′(A) = t′(B) = "+fmt(timeA)):
-    axisLabel(axisA,"t′(A) = "+fmt(timeA))+axisLabel(axisB,"t′(B) = "+fmt(timeB)))+
+    axisLabel(axisA,"t′(A) = "+fmt(timeA))+axisLabel(axisB,"t′(B) = "+fmt(timeB),near))+
   text(point(beta*top,top)[0]+7,point(beta*top,top)[1]+2,"t′")+
   text(point(right,beta*right)[0]+5,point(right,beta*right)[1]+13,"x′");
 }
