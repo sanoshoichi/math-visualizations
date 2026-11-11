@@ -1,11 +1,19 @@
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>特殊相対性理論</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><style>:root{color-scheme:light dark;--blue:light-dark(#12579c,#8ac6ff);--red:light-dark(#a42f52,#ff9ab6);--green:light-dark(#126947,#7de0ab)}body{max-width:43rem;margin:auto;padding:1rem;font:1rem/1.65 system-ui,sans-serif}h1{font-size:1.65rem}h2{font-size:1.25rem}h1,h2,p{margin:.6rem 0}section{margin:1.4rem 0}nav{display:flex;gap:.7rem;flex-wrap:wrap}.controls{position:sticky;top:0;background:Canvas;z-index:1;border-bottom:1px solid GrayText}label{display:flex;align-items:center;gap:.55rem;min-height:44px;flex-wrap:wrap}input{flex:1;min-width:8rem;min-height:44px}svg{display:block;width:100%;max-height:255px}svg text{fill:CanvasText;font:12px system-ui}.equation{text-align:center;font:1.1rem/1.5 serif}.katex-display{overflow-x:auto;overflow-y:hidden;padding:.15rem 0}.reading{padding:.4rem .65rem;border-inline-start:3px solid var(--blue)}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;text-align:right;padding:.3rem}th:first-child{text-align:left}</style></head><body><main><nav aria-label="相対論の学習ページ"><a href="../../">数学の可視化一覧</a><a href="../special/">特殊相対性理論</a><a href="../general/">一般相対性理論</a><a href="../../differential-geometry/general-relativity/">相対論のための微分幾何学</a></nav><h1>特殊相対性理論</h1>
-<p>慣性系を変えると、同じ出来事の時刻と位置は変わる。ここでは光速を 1 とし、空間は一次元とする。縦軸は時間、横軸は空間。</p>
+<p>慣性系で出来事を座標化し、光の伝わり方から座標変換を求める。その変換が保つ間隔から、時計の読みと粒子の運動量を導く。</p>
 <nav aria-label="ページ内の目次"><a href="#coordinates">四次元座標</a><a href="#boost">ローレンツ変換</a><a href="#proper-time">固有時</a><a href="#twins">往復する時計</a><a href="#momentum">四元運動量</a></nav>
 <section id="coordinates"><h2>1. 出来事と四次元座標</h2>
 <p>時計が鳴る瞬間や粒子が衝突する瞬間を、時空の一点（出来事）として扱う。慣性系を一つ選ぶと、出来事に時刻と三つの位置座標を付けられる。時間に光速を掛けるのは、四成分を長さの単位でそろえるため。</p>
 <div class="equation" data-tex="\begin{aligned}x^\mu&amp;=(ct,x,y,z),\quad \mu=0,1,2,3,\\ \Delta s^2&amp;=-(c\Delta t)^2+(\Delta x)^2+(\Delta y)^2+(\Delta z)^2.\end{aligned}">xμ = (ct, x, y, z)。Δs² = −(cΔt)² + Δx² + Δy² + Δz²。</div>
 <p>同じ粒子の出来事を順に結ぶと世界線になる。光では隣り合う出来事の間隔はゼロ。質量を持つ粒子では間隔は負になり、その世界線に沿って固有時が進む。以下の時空図では運動を x 方向に限り、光速を 1 とする。</p></section><section id="boost"><h2>2. ローレンツ変換と同時性</h2>
-<p>系 S′ は S に対して右向きに速度 β で動く。γ はローレンツ因子。S′ の原点が描く世界線が t′ 軸で、S′ で時刻ゼロの出来事を結ぶ線が x′ 軸になる。</p>
+<p>系 S′ は S に対して x 軸に沿う速度 β で動く。γ はローレンツ因子。S′ の原点が描く世界線が t′ 軸で、S′ で時刻ゼロの出来事を結ぶ線が x′ 軸になる。</p><h3>公準から変換を求める</h3>
+<p>相対性原理によれば、すべての慣性系で物理法則は同じ形をとる。真空中の光速はどの慣性系でも <i>c</i> である。原点がすれ違うとき両系で時刻をゼロにし、慣性運動を保つ線形な変換を考える。以下の導出では <i>c</i> = 1 とする。</p>
+<p><i>S</i> で見ると、動く系の原点は <i>x</i> = <i>βt</i> をたどる。この世界線で <i>x</i>′ = 0 になるように空間座標を置き、時間座標も <i>t</i> と <i>x</i> の一次式で表す。</p>
+<div class="equation" data-tex="x'=A(x-\beta t),\qquad t'=Bt+Cx.">x′ = A(x−βt)、t′ = Bt+Cx。</div>
+<p>右向きの光では <i>x</i> = <i>t</i> と <i>x</i>′ = <i>t</i>′、左向きの光では <i>x</i> = −<i>t</i> と <i>x</i>′ = −<i>t</i>′ が成り立つ。両方を代入すると、<i>B</i> と <i>C</i> が決まる。</p>
+<div class="equation" data-tex="\begin{aligned}B+C&amp;=A(1-\beta),\\ B-C&amp;=A(1+\beta),\\ B&amp;=A,\qquad C=-A\beta.\end{aligned}">B+C = A(1−β)、B−C = A(1+β)。よって B = A、C = −Aβ。</div>
+<p>逆変換では速度を −<i>β</i> に変える。空間の向きを反転しても尺度係数は同じなので、逆変換にも同じ <i>A</i> が現れる。往復の変換で元の座標に戻ることから、正の係数 <i>A</i> が決まる。</p>
+<div class="equation" data-tex="\begin{aligned}x&amp;=A(x'+\beta t')=A^2(1-\beta^2)x,\\ A&amp;=(1-\beta^2)^{-1/2}=\gamma.\end{aligned}">x = A(x′+βt′) = A²(1−β²)x。よって A = 1/√(1−β²) = γ。</div>
+<p>これを最初の二式に戻すと、ローレンツ変換になる。</p>
 <div class="equation" data-tex="\begin{aligned}\gamma&amp;=(1-\beta^2)^{-1/2},\\ t'&amp;=\gamma(t-\beta x),\qquad x'=\gamma(x-\beta t).\end{aligned}">γ = 1/√(1−β²),　 t′ = γ(t−βx),　 x′ = γ(x−βt)</div>
 <div class="controls"><label>相対速度 β <output id="beta-value"></output><input id="beta" type="range" min="-.8" max=".8" step=".05" value=".5"></label></div>
 <svg id="diagram" viewBox="0 0 360 240" role="img" aria-label="光円錐、二つの座標軸、同時刻の出来事 A と B"></svg>
@@ -14,7 +22,19 @@
 <tr><th scope="row">A</th><td>0.6</td><td>−0.8</td><td id="at"></td><td id="ax"></td></tr><tr><th scope="row">B</th><td>0.6</td><td>0.8</td><td id="bt"></td><td id="bx"></td></tr></tbody></table>
 <p class="reading">まず β を 0 にし、次に正・負に振る。A と B の時刻の順序が変わる。<output id="simul"></output></p></section>
 <section id="proper-time"><h2>3. 不変間隔と固有時</h2>
-<p>二つの出来事の座標差に同じ変換を施すと、混合項が消える。負の間隔を持つ二点を結ぶ慣性運動では、その時計が測る時間が固有時になる。</p>
+<p><h3>変換しても間隔が保たれる理由</h3>
+<p>二つの出来事の座標差にも同じ線形変換が成り立つ。平方を展開すると、時間差と位置差の積を含む項が相殺される。</p>
+<div class="equation" data-tex="\begin{aligned}-(\Delta t')^2+(\Delta x')^2
+&amp;=\gamma^2[-(\Delta t-\beta\Delta x)^2+(\Delta x-\beta\Delta t)^2]\\
+&amp;=\gamma^2(1-\beta^2)[-(\Delta t)^2+(\Delta x)^2]\\
+&amp;=-(\Delta t)^2+(\Delta x)^2.\end{aligned}">変換後の間隔は γ²(1−β²)(−Δt²+Δx²)。γ²(1−β²) = 1 なので変換前の値に等しい。</div>
+<h3>時計の読みを間隔から求める</h3>
+<p>質量を持つ粒子の一瞬の静止系では、粒子の位置の微小変化がゼロになる。その系の時間差を固有時 <i>dτ</i> と呼ぶ。間隔はどの慣性系でも同じなので、任意の系での座標時間と速度から <i>dτ</i> を計算できる。ここでは光速 <i>c</i> を式に戻す。</p>
+<div class="equation" data-tex="\begin{aligned}-c^2\,\mathrm d\tau^2
+&amp;=-c^2\,\mathrm dt^2+|\mathrm d\mathbf x|^2,\\
+\mathrm d\tau&amp;=\sqrt{1-|\mathbf v|^2/c^2}\,\mathrm dt,
+\qquad \mathbf v=\frac{\mathrm d\mathbf x}{\mathrm dt}.\end{aligned}">−c²dτ² = −c²dt²+|dx|²。よって dτ = √(1−|v|²/c²) dt。</div>
+<p>速度が一定なら、平方根を積分の外に出せる。青い世界線の時計が刻む時間は、<i>S</i> の座標時間を <i>γ</i> で割った値になる。</p>
 <div class="equation" data-tex="\begin{aligned}-(\Delta t')^2+(\Delta x')^2&amp;=-(\Delta t)^2+(\Delta x)^2,\\ \Delta\tau&amp;=\sqrt{(\Delta t)^2-(\Delta x)^2}\quad\text{（慣性運動）}.\end{aligned}">−Δt′²+Δx′² = −Δt²+Δx²。慣性運動の固有時 Δτ = √(Δt²−Δx²)。</div>
 <p>A と B の間隔は正で空間的。時刻の順序は変えられる。原点 O と、S′ の原点が S で時刻 1 にいる出来事 C は時間的に隔たる。青い t′ 軸上の点 C が、その時計の読みを表す。</p>
 <table><tbody><tr><th scope="row">A → B の間隔の二乗（S / S′）</th><td id="space-interval"></td></tr><tr><th scope="row">O → C で S′ の時計が測る固有時</th><td id="proper"></td></tr></tbody></table>
@@ -26,7 +46,19 @@
 <svg id="trip-diagram" viewBox="0 0 360 245" role="img" aria-label="出発と再会を結ぶ静止時計と往復時計の世界線"></svg>
 <table><thead><tr><th scope="col">時計</th><th scope="col">再会までに刻む時間（秒）</th></tr></thead><tbody><tr><th scope="row">青：静止</th><td>10.000</td></tr><tr><th scope="row">赤：往復</th><td id="trip-proper"></td></tr><tr><th scope="row">青と赤の差</th><td id="trip-gap"></td></tr></tbody></table>
 <p class="reading">β を 0.6 にすると、赤は往路と復路で各 4 秒、合計 8 秒を刻む。同じ出発点と再会点を結んでも、固有時は途中の世界線に沿って積分する量なので、時計の読みは経路に依存する。</p></section><section id="momentum"><h2>5. 四元速度・四元運動量</h2>
-<p>質量 m の粒子について、四次元座標を粒子自身の時計の読み τ で微分すると四元速度になる。それに質量を掛けた四元運動量の時間成分が E/c、空間成分が運動量 p。ここでは c を式に戻す。</p>
+<p>質量 m の粒子について、四次元座標を粒子自身の時計の読み τ で微分すると四元速度になる。それに質量を掛けた四元運動量の時間成分が E/c、空間成分が運動量 p。</p><h3>固有時で微分する</h3>
+<p>前節で求めた <i>dτ</i> を使うと、<i>dt/dτ</i> は <i>γ</i> になる。連鎖律を使えば、四元速度の時間成分と空間成分が同時に得られる。</p>
+<div class="equation" data-tex="\begin{aligned}\frac{\mathrm dt}{\mathrm d\tau}&amp;=\gamma,\\
+\frac{\mathrm d x^\mu}{\mathrm d\tau}
+&amp;=\frac{\mathrm d x^\mu}{\mathrm dt}\frac{\mathrm dt}{\mathrm d\tau}
+=\gamma(c,\mathbf v).\end{aligned}">dt/dτ = γ。連鎖律から dxμ/dτ = (dxμ/dt)γ = γ(c,v)。</div>
+<p>質量 <i>m</i> を掛けて四元運動量を作る。時間成分を <i>E/c</i> と書くと、低速での展開から、全エネルギーのうち静止時にも残る項と、ニュートン力学の運動エネルギーに一致する項が分かる。</p>
+<div class="equation" data-tex="\begin{aligned}\gamma&amp;=1+\tfrac12|\mathbf v|^2/c^2+O(|\mathbf v|^4/c^4),\\
+E=\gamma mc^2&amp;=mc^2+\tfrac12m|\mathbf v|^2+O(m|\mathbf v|^4/c^2),\\
+\mathbf p=\gamma m\mathbf v&amp;\simeq m\mathbf v\quad (|\mathbf v|\ll c).\end{aligned}">低速では E ≈ mc² + ½m|v|²、p ≈ mv。</div>
+<p>四元運動量の計量による二乗は、静止系で計算できる。静止系では空間成分がゼロ、時間成分が <i>mc</i>。同じ二乗を任意の慣性系で計算し、両式を等置する。</p>
+<div class="equation" data-tex="\begin{aligned}P_\mu P^\mu&amp;=-(mc)^2\\&amp;=-(E/c)^2+|\mathbf p|^2,\\
+E^2&amp;=|\mathbf p|^2c^2+m^2c^4.\end{aligned}">PμPμ = −m²c² = −(E/c)² + |p|²。よって E² = |p|²c² + m²c⁴。</div>
 <div class="equation" data-tex="\begin{aligned}U^\mu&amp;=\frac{\mathrm d x^\mu}{\mathrm d\tau}=\gamma(c,\mathbf v),\\ P^\mu&amp;=mU^\mu=(E/c,\mathbf p),\\ E&amp;=\gamma mc^2,\qquad \mathbf p=\gamma m\mathbf v,\\ -(E/c)^2+|\mathbf p|^2&amp;=-m^2c^2,\quad E^2=|\mathbf p|^2c^2+m^2c^4.\end{aligned}">U = γ(c,v)、P = mU = (E/c,p)。E = γmc²、p = γmv、E² = |p|²c² + m²c⁴。</div>
 <p>図では c = 1、m = 1 とする。青は全エネルギー、緑は運動量の大きさ、赤は運動エネルギー。灰色の基準線は静止エネルギー 1 を示す。</p>
 <div class="controls"><label>粒子の速さ β <output id="particle-speed"></output><input id="particle" type="range" min="0" max=".95" step=".05" value=".6"></label></div>
