@@ -1,0 +1,13 @@
+#geodesic section { scroll-margin-top: 5rem; }
+.geodesic-controls {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--paper);
+  border-block: 1px solid var(--line);
+  padding: .35rem 0;
+}
+.geodesic-controls input { display: block; width: 100%; min-height: 26px; accent-color: var(--blue); }
+.geodesic-controls output { margin-left: .5rem; font-variant-numeric: tabular-nums; }
+#worldline { max-width: 29rem; margin-inline: auto; }
+.curve-key { color: var(--blue); }
