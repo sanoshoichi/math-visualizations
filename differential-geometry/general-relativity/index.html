@@ -1,14 +1,14 @@
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>微分幾何学</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><style>:root{color-scheme:light dark;--blue:light-dark(#12579c,#8ac6ff);--red:light-dark(#a42f52,#ff9ab6);--green:light-dark(#126947,#7de0ab)}body{max-width:43rem;margin:auto;padding:1rem;font:1rem/1.65 system-ui,sans-serif}h1{font-size:1.65rem}h2{font-size:1.25rem}h1,h2,p{margin:.6rem 0}section{margin:1.4rem 0}nav{display:flex;gap:.7rem;flex-wrap:wrap}.controls{position:sticky;top:0;background:Canvas;z-index:1;border-bottom:1px solid GrayText}label{display:flex;align-items:center;gap:.55rem;min-height:44px;flex-wrap:wrap}input{flex:1;min-width:8rem;min-height:44px}svg:not(.katex svg){display:block;width:100%;max-height:255px}svg:not(.katex svg) text{fill:CanvasText;font:12px system-ui}.equation{text-align:center;font:1.1rem/1.5 serif}.katex-display{overflow-x:auto;overflow-y:hidden;padding:.15rem 0}.reading{padding:.4rem .65rem;border-inline-start:3px solid var(--blue)}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;text-align:right;padding:.3rem}th:first-child{text-align:left}.derivation-figure{margin:1rem 0}.derivation-figure figcaption{font-size:.92rem}.derivation-figure svg:not(.katex svg){height:auto}
 </style><link rel="stylesheet" href="../../assets/lesson.css?v=radicals"><script defer src="../../assets/lesson.js"></script><link rel="stylesheet" href="../../assets/figure-theme.css">
 <link rel="stylesheet" href="../../assets/math-layout.css">
-<link rel="stylesheet" href="../../relativity/special/course.css">
-<script defer src="../../assets/gr-course.js"></script>
+<link rel="stylesheet" href="../../assets/geometry-course.css">
+<script defer src="../../assets/geometry-course.js"></script>
 <style>[data-gr-lab] .controls { position: sticky; top: 3.15rem; z-index: 5; }</style>
 </head><body data-legacy="geometry"><main>
-<nav aria-label="学習ページ"><a href="../../">数学の可視化一覧</a><a href="../../relativity/special/">特殊相対性理論</a><a href="../../relativity/general/">一般相対性理論 · 第4・6部</a><a href="backup/">旧版のバックアップ</a></nav>
+<nav aria-label="学習ページ"><a href="../../">数学の可視化一覧</a><a href="../../relativity/special/">特殊相対性理論</a><a href="../../relativity/general/">一般相対性理論（工事中）</a><a href="backup/">旧版のバックアップ</a></nav>
 <h1>微分幾何学</h1>
 <p class="lead">ベクトルを比べる規則から始め、曲率を計算し、重力の式につなぐ。</p>
-<p><a href="../../relativity/general/#part-4">第4部</a> で見た二つの方程式に出てくる記号を、この部で順に組み立てる。ベクトル・基底・計量から復習する場合は <a href="backup/">旧版の16項目</a> から始められる。</p>
+<p>ベクトル・基底・計量から復習する場合は <a href="backup/">旧版の16項目</a> から始められる。</p>
 <p>各項目の末尾に <a href="https://eman-physics.net/relativity/contents.html">EMAN「相対性理論」</a> の対応記事へのリンクがある。時空の計量の符号は <span class="inline-math" data-tex="(-,+,+,+)">(-,+,+,+)</span>、時間座標は <span class="inline-math" data-tex="x^0=ct">x^0=ct</span> とする。</p>
 <nav class="sr-parts" aria-label="部を選ぶ"><a href="#part-5">第5部 リーマン幾何学</a></nav><div class="chapter-bar"><label for="chapter-select">項目を選ぶ</label><select id="chapter-select"><option value="">目次</option><optgroup label="第5部 リーマン幾何学"><option value="covariant">5.1 共変微分は何を足しているか</option><option value="parallel">5.2 平行移動で成分が変わる理由</option><option value="geodesics">5.3 測地線は接ベクトル自身を運ぶ</option><option value="normal-coordinates">5.4 接続係数を一点でゼロにする</option><option value="tensor-derivative">5.5 テンソルでは添字ごとに補正する</option><option value="riemann">5.6 閉じた経路で平行移動を比べる</option><option value="ricci">5.7 Ricci は同じ方向を含む断面曲率の和</option><option value="bianchi">5.8 ビアンキの恒等式と発散の消える組</option><option value="newton">5.9 低速・弱い重力で Newton の運動に戻る</option><option value="field-equation">5.10 Newton の極限で結合定数を決める</option></optgroup></select></div><div class="sr-part" id="part-5"><h2>第5部 リーマン幾何学</h2>
 <section id="covariant" class="sr-topic">
@@ -213,7 +213,7 @@
   <dl class="sr-readings" data-readings></dl>
   <p class="caption">G = 1、球の半径は 1。r ≤ 1 の内部で Φ(r)−Φ(0) = 2πρr²/3。曲線が平らなら密度もゼロ。</p>
 </figure>
-<p><a href="../../relativity/general/#part-6">第6部へ進む · 観測量を計算する</a></p>
+
 <p class="source"><a href="https://eman-physics.net/relativity/ein_eq.html">EMAN の対応記事 ↗</a></p>
 </section>
 </div>

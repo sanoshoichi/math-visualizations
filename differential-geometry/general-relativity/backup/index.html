@@ -17,7 +17,7 @@ table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,t
 <link rel="stylesheet" href="../../../assets/eman-archive/lesson.css"><script defer src="../../../assets/eman-archive/lesson.js"></script><script defer src="../../../assets/eman-archive/geometry-lessons.js"></script><link rel="stylesheet" href="../../../assets/eman-archive/figure-theme.css">
 <link rel="stylesheet" href="../../../assets/eman-archive/math-layout.css">
 </head><body><main><p class="reading">旧版のバックアップ · <a href="../">現行版へ</a></p>
-<nav aria-label="相対論の学習ページ"><a href="../../../">数学の可視化一覧</a><a href="../../../relativity/special/">特殊相対性理論</a><a href="../../../relativity/general/backup/">一般相対性理論</a></nav>
+<nav aria-label="相対論の学習ページ"><a href="../../../">数学の可視化一覧</a><a href="../../../relativity/special/">特殊相対性理論</a><a href="../../../relativity/general/">一般相対性理論</a></nav>
 <h1>一般相対性理論のための微分幾何学</h1>
 <p class="lead">矢印の意味から始め、比較の規則を作り、曲率を計算する。最後に、その曲率が重力としてどう現れるかを結び付ける。</p><div class="learning-goal"><strong>学び方</strong><p>まず「意味と記号」を読み、図を一度動かす。次に「定義をたどる」で式を確かめる。「別の例・確認」は理解を試したいときに使う。</p><p>初めてなら <a href="#1">1–6 対象と測定</a> → <a href="#7">7–10 比較と運動</a> → <a href="#11">11–16 曲率と重力</a> の順で進む。</p></div><details class="convention"><summary>全項目で使う添字と符号</summary><p>同じ項で上と下に一回ずつ現れる添字は全範囲の和を取る。<span class="inline-math" data-tex="i,j">i,j</span> は幾何学での座標、<span class="inline-math" data-tex="\mu ,\nu">μ,ν</span> は時空の 0,1,2,3。時空計量は (−,+,+,+)。接続は特記しない限り Levi-Civita 接続。</p><div class="equation" data-tex="R(X,Y)Z=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z"></div><p>曲率の符号は文献によって異なる。ここでは単位球の Gauss 曲率が +1 になる上の規約を一貫して使う。</p></details><div class="chapter-bar"><label for="topic">16項目</label><select id="topic"></select></div>
 <div class="actions"><button id="prev" type="button">前の項目</button><button id="next" type="button">次の項目</button></div>
@@ -25,7 +25,7 @@ table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,t
 <div class="controls"><label for="control"><span id="parameter"></span> <output id="setting" for="control"></output></label><input id="control" type="range"></div>
 <svg id="figure" viewBox="0 0 360 240" role="img" aria-labelledby="title readout"></svg>
 <div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul id="diagram-notes"></ul></div><p id="readout"></p><div id="formula" class="formula"></div><section id="calculation-section" aria-labelledby="calculation-title"><h3 id="calculation-title">現在の値で計算</h3><p id="calculation-context"></p><div id="calculation" class="formula"></div></section><section id="basis-matrices" hidden><h3>元の行列と基底の回転</h3><div id="basis-values" class="formula"></div></section><div id="extra"></div>
-<footer>定義と符号の照合先　<a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S2">Tong §2</a> · <a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S3">§3</a><p>図の有限な大きさ、局所的な計算、短時間近似は、それぞれ本文の条件と一緒に読む。</p><a href="../../../relativity/general/backup/">この道具で一般相対論を読む →</a></footer></main><script>
+<footer>定義と符号の照合先　<a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S2">Tong §2</a> · <a href="https://www.davidtong.org/teaching/general-relativity/grhtml/S3">§3</a><p>図の有限な大きさ、局所的な計算、短時間近似は、それぞれ本文の条件と一緒に読む。</p><a href="../../../relativity/general/">一般相対性理論（工事中）</a></footer></main><script>
 const get=id=>document.getElementById(id);
 const blue="var(--blue)",red="var(--red)",green="var(--green)",gray="GrayText";
 const rad=x=>x*Math.PI/180;

@@ -45,54 +45,6 @@
   }
 
   const demos = {
-    fall(t) {
-      const q = plane(0,2,0,2.35,"時刻 t（秒）","慣性系の高さ（m）");
-      const height = t*t/2;
-      return {
-        svg:q.axes+q.curve(0,2,()=>2,colors[0])+q.curve(0,2,t=>t*t/2,colors[1])+
-          q.stroke([t,0],[t,2],ink,1,"3 3")+q.mark([t,2],colors[0])+q.mark([t,height],colors[1]),
-        readings:[["ボールの高さ（m）",2],["床の高さ（m）",height],["床からボールまで（m）",2-height]]
-      };
-    },
-    metric(n) {
-      return bars([["座標時間（秒）",1],["固有時（秒）",n]],0,1.15);
-    },
-    geodesic(s) {
-      const r=Math.hypot(s,1);
-      const origin=[180,126], p=[180+55*s,71];
-      return {
-        svg:line([47,126],[316,126])+line([180,157],[180,30])+label([315,145],"x")+label([188,28],"y")+
-          line([58,71],[302,71],colors[0],2)+line(origin,p,colors[1],2)+point(p,colors[0])+label([p[0]+8,p[1]-7],"P"),
-        readings:[["半径 r",r],["半径方向の座標加速度",1/r**3],["半径方向の接続項",-1/r**3],["二項の和",0]]
-      };
-    },
-    einstein(k) {
-      return bars([["Ricci / g（係数）",3*k],["スカラー曲率 R",12*k],["Einstein / g（係数）",-3*k]],-6,6);
-    },
-    source(e) {
-      return bars([["T⁰⁰",e],["T⁰ˣ",e],["Tˣˣ",e]],0,1.1);
-    },
-    twoMasses(ratio) {
-      const a=4.9, b=4.9*ratio;
-      const scale=14, y=38;
-      return {
-        svg:line([56,y],[304,y],ink,1,"4 3")+label([57,28],"放した高さ")+
-          line([130,y],[130,y+scale*a],colors[0],2,"4 3")+line([230,y],[230,y+scale*b],colors[1],2,"4 3")+
-          point([130,y+scale*a],colors[0],7)+point([230,y+scale*b],colors[1],7)+
-          label([130,y+scale*a+20],"A","middle")+label([230,y+scale*b+20],"B","middle"),
-        readings:[["A の落下距離（m）",a],["B の落下距離（m）",b],["B − A（m）",b-a]]
-      };
-    },
-    tides(r) {
-      const k=1/r**3, cx=180, cy=87, d=29, scale=22;
-      return {
-        svg:line([cx,cy-d],[cx,cy+d])+line([cx-d,cy],[cx+d,cy])+point([cx,cy],ink)+
-          arrow([cx,cy-d],[cx,cy-d-2*scale*k],colors[0])+arrow([cx,cy+d],[cx,cy+d+2*scale*k],colors[0])+
-          arrow([cx-d,cy],[cx-d+scale*k,cy],colors[1])+arrow([cx+d,cy],[cx+d-scale*k,cy],colors[1])+
-          label([316,169],"↓ 天体","end"),
-        readings:[["半径方向の相対加速度",2*k],["横方向の相対加速度",-k]]
-      };
-    },
     covariant(degrees) {
       const t=rad(degrees), s=Math.sin(t), c=Math.cos(t), center=[138,90];
       const at=end(center,[s,-c],61);
@@ -181,58 +133,7 @@
         readings:[["表面と中心の Φ の差",2*Math.PI*rho/3],["ラプラシアン ∇²Φ",4*Math.PI*rho],["4πGρ",4*Math.PI*rho]]
       };
     },
-    schwarzschild(r) {
-      const n=Math.sqrt(1-1/r);
-      return bars([["時計 dτ/dt",n],["物差し dℓ/dr",1/n]],0,3);
-    },
-    lightBending(b) {
-      const bend=1.751/b, base=37+13*(b-1), factor=24/b;
-      return {
-        svg:point([177,139],colors[2],21)+label([177,173],"太陽","middle")+
-          path(samples(-1,1,x=>[180+144*x,base+factor*(Math.hypot(1.4*x,.25)+1.4*x)/2.82]),colors[0])+
-          line([36,base],[324,base],colors[1],1.6,"5 4")+label([320,26],"進行方向 →","end"),
-        readings:[["遠方での曲がり角（秒角）",bend],["遠方での曲がり角（µrad）",bend*Math.PI/648000*1e6]]
-      };
-    },
-    mercury(n) {
-      const eccentricity=.2056, semiMajor=5.7909e10, solarM=1.476625e3;
-      const one=6*Math.PI*solarM/(semiMajor*(1-eccentricity**2)), angle=n*one;
-      const center=[176,94], p=59;
-      const orbit=(t,turn)=>end(center,[Math.cos(t+turn),-Math.sin(t+turn)],p/(1+eccentricity*Math.cos(t)));
-      return {
-        svg:path(samples(0,2*Math.PI,t=>orbit(t,0)),colors[0],2)+
-          path(samples(0,2*Math.PI,t=>orbit(t,angle*3000)),colors[1],2,"4 2")+point(center,colors[2],7)+
-          line(center,orbit(0,0),colors[3])+line(center,orbit(0,angle*3000),colors[1])+
-          point(orbit(0,0),colors[3])+point(orbit(0,angle*3000),colors[1])+label([186,100],"太陽"),
-        readings:[["一周あたり（秒角）",one*648000/Math.PI],["合計（秒角）",angle*648000/Math.PI]]
-      };
-    },
-    redshift(r) {
-      const ratio=Math.sqrt((1-1/r)/.9);
-      const x=t=>38+285*t/3;
-      return {
-        svg:label([39,21],"放出側")+label([39,97],"受信側")+label([323,174],"固有時間","end")+
-          line([38,54],[323,54])+line([38,130],[323,130])+
-          path(samples(0,3,t=>[x(t),54-18*Math.cos(2*Math.PI*t)]),colors[0])+
-          path(samples(0,3,t=>[x(t),130-18*Math.cos(2*Math.PI*t*ratio)]),colors[1]),
-        readings:[["周波数の比 νᵣ/νₑ",ratio],["赤方偏移 z",1/ratio-1]]
-      };
-    },
-    rindler(xi) {
-      const map=([x,t])=>[100+57*x,92-57*t];
-      const axes=line(map([-.15,0]),map([2.65,0]))+line(map([0,-1.25]),map([0,1.25]))+
-        label(map([2.75,0]),"X")+label(map([.13,1.30]),"cT");
-      const stroke=(a,b,color,width,dash)=>line(map(a),map(b),color,width,dash);
-      const pt=(u,eta)=>[(1+u)*Math.cosh(eta),(1+u)*Math.sinh(eta)];
-      const trajectory=(u,color)=>path(samples(-.68,.68,eta=>map(pt(u,eta))),color);
-      const equalTime=.65;
-      return {
-        svg:axes+stroke([0,0],[1.2,1.2],colors[2],1)+stroke([0,0],[1.2,-1.2],colors[2],1)+
-          stroke([0,0],pt(.75,equalTime),ink,1,"4 3")+trajectory(0,colors[1])+trajectory(xi,colors[0])+
-          point(map(pt(xi,equalTime)),colors[0]),
-        readings:[["時計の係数 dτ/dη",1+xi],["固有加速度（a を 1）",1/(1+xi)],["リーマン曲率",0]]
-      };
-    }
+
   };
 
   for (const figure of document.querySelectorAll("[data-gr-lab]")) {
@@ -258,8 +159,6 @@
   }
 
   const route = location.hash.slice(1);
-  const legacy = document.body.dataset.legacy;
-  const archived = legacy === "geometry" ? /^(?:[1-9]|1[0-6]|title|definition-title|calculation-section|calculation-title|basis-matrices)$/ :
-    /^(?:newton|clock|clock-value|orbit|orbit-diagram|orbit-radius|period|radius|radius-value|stability|tidal-diagram|tidal-time|tidal-value)$/;
-  if (archived.test(route) && !document.getElementById(route)) location.replace("backup/#"+route);
+  if (/^(?:[1-9]|1[0-6]|title|definition-title|calculation-section|calculation-title|basis-matrices)$/.test(route) &&
+      !document.getElementById(route)) location.replace("backup/#"+route);
 })();

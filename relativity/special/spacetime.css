@@ -1,0 +1,25 @@
+.boost-controls {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  display: grid;
+  gap: .15rem;
+  padding: .45rem 0;
+  background: var(--paper);
+  border-block: 1px solid var(--line);
+}
+.boost-controls input { width: 100%; min-height: 24px; margin: 0; accent-color: var(--blue); }
+.boost-controls output, .boost-values td { font-variant-numeric: tabular-nums; }
+.boost-actions, #plot-legend { display: flex; flex-wrap: wrap; gap: .3rem .75rem; }
+.boost-actions button { font-size: .84rem; }
+.boost-figure { max-width: 31rem; margin-inline: auto; }
+#spacetime { margin: 0; }
+#spacetime text { font-size: 13px; }
+#spacetime .axis-name { font-style: italic; }
+#plot-legend { margin-block: .25rem; }
+#plot-legend i { display: inline-block; width: 1.2em; vertical-align: middle; border-top: 2px solid; }
+#plot-legend .ground-key { border-top-style: dashed; }
+#plot-legend .train-key { color: var(--blue); }
+.boost-values caption { text-align: left; color: var(--muted); font-size: .9rem; }
+.boost-values td { white-space: nowrap; }
+var { font-family: Georgia, serif; }

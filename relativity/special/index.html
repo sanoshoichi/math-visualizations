@@ -1,421 +1,90 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>特殊相対性理論</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><style>:root{color-scheme:light dark;--blue:light-dark(#12579c,#8ac6ff);--red:light-dark(#a42f52,#ff9ab6);--green:light-dark(#126947,#7de0ab)}body{max-width:43rem;margin:auto;padding:1rem;font:1rem/1.65 system-ui,sans-serif}h1{font-size:1.65rem}h2{font-size:1.25rem}h1,h2,p{margin:.6rem 0}section{margin:1.4rem 0}nav{display:flex;gap:.7rem;flex-wrap:wrap}.controls{position:sticky;top:0;background:Canvas;z-index:1;border-bottom:1px solid GrayText}label{display:flex;align-items:center;gap:.55rem;min-height:44px;flex-wrap:wrap}input{flex:1;min-width:8rem;min-height:44px}svg:not(.katex svg){display:block;width:100%;max-height:255px}svg:not(.katex svg) text{fill:CanvasText;font:12px system-ui}.equation{text-align:center;font:1.1rem/1.5 serif}.katex-display{overflow-x:auto;overflow-y:hidden;padding:.15rem 0}.reading{padding:.4rem .65rem;border-inline-start:3px solid var(--blue)}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid GrayText;text-align:right;padding:.3rem}th:first-child{text-align:left}.derivation-figure{margin:1rem 0}.derivation-figure figcaption{font-size:.92rem}.derivation-figure svg:not(.katex svg){height:auto}
-</style><link rel="stylesheet" href="../../assets/lesson.css?v=radicals"><script defer src="../../assets/lesson.js"></script><link rel="stylesheet" href="../../assets/figure-theme.css">
-<link rel="stylesheet" href="../../assets/math-layout.css">
-<link rel="stylesheet" href="course.css">
-<script defer src="course.js"></script>
-</head><body><main>
-<nav aria-label="学習ページ"><a href="../../">数学の可視化一覧</a><a href="../general/">一般相対性理論</a><a href="backup/">旧版のバックアップ</a></nav><h1>特殊相対性理論</h1><p class="lead">光と時計から始めて、座標変換、力学・電磁気へ進む。参照記事の順に、途中計算や具体例を図で確かめる。</p><p>各項目の末尾に <a href="https://eman-physics.net/relativity/contents.html">EMAN「相対性理論」第1〜3部</a> の対応記事へのリンクがある。このページでは計量の符号を <span class="inline-math" data-tex="(-,+,+,+)">(-,+,+,+)</span>、固有時を時間の単位で表す。参照記事の式と比較するときは符号と <span class="inline-math" data-tex="c">c</span> の位置に注意する。</p><nav class="sr-parts" aria-label="部を選ぶ"><a href="#part-1">第1部 特殊相対論</a><a href="#part-2">第2部 座標変換の理論</a><a href="#part-3">第3部 相対性原理の実践</a></nav><div class="chapter-bar"><label for="chapter-select">項目を選ぶ</label><select id="chapter-select"><option value="">目次</option><optgroup label="第1部 特殊相対論"><option value="birth">1.1 電磁気学から生まれた問い</option><option value="ether">1.2 エーテルを仮定すると何が測れるはずか</option><option value="principles">1.3 相対性原理と光速一定</option><option value="simultaneity">1.4 離れた時計を同期する</option><option value="boost">1.5 ローレンツ変換を導く</option><option value="length">1.6 応用の前に、測る二点を決める</option><option value="interval">1.7 時空の間隔は座標を変えても同じ</option><option value="proper-time">1.8 固有時は時計がたどった経路で決まる</option><option value="four-velocity">1.9 四元速度は固有時で微分する</option><option value="momentum">1.10 四元運動量と静止エネルギー</option><option value="mass">1.11 速度で増えるエネルギーと、系の質量</option><option value="speed-limit">1.12 質量のある粒子が光速に近づくと</option><option value="causality">1.13 超光速の往復信号と因果順序</option></optgroup><optgroup label="第2部 座標変換の理論"><option value="dual">2.1 反変成分と共変成分</option><option value="tensor">2.2 添字ごとに変換する</option><option value="metric">2.3 計量で成分から長さを求める</option><option value="operator">2.4 偏微分を四次元でまとめる</option></optgroup><optgroup label="第3部 相対性原理の実践"><option value="four-force">3.1 固有時で運動量を微分する</option><option value="energy-flow">3.2 エネルギー密度と流れを一つにする</option><option value="stress">3.3 応力は運動量の流束</option><option value="maxwell">3.4 ポテンシャルで Maxwell 方程式をまとめる</option><option value="lorentz-wave">3.5 波動方程式から座標変換を求め直す</option><option value="em-tensor">3.6 電場と磁場を同じテンソルで変換する</option></optgroup></select></div><div id="part-1" class="sr-part"><h2>第1部 特殊相対論</h2><section id="birth" class="sr-topic"><h2>1.1 電磁気学から生まれた問い</h2><p>真空の Maxwell 方程式から、電磁場には速さ <span class="inline-math" data-tex="c=1/\sqrt{\mu_0\epsilon_0}">c = 1/√(μ₀ε₀)</span> で伝わる波があると分かる。この速さは、光を追う観測者にとっても同じだろうか。</p><div class="equation" data-tex="x&#x27;=x-vt,\quad t&#x27;=t\quad\Longrightarrow\quad u&#x27;=u-v.">ガリレイ変換では u′ = u − v。</div><p>従来の時間のまま光を追うと、位置の差を同じ時間で割るので <span class="inline-math" data-tex="u&#x27;=c-v">u′ = c − v</span> になる。一方、光速を両系で同じとするなら、時刻の変換も見直す必要がある。</p><figure class="sr-lab" data-lab="birth">
-  <figcaption>二つの仮定で、追いかける人が測る光速を比べる</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-birth"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-birth">0.4</output></label>
-    <input id="slider-birth" type="range" min="0" max="0.9" step="0.05" value="0.4">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="二つの仮定で、追いかける人が測る光速を比べる"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>ガリレイ変換</span><span><i class="key green" aria-hidden="true"></i>光速一定</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">青はガリレイ変換の予測。緑は光速一定を採ったときの値。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/birth.html">EMAN の対応ページ ↗</a></p></section><section id="ether" class="sr-topic"><h2>1.2 エーテルを仮定すると何が測れるはずか</h2><p>光を伝える媒質に対して、長さ <span class="inline-math" data-tex="L">L</span> が等しい二本の腕を持つ装置が速度 <span class="inline-math" data-tex="v">v</span> で進むと仮定する。平行な腕では光と鏡の相対速度が行きと帰りで異なる。垂直な腕では、光は横に動く鏡を目指して斜めに進む。腕の長さはこの古典モデルでは一定とする。</p><div class="equation" data-tex="\begin{aligned}T_\parallel&amp;=\frac{L}{c-v}+\frac{L}{c+v},\\ T_\perp&amp;=\frac{2L}{\sqrt{c^2-v^2}}.\end{aligned}">平行腕の往復時間は L/(c−v)+L/(c+v)。垂直腕は 2L/√(c²−v²)。</div><p>干渉計を回せば、この往復時間差に対応する縞の移動が予測される。マイケルソンとモーリーの実験では、単純な静止エーテル模型が予測する大きさの移動は見つからなかった。</p><figure class="sr-lab" data-lab="ether">
-  <figcaption>静止エーテル模型での光の往復時間</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-ether"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-ether">0.35</output></label>
-    <input id="slider-ether" type="range" min="0" max="0.85" step="0.01" value="0.35">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="静止エーテル模型での光の往復時間"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>平行な腕</span><span><i class="key green" aria-hidden="true"></i>垂直な腕</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">表示は往復時間を静止時の <span class="inline-math" data-tex="2L/c">2L/c</span> で割った値。速度を大きくして予測される差を拡大している。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/ether.html">EMAN の対応ページ ↗</a></p></section><section id="principles" class="sr-topic"><h2>1.3 相対性原理と光速一定</h2><p>慣性系を取り替えても物理法則は同じ形をとる。真空中の光の速さも、それぞれの慣性系で同期した時計と物差しを使って測ると <span class="inline-math" data-tex="c">c</span> になる。光源が動いている場合も同じ条件を使う。</p><p>時空図では、横軸が位置 <span class="inline-math" data-tex="x">x</span>、縦軸が <span class="inline-math" data-tex="ct">ct</span>。原点で光を放つと、その光は <span class="inline-math" data-tex="x=\pm ct">x = ±ct</span> に沿う。光源の速度を変えると光源の世界線が傾く。</p><figure class="sr-lab" data-lab="light">
-  <figcaption>動く光源から左右に放った光</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-light">光源の <span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-light">0.45</output></label>
-    <input id="slider-light" type="range" min="-0.85" max="0.85" step="0.05" value="0.45">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="動く光源から左右に放った光"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>光源の世界線</span><span><i class="key green" aria-hidden="true"></i>光の世界線</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">表示している座標系を固定し、光源の速度だけを変えている。緑の光の線はそのまま。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/einstein.html">EMAN の対応ページ ↗</a></p></section><section id="simultaneity" class="sr-topic"><h2>1.4 離れた時計を同期する</h2><p>二か所の時計を比べるには、同時刻をどう決めるかが要る。固定した時計 A から光を送り、時計 B の位置で反射させて A で受け取る。A の送信時刻を <span class="inline-math" data-tex="t_1">t₁</span>、受信時刻を <span class="inline-math" data-tex="t_2">t₂</span> とする。</p><div class="equation" data-tex="t_B=t_1+\frac{t_2-t_1}{2}=\frac{t_1+t_2}{2}.">B の反射時刻は A の送受信時刻の中点。</div><p>この系で光の往路と復路が同じ速さなら、反射点は往復の途中の時刻に当たる。その瞬間に B が上の時刻を示すように合わせる。別の慣性系でも、自分の系に固定した時計に同じ手順を行う。二つの系でどの出来事が同時になるかは、次の変換で計算する。</p><figure class="sr-lab" data-lab="sync">
-  <figcaption>光の往復から反射時刻を求める</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-sync">時計間の距離（光秒） <output data-setting for="slider-sync">1</output></label>
-    <input id="slider-sync" type="range" min="0.25" max="2" step="0.05" value="1">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="光の往復から反射時刻を求める"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>固定した時計</span><span><i class="key green" aria-hidden="true"></i>往路・復路の光</span><span><i class="key gold" aria-hidden="true"></i>反射</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">A の送信は 0 秒。横に長くなるほど反射と受信が遅れる。破線の高さが反射時刻。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/sametime.html">EMAN の対応ページ ↗</a></p></section><section id="boost" class="sr-topic"><h2>1.5 ローレンツ変換を導く</h2>
-<h3 id="boost-derivation">ローレンツ変換の導出 ― 原点 <span class="inline-math" data-tex="O">O</span> から出す光</h3><p>慣性系 <span class="inline-math" data-tex="S"><i>S</i></span> に対し、右向きを正とする速度 <span class="inline-math" data-tex="v"><i>v</i></span> で動く慣性系を <span class="inline-math" data-tex="S&#x27;"><i>S</i>′</span> とする。<span class="inline-math" data-tex="\beta  = v/c"><i>β</i> = <i>v</i>/<i>c</i></span> と置く。変換を求めるために、二つの原点が重なる出来事 <span class="inline-math" data-tex="O">O</span> で光を左右に出すと考える。</p>
-<p>相対性原理によれば、すべての慣性系で物理法則は同じ形をとる。真空中の光速はどちらの系でも <span class="inline-math" data-tex="c">c</span>。以下では <span class="inline-math" data-tex="c=1">c=1</span> となる単位を使い、両系の原点が重なる出来事 <span class="inline-math" data-tex="O">O</span> を両方で位置 0、時刻 0 とする。</p>
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>特殊相対性理論 — 二つの発光の時空図</title>
+  <meta name="description" content="地上と列車の軸を同じ時空図に重ね、速度を変えて二つの発光の位置差・時刻差を比べる。">
+  <link rel="stylesheet" href="../../assets/lesson.css">
+  <link rel="stylesheet" href="../../assets/figure-theme.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+  <link rel="stylesheet" href="../../assets/math-layout.css">
+  <link rel="stylesheet" href="spacetime.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <script defer src="../../assets/lesson.js"></script>
+  <script defer src="spacetime.js"></script>
+</head>
+<body>
+<main>
+  <nav aria-label="学習ページ"><a href="../../">数学の可視化一覧</a></nav>
+  <h1>特殊相対性理論</h1>
+  <p class="lead">地上と列車で、二つのランプが光る順番を比べる。</p>
+  <p>地上を慣性系 <var>S</var>、右へ走る列車を慣性系 <var>S′</var> とする。両系の原点がすれ違う点を <var>O</var> とし、そのとき両方の原点の時計をゼロに合わせる。各系では、離れた場所に置いた時計も、その系の中で同期してある。</p>
+  <ul>
+    <li><var>F</var>：地上の原点で、地上時刻 <b>2.00 秒</b> に発光。</li>
+    <li><var>E</var>：地上の原点から右へ <b>2.75 光秒</b> の地点で、地上時刻 <b>3.25 秒</b> に発光。</li>
+  </ul>
+  <p>発光時刻は、光った場所に居合わせた時計の読み。原点にいる人が光を受け取る時刻は、光が届いたときの別の出来事になる。</p>
 
-<h4>1. まず一般の一次式を書く</h4>
-<p>空間と時間の一様性から、同じ座標差を変換した結果は、どの場所・時刻からその差を測るかに依らないとする。変換が連続なら、この条件から変換は一次式になる。座標を一つの定数分だけずらす自由もあるが、ここでは <span class="inline-math" data-tex="O">O</span> を両系で原点に選んだので定数項は 0。よって位置と時刻を、それぞれ次の一次式で置ける。</p>
-<div class="equation" data-tex="x&#x27;=ax+kt,\qquad t&#x27;=bt+dx.">x′ = ax + kt、t′ = bt + dx。</div>
-<p><span class="inline-math" data-tex="a,k,b,d">a,k,b,d</span> は、相対速度を決めると定まる係数。出来事ごとに変わるのは座標 <span class="inline-math" data-tex="x,t">x,t</span> のほう。ここで <span class="inline-math" data-tex="dx">dx</span> は係数 <span class="inline-math" data-tex="d">d</span> と位置 <span class="inline-math" data-tex="x">x</span> の積を表す。</p>
-<details><summary>座標差が場所や時刻に依らないと、なぜ一次式になるか</summary>
-<p>ある出来事の座標の組を <span class="inline-math" data-tex="z=(x,t)">z=(x,t)</span>、座標のずれを <span class="inline-math" data-tex="h">h</span>、変換を <span class="inline-math" data-tex="F">F</span> と書く。一様性とは、<span class="inline-math" data-tex="F(z+h)-F(z)">F(z+h)-F(z)</span> が <span class="inline-math" data-tex="z">z</span> に依らないという条件。<span class="inline-math" data-tex="z=0">z=0</span> で同じ差を取ると、<span class="inline-math" data-tex="F(0)=0">F(0)=0</span> なので次の式が得られる。</p>
-<div class="equation" data-tex="F(z+h)-F(z)=F(h),\qquad F(z+h)=F(z)+F(h).">F(z+h) − F(z) = F(h)。よって F(z+h) = F(z) + F(h)。</div>
-<p>この式を繰り返すと、座標を整数倍したとき変換結果も同じ整数倍になる。整数で割れば有理数倍でも成り立ち、連続性を使えば実数倍にも広がる。そこで <span class="inline-math" data-tex="(x,t)=x(1,0)+t(0,1)">(x,t)=x(1,0)+t(0,1)</span> と分けると、<span class="inline-math" data-tex="F(x,t)=xF(1,0)+tF(0,1)">F(x,t)=xF(1,0)+tF(0,1)</span>。これが上の二つの一次式に当たる。</p>
-</details>
+  <section id="boost">
+    <h2>地上と列車の軸を一枚に重ねる</h2>
+    <p>横軸は地上での位置 <var>x</var>、縦軸は地上での時刻に光速を掛けた <var>ct</var>。どちらも光秒で描く。列車の速さ <span class="inline-math" data-tex="\beta=v/c">β = v/c</span> を変えると、青い軸と補助線が動く。二つの発光点は同じ場所に残る。</p>
 
-<h4>2. 動く原点の位置から、位置の式を絞る</h4>
-<p><span class="inline-math" data-tex="S">S</span> で見ると、<span class="inline-math" data-tex="S&#x27;">S′</span> の原点は時刻 0 に位置 0 を出て、一定の速度 <span class="inline-math" data-tex="\beta">β</span> で動く。その位置は <span class="inline-math" data-tex="x=\beta t">x=βt</span>。同じ原点を自分の座標系 <span class="inline-math" data-tex="S&#x27;">S′</span> で測れば、どの時刻でも位置は <span class="inline-math" data-tex="x&#x27;=0">x′=0</span>。したがって、位置の一次式に <span class="inline-math" data-tex="x=\beta t">x=βt</span> を入れた結果が、すべての <span class="inline-math" data-tex="t">t</span> で 0 になる。</p>
-<div class="equation" data-tex="\begin{aligned}0 &amp;= a(\beta t)+kt=(a\beta+k)t,\\ k&amp;=-a\beta,\\ x&#x27;&amp;=ax-a\beta t=a(x-\beta t).\end{aligned}">0 = a(βt) + kt = (aβ + k)t。すべての t で成り立つので k = −aβ。よって x′ = a(x−βt)。</div>
-<p>括弧の中の <span class="inline-math" data-tex="x-\beta t">x−βt</span> は、時刻 <span class="inline-math" data-tex="t">t</span> の位置 <span class="inline-math" data-tex="x">x</span> から、同じ時刻に動く原点がいる位置 <span class="inline-math" data-tex="\beta t">βt</span> を引いた量。<span class="inline-math" data-tex="a">a</span> は、その差を <span class="inline-math" data-tex="S&#x27;">S′</span> の位置座標に直す尺度を表す。この条件は位置 <span class="inline-math" data-tex="x&#x27;">x′</span> についての条件なので、時刻の式は <span class="inline-math" data-tex="t&#x27;=bt+dx">t′=bt+dx</span> の形のまま。次に光の速さを使って、<span class="inline-math" data-tex="b">b</span> と <span class="inline-math" data-tex="d">d</span> を絞る。</p>
-<figure class="derivation-figure"><svg viewBox="0 0 360 210" role="img" aria-label="原点から左右へ進む光と、速度 0.5 の S′ の原点"><line x1="35" y1="170" x2="325" y2="170" stroke="GrayText" stroke-width="2"/><line x1="180" y1="188" x2="180" y2="24" stroke="GrayText" stroke-width="2"/><line x1="180" y1="170" x2="68" y2="58" stroke="var(--green)" stroke-width="2"/><line x1="180" y1="170" x2="292" y2="58" stroke="var(--green)" stroke-width="2"/><line x1="180" y1="170" x2="236" y2="58" stroke="var(--blue)" stroke-width="2"/><circle cx="180" cy="170" r="4" fill="var(--blue)"/><text x="185" y="185">O</text><text x="326" y="174">x</text><text x="187" y="24">t</text><text x="31" y="48">左向きの光</text><text x="32" y="64">x = −t</text><text x="257" y="34">右向きの光</text><text x="281" y="50">x = t</text><text x="193" y="75">S′ の原点</text><text x="215" y="93">x = βt</text></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>動く座標系 <span class="inline-math" data-tex="S&#x27;">S′</span> の原点の世界線 <span class="inline-math" data-tex="x = \beta t">x = βt</span></span></li><li><span class="figure-key " style="--key:var(--green)" aria-hidden="true"></span><span>原点から左右へ進む光</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標系 <span class="inline-math" data-tex="S">S</span> の軸 <span class="inline-math" data-tex="x">x</span>・<span class="inline-math" data-tex="t">t</span></span></li></ul></div><figcaption>緑は、両系で時刻 0 の出来事 <span class="inline-math" data-tex="O">O</span> から出した光の世界線。青は動く座標系 <span class="inline-math" data-tex="S&#x27;">S′</span> の原点。図では <span class="inline-math" data-tex="\beta  = 0.5">β = 0.5</span> を例に描いている。</figcaption></figure>
-<h4>3. 左右の光を代入して、時刻の式を絞る</h4>
-<p>右向きの光は <span class="inline-math" data-tex="S">S</span> で <span class="inline-math" data-tex="x=t">x=t</span>。これを二つの式に代入すると、<span class="inline-math" data-tex="x&#x27;=a(1-\beta)t">x′=a(1−β)t</span>、<span class="inline-math" data-tex="t&#x27;=(b+d)t">t′=(b+d)t</span> になる。<span class="inline-math" data-tex="S&#x27;">S′</span> でも右向きの光の速さは 1 なので、<span class="inline-math" data-tex="x&#x27;=t&#x27;">x′=t′</span>。時刻 0 以外の光の点で両辺を <span class="inline-math" data-tex="t">t</span> で割ると、最初の条件が出る。</p>
-<div class="equation" data-tex="b+d=a(1-\beta).">b + d = a(1−β)。</div>
-<p>左向きの光は <span class="inline-math" data-tex="S">S</span> で <span class="inline-math" data-tex="x=-t">x=−t</span>。同じように代入すると、<span class="inline-math" data-tex="x&#x27;=-a(1+\beta)t">x′=−a(1+β)t</span>、<span class="inline-math" data-tex="t&#x27;=(b-d)t">t′=(b−d)t</span>。今度は <span class="inline-math" data-tex="x&#x27;=-t&#x27;">x′=−t′</span> を使う。</p>
-<div class="equation" data-tex="b-d=a(1+\beta).">b − d = a(1+β)。</div>
-<p>二つの条件を足すと <span class="inline-math" data-tex="2b=2a">2b=2a</span>、最初の式から二番目を引くと <span class="inline-math" data-tex="2d=-2a\beta">2d=−2aβ</span>。したがって、ここまでの変換は次の形になる。</p>
-<div class="equation" data-tex="x&#x27;=a(x-\beta t),\qquad t&#x27;=a(t-\beta x).">x′ = a(x−βt)、t′ = a(t−βx)。</div>
+    <div class="boost-controls">
+      <label for="speed">列車の速さ <var>β</var> = <output id="speed-value" for="speed">0.600</output></label>
+      <input id="speed" type="range" min="0" max="0.8" step="any" value="0.6">
+      <div class="boost-actions">
+        <button type="button" id="simultaneous-speed">同時になる速さに合わせる</button>
+        <button type="button" id="example-speed"><var>β</var> = 0.60 に戻す</button>
+      </div>
+    </div>
 
-<h4>4. 逆変換で、残った係数を求める</h4>
-<p><span class="inline-math" data-tex="S">S</span> から見て <span class="inline-math" data-tex="S&#x27;">S′</span> が速度 <span class="inline-math" data-tex="\beta">β</span> で動くなら、<span class="inline-math" data-tex="S&#x27;">S′</span> から見た <span class="inline-math" data-tex="S">S</span> の速度は <span class="inline-math" data-tex="-\beta">−β</span>。実際、<span class="inline-math" data-tex="S">S</span> の原点では <span class="inline-math" data-tex="x=0">x=0</span> なので、直前の式に代入すると <span class="inline-math" data-tex="x&#x27;=-a\beta t">x′=−aβt</span>、<span class="inline-math" data-tex="t&#x27;=at">t′=at</span>。したがって <span class="inline-math" data-tex="x&#x27;/t&#x27;=-\beta">x′/t′=−β</span> となる。ここまで求めた変換の式で、入力と出力の座標を入れ替え、相対速度の符号を反転すれば逆変換になる。両方の空間軸を反転しても長さの尺度は同じなので、係数 <span class="inline-math" data-tex="a">a</span> は <span class="inline-math" data-tex="\beta">β</span> と <span class="inline-math" data-tex="-\beta">−β</span> で同じ値を取る。よって逆変換の位置の式は次のとおり。</p>
-<div class="equation" data-tex="x=a(x&#x27;+\beta t&#x27;).">x = a(x′ + βt′)。</div>
-<p>この右辺に、直前の式で得た <span class="inline-math" data-tex="x&#x27;">x′</span> と <span class="inline-math" data-tex="t&#x27;">t′</span> を代入する。変換してから逆変換すれば、元の <span class="inline-math" data-tex="x">x</span> に戻る。</p>
-<div class="equation" data-tex="\begin{aligned}x&amp;=a\big[a(x-\beta t)+\beta a(t-\beta x)\big]\\&amp;=a^2(x-\beta t+\beta t-\beta^2 x)\\&amp;=a^2(1-\beta^2)x.\end{aligned}">x = a[a(x−βt) + βa(t−βx)] = a²(1−β²)x。</div>
-<p>任意の位置でこの等式が成り立つので <span class="inline-math" data-tex="a^2(1-\beta^2)=1">a²(1−β²)=1</span>。両系の空間軸を同じ向きに取るので <span class="inline-math" data-tex="a&gt;0">a&gt;0</span> を選ぶ。この正の値を <span class="inline-math" data-tex="\gamma">γ</span> と書く。</p>
-<div class="equation" data-tex="\begin{aligned}\gamma&amp;=\frac{1}{\sqrt{1-\beta^2}},\\ x&#x27;&amp;=\gamma(x-\beta t),\\ t&#x27;&amp;=\gamma(t-\beta x).\end{aligned}">γ = 1/√(1−β²)。x′ = γ(x−βt)、t′ = γ(t−βx)。</div>
-<p>相対速度が 0 なら <span class="inline-math" data-tex="\gamma=1">γ=1</span> となり、両系で座標は一致する。</p>
-<h3 id="trackside-example" style="scroll-margin-top:4rem">変換を使う例 ― 線路脇のランプ <span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span></h3>
-<p>ここからは、線路を慣性系 <span class="inline-math" data-tex="S"><i>S</i></span>、列車を慣性系 <span class="inline-math" data-tex="S&#x27;"><i>S</i>′</span> とする。<span class="inline-math" data-tex="O">O</span> は、列車の中央が線路の原点を通る瞬間。そこから線路の時計で 0.6 が経ったとき、<span class="inline-math" data-tex="x = -0.8"><i>x</i> = −0.8</span> と +0.8 に固定したランプを光らせる。左の発光が <span class="inline-math" data-tex="A">A</span>、右が <span class="inline-math" data-tex="B">B</span>。まず下の図で、線路に固定した三つの時計が同じ時刻を示す瞬間を確認する。次に、上で求めた変換を使って <span class="inline-math" data-tex="A">A</span> と <span class="inline-math" data-tex="B">B</span> に列車の座標時刻 <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span> を付ける。</p>
-<figure class="derivation-figure"><svg viewBox="0 0 400 240" role="img" aria-label="線路の座標系 S で t = 0.6 の瞬間を描いた図。左右の赤い点は線路脇に固定したランプの発光。中央 x = 0 の時計も同時に 0.6 を示す。"><line x1="42" y1="162" x2="358" y2="162" stroke="#91a3af" stroke-width="2" stroke-dasharray=""/><line x1="74" y1="155" x2="74" y2="170" stroke="#91a3af" stroke-width="2" stroke-dasharray=""/><circle cx="74" cy="95" r="26" fill="none" stroke="var(--blue)" stroke-width="2"/><text x="74" y="99" text-anchor="middle">0.6</text><text x="74" y="191" text-anchor="middle">x = −0.8</text><line x1="74" y1="121" x2="74" y2="153" stroke="var(--blue)" stroke-width="2" stroke-dasharray="3 4"/><line x1="200" y1="155" x2="200" y2="170" stroke="#91a3af" stroke-width="2" stroke-dasharray=""/><circle cx="200" cy="95" r="26" fill="none" stroke="var(--blue)" stroke-width="2"/><text x="200" y="99" text-anchor="middle">0.6</text><text x="200" y="191" text-anchor="middle">x = 0</text><line x1="200" y1="121" x2="200" y2="153" stroke="var(--blue)" stroke-width="2" stroke-dasharray="3 4"/><line x1="326" y1="155" x2="326" y2="170" stroke="#91a3af" stroke-width="2" stroke-dasharray=""/><circle cx="326" cy="95" r="26" fill="none" stroke="var(--blue)" stroke-width="2"/><text x="326" y="99" text-anchor="middle">0.6</text><text x="326" y="191" text-anchor="middle">x = +0.8</text><line x1="326" y1="121" x2="326" y2="153" stroke="var(--blue)" stroke-width="2" stroke-dasharray="3 4"/><circle cx="74" cy="147" r="4" fill="var(--red)"/><circle cx="326" cy="147" r="4" fill="var(--red)"/><text x="74" y="139" text-anchor="middle">A 発光</text><text x="326" y="139" text-anchor="middle">B 発光</text><text x="200" y="35" text-anchor="middle">S に固定した同期時計</text></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>線路に固定した同期時計</span></li><li><span class="figure-key point" style="--key:var(--red)" aria-hidden="true"></span><span>線路脇のランプの発光 <span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span></span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>線路と位置の目盛り</span></li></ul></div><figcaption>線路の座標系 <span class="inline-math" data-tex="S">S</span> で <span class="inline-math" data-tex="t = 0.6">t = 0.6</span> の瞬間を描いた図。左右の赤い点は線路脇に固定したランプの発光。中央 <span class="inline-math" data-tex="x = 0">x = 0</span> の時計も同時に 0.6 を示す。</figcaption></figure>
-<p>青い <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span> 軸は列車の中央がたどる世界線。青い <span class="inline-math" data-tex="x&#x27;"><i>x</i>′</span> 軸は、列車と一緒に動く同期時計がそれぞれ <span class="inline-math" data-tex="t&#x27; = 0"><i>t</i>′ = 0</span> を示す出来事を結ぶ線。</p>
-<div class="controls"><label>相対速度 <span class="inline-math" data-tex="\beta">β</span> <output id="beta-value"></output><input id="beta" type="range" min="-.8" max=".8" step=".05" value=".5"></label></div>
-<svg id="diagram" viewBox="0 0 360 240" role="img" aria-label="線路と列車の座標軸、および線路で同時に起きるランプの発光 A と B"></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>線路の座標軸 <span class="inline-math" data-tex="x">x</span>・<span class="inline-math" data-tex="t">t</span></span></li><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>列車の座標軸 <span class="inline-math" data-tex="x&#x27;">x′</span>・<span class="inline-math" data-tex="t&#x27;">t′</span></span></li><li><span class="figure-key point" style="--key:var(--red)" aria-hidden="true"></span><span><span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span>：線路脇の左右のランプが光る瞬間</span></li><li><span class="figure-key dash" style="--key:var(--red)" aria-hidden="true"></span><span>線路で同時 <span class="inline-math" data-tex="t = 0.6">t = 0.6</span></span></li><li><span class="figure-key point" style="--key:var(--blue)" aria-hidden="true"></span><span>列車の原点が <span class="inline-math" data-tex="t = 1">t = 1</span> に通る出来事 <span class="inline-math" data-tex="C">C</span></span></li></ul></div>
-<p><strong>点 <span class="inline-math" data-tex="C">C</span></strong> は、線路の時計が <span class="inline-math" data-tex="t = 1"><i>t</i> = 1</span> を示すときに列車の原点が通る出来事。青い <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span> 軸上の <span class="inline-math" data-tex="O">O</span> から <span class="inline-math" data-tex="C">C</span> までを、第1部の固有時の項目で使う。</p>
-<div class="table-wrap"><table class="symbols"><thead><tr><th>出来事</th><th><span class="inline-math" data-tex="S">S</span> での座標 <span class="inline-math" data-tex="(t,x)">(t,x)</span></th><th>何が起きるか</th></tr></thead><tbody><tr><td><span class="inline-math" data-tex="O">O</span></td><td>(0,0)</td><td>列車の原点と線路の原点がすれ違う</td></tr><tr><td><span class="inline-math" data-tex="A">A</span></td><td>(0.6,−0.8)</td><td>線路脇の左ランプが発光</td></tr><tr><td><span class="inline-math" data-tex="B">B</span></td><td>(0.6,+0.8)</td><td>線路脇の右ランプが発光</td></tr><tr><td><span class="inline-math" data-tex="C">C</span></td><td><span class="inline-math" data-tex="(1,\beta )">(1,β)</span></td><td>列車の原点が線路時刻 1 にいる位置</td></tr></tbody></table></div><h3 id="train-view" style="scroll-margin-top:7rem">列車の位置と時空図の点 <span class="inline-math" data-tex="P">P</span></h3>
-<p>列車の中央に列車座標の原点 <span class="inline-math" data-tex="x&#x27; = 0"><i>x</i>′ = 0</span> を置く。線路の時計で時刻 <span class="inline-math" data-tex="t"><i>t</i></span> を決めると、列車の中央は線路の位置 <span class="inline-math" data-tex="x = \beta t"><i>x</i> = <i>βt</i></span> にある。</p>
-<label class="train-time-control" for="train-time">表示する線路の時刻 <span class="inline-math" data-tex="t"><i>t</i></span>
-  <output id="train-time-value" for="train-time">0.60</output>
-  <input id="train-time" type="range" min="0" max="1.5" value=".6" step=".05">
-</label>
-<figure class="derivation-figure">
-  <svg id="train-coordinates" viewBox="0 0 360 310" role="img" aria-label="同じ時刻の列車の位置を、線路を横から見た絵と時空図で比較する"></svg>
-  <div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong>
-    <ul>
-      <li><span class="figure-key point" style="--key:var(--red)" aria-hidden="true"></span><span>赤い点は線路脇のランプの発光 <span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span>。上図の白い輪は発光していないランプ</span></li>
-      <li><span class="figure-key point" style="--key:var(--gold)" aria-hidden="true"></span><span>列車の中央。上下の点は同じ出来事 <span class="inline-math" data-tex="P">P</span></span></li>
-      <li><span class="figure-key" style="--key:var(--blue)" aria-hidden="true"></span><span>下図の青線は列車中央の世界線（<span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span> 軸）</span></li>
-      <li><span class="figure-key dash" style="--key:var(--gold)" aria-hidden="true"></span><span>下図で <span class="inline-math" data-tex="P">P</span> の <span class="inline-math" data-tex="x"><i>x</i></span> と <span class="inline-math" data-tex="t"><i>t</i></span> を読む補助線</span></li>
-    </ul>
-  </div>
-  <figcaption>上の絵は、選んだ時刻での列車の位置。下の図では、そのときの位置を横軸 <span class="inline-math" data-tex="x"><i>x</i></span>、時刻を縦軸 <span class="inline-math" data-tex="t"><i>t</i></span> で読む。線路脇のランプは <span class="inline-math" data-tex="x = \pm 0.8"><i>x</i> = ±0.8</span> に固定。表示時刻が <span class="inline-math" data-tex="t = 0.6"><i>t</i> = 0.6</span> のときだけ、二つのランプを赤く表示する。車体の大きさは模式的に描いている。</figcaption>
-</figure>
-<p>列車中央の出来事 <span class="inline-math" data-tex="P">P</span> の線路座標 <span class="inline-math" data-tex="(x, t) =">(<i>x</i>, <i>t</i>) =</span> <output id="train-event" for="beta train-time">(0.30, 0.60)</output>。時刻スライダーは、どの瞬間の列車を描くかを選ぶ。<strong>ランプが光る時刻は <span class="inline-math" data-tex="t = 0.6"><i>t</i> = 0.6</span> に固定</strong>している。相対速度 <span class="inline-math" data-tex="\beta"><i>β</i></span> を変えると、同じ時刻での列車の位置が変わる。</p>
-<h3 id="flash-times" style="scroll-margin-top:7rem">同じ発光 <span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span> に、二つの座標系で時刻を付ける</h3><p>発光 <span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span> は、どちらも線路脇で起きる。線路の同期時計は、二つの発光を同じ <span class="inline-math" data-tex="t = 0.6"><i>t</i> = 0.6</span> と記録する。列車と同じ速度で動く同期時計を考える。<strong>発光した瞬間にその場所を通る時計の読み</strong>が、列車の座標での発光時刻 <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span>。車体の外にも、この座標系の時計を置けると考える。乗客が後から光を受け取る時刻は、光が発光地点から乗客まで進む時間も含む。</p><p>発光 <span class="inline-math" data-tex="B">B</span> の時刻から発光 <span class="inline-math" data-tex="A">A</span> の時刻を引く。線路では <span class="inline-math" data-tex="\Delta t = 0"><i>Δt</i> = 0</span>、位置の差は <span class="inline-math" data-tex="\Delta x = 0.8 - (-0.8) = 1.6"><i>Δx</i> = 0.8 − (−0.8) = 1.6</span>。これをローレンツ変換に代入すると、列車の座標での発光時刻の差 <span class="inline-math" data-tex="\Delta t&#x27;"><i>Δt</i>′</span> が出る。</p><div class="equation" data-tex="\Delta t&#x27;=\gamma(\Delta t-\beta\Delta x)=-1.6\,\gamma\beta.">Δt′ = γ(Δt−βΔx) = −1.6γβ。</div>
-<h4>図で <span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span> の時刻を読む</h4>
-<p>列車の座標で <span class="inline-math" data-tex="A">A</span> が何時かを読むには、<span class="inline-math" data-tex="A">A</span> から <span class="inline-math" data-tex="x&#x27;"><i>x</i>′</span> 軸に平行な線を引く。その線上の出来事は、列車の同期時計で同じ <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span> を持つ。線が <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span> 軸と交わる点で、列車中央の時計が <span class="inline-math" data-tex="A">A</span> と同じ <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span> を示す。<span class="inline-math" data-tex="B">B</span> も同じ手順で読む。この作図では、紙面上の軸の角度にかかわらず、常に <span class="inline-math" data-tex="x&#x27;"><i>x</i>′</span> 軸と平行に線を引く。</p>
-<div class="equation" data-tex="\begin{aligned}t&#x27;&amp;=\gamma(t-\beta x),\\ t&#x27;=\text{一定}&amp;\quad\Longleftrightarrow\quad t=\beta x+t&#x27;/\gamma.\end{aligned}">t′ = γ(t−βx)。t′ を一定にすると、t = βx+t′/γ。</div>
-<p>下の図では、灰色の水平線が線路の時刻 <span class="inline-math" data-tex="t = 0.6">t = 0.6</span>。赤い破線は、それぞれ <span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span> と同じ <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span> の出来事を結ぶ。青い軸の目盛り 1 は、列車の原点の時計が <span class="inline-math" data-tex="t&#x27; = 1"><i>t</i>′ = 1</span> を示す点。表と図の値は同じ式から求める。</p>
-<svg id="time-projection" viewBox="0 0 360 316" role="img" aria-label="AとBからx′軸に平行な線を引き、t′軸で列車の時刻を読む図"></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key " style="--key:var(--blue)" aria-hidden="true"></span><span>列車の座標軸 <span class="inline-math" data-tex="x&#x27;">x′</span>・<span class="inline-math" data-tex="t&#x27;">t′</span></span></li><li><span class="figure-key dash" style="--key:var(--red)" aria-hidden="true"></span><span>列車で同時。<span class="inline-math" data-tex="x&#x27;">x′</span> 軸に平行</span></li><li><span class="figure-key point" style="--key:var(--red)" aria-hidden="true"></span><span><span class="inline-math" data-tex="A">A</span>・<span class="inline-math" data-tex="B">B</span> と <span class="inline-math" data-tex="t&#x27;">t′</span> 軸上の読み取り点</span></li><li><span class="figure-key dash" style="--key:var(--muted)" aria-hidden="true"></span><span>線路で同時 <span class="inline-math" data-tex="t = 0.6">t = 0.6</span></span></li></ul></div>
-<table><thead><tr><th scope="col">出来事</th><th scope="col">線路の時刻 <span class="inline-math" data-tex="t"><i>t</i></span></th><th scope="col">線路の位置 <span class="inline-math" data-tex="x"><i>x</i></span></th><th scope="col">列車の時刻 <span class="inline-math" data-tex="t&#x27;"><i>t</i>′</span></th><th scope="col">列車の位置 <span class="inline-math" data-tex="x&#x27;"><i>x</i>′</span></th></tr></thead><tbody>
-<tr><th scope="row"><span class="inline-math" data-tex="A">A</span></th><td>0.6</td><td>−0.8</td><td id="at"></td><td id="ax"></td></tr><tr><th scope="row"><span class="inline-math" data-tex="B">B</span></th><td>0.6</td><td>0.8</td><td id="bt"></td><td id="bx"></td></tr></tbody></table>
-<p class="reading"><span class="inline-math" data-tex="\beta">β</span> を 0 にすると <span class="inline-math" data-tex="A">A</span> と <span class="inline-math" data-tex="B">B</span> は同時。<span class="inline-math" data-tex="\beta">β</span> の符号を反転すると <span class="inline-math" data-tex="\Delta t&#x27;">Δt′</span> の符号も反転し、順序が入れ替わる。<output id="simul"></output></p><div class="equation" data-tex="P=(x,t)=(\gamma x^\prime,\gamma\beta x^\prime)+(\gamma\beta t^\prime,\gamma t^\prime).">P=(x,t)=(\gamma x^\prime,\gamma\beta x^\prime)+(\gamma\beta t^\prime,\gamma t^\prime).</div><p>これは斜めの二本の基底への分解。時刻 <span class="inline-math" data-tex="t&#x27;">t′</span> は <span class="inline-math" data-tex="x&#x27;">x′</span> 軸に平行にたどって <span class="inline-math" data-tex="t&#x27;">t′</span> 軸で読み、位置 <span class="inline-math" data-tex="x&#x27;">x′</span> は <span class="inline-math" data-tex="t&#x27;">t′</span> 軸に平行にたどって <span class="inline-math" data-tex="x&#x27;">x′</span> 軸で読む。紙面上の線分の長さを、そのまま <span class="inline-math" data-tex="t&#x27;">t′</span> の数値にすることもできない。</p><div class="equation" data-tex="t^\prime=1,\ x^\prime=0\quad\Longrightarrow\quad (t,x)=(\gamma,\gamma\beta).">t^\prime=1,\ x^\prime=0\quad\Longrightarrow\quad (t,x)=(\gamma,\gamma\beta).</div><p>この点が <span class="inline-math" data-tex="t&#x27;">t′</span> 軸の「1」の目盛り。<span class="inline-math" data-tex="\beta =0.6">β=0.6</span> なら <span class="inline-math" data-tex="\gamma =1.25">γ=1.25</span> なので <span class="inline-math" data-tex="(t,x)=(1.25,0.75)">(t,x)=(1.25,0.75)</span> に置く。上のスライダーと独立した、目盛りの校正の数値例である。</p><details class="review"><summary>確認問題　<span class="inline-math" data-tex="\beta =0.5">β=0.5</span> で <span class="inline-math" data-tex="A">A</span> と <span class="inline-math" data-tex="B">B</span> のどちらが <span class="inline-math" data-tex="S&#x27;">S′</span> で先に発光する？</summary><div class="equation" data-tex="t_A^\prime=1.155,\quad t_B^\prime=0.231,\quad\Delta t^\prime=-0.924.">t_A^\prime=1.155,\quad t_B^\prime=0.231,\quad\Delta t^\prime=-0.924.</div><p><span class="inline-math" data-tex="B">B</span> のほうが早い。この二つの発光は空間的に離れており、光速以下の信号で互いを引き起こせない。</p></details><p class="source">参照記事 <a href="https://eman-physics.net/relativity/lorentz.html">EMAN の対応ページ ↗</a></p></section><section id="length" class="sr-topic"><h2>1.6 応用の前に、測る二点を決める</h2><p>ここで一つ練習する。動く棒の長さを測るには、その系で同じ時刻に両端の位置を記録する。棒と一緒に動く系では、両端の位置の差はいつ測っても <span class="inline-math" data-tex="L_0">L₀</span>。基準系で同時に選んだ二点に <span class="inline-math" data-tex="\Delta x^\prime=\gamma(\Delta x-v\Delta t)">Δx′ = γ(Δx − vΔt)</span> を使う。</p><div class="equation" data-tex="\Delta t=0\quad\Longrightarrow\quad L_0=\gamma L,\qquad L=\frac{L_0}{\gamma}.">同時に選んだ端点の距離は L = L₀/γ。</div><figure class="sr-lab" data-lab="length">
-  <figcaption>同じ時刻に測った棒の長さ</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-length"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-length">0.6</output></label>
-    <input id="slider-length" type="range" min="0" max="0.95" step="0.05" value="0.6">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="同じ時刻に測った棒の長さ"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>棒の静止系</span><span><i class="key green" aria-hidden="true"></i>基準系</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">固有長を 1 に固定。二本の棒はそれぞれの系で同時に測った長さを示す。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/playlater.html">EMAN の対応ページ ↗</a></p></section><section id="interval" class="sr-topic"><h2>1.7 時空の間隔は座標を変えても同じ</h2><p>時刻差と位置差は、ブーストで互いに混ざる。二乗の差を作ると交差項が消え、ローレンツ因子と <span class="inline-math" data-tex="1-\beta^2">1−β²</span> が打ち消し合う。<span class="inline-math" data-tex="c=1">c=1</span> で書くと、</p><div class="equation" data-tex="\begin{aligned}-(\Delta t&#x27;)^2+(\Delta x&#x27;)^2&amp;=\gamma^2[-(\Delta t-\beta\Delta x)^2+(\Delta x-\beta\Delta t)^2]\\&amp;=-(\Delta t)^2+(\Delta x)^2.\end{aligned}">ローレンツ変換の前後で、空間差の二乗から時間差の二乗を引いた値は等しい。</div><p>これは通常の平面の回転で長さが保存されることに似ている。時空で保存されるのは二乗の和ではなく二乗の差で、ブーストは双曲回転と呼ばれる。</p><figure class="sr-lab" data-lab="interval">
-  <figcaption>二つの座標成分と、その組み合わせを比べる</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-interval"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-interval">0.4</output></label>
-    <input id="slider-interval" type="range" min="-0.85" max="0.85" step="0.05" value="0.4">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="二つの座標成分と、その組み合わせを比べる"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>時間差</span><span><i class="key green" aria-hidden="true"></i>位置差</span><span><i class="key gold" aria-hidden="true"></i>間隔の二乗</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">最初の座標差は時間 1.2、位置 0.6。ブースト後も間隔の二乗が負のまま保たれる。</p>
-</figure><p>先ほどの発光 A・B についても、速度スライダーに連動する値で比較できる。</p><table><tbody><tr><th scope="row">A・B の間隔の二乗（線路／列車）</th><td id="space-interval"></td></tr></tbody></table><p class="source">参照記事 <a href="https://eman-physics.net/relativity/invariable.html">EMAN の対応ページ ↗</a></p></section><section id="proper-time" class="sr-topic"><h2>1.8 固有時は時計がたどった経路で決まる</h2><p>時計と一瞬同じ速度で動く系では、その時計の位置の微小変化は 0。その系で時計が刻む微小時間を <span class="inline-math" data-tex="\mathrm d\tau">dτ</span> と書く。間隔が同じなので、別の系からでも速度の履歴を使って計算できる。</p><div class="equation" data-tex="\mathrm d\tau=\frac{\sqrt{-\mathrm ds^2}}{c}=\sqrt{1-v^2/c^2}\,\mathrm dt.">dτ = √(1−v²/c²) dt。</div><p>列車の図の O から C までは線路の時刻で 1。列車の中央の時計が刻む値は次のとおり。</p><table><tbody><tr><th scope="row">列車の時計の経過時間 O → C</th><td id="proper"></td></tr></tbody></table><h3 id="twins">往復して時計を突き合わせる</h3><figure class="sr-lab" data-lab="proper">
-  <figcaption>同じ出発点と再会点を結ぶ二つの時計</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-proper">往復の速さ <span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-proper">0.6</output></label>
-    <input id="slider-proper" type="range" min="0" max="0.95" step="0.05" value="0.6">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="同じ出発点と再会点を結ぶ二つの時計"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>静止時計</span><span><i class="key green" aria-hidden="true"></i>往復時計</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">静止時計では 10 秒。往復時計は基準系の時刻 5 秒に折り返す。折り返しは瞬間的とする。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/proper.html">EMAN の対応ページ ↗</a></p></section><section id="four-velocity" class="sr-topic"><h2>1.9 四元速度は固有時で微分する</h2><p>四元座標を <span class="inline-math" data-tex="x^\mu=(ct,\mathbf x)">xμ = (ct, x)</span> とする。慣性系を取り替えても同じ値になる固有時で割れば、座標差と同じローレンツ変換に従う量が作れる。</p><div class="equation" data-tex="\begin{aligned}U^\mu&amp;=\frac{\mathrm dx^\mu}{\mathrm d\tau}=\gamma(c,\mathbf v),\\ U^\mu U_\mu&amp;=-c^2\gamma^2+\gamma^2v^2=-c^2.\end{aligned}">四元速度は γ(c,v)。内積は −c²。</div><figure class="sr-lab" data-lab="fourVelocity">
-  <figcaption>通常の速度と四元速度の成分</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-fourVelocity"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-fourVelocity">0.7</output></label>
-    <input id="slider-fourVelocity" type="range" min="0" max="0.96" step="0.02" value="0.7">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="通常の速度と四元速度の成分"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>通常の速度</span><span><i class="key green" aria-hidden="true"></i>四元速度の空間成分</span><span><i class="key gold" aria-hidden="true"></i>時間成分</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">空間成分は固有時あたりの位置の変化。光速と比べる通常の速度は座標時刻あたりの変化なので、青と緑を区別する。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/4velocity.html">EMAN の対応ページ ↗</a></p></section><section id="momentum" class="sr-topic"><h2>1.10 四元運動量と静止エネルギー</h2><p>質量 <span class="inline-math" data-tex="m">m</span> を四元速度に掛ける。時間成分を <span class="inline-math" data-tex="E/c">E/c</span> とおくと <span class="inline-math" data-tex="E=\gamma mc^2">E = γmc²</span>。低速で <span class="inline-math" data-tex="\gamma=1+\frac{v^2}{2c^2}+O(v^4/c^4)">γ ≈ 1+v²/(2c²)</span> と展開したとき、速度に依存する最初の項は Newton 力学の運動エネルギーになる。残る <span class="inline-math" data-tex="mc^2">mc²</span> は静止エネルギー。</p><div class="equation" data-tex="P^\mu=mU^\mu=(E/c,\mathbf p),\qquad E^2-c^2|\mathbf p|^2=m^2c^4.">Pμ = (E/c,p)。E² − c²|p|² = m²c⁴。</div><figure class="sr-lab" data-lab="energy">
-  <figcaption>速度を変えても質量は一定</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-energy"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-energy">0.65</output></label>
-    <input id="slider-energy" type="range" min="0" max="0.96" step="0.01" value="0.65">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="速度を変えても質量は一定"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>全エネルギー</span><span><i class="key green" aria-hidden="true"></i>運動量 × 光速</span><span><i class="key gold" aria-hidden="true"></i>運動エネルギー</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">各棒はエネルギーを <span class="inline-math" data-tex="mc^2">mc²</span> で割った値。青は全エネルギー、緑は運動量に光速を掛けた量。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/4momentum.html">EMAN の対応ページ ↗</a></p></section><section id="mass" class="sr-topic"><h2>1.11 速度で増えるエネルギーと、系の質量</h2><p>ここでは「質量」を静止系で測る不変質量に統一する。粒子の速さを変えると <span class="inline-math" data-tex="E">E</span> と <span class="inline-math" data-tex="|\mathbf p|">|p|</span> は変わるが、両方から計算する質量は一定。一方、熱や結合エネルギーを含めた系では、重心系での全エネルギーが変われば系の質量も変わる。</p><div class="equation" data-tex="M^2c^4=E_{\rm tot}^2-c^2|\mathbf p_{\rm tot}|^2,\qquad \Delta M=\Delta E_{\rm rest}/c^2.">系の質量は全四元運動量から計算する。静止系でエネルギーが増えると質量も増える。</div><figure class="sr-lab" data-lab="mass">
-  <figcaption>容器に熱を加えたときの質量</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-mass">加えた内部エネルギー（初期静止エネルギーに対する比） <output data-setting for="slider-mass">0.2</output></label>
-    <input id="slider-mass" type="range" min="0" max="0.5" step="0.01" value="0.2">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="容器に熱を加えたときの質量"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>初期の質量</span><span><i class="key green" aria-hidden="true"></i>加熱後の質量</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">容器の重心は静止。外へエネルギーが漏れない理想化で、全運動量はゼロ。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/increase.html">EMAN の対応ページ ↗</a></p></section><section id="speed-limit" class="sr-topic"><h2>1.12 質量のある粒子が光速に近づくと</h2><p>静止質量を固定すると、<span class="inline-math" data-tex="v">v</span> が <span class="inline-math" data-tex="c">c</span> に近づくほど <span class="inline-math" data-tex="\gamma">γ</span> が大きくなる。エネルギーを先に指定し、逆に速度を計算してみる。</p><div class="equation" data-tex="\frac{v}{c}=\sqrt{1-\left(\frac{mc^2}{E}\right)^2}.">v/c = √(1−(mc²/E)²)。</div><figure class="sr-lab" data-lab="limit">
-  <figcaption>エネルギーを加えて光速にどこまで近づくか</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-limit"><span class="inline-math" data-tex="E/(mc^2)">E/(mc²)</span> <output data-setting for="slider-limit">3</output></label>
-    <input id="slider-limit" type="range" min="1" max="12" step="0.1" value="3">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="エネルギーを加えて光速にどこまで近づくか"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>粒子の速さ</span><span><i class="key green" aria-hidden="true"></i>光速</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">有限のエネルギーでは 1 未満。質量ゼロの光子には、固有時で割る四元速度の定義を使わない。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/tachyon.html">EMAN の対応ページ ↗</a></p></section><section id="causality" class="sr-topic"><h2>1.13 超光速の往復信号と因果順序</h2><p>仮にそれぞれの送信者が、自分の系で速さ <span class="inline-math" data-tex="u=2c">u=2c</span> の信号を送れるとする。<span class="inline-math" data-tex="c=1">c=1</span> として、A は <span class="inline-math" data-tex="x=0">x=0</span> に静止、B は <span class="inline-math" data-tex="x=1+\beta t">x=1+βt</span> を進む。A が時刻 0 に送り、B が受け取った瞬間に自分の系で A へ返信する。</p><div class="equation" data-tex="\begin{aligned}t_B&amp;=\frac{1}{2-\beta},\quad x_B=2t_B,\\ t_{\rm reply}&amp;=t_B+\frac{x_B(1-2\beta)}{2-\beta}.\end{aligned}">B への到着時刻と、A への返信到着時刻。</div><p>往路は <span class="inline-math" data-tex="x=2t">x=2t</span> と B の世界線の交点。復路は B の系で <span class="inline-math" data-tex="\Delta x&#x27;=-2\Delta t&#x27;">Δx′ = −2Δt′</span> を逆変換すると <span class="inline-math" data-tex="\Delta t=\gamma(1-2\beta)\Delta t&#x27;">Δt = γ(1−2β)Δt′</span> になる。到着を <span class="inline-math" data-tex="x=0">x=0</span> とおけば上の返信時刻が出る。この仮定では <span class="inline-math" data-tex="\beta&gt;0.8">β &gt; 0.8</span> で A の送信より先に返信が届く。</p><figure class="sr-lab" data-lab="tachyon">
-  <figcaption>発信・受信・返信を一本の時空図で追う</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-tachyon">B の <span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-tachyon">0.85</output></label>
-    <input id="slider-tachyon" type="range" min="0" max="0.95" step="0.01" value="0.85">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="発信・受信・返信を一本の時空図で追う"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>A と B の世界線</span><span><i class="key green" aria-hidden="true"></i>往路</span><span><i class="key red" aria-hidden="true"></i>返信</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">横が位置、縦が A の時刻。点線の高さが発信時刻。これは仮定した通信の計算である。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/tachyon_com.html">EMAN の対応ページ ↗</a></p></section></div><div id="part-2" class="sr-part"><h2>第2部 座標変換の理論</h2><section id="dual" class="sr-topic"><h2>2.1 反変成分と共変成分</h2><p>同じ変位でも、座標の目盛りを変えると数値が変わる。<span class="inline-math" data-tex="x&#x27;=ax">x′ = ax</span> とするとベクトルの成分は <span class="inline-math" data-tex="V^{x&#x27;}=aV^x">Vˣ′ = aVˣ</span>。一方、スカラー場の微分は連鎖律で逆向きに変換される。</p><div class="equation" data-tex="\omega_{x&#x27;}=\frac{\partial x}{\partial x&#x27;}\omega_x=\frac{\omega_x}{a},\qquad \omega_{x&#x27;}V^{x&#x27;}=\omega_xV^x.">共変成分は 1/a 倍。ベクトルと掛けた値は一定。</div><p>例えば <span class="inline-math" data-tex="\omega=\mathrm df">ω = df</span> なら、積はその変位に沿う <span class="inline-math" data-tex="f">f</span> の一次の変化。上付きと下付きが逆に変わるので、測る値は目盛りの付け方に依らない。</p><figure class="sr-lab" data-lab="dual">
-  <figcaption>目盛りを変えても微小変化は同じ</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-dual"><span class="inline-math" data-tex="a">a</span> <output data-setting for="slider-dual">1.5</output></label>
-    <input id="slider-dual" type="range" min="0.5" max="2.5" step="0.05" value="1.5">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="目盛りを変えても微小変化は同じ"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>反変成分</span><span><i class="key green" aria-hidden="true"></i>共変成分</span><span><i class="key gold" aria-hidden="true"></i>積</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">もとの成分は Vˣ = 1、ωₓ = 2。棒の長さは成分の数値を表す。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/variant.html">EMAN の対応ページ ↗</a></p></section><section id="tensor" class="sr-topic"><h2>2.2 添字ごとに変換する</h2><p>ベクトルが二つあれば、成分の積 <span class="inline-math" data-tex="T^{ij}=V^iW^j">Tⁱʲ = VⁱWʲ</span> を並べて2階のテンソルを作れる。変換するときは、それぞれの添字に変換行列を一回ずつ掛ける。</p><div class="equation" data-tex="T^{\prime ij}=A^i{}_k A^j{}_\ell T^{k\ell}\qquad\text{（繰り返した添字について和）}">上付き添字ごとに変換行列を掛ける。</div><p>下付き添字には逆向きの変換を掛ける。上下の添字を一組だけ同じにして足す「縮約」では、その一組の変換が打ち消し合う。図の例では、直交座標で添字を一つ下げた行列のトレースを比較する。</p><figure class="sr-lab" data-lab="tensor">
-  <figcaption>座標軸の回転で対角・非対角成分が入れ替わる</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-tensor">新しい軸の角度（度） <output data-setting for="slider-tensor">30</output></label>
-    <input id="slider-tensor" type="range" min="0" max="90" step="1" value="30">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="座標軸の回転で対角・非対角成分が入れ替わる"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>T′₁₁</span><span><i class="key green" aria-hidden="true"></i>T′₂₂</span><span><i class="key gold" aria-hidden="true"></i>T′₁₂</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">元の行列は diag(2, 1)。新しい軸を反時計回りに回す。青と緑を足したトレースは 3。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/tensor.html">EMAN の対応ページ ↗</a></p></section><section id="metric" class="sr-topic"><h2>2.3 計量で成分から長さを求める</h2><p>斜めに交わる座標軸では、二つの成分を二乗して足すだけでは長さが出ない。基底ベクトル同士の内積を <span class="inline-math" data-tex="g_{ij}=\mathbf e_i\cdot\mathbf e_j">gᵢⱼ = eᵢ·eⱼ</span> としておくと、成分から長さが計算できる。</p><div class="equation" data-tex="|\mathbf V|^2=g_{ij}V^iV^j,\qquad V_i=g_{ij}V^j,\qquad V^i=g^{ij}V_j.">計量で長さの二乗と下付き成分を求め、逆計量で添字を上げる。</div><p>時空では直交慣性座標 <span class="inline-math" data-tex="(ct,x,y,z)">(ct,x,y,z)</span> の計量を <span class="inline-math" data-tex="\eta=\operatorname{diag}(-1,1,1,1)">η = diag(−1,1,1,1)</span> とする。時間方向の符号が負なので、時空の間隔は空間の長さとは異なる性質を持つ。</p><figure class="sr-lab" data-lab="metric">
-  <figcaption>成分が (1, 1) でも基底の角度で長さが変わる</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-metric">基底の角度（度） <output data-setting for="slider-metric">60</output></label>
-    <input id="slider-metric" type="range" min="30" max="150" step="1" value="60">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="成分が (1, 1) でも基底の角度で長さが変わる"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>基底 e₁</span><span><i class="key green" aria-hidden="true"></i>基底 e₂</span><span><i class="key gold" aria-hidden="true"></i>和 e₁ + e₂</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">二本の基底の長さは各 1。金色は二本の和。長さの二乗に交差項が二つ入る。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/metric.html">EMAN の対応ページ ↗</a></p></section><section id="operator" class="sr-topic"><h2>2.4 偏微分を四次元でまとめる</h2><p>スカラー場を変換してから微分すると、連鎖律で下付き添字の変換が現れる。ミンコフスキー計量で添字を上げて縮約すると、座標の取り方によらない波動演算子になる。</p><div class="equation" data-tex="\begin{aligned}\partial_\mu&amp;=\frac{\partial}{\partial x^\mu},\quad \partial^\mu=\eta^{\mu\nu}\partial_\nu,\\ \Box&amp;=\partial_\mu\partial^\mu=-c^{-2}\partial_t^2+\nabla^2.\end{aligned}">波動演算子 □ = −c⁻²∂²ₜ + ∇²。</div><p>波 <span class="inline-math" data-tex="f=\cos(kx-\omega t)">f = cos(kx−ωt)</span> では、時刻で二回微分すると <span class="inline-math" data-tex="-\omega^2f">−ω²f</span>、位置で二回微分すると <span class="inline-math" data-tex="-k^2f">−k²f</span>。従って <span class="inline-math" data-tex="\Box f=(\omega^2/c^2-k^2)f">□f = (ω²/c²−k²)f</span>。真空の波動方程式ではこの係数がゼロになる。</p><figure class="sr-lab" data-lab="operator">
-  <figcaption>時間微分と空間微分が打ち消し合う条件</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-operator"><span class="inline-math" data-tex="\omega/(ck)">ω/(ck)</span> <output data-setting for="slider-operator">1</output></label>
-    <input id="slider-operator" type="range" min="0.3" max="1.6" step="0.02" value="1">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="時間微分と空間微分が打ち消し合う条件"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>波 f</span><span><i class="key gold" aria-hidden="true"></i>演算結果 □f</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">k = c = 1、表示は t = 0 の断面。金色の曲線がゼロになると真空の波動方程式を満たす。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/operator.html">EMAN の対応ページ ↗</a></p></section></div><div id="part-3" class="sr-part"><h2>第3部 相対性原理の実践</h2><section id="four-force" class="sr-topic"><h2>3.1 固有時で運動量を微分する</h2><p>三次元の力を <span class="inline-math" data-tex="\mathbf F=\mathrm d\mathbf p/\mathrm dt">F = dp/dt</span> とする。四元運動量を固有時で微分すれば、座標を変えても四元ベクトルとして変換する力になる。</p><div class="equation" data-tex="K^\mu=\frac{\mathrm dP^\mu}{\mathrm d\tau}=\gamma\left(\frac{\mathbf F\cdot\mathbf v}{c},\,\mathbf F\right).">四元力の時間成分は γ F·v/c、空間成分は γF。</div><p>時間成分は仕事率から来る。<span class="inline-math" data-tex="E^2=m^2c^4+c^2|\mathbf p|^2">E²=m²c⁴+c²|p|²</span> を時刻で微分して <span class="inline-math" data-tex="c^2\mathbf p/E=\mathbf v">c²p/E=v</span> を使うと、<span class="inline-math" data-tex="\mathrm dE/\mathrm dt=\mathbf F\cdot\mathbf v">dE/dt=F·v</span> になる。さらに <span class="inline-math" data-tex="\mathrm dt/\mathrm d\tau=\gamma">dt/dτ=γ</span> を掛ける。</p><figure class="sr-lab" data-lab="force">
-  <figcaption>力がする仕事と四元力の成分</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-force"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-force">0.65</output></label>
-    <input id="slider-force" type="range" min="0" max="0.95" step="0.05" value="0.65">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="力がする仕事と四元力の成分"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>三次元の力</span><span><i class="key green" aria-hidden="true"></i>四元力の空間成分</span><span><i class="key gold" aria-hidden="true"></i>四元力の時間成分</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">力と速度を同じ方向に取り、三次元の力を 1 に固定。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/4force.html">EMAN の対応ページ ↗</a></p></section><section id="energy-flow" class="sr-topic"><h2>3.2 エネルギー密度と流れを一つにする</h2><p>粒子の集団について「どれだけエネルギーがあるか」と「面を通ってどちらへ流れるか」を同時に記述する。圧力がない粒子の流れで、各粒子と同じ速度の系で測った質量密度を <span class="inline-math" data-tex="\rho_0">ρ₀</span> とする。</p><div class="equation" data-tex="\begin{aligned}T^{\mu\nu}&amp;=\rho_0 U^\mu U^\nu,\\ T^{00}&amp;=\rho_0\gamma^2c^2,\quad cT^{x0}=v T^{00},\\ \partial_\mu T^{\mu 0}=0&amp;\ \Longleftrightarrow\ \partial_t T^{00}+\partial_i(cT^{i0})=0.\end{aligned}">圧力なしの流れでは T = ρ₀ U⊗U。密度の時間変化と流束の発散の和はゼロ。</div><p>密度に <span class="inline-math" data-tex="\gamma">γ</span> が二回入る理由は、同じ粒子数が占める体積が縮むことと、一粒子あたりのエネルギーが増えること。一様な流れでは、境界から出入りする量がつり合う。</p><figure class="sr-lab" data-lab="dust">
-  <figcaption>静止密度を固定して、流れの速さを変える</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-dust"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-dust">0.55</output></label>
-    <input id="slider-dust" type="range" min="0" max="0.9" step="0.05" value="0.55">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="静止密度を固定して、流れの速さを変える"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>T⁰⁰</span><span><i class="key green" aria-hidden="true"></i>Tˣ⁰</span><span><i class="key gold" aria-hidden="true"></i>Tˣˣ</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">c = ρ₀ = 1。エネルギー密度、エネルギー流束、x 方向運動量の流束を比べる。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/ep_tensor.html">EMAN の対応ページ ↗</a></p></section><section id="stress" class="sr-topic"><h2>3.3 応力は運動量の流束</h2><p>面を横切るのがエネルギーならエネルギー流束、運動量なら応力の成分になる。<span class="inline-math" data-tex="T^{ij}">Tⁱʲ</span> の第一添字は面の法線方向、第二添字は運ばれる運動量の方向。斜めの成分は、面に平行な運動量が面を横切るせん断に対応する。</p><p>完全流体の静止系では、空間部分は圧力 <span class="inline-math" data-tex="p">p</span> を三方向の対角に並べた行列になる。静止エネルギー密度を <span class="inline-math" data-tex="\varepsilon">ε</span> とすると、流体が <span class="inline-math" data-tex="+x">+x</span> 方向に動く系での成分は次のとおり。</p><div class="equation" data-tex="\begin{aligned}T^{00}&amp;=\gamma^2(\varepsilon+\beta^2p),\\ T^{0x}&amp;=\gamma^2\beta(\varepsilon+p),\\ T^{xx}&amp;=\gamma^2(p+\beta^2\varepsilon),\quad T^{yy}=T^{zz}=p.\end{aligned}">運動方向の成分はブーストで混ざる。横方向の圧力成分は p。</div><figure class="sr-lab" data-lab="stress">
-  <figcaption>流れを止めても圧力は残る</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-stress"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-stress">0.45</output></label>
-    <input id="slider-stress" type="range" min="0" max="0.9" step="0.05" value="0.45">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="流れを止めても圧力は残る"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>エネルギー密度</span><span><i class="key green" aria-hidden="true"></i>流束の成分</span><span><i class="key gold" aria-hidden="true"></i>運動方向の応力</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">ε = 1、p = 0.3。β = 0 で緑はゼロになり、金色は静止系の圧力になる。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/stress_tensor.html">EMAN の対応ページ ↗</a></p></section><section id="maxwell" class="sr-topic"><h2>3.4 ポテンシャルで Maxwell 方程式をまとめる</h2><p>電位とベクトルポテンシャルを <span class="inline-math" data-tex="A^\mu=(\phi/c,\mathbf A)">Aμ = (φ/c,A)</span>、電荷密度と電流密度を <span class="inline-math" data-tex="J^\mu=(c\rho,\mathbf J)">Jμ = (cρ,J)</span> にまとめる。電場と磁場は <span class="inline-math" data-tex="\mathbf E=-\nabla\phi-\partial_t\mathbf A">E=−∇φ−∂ₜA</span>、<span class="inline-math" data-tex="\mathbf B=\nabla\times\mathbf A">B=∇×A</span> で求める。</p><div class="equation" data-tex="\partial_\mu A^\mu=0\quad\Longrightarrow\quad\Box A^\nu=-\mu_0 J^\nu,\qquad \partial_\mu J^\mu=0.">ローレンツゲージでポテンシャルの波動方程式が成り立つ。四元電流は保存する。</div><p>ポテンシャルを <span class="inline-math" data-tex="\mathbf A\mapsto\mathbf A+\nabla\chi">\mathbf A\mapsto\mathbf A+\nabla\chi</span>、<span class="inline-math" data-tex="\phi\mapsto\phi-\partial_t\chi">\phi\mapsto\phi-\partial_t\chi</span> と変えても、電場では混合偏微分が打ち消し合い、磁場では勾配の回転がゼロになる。これがゲージ変換。ローレンツゲージを保つには <span class="inline-math" data-tex="\Box\chi=0">\Box\chi=0</span> を使う。</p><figure class="sr-lab" data-lab="gauge">
-  <figcaption>ポテンシャルを変えても電場と磁場は同じ</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-gauge">ゲージ関数の振幅 <output data-setting for="slider-gauge">0.6</output></label>
-    <input id="slider-gauge" type="range" min="-2" max="2" step="0.05" value="0.6">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="ポテンシャルを変えても電場と磁場は同じ"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>変換後の電位</span><span><i class="key green" aria-hidden="true"></i>電場の横成分</span><span><i class="key gold" aria-hidden="true"></i>磁場の横成分</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">c = 1、χ = λ sin(x−t)。もとの波は Aᵧ = cos(x−t)、測定点は x−t = π/4。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/maxwell.html">EMAN の対応ページ ↗</a></p></section><section id="lorentz-wave" class="sr-topic"><h2>3.5 波動方程式から座標変換を求め直す</h2><p>参照記事では Maxwell 方程式の形をそろえて座標と電磁場の変換を求める。ここでは座標の部分を真空の波動演算子で確かめる。<span class="inline-math" data-tex="c=1">c=1</span> とし、<span class="inline-math" data-tex="x&#x27;=a(x-\beta t),\ t&#x27;=bt+dx">x&#x27;=a(x-\beta t),\ t&#x27;=bt+dx</span> を使う。<span class="inline-math" data-tex="y&#x27;=y,\ z&#x27;=z">y&#x27;=y,\ z&#x27;=z</span> として横方向の演算子はそのままにする。</p><div class="equation" data-tex="\partial_x=a\partial_{x&#x27;}+d\partial_{t&#x27;},\qquad \partial_t=-a\beta\partial_{x&#x27;}+b\partial_{t&#x27;}.">連鎖律で旧座標の偏微分を新座標の偏微分に分ける。</div><p>この二式を <span class="inline-math" data-tex="\partial_x^2-\partial_t^2">\partial_x^2-\partial_t^2</span> に入れると、混合微分の係数は <span class="inline-math" data-tex="2a(d+\beta b)">2a(d+\beta b)</span>。元の演算子と同じ形にするには <span class="inline-math" data-tex="d=-\beta b">d=-\beta b</span>。横方向の係数を 1 に固定したので、残る係数もそれぞれ 1 と −1 に合わせる。</p><div class="equation" data-tex="a^2(1-\beta^2)=b^2(1-\beta^2)=1,\qquad a=b=\gamma.">空間と時間の向きを保つ正の係数を選ぶと a = b = γ。</div><figure class="sr-lab" data-lab="waveBoost">
-  <figcaption>混合微分が消える係数を探す</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-waveBoost"><span class="inline-math" data-tex="d">d</span> <output data-setting for="slider-waveBoost">-0.25</output></label>
-    <input id="slider-waveBoost" type="range" min="-1.4" max="0.35" step="0.01" value="-0.25">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="混合微分が消える係数を探す"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>空間二階微分</span><span><i class="key green" aria-hidden="true"></i>時間二階微分</span><span><i class="key gold" aria-hidden="true"></i>混合微分</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">β = 0.6、a = b = 1.25 を固定。d = −0.75 で混合項が消え、残る二係数が 1 と −1 になる。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/lorentz2.html">EMAN の対応ページ ↗</a></p></section><section id="em-tensor" class="sr-topic"><h2>3.6 電場と磁場を同じテンソルで変換する</h2><p>共変ポテンシャルから、反対称なテンソル <span class="inline-math" data-tex="F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu">F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu</span> を作る。このページの符号規約では <span class="inline-math" data-tex="F_{0i}=-E_i/c,\ F_{ij}=\epsilon_{ijk}B_k">F_{0i}=-E_i/c,\ F_{ij}=\epsilon_{ijk}B_k</span>。添字が二つあるので、ブーストでは行と列の両方が変わる。</p><div class="equation" data-tex="\begin{aligned}\partial_\mu F^{\nu\mu}&amp;=\mu_0J^\nu,\\ \partial_\alpha F_{\mu\nu}+\partial_\mu F_{\nu\alpha}+\partial_\nu F_{\alpha\mu}&amp;=0.\end{aligned}">電荷と電流のある方程式と、ポテンシャルの定義から従う方程式。</div><p>例えば <span class="inline-math" data-tex="\mathbf E=0">\mathbf E=0</span>、磁場が <span class="inline-math" data-tex="+z">+z</span> 方向のとき、<span class="inline-math" data-tex="+x">+x</span> へ動く系では <span class="inline-math" data-tex="E&#x27;_y=-\gamma vB_z">E&#x27;_y=-\gamma vB_z</span> と <span class="inline-math" data-tex="B&#x27;_z=\gamma B_z">B&#x27;_z=\gamma B_z</span> が得られる。場が物質とエネルギーや運動量を交換する場合は、場と物質のエネルギー運動量テンソルを足したものが保存する。</p><div class="equation" data-tex="\begin{aligned}T_{\rm EM}^{\mu\nu}&amp;=\mu_0^{-1}\left(F^{\mu\alpha}F^\nu{}_\alpha-\tfrac14\eta^{\mu\nu}F_{\alpha\beta}F^{\alpha\beta}\right),\\ \partial_\mu(T_{\rm EM}^{\mu\nu}+T_{\rm matter}^{\mu\nu})&amp;=0.\end{aligned}">電磁場と物質のエネルギー運動量の和が保存する。</div><figure class="sr-lab" data-lab="fields">
-  <figcaption>純粋な磁場を動く観測者が測る</figcaption>
-  <div class="controls sr-controls">
-    <label for="slider-fields"><span class="inline-math" data-tex="\beta=v/c">β = v/c</span> <output data-setting for="slider-fields">0.6</output></label>
-    <input id="slider-fields" type="range" min="-0.9" max="0.9" step="0.05" value="0.6">
-  </div>
-  <svg viewBox="0 0 360 190" role="img" aria-label="純粋な磁場を動く観測者が測る"></svg>
-  <div class="sr-keys"><span><i class="key blue" aria-hidden="true"></i>E′ᵧ</span><span><i class="key green" aria-hidden="true"></i>cB′𝓏</span><span><i class="key gold" aria-hidden="true"></i>c²B′²−E′²</span></div>
-  <dl class="sr-readings" data-readings></dl>
-  <p class="caption">元の cB_z を 1 に規格化。青と緑は符号付き成分。差の二乗は変換しても 1。</p>
-</figure><p class="source">参照記事 <a href="https://eman-physics.net/relativity/em_tensor.html">EMAN の対応ページ ↗</a></p></section></div><footer><a href="backup/">特殊相対性理論の旧版</a></footer></main><script>const get=id=>document.getElementById(id);const fmt=x=>(Math.abs(x)<.0005?0:x).toFixed(3);
-const line=(a,b,c="GrayText",w=1,d="")=>'<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="'+c+'" stroke-width="'+w+'" stroke-dasharray="'+d+'"/>';
-const dot=(p,c)=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="'+c+'"/>';
-const text=(x,y,t)=>'<text x="'+x+'" y="'+y+'">'+t+'</text>';
-const circle=(x,y,r,c,d="")=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="none" stroke="'+c+'" stroke-width="2" stroke-dasharray="'+d+'"/>';
-const blue="var(--blue)",red="var(--red)",green="var(--green)";
+    <figure class="boost-figure">
+      <svg id="spacetime" role="img" aria-label="二つの発光と二組の時空軸" aria-describedby="plot-legend event-order"></svg>
+      <figcaption id="plot-legend">
+        <span><i class="ground-key" aria-hidden="true"></i> 地上 <var>S</var> の差</span>
+        <span><i class="train-key" aria-hidden="true"></i> 列車 <var>S′</var> の差</span>
+      </figcaption>
+    </figure>
 
-const beta=get("beta"),P=(x,t)=>[180+61*x,122-61*t];
+    <table class="boost-values">
+      <caption>発光点の座標と、<var>F</var> から <var>E</var> への差<br>（位置：光秒、時刻：秒）</caption>
+      <thead><tr><th scope="col">座標・差</th><th scope="col">地上 <var>S</var></th><th scope="col">列車 <var>S′</var></th></tr></thead>
+      <tbody>
+        <tr><th scope="row"><var>F</var> の位置・時刻</th><td>(0.00, 2.00)</td><td id="coord-f">(-1.50, 2.50)</td></tr>
+        <tr><th scope="row"><var>E</var> の位置・時刻</th><td>(2.75, 3.25)</td><td id="coord-e">(1.00, 2.00)</td></tr>
+        <tr><th scope="row">位置差</th><td>+2.75</td><td id="delta-x">+2.50</td></tr>
+        <tr><th scope="row">時刻差</th><td>+1.25</td><td id="delta-t">−0.50</td></tr>
+      </tbody>
+    </table>
+    <p class="reading" id="event-order" role="status">列車では <var>E</var> が <var>F</var> より 0.50 秒先に光る。</p>
 
-function drawTimeProjection(beta,gamma,timeA,timeB){
- const toAxis=time=>[beta*gamma*time,gamma*time];
- const A=toAxis(timeA),B=toAxis(timeB);
- const top=Math.max(1.6,A[1],B[1],gamma)+.27;
- const scale=Math.min(68,217/top,132/Math.max(1,Math.abs(beta)*top));
- const point=(x,t)=>[157+scale*x,266-scale*t];
- const xEnd=Math.abs(beta)>0?.5/Math.abs(beta):2;
- const left=beta>0?-Math.min(2,xEnd):-2;
- const right=beta<0?Math.min(2,xEnd):2;
- const axisA=point(...A),axisB=point(...B),mark=point(beta*gamma,gamma);
- const coincide=Math.abs(timeA-timeB)<1e-8;
- const near=Math.abs(axisA[1]-axisB[1])<17;
- const axisLabel=(p,name,leftSide=false)=>{
-  const left=leftSide||p[0]>254;
-  return '<text x="'+(p[0]+(left?-7:7))+'" y="'+(p[1]-7)+'" text-anchor="'+(left?"end":"start")+'">'+name+'</text>';
- };
- get("time-projection").innerHTML=
-  line(point(-2,0),point(2,0))+line(point(0,-.5),point(0,top))+
-  line(point(left,beta*left),point(right,beta*right),blue,2)+
-  line(point(-.5*beta,-.5),point(beta*top,top),blue,2)+
-  line(point(-.8,.6),point(.8,.6),"GrayText",1,"2 4")+
-  text(point(-.8,.6)[0]-47,point(-.8,.6)[1]+4,"t = 0.6")+
-  line(point(-.8,.6),axisA,red,2,"5 4")+line(point(.8,.6),axisB,red,2,"5 4")+
-  dot(point(-.8,.6),red)+dot(point(.8,.6),red)+dot(axisA,red)+dot(axisB,red)+
-  line([mark[0]-4,mark[1]],[mark[0]+4,mark[1]],blue,2)+text(mark[0]-15,mark[1]+4,"1")+
-  text(point(-.8,.6)[0]-15,point(-.8,.6)[1]+15,"A")+text(point(.8,.6)[0]+6,point(.8,.6)[1]+15,"B")+
-  (coincide?axisLabel(axisA,"t′(A) = t′(B) = "+fmt(timeA)):
-    axisLabel(axisA,"t′(A) = "+fmt(timeA))+axisLabel(axisB,"t′(B) = "+fmt(timeB),near))+
-  text(point(beta*top,top)[0]+7,point(beta*top,top)[1]+2,"t′")+
-  text(point(right,beta*right)[0]+5,point(right,beta*right)[1]+13,"x′");
-}
+    <p><b>地上の破線</b>は <var>F</var> から右に 2.75 光秒、次に上へ 1.25 秒進んで <var>E</var> に着く。<b>列車の青い矢印</b>は、まず <var>x′</var> 軸と平行に進み、次に <var>ct′</var> 軸と平行に進む。初期値 <span class="inline-math" data-tex="\beta=0.60">β = 0.60</span> では、最後の青い矢印は左下を向く。列車の時刻では、<var>E</var> が <var>F</var> より 0.50 秒早い。</p>
+    <p><var>ct′</var> 軸は列車の原点 <span class="inline-math" data-tex="x'=0">x′ = 0</span> の世界線。<var>x′</var> 軸は列車で <span class="inline-math" data-tex="t'=0">t′ = 0</span> の出来事を結んだ線。<var>x′</var> 軸と平行な線の上では、列車の時刻が同じになる。矢印は二点の座標差を分けて示している。</p>
+  </section>
 
-function draw(){
- const b=Number(beta.value),g=1/Math.sqrt(1-b*b);
- const boost=(t,x)=>[g*(t-b*x),g*(x-b*t)];
- const A=boost(.6,-.8),B=boost(.6,.8);
- drawTimeProjection(b,g,A[0],B[0]);
- get("beta-value").textContent=fmt(b);
- for(const [id,value] of [["at",A[0]],["ax",A[1]],["bt",B[0]],["bx",B[1]]])get(id).textContent=fmt(value);
- get("simul").textContent=" 現在の Δt′（B − A）= "+fmt(B[0]-A[0])+"。";
- get("space-interval").textContent=fmt(1.6**2)+" / "+fmt((B[1]-A[1])**2-(B[0]-A[0])**2);
- get("proper").textContent=fmt(1/g);
- get("diagram").innerHTML=line(P(-2.2,0),P(2.2,0))+line(P(0,-1.6),P(0,1.65))+
-  line(P(-2,-2*b),P(2,2*b),blue,2)+line(P(-1.55*b,-1.55),P(1.55*b,1.55),blue,2)+
-  line(P(-.8,.6),P(.8,.6),red,1,"4 4")+
-  line(P(-.8,.6),P(-.8,0),"GrayText",1,"2 4")+line(P(.8,.6),P(.8,0),"GrayText",1,"2 4")+
-  line(P(-.07,.6),P(.07,.6),red,2)+text(184,100,"t = 0.6")+
-  text(116,139,"−0.8")+text(219,139,"0.8")+dot(P(-.8,.6),red)+dot(P(.8,.6),red)+dot(P(b,1),blue)+
-  text(166,140,"O")+text(123,79,"A")+text(234,79,"B")+text(P(b,1)[0]+7,59,"C")+text(321,126,"x")+text(185,19,"t")+
-  text(P(2,2*b)[0]+4,P(2,2*b)[1]-6,"x′")+text(P(1.55*b,1.55)[0]+8,32,"t′");
-}
-beta.addEventListener("input",draw);draw();
+  <section id="simultaneity">
+    <h2>二つの発光が同時になる速さ</h2>
+    <p>「同時になる速さに合わせる」を押すと、<var>F</var> と <var>E</var> を結ぶ青い矢印が <var>x′</var> 軸と平行になり、時間方向の矢印が消える。地上の座標で見た線 <var>FE</var> の傾きに、<var>x′</var> 軸の傾きが一致した状態だ。</p>
+    <div class="equation" data-tex="\beta=\frac{c\Delta t}{\Delta x}=\frac{1.25}{2.75}=\frac{5}{11}\approx0.4545.">β = 1.25 / 2.75 = 5/11 ≈ 0.4545</div>
+    <p>この速さより遅い列車では <var>F</var> が先、速い列車では <var>E</var> が先。図の <var>F,E</var> は同じ発光なので、変わっているのは、離れた場所の二つの出来事にどの時刻を付けるかだ。</p>
+  </section>
 
-const trainTime = get("train-time");
-function drawTrainCoordinates() {
-  const b = Number(beta.value);
-  const t = Number(trainTime.value);
-  const x = b * t;
-  const atX = value => 180 + 90 * value;
-  const atT = value => 282 - 90 * value;
-  const center = atX(x);
-  const height = atT(t);
-  const gold = "var(--gold)";
-  const flashing = Math.abs(t - .6) < 1e-9;
-  const lamps = [-.8, .8].map((position, index) => {
-    const lampX = atX(position);
-    const label = index === 0 ? "A" : "B";
-    return '<circle cx="' + lampX + '" cy="40" r="5" stroke="' +
-      (flashing ? red : "var(--ink)") + '" stroke-width="1.5" fill="' +
-      (flashing ? red : "none") + '"/>' +
-      text(lampX + 8, 44, label);
-  }).join("");
-  const number = value => (Math.abs(value) < .005 ? 0 : value).toFixed(2);
-  const ticks = [-1, 0, 1].map(value =>
-    line([atX(value), 86], [atX(value), 93]) +
-    text(atX(value) - 4, 108, value === -1 ? "−1" : value) +
-    line([atX(value), 279], [atX(value), 286]) +
-    text(atX(value) - 4, 300, value === -1 ? "−1" : value)
-  ).join("");
+  <section id="calculation">
+    <h2>図の数値をローレンツ変換で求める</h2>
+    <p><var>F</var> から <var>E</var> への差を、時間成分から並べる。<span class="inline-math" data-tex="\gamma=1/\sqrt{1-\beta^2}">γ = 1 / √(1−β²)</span> とすると、地上 <var>S</var> から列車 <var>S′</var> への変換は次の式になる。</p>
+    <div class="equation" data-tex="\begin{pmatrix}c\Delta t'\\\Delta x'\end{pmatrix}=\gamma\begin{pmatrix}1&-\beta\\-\beta&1\end{pmatrix}\begin{pmatrix}c\Delta t\\\Delta x\end{pmatrix}.">(cΔt′, Δx′) = γ(cΔt − βΔx, Δx − βcΔt)</div>
+    <p><span class="inline-math" data-tex="\beta=0.60">β = 0.60</span> なら <span class="inline-math" data-tex="\gamma=1.25">γ = 1.25</span>。光秒を単位に、行列の各行を計算すると、</p>
+    <div class="equation" data-tex="\begin{aligned}c\Delta t'&amp;=1.25(1.25-0.60\times2.75)=-0.50,\\\Delta x'&amp;=1.25(2.75-0.60\times1.25)=+2.50.\end{aligned}">cΔt′ = −0.50 光秒、Δx′ = +2.50 光秒</div>
+    <p>時刻差の式で <span class="inline-math" data-tex="c\Delta t'=0">cΔt′ = 0</span> と置くと、図で使った同時の条件が出る。空間が1次元なら、この条件を満たす慣性系があるのは <span class="inline-math" data-tex="|\Delta x|&gt;c|\Delta t|">|Δx| &gt; c|Δt|</span> の場合だ。そうすれば求めた <var>β</var> が <span class="inline-math" data-tex="|\beta|&lt;1">|β| &lt; 1</span> に収まる。</p>
+  </section>
 
-  const timeTicks = [.5, 1].map(value =>
-    line([177, atT(value)], [183, atT(value)]) +
-    '<text x="173" y="' + (atT(value) - 4) + '" text-anchor="end">' + value + '</text>'
-  ).join("");
-
-  get("train-time-value").textContent = number(t);
-  get("train-event").textContent = "(" + number(x) + ", " + number(t) + ")";
-  get("train-coordinates").innerHTML =
-    text(22, 21, "上：線路を横から見た位置") +
-    line([35, 89], [325, 89]) + lamps +
-    '<rect x="' + (center - 27) + '" y="48" width="54" height="31" rx="5" fill="var(--wash)" stroke="' + blue + '" stroke-width="2"/>' +
-    line([center - 18, 58], [center + 18, 58], blue, 2) +
-    dot([center - 16, 84], blue) + dot([center + 16, 84], blue) +
-    line([center, 67], [center, 89], gold, 1.2, "3 3") +
-    dot([center, 67], gold) + text(center + 7, 72, "P") + text(330, 94, "x") +
-    text(22, 134, "下：出来事 P の時空図") +
-    line([35, 282], [325, 282]) + line([180, 287], [180, 148]) +
-    text(330, 287, "x") + text(185, 151, "t") +
-    line([180, 282], [atX(1.5 * b), atT(1.5)], blue, 2.5) +
-    line([180, height], [center, height], gold, 1.5, "4 4") +
-    line([center, height], [center, 282], gold, 1.5, "4 4") +
-    ticks + timeTicks +
-    (flashing ? dot([atX(-.8), atT(.6)], red) + dot([atX(.8), atT(.6)], red) +
-      text(atX(-.8) - 16, atT(.6) + 15, "A") + text(atX(.8) + 8, atT(.6) + 15, "B") : "") +
-    dot([center, height], gold) +
-    text(center + 8, height - 7, "P");
-}
-trainTime.addEventListener("input", drawTrainCoordinates);
-beta.addEventListener("input", drawTrainCoordinates);
-drawTrainCoordinates();
-
-
-</script></body></html>
+  <section id="interval">
+    <h2>どちらの系でも同じ値</h2>
+    <p>位置差と時刻差は変わるが、時空間隔の二乗は同じ。光秒を単位に計算すると、</p>
+    <div class="equation" data-tex="\begin{aligned}S:\quad &amp;2.75^2-1.25^2=6,\\S'\ (\beta=0.60):\quad &amp;2.50^2-(-0.50)^2=6.\end{aligned}">S: 2.75² − 1.25² = 6。S′: 2.50² − (−0.50)² = 6。</div>
+    <p>地上では、光でも1.25秒で2.75光秒は進めない。二つの発光は空間的に隔たっているので、発光の順番が変わる慣性系がある。同時になる系では時間の差がゼロになり、二点の距離は <span class="inline-math" data-tex="\sqrt6">√6</span> 光秒になる。</p>
+  </section>
+</main>
+</body>
+</html>
