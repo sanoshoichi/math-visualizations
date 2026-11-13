@@ -4,15 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>測地線 — 一般相対性理論</title>
-  <meta name="description" content="一般の測地線方程式を時間1次元・空間1次元に展開し、自由落下の時空図を読む。">
+  <meta name="description" content="一般の測地線方程式を時間1次元・空間1次元の二本の式に展開する。">
   <link rel="stylesheet" href="../../assets/lesson.css">
   <link rel="stylesheet" href="../../assets/figure-theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
   <link rel="stylesheet" href="../../assets/math-layout.css">
-  <link rel="stylesheet" href="geodesic.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
   <script defer src="../../assets/lesson.js"></script>
-  <script defer src="geodesic.js"></script>
 </head>
 <body><main>
 
@@ -20,7 +18,7 @@
 <h1>一般相対性理論</h1>
 <article id="geodesic">
 <h2>測地線</h2>
-<p>物体を静かに手放すと、どちらへ動き始めるか。一般の測地線方程式を書いてから、時間 <span class="inline-math" data-tex="t">t</span> と位置 <span class="inline-math" data-tex="x">x</span> だけの時空で計算する。</p>
+<p>一般の測地線方程式から始め、時間1次元・空間1次元では、時刻と位置の二本の式がどう出てくるかをたどる。</p>
 
 <section aria-labelledby="general-equation">
 <h3 id="general-equation">1. 一般の測地線方程式</h3>
@@ -37,43 +35,6 @@
 <p>たとえば <span class="inline-math" data-tex="\lambda=\tau">\lambda=\tau</span> を選ぶと、未知なのは <span class="inline-math" data-tex="t(\tau)">t(\tau)</span> と <span class="inline-math" data-tex="x(\tau)">x(\tau)</span>。物体の時計が <span class="inline-math" data-tex="\tau">\tau</span> を示すとき、時空図のどの点 <span class="inline-math" data-tex="(t,x)">(t,x)</span> にいるかを二本の式で求める。</p>
 </section>
 
-<section aria-labelledby="fall-example">
-<h3 id="fall-example">3. ある位置で静かに手放す</h3>
-<p>この例では、時間に依存しない次の計量を与える。<span class="inline-math" data-tex="N(x)&gt;0">N(x)&gt;0</span> は、位置 <span class="inline-math" data-tex="x">x</span> に固定した時計が座標時刻の1秒あたりに刻む秒数。<span class="inline-math" data-tex="N&#x27;">N&#x27;</span> は <span class="inline-math" data-tex="x">x</span> による微分を表す。</p>
-<div class="equation" data-tex="ds^2=-N(x)^2c^2dt^2+dx^2.">ds² = −N(x)² c² dt² + dx²</div>
-<p><span class="inline-math" data-tex="g_{tt}=-c^2N^2">g_{tt}=-c^2N^2</span> だけが位置に依存し、<span class="inline-math" data-tex="\partial_x g_{tt}=-2c^2NN&#x27;">\partial_x g_{tt}=-2c^2NN&#x27;</span>。たとえば空間の式に入る <span class="inline-math" data-tex="\Gamma^x_{tt}">\Gamma^x_{tt}</span> は、<span class="inline-math" data-tex="g^{xx}=1">g^{xx}=1</span> を使うと <span class="inline-math" data-tex="-\tfrac12\partial_x g_{tt}=c^2NN&#x27;">-\tfrac12\partial_x g_{tt}=c^2NN&#x27;</span> になる。非ゼロの可能性がある記号と対応する項は次のとおり。</p>
-<table>
-<thead><tr><th scope="col">記号</th><th scope="col">値</th><th scope="col">方程式に入る項</th></tr></thead>
-<tbody>
-<tr><th scope="row"><span class="inline-math" data-tex="\Gamma^t_{tx}=\Gamma^t_{xt}">\Gamma^t_{tx}=\Gamma^t_{xt}</span></th><td><span class="inline-math" data-tex="N&#x27;/N">N&#x27;/N</span></td><td><span class="inline-math" data-tex="2(N&#x27;/N)\dot t\dot x">2(N&#x27;/N)\dot t\dot x</span></td></tr>
-<tr><th scope="row"><span class="inline-math" data-tex="\Gamma^x_{tt}">\Gamma^x_{tt}</span></th><td><span class="inline-math" data-tex="c^2NN&#x27;">c^2NN&#x27;</span></td><td><span class="inline-math" data-tex="c^2NN&#x27;\dot t^2">c^2NN&#x27;\dot t^2</span></td></tr>
-</tbody>
-</table>
-<div class="equation" data-tex="\begin{aligned}\ddot t+2\frac{N'}{N}\dot t\dot x&=0,\\\ddot x+c^2NN'\dot t^2&=0.\end{aligned}">この計量に対する二本の測地線方程式</div>
-<p>手を離した瞬間は <span class="inline-math" data-tex="\dot x=0">\dot x=0</span>。固有時の定義から <span class="inline-math" data-tex="\dot t=1/N(x_0)">\dot t=1/N(x_0)</span> なので、初期位置 <span class="inline-math" data-tex="x_0">x_0</span> での空間の式は次のようになる。</p>
-<div class="equation" data-tex="\left.\frac{d^2x}{d\tau^2}\right|_{\tau=0}=-c^2\frac{N'(x_0)}{N(x_0)}.">手放した瞬間の位置の二階微分</div>
-<p><span class="inline-math" data-tex="N&#x27;(x_0)&gt;0">N&#x27;(x_0)&gt;0</span> なら、物体は <span class="inline-math" data-tex="x">x</span> が小さくなる向きに動き始める。</p>
-</section>
-
-<section aria-labelledby="worldline-example">
-<h3 id="worldline-example">4. 時空図で自由落下を読む</h3>
-<p>ここでは <span class="inline-math" data-tex="N(x)=\sqrt{1+(x/L)^2}">N(x)=\sqrt{1+(x/L)^2}</span> とする。<span class="inline-math" data-tex="L">L</span> は長さの基準。図の下端で静かに手放し、時刻とともに上へたどる。縦軸は <span class="inline-math" data-tex="ct/L">ct/L</span>、横軸は <span class="inline-math" data-tex="x/L">x/L</span>。スライダーで初期位置を変えると、落下の世界線と手放した瞬間の値が更新される。</p>
-<div class="geodesic-controls">
-<label for="release">手放す位置 <var>x</var>₀/<var>L</var> <output id="release-value" for="release">0.75</output></label>
-<input type="range" id="release" min="0" max="1" step="0.05" value="0.75">
-</div>
-<figure>
-<svg id="worldline" viewBox="0 0 360 260" role="img" aria-label="横が位置、縦が時刻。青が自由落下、破線が初期位置に固定した時計の世界線。"></svg>
-<figcaption><span class="curve-key">青の実線</span> 自由落下　<span>白の破線</span> 初期位置に固定した時計</figcaption>
-</figure>
-<p class="reading" id="initial-acceleration" role="status">手放した瞬間の位置の二階微分は −0.48 c²/L。</p>
-<p>二つの線は手放した瞬間に同じ点・同じ向きから始まる。自由落下の線はその後、中央へ曲がる。<span class="inline-math" data-tex="x_0=0">x_0=0</span> にすると <span class="inline-math" data-tex="N&#x27;(0)=0">N&#x27;(0)=0</span> なので、二つの線が重なる。</p>
-<details>
-<summary>図の軌道を計算する</summary>
-<p>時間の式は <span class="inline-math" data-tex="d(N^2\dot t)/d\tau=0">d(N^2\dot t)/d\tau=0</span> と書ける。初期値を入れると <span class="inline-math" data-tex="N^2\dot t=N(x_0)">N^2\dot t=N(x_0)</span>。これを空間の式に代入し、<span class="inline-math" data-tex="x(0)=x_0,\ \dot x(0)=0">x(0)=x_0,\ \dot x(0)=0</span> から数値積分する。図の縦座標 <span class="inline-math" data-tex="t(\tau)">t(\tau)</span> は、同時に時間の式から求める。</p>
-<div class="equation" data-tex="\dot t=\frac{N(x_0)}{N(x)^2},\qquad \ddot x=-\frac{c^2x}{L^2}\frac{N(x_0)^2}{N(x)^4}.">図を描くために積分する二本の式</div>
-</details>
-</section>
 <p class="scope">参考 <a href="https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S3.html">David Tong, General Relativity §3.3.1</a></p>
 </article>
 
