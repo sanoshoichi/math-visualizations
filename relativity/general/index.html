@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>測地線 — 一般相対性理論</title>
-  <meta name="description" content="一般の測地線方程式を時間1次元・空間1次元の二本の式に展開する。">
+  <meta name="description" content="二次元時空の測地線方程式から慣性運動とローレンツ・ブーストを導く。">
   <link rel="stylesheet" href="../../assets/lesson.css">
   <link rel="stylesheet" href="../../assets/figure-theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
@@ -33,6 +33,36 @@
 <p>座標を <span class="inline-math" data-tex="(t,x)">(t,x)</span> にすると、<span class="inline-math" data-tex="\mu">\mu</span> は <span class="inline-math" data-tex="t">t</span> と <span class="inline-math" data-tex="x">x</span> のどちらか。足し合わせる組は <span class="inline-math" data-tex="(t,t),(t,x),(x,t),(x,x)">(t,t),(t,x),(x,t),(x,x)</span> の四つになる。<span class="inline-math" data-tex="\Gamma^\mu_{tx}=\Gamma^\mu_{xt}">\Gamma^\mu_{tx}=\Gamma^\mu_{xt}</span> なので、真ん中の二項をまとめる。</p>
 <div class="equation" data-tex="\begin{aligned}\ddot t+\Gamma^t_{tt}\dot t^2+2\Gamma^t_{tx}\dot t\dot x+\Gamma^t_{xx}\dot x^2&=0,\\\ddot x+\Gamma^x_{tt}\dot t^2+2\Gamma^x_{tx}\dot t\dot x+\Gamma^x_{xx}\dot x^2&=0.\end{aligned}">時刻 t の方程式と、位置 x の方程式</div>
 <p>たとえば <span class="inline-math" data-tex="\lambda=\tau">\lambda=\tau</span> を選ぶと、未知なのは <span class="inline-math" data-tex="t(\tau)">t(\tau)</span> と <span class="inline-math" data-tex="x(\tau)">x(\tau)</span>。物体の時計が <span class="inline-math" data-tex="\tau">\tau</span> を示すとき、時空図のどの点 <span class="inline-math" data-tex="(t,x)">(t,x)</span> にいるかを二本の式で求める。</p>
+</section>
+
+<section aria-labelledby="minkowski-metric">
+<h3 id="minkowski-metric">3. ミンコフスキー計量を選ぶ</h3>
+<p>時間1次元・空間1次元の平坦な時空を、慣性座標 <var>(t,x)</var> で表す。ある点での接ベクトル <var>V</var> の成分を <var>(u,w)</var> とすると、計量が定める二次形式は</p>
+<div class="equation" data-tex="g(V,V)=\begin{pmatrix}u&w\end{pmatrix}\begin{pmatrix}-c^2&0\\0&1\end{pmatrix}\begin{pmatrix}u\\w\end{pmatrix}=-c^2u^2+w^2.">g(V,V) = −c²u² + w²</div>
+<p><var>c</var> は光速。時間を <span class="inline-math" data-tex="T=ct">T = ct</span> で表すと、時間成分も長さの単位になる。<var>(T,x)</var> の順での計量行列を <span class="inline-math" data-tex="\eta=\operatorname{diag}(-1,1)">η = diag(−1,1)</span> と書く。</p>
+</section>
+
+<section aria-labelledby="inertial-motion">
+<h3 id="inertial-motion">4. 測地線から慣性運動を求める</h3>
+<p><var>(t,x)</var> での計量成分はどの点でも同じ。したがって計量成分の偏微分はすべてゼロになり、それを使うクリストッフェル記号もすべてゼロになる。第2節の二本の式に代入すると、</p>
+<div class="equation" data-tex="\ddot t=0,\qquad \ddot x=0.">t と x の固有時による二階微分はゼロ</div>
+<p>初期の値を <span class="inline-math" data-tex="t_0,x_0,\dot t_0,\dot x_0">t₀, x₀, ṫ₀, ẋ₀</span> とし、固有時の原点をそこで合わせる。二回積分すると、</p>
+<div class="equation" data-tex="t(\tau)=t_0+\dot t_0\tau,\qquad x(\tau)=x_0+\dot x_0\tau.">t(τ) = t₀ + ṫ₀τ, x(τ) = x₀ + ẋ₀τ</div>
+<p>未来向きの物体では <span class="inline-math" data-tex="\dot t_0>0">ṫ₀ &gt; 0</span>。最初の式で <var>τ</var> を消去すると、</p>
+<div class="equation" data-tex="x(t)=x_0+\frac{\dot x_0}{\dot t_0}(t-t_0).">x(t) = x₀ + (ẋ₀/ṫ₀)(t − t₀)</div>
+<p>座標時刻で測った速度 <span class="inline-math" data-tex="dx/dt=\dot x_0/\dot t_0">dx/dt = ẋ₀/ṫ₀</span> が一定なので、自由粒子は等速直線運動をする。光の進む方向では接ベクトルの二次形式がゼロになる。そこで <span class="inline-math" data-tex="-c^2u^2+w^2=0">−c²u² + w² = 0</span> を解けば、<span class="inline-math" data-tex="w/u=\pm c">w/u = ±c</span>。光速の大きさは <var>c</var> となる。</p>
+</section>
+
+<section aria-labelledby="lorentz-boost">
+<h3 id="lorentz-boost">5. 計量を保つ座標変換からブーストを求める</h3>
+<p>慣性系 <var>S′</var> が <var>S</var> に対して <var>x</var> 方向に符号付き速度 <var>v</var> で動く。原点がすれ違う時刻を両系でゼロにし、未来と空間軸の正の向きをそろえる。<span class="inline-math" data-tex="\beta=v/c">β = v/c</span> とおく。慣性座標間の変換は、原点をそろえれば線形になる。これを行列 <span class="inline-math" data-tex="\Lambda">Λ</span> で表す。</p>
+<div class="equation" data-tex="\begin{pmatrix}T'\\x'\end{pmatrix}=\Lambda\begin{pmatrix}T\\x\end{pmatrix},\qquad \Lambda^{\mathsf T}\eta\Lambda=\eta.">(T′, x′) は Λ による成分変換。Λ は η を保存する。</div>
+<p><span class="inline-math" data-tex="\Lambda^{\mathsf T}\eta\Lambda=\eta">ΛᵀηΛ = η</span> は、変換した成分で計算しても、もとの成分で計算しても、二次形式が同じ値になるという条件。<var>S′</var> の原点は <var>S</var> では <span class="inline-math" data-tex="x=\beta T">x = βT</span> を進む。そこで <span class="inline-math" data-tex="x'=0">x′ = 0</span> となるように、行列の二行目を <span class="inline-math" data-tex="(-k\beta,k)">(−kβ,k)</span> と置く。<var>k</var> は正の係数とする。</p>
+<p>一行目を <var>(p,q)</var> と置く。計量を保つ条件は、同値な <span class="inline-math" data-tex="\Lambda\eta\Lambda^{\mathsf T}=\eta">ΛηΛᵀ = η</span> を使うと、行ごとに読める。</p>
+<div class="equation" data-tex="\begin{aligned}\text{二行目の自己内積}&:\quad k^2(1-\beta^2)=1,\\\text{二行の内積}&:\quad k(p\beta+q)=0,\\\text{一行目の自己内積}&:\quad -p^2+q^2=-1.\end{aligned}">二行目の自己内積は1、二行の内積は0、一行目の自己内積は−1。</div>
+<p>最初の式から <span class="inline-math" data-tex="k=\gamma=(1-\beta^2)^{-1/2}">k = γ</span>。次の式から <span class="inline-math" data-tex="q=-\beta p">q = −βp</span>。最後の式に入れ、未来向きを保つよう <span class="inline-math" data-tex="p>0">p &gt; 0</span> を選べば <span class="inline-math" data-tex="p=\gamma">p = γ</span> になる。したがって <var>S</var> から <var>S′</var> へのローレンツ・ブーストは</p>
+<div class="equation" data-tex="\boxed{\Lambda=\gamma\begin{pmatrix}1&-\beta\\-\beta&1\end{pmatrix}}.">Λ = γ × 行列 (1, −β; −β, 1)</div>
+<p><a href="../special/#boost">特殊相対性理論の時空図で、ブーストによる軸の傾きを確かめる</a></p>
 </section>
 
 <p class="scope">参考 <a href="https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S3.html">David Tong, General Relativity §3.3.1</a></p>
