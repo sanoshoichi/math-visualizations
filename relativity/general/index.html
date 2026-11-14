@@ -24,6 +24,8 @@
 <h3 id="general-equation">1. 一般の測地線方程式</h3>
 <p>時空の曲線を <span class="inline-math" data-tex="x^\mu(\lambda)">x^\mu(\lambda)</span> と書く。<span class="inline-math" data-tex="\lambda">\lambda</span> は曲線上の点を順に指定するアフィンパラメータで、自由落下する質量のある物体なら固有時 <span class="inline-math" data-tex="\tau">\tau</span> を使える。ドットは <span class="inline-math" data-tex="\lambda">\lambda</span> による微分を表す。</p>
 <div class="equation" data-tex="\ddot x^\mu+\sum_{\alpha,\beta}\Gamma^\mu_{\alpha\beta}\,\dot x^\alpha\dot x^\beta=0.">座標の二階微分 ＋ 接続による補正 ＝ 0</div>
+<p>自由落下では、世界線の速度ベクトル <var>W</var> を世界線に沿って共変微分した結果がゼロになる。積の微分則を使うと、上の式の第一項は速度の係数を微分したもの、第二項は座標基底を共変微分したものから出る。クリストッフェル記号は、各点 <var>p</var> でこの基底の共変微分を表す係数。</p>
+<div class="equation" data-tex="\left.\nabla_{\partial/\partial x^\alpha}\frac{\partial}{\partial x^\beta}\right|_p=\sum_\mu\Gamma^\mu_{\alpha\beta}(p)\left.\frac{\partial}{\partial x^\mu}\right|_p.">座標基底の共変微分を、同じ点の座標基底で展開する。</div>
 <p><span class="inline-math" data-tex="\mu">\mu</span> は「どの座標の式か」を指定する。一方、<span class="inline-math" data-tex="\alpha,\beta">\alpha,\beta</span> は速度のどの二成分を掛けるかを表し、全ての組について足す。<span class="inline-math" data-tex="\Gamma^\mu_{\alpha\beta}">\Gamma^\mu_{\alpha\beta}</span> はその積に掛けるクリストッフェル記号。計量 <span class="inline-math" data-tex="g_{\mu\nu}">g_{\mu\nu}</span> とその逆行列 <span class="inline-math" data-tex="g^{\mu\nu}">g^{\mu\nu}</span> から、次の式で求める。</p>
 <div class="equation" data-tex="\Gamma^\mu_{\alpha\beta}=\tfrac12\sum_\nu g^{\mu\nu}\bigl(\partial_\alpha g_{\nu\beta}+\partial_\beta g_{\nu\alpha}-\partial_\nu g_{\alpha\beta}\bigr).">クリストッフェル記号の計算式</div>
 </section>
@@ -36,21 +38,138 @@
 </section>
 
 <section aria-labelledby="minkowski-metric">
-<h3 id="minkowski-metric">3. ミンコフスキー計量を選ぶ</h3>
-<p>時間1次元・空間1次元の平坦な時空を、慣性座標 <var>(t,x)</var> で表す。ある点での接ベクトル <var>V</var> の成分を <var>(u,w)</var> とすると、計量が定める二次形式は</p>
-<div class="equation" data-tex="g(V,V)=\begin{pmatrix}u&w\end{pmatrix}\begin{pmatrix}-c^2&0\\0&1\end{pmatrix}\begin{pmatrix}u\\w\end{pmatrix}=-c^2u^2+w^2.">g(V,V) = −c²u² + w²</div>
-<p><var>c</var> は光速。時間を <span class="inline-math" data-tex="T=ct">T = ct</span> で表すと、時間成分も長さの単位になる。<var>(T,x)</var> の順での計量行列を <span class="inline-math" data-tex="\eta=\operatorname{diag}(-1,1)">η = diag(−1,1)</span> と書く。</p>
+<h3 id="minkowski-metric">3. 接ベクトルをミンコフスキー計量に入れる</h3>
+<h4>同じ点にいる二人と、二本の接ベクトル</h4>
+<p>地上に立つ人と、右へ <span class="inline-math" data-tex="v=3\,\mathrm{m/s}">v=3\,\mathrm{m/s}</span> で進む人が、地上の時刻 <span class="inline-math" data-tex="5\,\mathrm{s}">5\,\mathrm{s}</span>、位置 <span class="inline-math" data-tex="10\,\mathrm m">10\,\mathrm m</span> ですれ違う。その出来事を <span class="inline-math" data-tex="p">p</span> とすると、<span class="inline-math" data-tex="t(p)=5\,\mathrm s">t(p)=5\,\mathrm s</span>、<span class="inline-math" data-tex="x(p)=10\,\mathrm m">x(p)=10\,\mathrm m</span>。この二つの数は、時空上の点 <span class="inline-math" data-tex="p">p</span> の座標。</p>
+<p>すれ違いからの地上時刻の差を <span class="inline-math" data-tex="h">h</span> とする。地上に立つ人の世界線を <span class="inline-math" data-tex="\gamma_U">\gamma_U</span>、右へ進む人の世界線を <span class="inline-math" data-tex="\gamma_V">\gamma_V</span> と書く。時刻はどちらも <span class="inline-math" data-tex="t(\gamma_U(h))=t(\gamma_V(h))=5\,\mathrm s+h">t(\gamma_U(h))=t(\gamma_V(h))=5\,\mathrm s+h</span>。位置は <span class="inline-math" data-tex="x(\gamma_U(h))=10\,\mathrm m">x(\gamma_U(h))=10\,\mathrm m</span>、<span class="inline-math" data-tex="x(\gamma_V(h))=10\,\mathrm m+vh">x(\gamma_V(h))=10\,\mathrm m+vh</span>。<span class="inline-math" data-tex="h=0">h=0</span> では二人とも <span class="inline-math" data-tex="p">p</span> を通る。</p>
+<figure style="max-width:30rem;margin-inline:auto">
+<svg viewBox="0 0 360 238" role="img" aria-labelledby="passing-title passing-description">
+<title id="passing-title">すれ違う二人の世界線と接ベクトル</title>
+<desc id="passing-description">横軸は地上での位置、縦軸は地上の時刻。二人は位置10メートル、時刻5秒の点pですれ違う。静止する人の接ベクトルUは真上、右へ進む人のVは右上を向く。</desc>
+<defs>
+  <marker id="passing-arrow-u" markerWidth="5" markerHeight="5" refX="4.5" refY="2.5" orient="auto"><path d="M0 0 L5 2.5 L0 5 Z" fill="var(--blue)"/></marker>
+  <marker id="passing-arrow-v" markerWidth="5" markerHeight="5" refX="4.5" refY="2.5" orient="auto"><path d="M0 0 L5 2.5 L0 5 Z" fill="var(--gold)"/></marker>
+</defs>
+<path d="M48 24 V194 H329" fill="none" stroke="var(--muted)"/>
+<path d="M48 113 H180 V194" fill="none" stroke="var(--muted)" stroke-dasharray="2 4"/>
+<path d="M180 185 V41" fill="none" stroke="var(--blue)" stroke-dasharray="5 4"/>
+<path d="M72 185 L288 41" fill="none" stroke="var(--gold)" stroke-dasharray="5 4"/>
+<path d="M180 113 V76" stroke="var(--blue)" stroke-width="2.4" marker-end="url(#passing-arrow-u)"/>
+<path d="M180 113 L235.5 76" stroke="var(--gold)" stroke-width="2.4" marker-end="url(#passing-arrow-v)"/>
+<circle cx="180" cy="113" r="4" fill="var(--ink)"/>
+<text x="19" y="19">t（秒）</text><text x="302" y="220">x（m）</text>
+<text x="32" y="117">5</text><text x="173" y="215">10</text>
+<text x="188" y="129">p</text><text x="162" y="78">U</text><text x="241" y="74">V</text>
+</svg>
+<figcaption>破線は世界線。青い矢印は地上に立つ人の接ベクトル、黄色は右へ進む人の接ベクトル。同じ点から、地上時刻で同じ時間だけ進んだ分を矢印で描いている。</figcaption>
+</figure>
+
+<p>点 <span class="inline-math" data-tex="p">p</span> の近くの任意の滑らかな関数 <span class="inline-math" data-tex="f">f</span> を取り、世界線に沿って読んだ値を <span class="inline-math" data-tex="h">h</span> で微分する。<span class="inline-math" data-tex="h=0">h=0</span> でのこの操作が、点 <span class="inline-math" data-tex="p">p</span> での接ベクトルになる。</p>
+<div class="equation" data-tex="\begin{aligned}
+U(f)&amp;=\left.\frac{d}{dh}(f\circ\gamma_U)(h)\right|_{h=0},\\
+V(f)&amp;=\left.\frac{d}{dh}(f\circ\gamma_V)(h)\right|_{h=0}.
+\end{aligned}">\begin{aligned}
+U(f)&amp;=\left.\frac{d}{dh}(f\circ\gamma_U)(h)\right|_{h=0},\\
+V(f)&amp;=\left.\frac{d}{dh}(f\circ\gamma_V)(h)\right|_{h=0}.
+\end{aligned}</div>
+<p>座標基底 <span class="inline-math" data-tex="\left.\dfrac{\partial}{\partial t}\right|_p">\left.\dfrac{\partial}{\partial t}\right|_p</span> は、<span class="inline-math" data-tex="x">x</span> を固定して <span class="inline-math" data-tex="f">f</span> を <span class="inline-math" data-tex="t">t</span> で偏微分し、点 <span class="inline-math" data-tex="p">p</span> で評価する操作。<span class="inline-math" data-tex="\left.\dfrac{\partial}{\partial x}\right|_p">\left.\dfrac{\partial}{\partial x}\right|_p</span> は、<span class="inline-math" data-tex="t">t</span> を固定して <span class="inline-math" data-tex="f">f</span> を <span class="inline-math" data-tex="x">x</span> で偏微分し、点 <span class="inline-math" data-tex="p">p</span> で評価する操作。進む人の世界線に沿っては <span class="inline-math" data-tex="t">t</span> と <span class="inline-math" data-tex="x">x</span> がともに変わるので、連鎖律を使う。</p>
+<div class="equation" data-tex="\begin{aligned}
+V(f)
+&amp;=\left.\frac{d(t\circ\gamma_V)}{dh}\right|_{h=0}
+   \left.\frac{\partial f}{\partial t}\right|_p\\
+&amp;\quad+\left.\frac{d(x\circ\gamma_V)}{dh}\right|_{h=0}
+   \left.\frac{\partial f}{\partial x}\right|_p\\
+&amp;=\left.\frac{\partial f}{\partial t}\right|_p
+ +v\left.\frac{\partial f}{\partial x}\right|_p.
+\end{aligned}">\begin{aligned}
+V(f)
+&amp;=\left.\frac{d(t\circ\gamma_V)}{dh}\right|_{h=0}
+   \left.\frac{\partial f}{\partial t}\right|_p\\
+&amp;\quad+\left.\frac{d(x\circ\gamma_V)}{dh}\right|_{h=0}
+   \left.\frac{\partial f}{\partial x}\right|_p\\
+&amp;=\left.\frac{\partial f}{\partial t}\right|_p
+ +v\left.\frac{\partial f}{\partial x}\right|_p.
+\end{aligned}</div>
+<p>地上に立つ人では位置の微分がゼロ。これらの関係はどの <span class="inline-math" data-tex="f">f</span> にも成り立つので、微分する操作そのものについて次の等式が成り立つ。</p>
+<div class="equation" data-tex="\begin{aligned}
+U&amp;=\left.\frac{\partial}{\partial t}\right|_p,\\
+V&amp;=\left.\frac{\partial}{\partial t}\right|_p
+ +v\left.\frac{\partial}{\partial x}\right|_p.
+\end{aligned}">\begin{aligned}
+U&amp;=\left.\frac{\partial}{\partial t}\right|_p,\\
+V&amp;=\left.\frac{\partial}{\partial t}\right|_p
+ +v\left.\frac{\partial}{\partial x}\right|_p.
+\end{aligned}</div>
+<p>二人は同じ点 <span class="inline-math" data-tex="p">p</span> を通る。それぞれの世界線をそこで微分すると、同じ接空間 <span class="inline-math" data-tex="T_pM">T_pM</span> に属する二本の異なる接ベクトルが得られる。</p>
+<h4>計量の二つの引数に何を入れるか</h4>
+<p>計量 <span class="inline-math" data-tex="g_p:T_pM\times T_pM\to\mathbb R">g_p:T_pM\times T_pM\to\mathbb R</span> は、同じ点の接ベクトルを二本受け取り、実数を返す対称な双線形形式。<span class="inline-math" data-tex="p">p</span> が計量を評価する点を指定し、括弧の中がその点で測る接ベクトルを指定する。</p>
+<p>地上の慣性座標 <span class="inline-math" data-tex="(t,x)">(t,x)</span> で、ミンコフスキー計量が基底に返す値は次のとおり。<span class="inline-math" data-tex="c">c</span> は光速。時間の単位を秒、位置の単位をメートルに取る。</p>
+<div class="equation" data-tex="\begin{aligned}
+g_p\!\left(\left.\frac{\partial}{\partial t}\right|_p,
+           \left.\frac{\partial}{\partial t}\right|_p\right)&amp;=-c^2,\\
+g_p\!\left(\left.\frac{\partial}{\partial t}\right|_p,
+           \left.\frac{\partial}{\partial x}\right|_p\right)&amp;=0,\\
+g_p\!\left(\left.\frac{\partial}{\partial x}\right|_p,
+           \left.\frac{\partial}{\partial x}\right|_p\right)&amp;=1.
+\end{aligned}">\begin{aligned}
+g_p\!\left(\left.\frac{\partial}{\partial t}\right|_p,
+           \left.\frac{\partial}{\partial t}\right|_p\right)&amp;=-c^2,\\
+g_p\!\left(\left.\frac{\partial}{\partial t}\right|_p,
+           \left.\frac{\partial}{\partial x}\right|_p\right)&amp;=0,\\
+g_p\!\left(\left.\frac{\partial}{\partial x}\right|_p,
+           \left.\frac{\partial}{\partial x}\right|_p\right)&amp;=1.
+\end{aligned}</div>
+<p>引数を逆にした混合項も対称性からゼロ。<span class="inline-math" data-tex="g_p(V,V)">g_p(V,V)</span> の両方に右へ進む人の接ベクトルを入れ、第一引数と第二引数の足し算を順に開くと四項になる。</p>
+<div class="equation" data-tex="\begin{aligned}
+g_p(V,V)
+={}&amp;g_p\!\left(\left.\frac{\partial}{\partial t}\right|_p,
+              \left.\frac{\partial}{\partial t}\right|_p\right)\\
+&amp;+v\,g_p\!\left(\left.\frac{\partial}{\partial t}\right|_p,
+                \left.\frac{\partial}{\partial x}\right|_p\right)\\
+&amp;+v\,g_p\!\left(\left.\frac{\partial}{\partial x}\right|_p,
+                 \left.\frac{\partial}{\partial t}\right|_p\right)\\
+&amp;+v^2 g_p\!\left(\left.\frac{\partial}{\partial x}\right|_p,
+                 \left.\frac{\partial}{\partial x}\right|_p\right)\\
+={}&amp;-c^2+v\cdot0+v\cdot0+v^2\cdot1\\
+={}&amp;-c^2+(3\,\mathrm{m/s})^2.
+\end{aligned}">\begin{aligned}
+g_p(V,V)
+={}&amp;g_p\!\left(\left.\frac{\partial}{\partial t}\right|_p,
+              \left.\frac{\partial}{\partial t}\right|_p\right)\\
+&amp;+v\,g_p\!\left(\left.\frac{\partial}{\partial t}\right|_p,
+                \left.\frac{\partial}{\partial x}\right|_p\right)\\
+&amp;+v\,g_p\!\left(\left.\frac{\partial}{\partial x}\right|_p,
+                 \left.\frac{\partial}{\partial t}\right|_p\right)\\
+&amp;+v^2 g_p\!\left(\left.\frac{\partial}{\partial x}\right|_p,
+                 \left.\frac{\partial}{\partial x}\right|_p\right)\\
+={}&amp;-c^2+v\cdot0+v\cdot0+v^2\cdot1\\
+={}&amp;-c^2+(3\,\mathrm{m/s})^2.
+\end{aligned}</div>
+<p>地上に立つ人の <span class="inline-math" data-tex="U">U</span> には時間方向の基底だけが入るので、<span class="inline-math" data-tex="g_p(U,U)=-c^2">g_p(U,U)=-c^2</span>。時刻 <span class="inline-math" data-tex="5\,\mathrm s">5\,\mathrm s</span> と位置 <span class="inline-math" data-tex="10\,\mathrm m">10\,\mathrm m</span> は点 <span class="inline-math" data-tex="p">p</span> を決める。この慣性座標でのミンコフスキー計量は、どの点でも基底に同じ値を返すので、最後の答えにはこの二つの数が現れない。</p>
+<h4>地上の時刻で微分した接ベクトルと、固有時で微分した接ベクトル</h4>
+<p>上の <span class="inline-math" data-tex="V">V</span> は <span class="inline-math" data-tex="h">h</span> で微分して作った。世界線上では <span class="inline-math" data-tex="dt/dh=1">dt/dh=1</span> なので、これは地上の時刻 <span class="inline-math" data-tex="t">t</span> による微分に当たる。物体自身の時計の読み <span class="inline-math" data-tex="\tau">\tau</span> で微分した接ベクトルを <span class="inline-math" data-tex="W=\dfrac{dt}{d\tau}V">W=\dfrac{dt}{d\tau}V</span> とすると、固有時による規格化は <span class="inline-math" data-tex="g_p(W,W)=-c^2">g_p(W,W)=-c^2</span>。双線形性を使うと、</p>
+<div class="equation" data-tex="\begin{aligned}
+-c^2&amp;=\left(\frac{dt}{d\tau}\right)^2 g_p(V,V),\\
+\frac{d\tau}{dt}&amp;=\frac{\sqrt{-g_p(V,V)}}{c}
+ =\sqrt{1-\frac{v^2}{c^2}}.
+\end{aligned}">\begin{aligned}
+-c^2&amp;=\left(\frac{dt}{d\tau}\right)^2 g_p(V,V),\\
+\frac{d\tau}{dt}&amp;=\frac{\sqrt{-g_p(V,V)}}{c}
+ =\sqrt{1-\frac{v^2}{c^2}}.
+\end{aligned}</div>
+<p>未来向きに進む時計なので正の平方根を取った。地上に立つ人では <span class="inline-math" data-tex="v=0">v=0</span> で <span class="inline-math" data-tex="d\tau/dt=1">d\tau/dt=1</span>。ここまでのすれ違いの例では地上時刻を使い、測地線方程式では物体の固有時で微分する。</p>
+<p>座標変換を計算するときは、基底に計量を入れた値を行列に並べる。時間を <span class="inline-math" data-tex="T=ct">T = ct</span> で表すと、時間成分も長さの単位になる。<var>(T,x)</var> の順での計量行列を <span class="inline-math" data-tex="\eta=\operatorname{diag}(-1,1)">η = diag(−1,1)</span> と書く。</p>
 </section>
 
 <section aria-labelledby="inertial-motion">
 <h3 id="inertial-motion">4. 測地線から慣性運動を求める</h3>
 <p><var>(t,x)</var> での計量成分はどの点でも同じ。したがって計量成分の偏微分はすべてゼロになり、それを使うクリストッフェル記号もすべてゼロになる。第2節の二本の式に代入すると、</p>
 <div class="equation" data-tex="\ddot t=0,\qquad \ddot x=0.">t と x の固有時による二階微分はゼロ</div>
-<p>初期の値を <span class="inline-math" data-tex="t_0,x_0,\dot t_0,\dot x_0">t₀, x₀, ṫ₀, ẋ₀</span> とし、固有時の原点をそこで合わせる。二回積分すると、</p>
+<p>初期の値を <span class="inline-math" data-tex="t_0,x_0,\dot t_0,\dot x_0">t₀, x₀, ṫ₀, ẋ₀</span> とし、固有時の原点をそこで合わせる。一回積分すると速度の二成分が一定になり、もう一回積分すると、</p>
 <div class="equation" data-tex="t(\tau)=t_0+\dot t_0\tau,\qquad x(\tau)=x_0+\dot x_0\tau.">t(τ) = t₀ + ṫ₀τ, x(τ) = x₀ + ẋ₀τ</div>
-<p>未来向きの物体では <span class="inline-math" data-tex="\dot t_0>0">ṫ₀ &gt; 0</span>。最初の式で <var>τ</var> を消去すると、</p>
+<p>未来向きの物体では <span class="inline-math" data-tex="\dot t_0>0">ṫ₀ &gt; 0</span>。時間の式から <span class="inline-math" data-tex="\tau=(t-t_0)/\dot t_0">τ = (t − t₀)/ṫ₀</span> を求め、位置の式に代入すると、</p>
 <div class="equation" data-tex="x(t)=x_0+\frac{\dot x_0}{\dot t_0}(t-t_0).">x(t) = x₀ + (ẋ₀/ṫ₀)(t − t₀)</div>
-<p>座標時刻で測った速度 <span class="inline-math" data-tex="dx/dt=\dot x_0/\dot t_0">dx/dt = ẋ₀/ṫ₀</span> が一定なので、自由粒子は等速直線運動をする。光の進む方向では接ベクトルの二次形式がゼロになる。そこで <span class="inline-math" data-tex="-c^2u^2+w^2=0">−c²u² + w² = 0</span> を解けば、<span class="inline-math" data-tex="w/u=\pm c">w/u = ±c</span>。光速の大きさは <var>c</var> となる。</p>
+<p>座標時刻で測った速度 <span class="inline-math" data-tex="dx/dt=\dot x_0/\dot t_0">dx/dt = ẋ₀/ṫ₀</span> が一定なので、自由粒子は等速直線運動をする。光の進む方向では接ベクトルの二次形式がゼロになる。地上の時刻でパラメータ付けし、位置の変化率を <var>v</var> とすると、3節と同じ計算で <span class="inline-math" data-tex="-c^2+v^2=0">−c² + v² = 0</span> となる。光速の大きさは <var>c</var> となる。</p>
 </section>
 
 <section aria-labelledby="lorentz-boost">
