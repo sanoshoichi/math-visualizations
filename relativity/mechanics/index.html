@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="極座標での自由粒子から、ラグランジュ方程式と測地線方程式の関係を導き、一般相対論での惑星の運動に応用する。">
+  <title>解析力学と一般相対性理論のアナロジー</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+  <link rel="stylesheet" href="../../assets/lesson.css">
+  <link rel="stylesheet" href="../../assets/figure-theme.css">
+  <link rel="stylesheet" href="../../assets/math-layout.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <script defer src="../../assets/lesson.js"></script>
+  <style>
+    .mechanics-order { display:flex; flex-wrap:wrap; gap:.4rem 1rem; padding:0; list-style:none; }
+    .mechanics-figure { margin:1rem 0; }
+    .mechanics-figure svg { max-width:35rem; margin:auto; }
+    .mechanics-figure svg text { fill:var(--ink); font-family:system-ui,sans-serif; }
+    .mechanics-compare th, .mechanics-compare td { text-align:left; vertical-align:top; }
+    .mechanics-compare th:nth-child(n+2) { min-width:10rem; }
+  </style>
+</head>
+<body>
+<main>
+  <nav aria-label="学習ページ">
+    <a href="../../">数学の可視化一覧</a>
+    <a href="../../differential-geometry/general-relativity/#geodesics">微分幾何学の測地線</a>
+    <a href="../general/#geodesic">一般相対性理論の測地線</a>
+  </nav>
+  <h1>解析力学と一般相対性理論のアナロジー</h1>
+  <p class="lead">極座標で自由粒子を追うと、ラグランジュ方程式に、座標基底の変化を表す項が現れます。その項をクリストッフェル記号で書き直し、一般相対論の自由落下に同じ計算を使います。</p>
+  <ol class="mechanics-order" aria-label="ページ内の目次">
+    <li><a href="#polar">極座標の自由粒子</a></li>
+    <li><a href="#derive">測地線方程式の導出</a></li>
+    <li><a href="#compare">力学と相対論の比較</a></li>
+    <li><a href="#orbit">惑星の軌道</a></li>
+  </ol>
+
+  <section id="polar">
+    <h2>1. 平面上の自由粒子を極座標で追う</h2>
+    <p>力を受けない粒子が、平らな面の上を右向きに等速で進むとします。図の二点で、原点から外へ向かう青い方向と、偏角を増やす金色の方向を比べます。軌道は直線のままですが、粒子が移動すると、この二方向は回ります。</p>
+    <figure class="mechanics-figure">
+      <svg viewBox="0 0 400 193" role="img" aria-labelledby="polar-title polar-desc">
+        <title id="polar-title">直線上の二点で極座標の方向を比べる</title>
+        <desc id="polar-desc">原点は軌道より下にある。右向きの軌道上の点Pと点Qで、半径方向と偏角が増える方向を描く。右のQでは二方向とも時計回りに回っている。方向を示す矢印は同じ長さで描いた。</desc>
+        <defs>
+          <marker id="polar-tip-path" viewBox="0 0 7 7" markerWidth="6" markerHeight="6" refX="6" refY="3.5" orient="auto"><path d="M0 0 7 3.5 0 7Z" fill="var(--green)"/></marker>
+          <marker id="polar-tip-r" viewBox="0 0 7 7" markerWidth="6" markerHeight="6" refX="6" refY="3.5" orient="auto"><path d="M0 0 7 3.5 0 7Z" fill="var(--blue)"/></marker>
+          <marker id="polar-tip-phi" viewBox="0 0 7 7" markerWidth="6" markerHeight="6" refX="6" refY="3.5" orient="auto"><path d="M0 0 7 3.5 0 7Z" fill="var(--gold)"/></marker>
+        </defs>
+        <path d="M58 158 150 80 M58 158 272 80 M58 158H357" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+        <path d="M40 80H365" fill="none" stroke="var(--green)" stroke-width="2.5" marker-end="url(#polar-tip-path)"/>
+        <g fill="none" stroke-width="2.1">
+          <path d="M150 80l29 -24.6 M272 80l35.7 -13.0" stroke="var(--blue)" marker-end="url(#polar-tip-r)"/>
+          <path d="M150 80l-24.6 -29 M272 80l-13.0 -35.7" stroke="var(--gold)" marker-end="url(#polar-tip-phi)"/>
+        </g>
+        <g fill="var(--ink)"><circle cx="58" cy="158" r="3"/><circle cx="150" cy="80" r="3"/><circle cx="272" cy="80" r="3"/></g>
+        <g font-size="15"><text x="48" y="180">O</text><text x="148" y="101">P</text><text x="271" y="101">Q</text></g>
+      </svg>
+      <div class="figure-legend" aria-label="図の凡例">
+        <ul>
+          <li><span class="figure-key arrow" style="--key:var(--green)" aria-hidden="true"></span>粒子の進行方向</li>
+          <li><span class="figure-key arrow" style="--key:var(--blue)" aria-hidden="true"></span>半径が増える向き</li>
+          <li><span class="figure-key arrow" style="--key:var(--gold)" aria-hidden="true"></span>偏角が増える向き</li>
+        </ul>
+      </div>
+      <figcaption>青と金の矢印は方向を比べるため同じ長さで表示。実際の座標基底の長さは、半径方向が <span class="inline-math" data-tex="1">1</span>、偏角方向が <span class="inline-math" data-tex="r">r</span> です。</figcaption>
+    </figure>
+    <p>時刻 <span class="inline-math" data-tex="t">t</span> で微分した量をドットで表します。半径が <span class="inline-math" data-tex="r">r</span> の円では、角度の変化率 <span class="inline-math" data-tex="\dot\phi">φ̇</span> に <span class="inline-math" data-tex="r">r</span> を掛けると円周方向の速度成分になります。二方向は直交するので、単位質量あたりの運動エネルギーを自由粒子のラグランジアンに取ると、次の式になります。</p>
+    <div class="equation" data-tex="L=\tfrac12\bigl(\dot r^2+r^2\dot\phi^2\bigr)">L=\tfrac12\bigl(\dot r^2+r^2\dot\phi^2\bigr)</div>
+    <p>半径方向のラグランジュ方程式では、<span class="inline-math" data-tex="\partial L/\partial r">∂L/∂r</span> を求めるときに <span class="inline-math" data-tex="r^2">r²</span> を微分します。偏角方向では、<span class="inline-math" data-tex="r^2\dot\phi">r²φ̇</span> を時間微分します。</p>
+    <div class="equation" data-tex="\begin{aligned}\frac{\mathrm d}{\mathrm dt}\frac{\partial L}{\partial\dot r}-\frac{\partial L}{\partial r}&amp;=\ddot r-r\dot\phi^2=0,\\ \frac{\mathrm d}{\mathrm dt}\frac{\partial L}{\partial\dot\phi}&amp;=r^2\ddot\phi+2r\dot r\dot\phi=0.\end{aligned}">\begin{aligned}\frac{\mathrm d}{\mathrm dt}\frac{\partial L}{\partial\dot r}-\frac{\partial L}{\partial r}&amp;=\ddot r-r\dot\phi^2=0,\\ \frac{\mathrm d}{\mathrm dt}\frac{\partial L}{\partial\dot\phi}&amp;=r^2\ddot\phi+2r\dot r\dot\phi=0.\end{aligned}</div>
+    <p><span class="inline-math" data-tex="\ddot r">r̈</span> は原点からの距離の二階微分です。物理的な加速度の半径方向成分は <span class="inline-math" data-tex="\ddot r-r\dot\phi^2">r̈−rφ̇²</span> で、図のような等速直線運動ではこの組がゼロになります。</p>
+  </section>
+
+  <section id="derive">
+    <h2>2. 計量の微分をクリストッフェル記号にまとめる</h2>
+    <p>曲線を <span class="inline-math" data-tex="\gamma(\lambda)">γ(λ)</span> とし、ここからドットはパラメータ <span class="inline-math" data-tex="\lambda">λ</span> による微分とします。座標関数 <span class="inline-math" data-tex="q^i">qⁱ</span> の曲線に沿った変化率を <span class="inline-math" data-tex="\dot q^i">q̇ⁱ</span> と書きます。接ベクトルを、その点での座標基底を使って書くと、</p>
+    <div class="equation" data-tex="\dot\gamma(\lambda)=\sum_i\dot q^i(\lambda)\left.\frac{\partial}{\partial q^i}\right|_{\gamma(\lambda)}.">\dot\gamma(\lambda)=\sum_i\dot q^i(\lambda)\left.\frac{\partial}{\partial q^i}\right|_{\gamma(\lambda)}.</div>
+    <p>この接ベクトルを、同じ点の計量 <span class="inline-math" data-tex="g_{\gamma(\lambda)}">g</span> に二回入れます。<span class="inline-math" data-tex="g_{ij}">gᵢⱼ</span> はその点で基底二本を計量に入れた値です。以下では上下で繰り返す添字について和を取ります。</p>
+    <div class="equation" data-tex="L=\tfrac12 g_{\gamma(\lambda)}(\dot\gamma,\dot\gamma)=\tfrac12 g_{ij}(q)\dot q^i\dot q^j.">L=\tfrac12 g_{\gamma(\lambda)}(\dot\gamma,\dot\gamma)=\tfrac12 g_{ij}(q)\dot q^i\dot q^j.</div>
+    <p>ラグランジュ方程式に必要な偏微分を取ります。速度で微分する側では計量の対称性を使い、位置で微分する側では速度を固定します。</p>
+    <div class="equation" data-tex="\frac{\partial L}{\partial\dot q^k}=g_{kj}\dot q^j,\qquad \frac{\partial L}{\partial q^k}=\tfrac12(\partial_k g_{ij})\dot q^i\dot q^j.">\frac{\partial L}{\partial\dot q^k}=g_{kj}\dot q^j,\qquad \frac{\partial L}{\partial q^k}=\tfrac12(\partial_k g_{ij})\dot q^i\dot q^j.</div>
+    <p>一つ目を曲線に沿って微分し、二つ目を引きます。積の微分で、速度の係数が変化する項と、点が移って計量成分が変化する項が出ます。</p>
+    <div class="equation" data-tex="0=g_{kj}\ddot q^j+\underbrace{(\partial_i g_{kj})\dot q^i\dot q^j-\tfrac12(\partial_k g_{ij})\dot q^i\dot q^j}_{\text{計量成分を微分した項}}.">0=g_{kj}\ddot q^j+\underbrace{(\partial_i g_{kj})\dot q^i\dot q^j-\tfrac12(\partial_k g_{ij})\dot q^i\dot q^j}_{\text{計量成分を微分した項}}.</div>
+    <p><span class="inline-math" data-tex="\dot q^i\dot q^j">q̇ⁱq̇ʲ</span> は添字を交換しても同じ積なので、下括弧の最初の項を、添字を交換した式との平均に置き換えられます。逆計量 <span class="inline-math" data-tex="g^{ak}">gᵃᵏ</span> を掛けると、最初の項は <span class="inline-math" data-tex="g^{ak}g_{kj}\ddot q^j=\ddot q^a">q̈ᵃ</span> になります。残りの係数が、レヴィ＝チヴィタ接続のクリストッフェル記号です。</p>
+    <div class="equation" data-tex="\Gamma^a_{ij}=\tfrac12g^{ak}\bigl(\partial_i g_{kj}+\partial_j g_{ki}-\partial_k g_{ij}\bigr).">\Gamma^a_{ij}=\tfrac12g^{ak}\bigl(\partial_i g_{kj}+\partial_j g_{ki}-\partial_k g_{ij}\bigr).</div>
+    <div class="equation" data-tex="\boxed{\ddot q^a+\Gamma^a_{ij}\dot q^i\dot q^j=0}\qquad\Longleftrightarrow\qquad\frac{D\dot\gamma}{\mathrm d\lambda}=0.">\boxed{\ddot q^a+\Gamma^a_{ij}\dot q^i\dot q^j=0}\qquad\Longleftrightarrow\qquad\frac{D\dot\gamma}{\mathrm d\lambda}=0.</div>
+    <p>右の式は、曲線の接ベクトルをその曲線に沿って平行に運ぶという測地線の定義です。共変微分を展開すると、座標成分を微分した項が <span class="inline-math" data-tex="\ddot q^a">q̈ᵃ</span>、座標基底を共変微分した項が <span class="inline-math" data-tex="\Gamma^a_{ij}\dot q^i\dot q^j">Γᵃᵢⱼq̇ⁱq̇ʲ</span> です。この形を満たす <span class="inline-math" data-tex="\lambda">λ</span> をアフィンパラメータと呼びます。</p>
+    <p>極座標では <span class="inline-math" data-tex="g_{rr}=1,\;g_{\phi\phi}=r^2,\;g_{r\phi}=0">gᵣᵣ=1, gφφ=r², gᵣφ=0</span> です。上の公式を使うと、先ほどの二本の式に現れた補正項を再現できます。</p>
+    <div class="equation" data-tex="\Gamma^r_{\phi\phi}=-\tfrac12\partial_r(r^2)=-r,\qquad \Gamma^\phi_{r\phi}=\Gamma^\phi_{\phi r}=\tfrac1r.">\Gamma^r_{\phi\phi}=-\tfrac12\partial_r(r^2)=-r,\qquad \Gamma^\phi_{r\phi}=\Gamma^\phi_{\phi r}=\tfrac1r.</div>
+    <p>力学で質量 <span class="inline-math" data-tex="m">m</span> を戻し、ポテンシャルエネルギー <span class="inline-math" data-tex="V(q)">V(q)</span> を引いたラグランジアンを使うと、右辺に力が入ります。ここでは計量は時刻に陽に依存しないものとします。</p>
+    <div class="equation" data-tex="\begin{aligned}L&amp;=\tfrac m2 g_{ij}\dot q^i\dot q^j-V,\\ \ddot q^a+\Gamma^a_{ij}\dot q^i\dot q^j&amp;=-\tfrac1m g^{ak}\partial_k V.\end{aligned}">\begin{aligned}L&amp;=\tfrac m2 g_{ij}\dot q^i\dot q^j-V,\\ \ddot q^a+\Gamma^a_{ij}\dot q^i\dot q^j&amp;=-\tfrac1m g^{ak}\partial_k V.\end{aligned}</div>
+  </section>
+
+  <section id="compare">
+    <h2>3. 配置空間の測地線と時空の測地線</h2>
+    <div class="table-wrap">
+      <table class="mechanics-compare">
+        <thead><tr><th scope="col">観点</th><th scope="col">ニュートン力学をラグランジュ形式で書く</th><th scope="col">一般相対論で自由落下を求める</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">曲線の上の一点</th><td>粒子の位置や系の配置。</td><td>時刻と位置を含む時空の事象。</td></tr>
+          <tr><th scope="row">時間</th><td>外から与えた時刻 <span class="inline-math" data-tex="t">t</span> に従って配置を追う。</td><td>座標時刻 <span class="inline-math" data-tex="t">t</span> も曲線に沿って変化する。質量のある粒子は固有時 <span class="inline-math" data-tex="\tau">τ</span> で世界線をたどれる。</td></tr>
+          <tr><th scope="row">計量</th><td>運動エネルギーの速度の二次形式に入る。</td><td>時計が刻む固有時、光の進む方向、自由落下の測地線を定める。</td></tr>
+          <tr><th scope="row">重力</th><td>重力ポテンシャルエネルギーの微分が力として入る。</td><td>重力は時空の計量に反映される。重力だけを受ける試験粒子の共変加速度はゼロ。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>極座標の例では平らな面でもクリストッフェル記号が現れました。一般相対論でも、一つの事象で局所慣性座標を取れば、そこで接続係数をゼロにできます。時空の曲率がある場合、その効果は、たとえば近くを自由落下する粒子どうしの相対加速度に現れます。自由落下を計算するときに使う時空の計量は、一般相対論ではアインシュタイン方程式で求める対象です。</p>
+  </section>
+
+  <section id="orbit">
+    <h2>4. 同じ手順で惑星の軌道を求める</h2>
+    <p>太陽を球対称で回転しないと近似すると、その外側にはシュワルツシルト計量を使えます。球対称性により、座標を取って惑星の軌道面を赤道面に置けます。世界線を <span class="inline-math" data-tex="(t(\tau),r(\tau),\phi(\tau))">(t(τ),r(τ),φ(τ))</span> とし、ドットを固有時 <span class="inline-math" data-tex="\tau">τ</span> での微分とします。単位質量あたりの二次形式は</p>
+    <div class="equation" data-tex="\begin{aligned}L&amp;=\tfrac12\left(-c^2 f(r)\dot t^{\,2}+\frac{\dot r^{\,2}}{f(r)}+r^2\dot\phi^{\,2}\right),\\ f(r)&amp;=1-\frac{2GM}{rc^2}.\end{aligned}">\begin{aligned}L&amp;=\tfrac12\left(-c^2 f(r)\dot t^{\,2}+\frac{\dot r^{\,2}}{f(r)}+r^2\dot\phi^{\,2}\right),\\ f(r)&amp;=1-\frac{2GM}{rc^2}.\end{aligned}</div>
+    <p><span class="inline-math" data-tex="M">M</span> は太陽の質量、<span class="inline-math" data-tex="G">G</span> は万有引力定数、<span class="inline-math" data-tex="c">c</span> は光速です。極座標の平面で出てきた <span class="inline-math" data-tex="r^2\dot\phi^2">r²φ̇²</span> が残り、時刻方向と半径方向には <span class="inline-math" data-tex="f(r)">f(r)</span> が入ります。</p>
+    <p>ラグランジアンに <span class="inline-math" data-tex="t,\phi">t, φ</span> 自体は現れず、その変化率だけが現れます。循環座標のラグランジュ方程式から、それぞれに対応する保存量が得られます。</p>
+    <div class="equation" data-tex="E=-\frac{\partial L}{\partial\dot t}=c^2 f(r)\dot t,\qquad \ell=\frac{\partial L}{\partial\dot\phi}=r^2\dot\phi.">E=-\frac{\partial L}{\partial\dot t}=c^2 f(r)\dot t,\qquad \ell=\frac{\partial L}{\partial\dot\phi}=r^2\dot\phi.</div>
+    <p>変分のときは世界線を指定するパラメータを固定して計算し、得られた時間的な測地線を固有時でたどるものとします。<span class="inline-math" data-tex="E">E</span> と <span class="inline-math" data-tex="\ell">ℓ</span> は、それぞれ単位質量あたりの保存エネルギーと角運動量です。固有時で測った接ベクトル <span class="inline-math" data-tex="U=\mathrm d\gamma/\mathrm d\tau">U</span> は <span class="inline-math" data-tex="g(U,U)=-c^2">g(U,U)=−c²</span> を満たします。これに保存量で表した <span class="inline-math" data-tex="\dot t,\dot\phi">ṫ, φ̇</span> を代入し、両辺に <span class="inline-math" data-tex="f(r)">f(r)</span> を掛けると、半径方向の式が得られます。</p>
+    <div class="equation" data-tex="\dot r^{\,2}=\frac{E^2}{c^2}-f(r)\left(c^2+\frac{\ell^2}{r^2}\right).">\dot r^{\,2}=\frac{E^2}{c^2}-f(r)\left(c^2+\frac{\ell^2}{r^2}\right).</div>
+    <p>括弧を展開すると、半径方向の運動を有効ポテンシャルで表せます。</p>
+    <div class="equation" data-tex="\tfrac12\dot r^{\,2}+\underbrace{\left(-\frac{GM}{r}+\frac{\ell^2}{2r^2}-\frac{GM\ell^2}{c^2r^3}\right)}_{\text{半径方向の有効ポテンシャル}}=\tfrac12\left(\frac{E^2}{c^2}-c^2\right).">\tfrac12\dot r^{\,2}+\underbrace{\left(-\frac{GM}{r}+\frac{\ell^2}{2r^2}-\frac{GM\ell^2}{c^2r^3}\right)}_{\text{半径方向の有効ポテンシャル}}=\tfrac12\left(\frac{E^2}{c^2}-c^2\right).</div>
+    <p>括弧の最初の二項はニュートン力学の中心力問題にも現れます。三つ目が相対論の補正です。水星のような軌道では、この補正によって近日点から次の近日点までに偏角が一周よりわずかに多く進み、近日点の向きがずれていきます。</p>
+    <p>参考資料 <a href="https://www.damtp.cam.ac.uk/user/us248/Lectures/Notes/grII.pdf">Cambridge 講義ノート「Schwarzschild solution and classic tests of GR」</a></p>
+  </section>
+</main>
+</body>
+</html>
