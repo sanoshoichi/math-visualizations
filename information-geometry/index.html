@@ -3,14 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="コインの確率分布を多様体の点として定義し、接ベクトルを二つの座標で表して比べる。">
+  <meta name="description" content="コインの確率分布と接ベクトルを座標で表し、3つの結果の確率分布を2次元と3次元の図で見る。">
   <title>情報幾何学 · コインの分布と接ベクトル</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
   <link rel="stylesheet" href="../assets/lesson.css">
   <link rel="stylesheet" href="../assets/figure-theme.css">
   <link rel="stylesheet" href="../assets/math-layout.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="./simplex.css">
   <script defer src="../assets/lesson.js"></script>
+  <script defer src="./simplex.js"></script>
   <style>
     #coin-tangent-coordinates .coin-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem; }
     #coin-tangent-coordinates .coin-controls label { display:block; min-width:0; }
@@ -45,6 +47,7 @@
       <option value="tangent-vector">2. 接ベクトル</option>
       <option value="coordinates">3. 同じ分布を別の座標で読む</option>
       <option value="coordinate-components">4. 同じ接ベクトルの成分を比べる</option>
+      <option value="three-outcome-distributions">5. 3つの結果の確率分布</option>
     </select>
   </div>
 
@@ -104,6 +107,32 @@
   <div class="sr-only" aria-live="polite" data-coin-summary></div>
 </div>
     <p><span class="inline-math" data-tex="p">p</span> を固定して <span class="inline-math" data-tex="a">a</span> を変えると、点は動かず矢印が変わります。横軸の目盛りが共通なので、<span class="inline-math" data-tex="a\ne0">a ≠ 0</span> では下の矢印の横幅が上の二倍になります。この二倍は、座標成分 <span class="inline-math" data-tex="2a">2a</span> と <span class="inline-math" data-tex="a">a</span> の比の大きさです。</p>
+  </section>
+
+  <section id="three-outcome-distributions">
+    <h2>5. 3つの結果の確率分布 <span class="inline-math" data-tex="P\in M_3">P ∈ M₃</span></h2>
+    <p>結果が3つあると、分布を決めるのに2つの確率が必要です。図で <span class="inline-math" data-tex="p_1(P)">p₁(P)</span> を動かすと、<span class="inline-math" data-tex="p_2(P)">p₂(P)</span> は固定され、確率の和が1になるように <span class="inline-math" data-tex="p_3(P)">p₃(P)</span> が変わります。3次元表示に切り替えると、同じ分布を3つの座標で読めます。</p>
+    <div id="simplex-widget">
+      <section class="panel" id="visualPanel" aria-label="確率分布の図">
+        <div class="top"><div class="modeTitle" id="modeTitle">2次元座標表示</div><label class="switchLabel"><input id="mode" type="checkbox" />三次元で見る</label></div>
+        <div class="chartWrap"><svg id="view" viewBox="0 0 360 330" role="img" aria-label="確率分布の空間と分布 P の図"><title>確率分布 P の幾何学的表示</title></svg></div>
+        <div class="legend"><span><span class="dot"></span>選んだ分布 P</span><span id="twoHint">青い点を直接ドラッグできます</span><span id="threeHint">図をドラッグして回転できます</span></div>
+        <div class="current"><div class="caption">現在の分布 P ∈ M₃</div><div class="triple"><span id="p1value">p₁ = 0.20</span><span id="p2value">p₂ = 0.30</span><span id="p3value">p₃ = 0.50</span></div><div class="pointLine" id="coordinate">(p₁(P), p₂(P), p₃(P)) = (0.20, 0.30, 0.50)</div></div>
+      </section>
+      <section class="panel" aria-label="確率の操作">
+        <div class="slRow"><div class="slHeader"><label for="slider1">p₁ を動かす</label><output class="slNum" id="out1" for="slider1">0.20</output></div><input type="range" id="slider1" min="1" max="69" value="20" step="1" aria-label="p₁" /><div class="rangeEnds"><span>0.01</span><span id="limit1">上限 0.69（p₂ 固定）</span></div></div>
+        <div class="slRow"><div class="slHeader"><label for="slider2">p₂ を動かす</label><output class="slNum" id="out2" for="slider2">0.30</output></div><input type="range" id="slider2" min="1" max="79" value="30" step="1" aria-label="p₂" /><div class="rangeEnds"><span>0.01</span><span id="limit2">上限 0.79（p₁ 固定）</span></div></div>
+      </section>
+    </div>
+    <h3>空間と座標の定義</h3>
+    <p>結果の集合を <span class="inline-math" data-tex="\Omega_3=\{1,2,3\}">Ω₃ = {1, 2, 3}</span> とします。各結果に正の確率を割り当てる分布を集めます。</p>
+    <div class="equation" data-tex="M_3=\biggl\{P:\Omega_3\to(0,1)\ \biggm|\ \sum_{i=1}^{3}P(i)=1\biggr\}.">M₃ = {P : Ω₃ → (0,1) | P(1) + P(2) + P(3) = 1}.</div>
+    <p>青い点 <span class="inline-math" data-tex="P\in M_3">P ∈ M₃</span> を入れると、写像 <span class="inline-math" data-tex="p_i">pᵢ</span> は結果 <span class="inline-math" data-tex="i">i</span> の確率を返します。</p>
+    <div class="equation" data-tex="p_i:M_3\to(0,1),\qquad p_i(P)=P(i)\quad(i=1,2,3).">pᵢ : M₃ → (0,1), pᵢ(P) = P(i) (i = 1, 2, 3).</div>
+    <div class="equation" data-tex="p_3(P)=1-p_1(P)-p_2(P).">p₃(P) = 1 − p₁(P) − p₂(P).</div>
+    <p>2次元表示で青く塗られた三角形の内部が、座標写像 <span class="inline-math" data-tex="(p_1,p_2)"> (p₁, p₂)</span> の像です。</p>
+    <div class="equation" data-tex="(p_1,p_2)(M_3)=\{(u,v)\in\mathbb R^2\mid u>0,\ v>0,\ u+v&lt;1\}.">(p₁, p₂)(M₃) = {(u,v) ∈ ℝ² | u &gt; 0, v &gt; 0, u + v &lt; 1}.</div>
+    <p>辺や頂点では少なくとも1つの確率が0になります。図では境界の位置として描き、操作できる範囲は各確率が <span class="inline-math" data-tex="0.01">0.01</span> 以上の分布にしています。</p>
   </section>
 </main>
 <script>(() => {

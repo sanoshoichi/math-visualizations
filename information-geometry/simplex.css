@@ -1,0 +1,178 @@
+#simplex-widget {
+  max-width: 520px;
+  margin: 1rem auto;
+  color-scheme: dark;
+  --panel: #101827;
+  --panel2: #0d1421;
+  --text: #e7edf7;
+  --muted: #99a9bf;
+  --blue: #55b6ff;
+  --cyan: #9ddcff;
+  --pink: #ffbf7a;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+#simplex-widget * {
+  box-sizing: border-box;
+}
+
+#simplex-widget .panel {
+  margin: 0 0 12px;
+  border: 1px solid #203046;
+  border-radius: 17px;
+  background: var(--panel);
+  padding: 13px;
+  box-shadow: 0 9px 25px #0003;
+}
+
+#simplex-widget .top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 7px;
+}
+
+#simplex-widget .modeTitle {
+  font-size: 14px;
+  font-weight: 680;
+}
+
+#simplex-widget .switchLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd8e9;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+#simplex-widget .switchLabel input {
+  accent-color: var(--blue);
+  height: 18px;
+  width: 18px;
+  margin: 0;
+}
+
+#simplex-widget .chartWrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+#simplex-widget svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  margin: 0;
+}
+
+#simplex-widget .current {
+  background: var(--panel2);
+  border: 1px solid #24374d;
+  border-radius: 12px;
+  padding: 10px 11px;
+  margin-top: 6px;
+}
+
+#simplex-widget .current .caption {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 0 5px;
+}
+
+#simplex-widget .triple {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+  font-size: clamp(14px,3.65vw,19px);
+  font-variant-numeric: tabular-nums;
+  font-weight: 670;
+}
+
+#simplex-widget .triple span:last-child {
+  color: var(--pink);
+}
+
+#simplex-widget .pointLine {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+#simplex-widget .slRow {
+  margin: 12px 1px 15px;
+}
+
+#simplex-widget .slRow:last-child {
+  margin-bottom: 3px;
+}
+
+#simplex-widget .slHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 680;
+}
+
+#simplex-widget .slNum {
+  font-variant-numeric: tabular-nums;
+  color: var(--cyan);
+  font-size: 15px;
+}
+
+#simplex-widget input[type=range] {
+  display: block;
+  width: 100%;
+  accent-color: var(--blue);
+  height: 27px;
+  cursor: pointer;
+  margin: 0;
+  touch-action: pan-y;
+}
+
+#simplex-widget .rangeEnds {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  margin-top: -2px;
+}
+
+#simplex-widget .legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+#simplex-widget .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--blue);
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+#simplex-widget #threeHint {
+  display: none;
+}
+
+#simplex-widget .threeActive #threeHint {
+  display: block;
+}
+
+#simplex-widget .threeActive #twoHint {
+  display: none;
+}
