@@ -27,7 +27,7 @@
   </style>
 <link rel="stylesheet" href="geometry-labs.css?v=math-arrows">
 <script defer src="basis.js?v=space-maps"></script>
-<script defer src="geometry-labs.js?v=space-maps"></script>
+<script defer src="geometry-labs.js?v=plot-targets"></script>
 </head>
 <body>
 <main>
@@ -143,6 +143,7 @@
     <div class="equation" data-tex="M_3=\biggl\{P:\Omega_3\to(0,1)\ \biggm|\ \sum_{i=1}^{3}P(i)=1\biggr\}.">M₃ = {P : Ω₃ → (0,1) | P(1) + P(2) + P(3) = 1}.</div>
     <p>青い点 <span class="inline-math" data-tex="P\in M_3">P ∈ M₃</span> を入れると、写像 <span class="inline-math" data-tex="p_i">pᵢ</span> は結果 <span class="inline-math" data-tex="i">i</span> の確率を返します。</p>
     <div class="equation" data-tex="p_i:M_3\to(0,1),\qquad p_i(P)=P(i)\quad(i=1,2,3).">pᵢ : M₃ → (0,1), pᵢ(P) = P(i) (i = 1, 2, 3).</div>
+    <p><span class="inline-math" data-tex="p_i">pᵢ</span> は<strong>分布を受け取る座標関数</strong>です。分布を <span class="inline-math" data-tex="P">P</span> に決めると、座標値 <span class="inline-math" data-tex="p_i(P)">pᵢ(P)</span> と、その分布で結果 <span class="inline-math" data-tex="i">i</span> が出る確率 <span class="inline-math" data-tex="P(i)">P(i)</span> は同じ数です。たとえば <span class="inline-math" data-tex="p_1(P)=P(1)=0.20">p₁(P) = P(1) = 0.20</span>。図の軸にある <span class="inline-math" data-tex="p_1,p_2">p₁, p₂</span> は、どの座標関数の値を読むかを示しています。</p>
     <div class="equation" data-tex="p_3(P)=1-p_1(P)-p_2(P).">p₃(P) = 1 − p₁(P) − p₂(P).</div>
     <p>2次元表示で青く塗られた三角形の内部が、座標写像 <span class="inline-math" data-tex="(p_1,p_2)"> (p₁, p₂)</span> の像です。</p>
     <div class="equation" data-tex="(p_1,p_2)(M_3)=\{(u,v)\in\mathbb R^2\mid u>0,\ v>0,\ u+v&lt;1\}.">(p₁, p₂)(M₃) = {(u,v) ∈ ℝ² | u &gt; 0, v &gt; 0, u + v &lt; 1}.</div>
@@ -218,15 +219,15 @@
 <p>同じ確率の増分でも、もとの確率が小さいほど相対変化は大きくなります。点 <span class="inline-math" data-tex="P">P</span> で接ベクトル <span class="inline-math" data-tex="U,V\in T_PM_3">U,V\in T_PM_3</span> を取り、確率の変化率を <span class="inline-math" data-tex="u_i=U(p_i),\ v_i=V(p_i)">u_i=U(p_i),\ v_i=V(p_i)</span> と書きます。対数確率の変化率は <span class="inline-math" data-tex="U(\log p_i)=u_i/P(i)">U(\log p_i)=u_i/P(i)</span> です。この変化率の積を分布 <span class="inline-math" data-tex="P">P</span> で平均すると、フィッシャー計量が得られます。</p>
 <div class="equation" data-tex="g_P:T_PM_3\times T_PM_3\longrightarrow\mathbb R">g_P:T_PM_3\times T_PM_3\longrightarrow\mathbb R</div>
 <div class="equation" data-tex="g_P(U,V)=\sum_{i=1}^3P(i)\frac{u_i}{P(i)}\frac{v_i}{P(i)}=\sum_{i=1}^3\frac{u_iv_i}{P(i)}.">g_P(U,V)=\sum_{i=1}^3P(i)\frac{u_i}{P(i)}\frac{v_i}{P(i)}=\sum_{i=1}^3\frac{u_iv_i}{P(i)}.</div>
-<p>以下、<span class="inline-math" data-tex="p_i=P(i)">p_i=P(i)</span> と略記します。<span class="inline-math" data-tex="e_1">e_1</span> の3つの変化率は <span class="inline-math" data-tex="(1,0,-1)">(1,0,-1)</span>、<span class="inline-math" data-tex="e_2">e_2</span> では <span class="inline-math" data-tex="(0,1,-1)">(0,1,-1)</span> でした。したがって内積 <span class="inline-math" data-tex="g_{12}=g_P(e_1,e_2)">g_{12}=g_P(e_1,e_2)</span> に寄与するのは、どちらでも減る結果3です。</p>
-<div class="equation" data-tex="(g_{ab})=\begin{pmatrix}1/p_1+1/p_3&amp;1/p_3\\1/p_3&amp;1/p_2+1/p_3\end{pmatrix}.">(g_{ab})=\begin{pmatrix}1/p_1+1/p_3&amp;1/p_3\\1/p_3&amp;1/p_2+1/p_3\end{pmatrix}.</div>
+<p><span class="inline-math" data-tex="e_1">e_1</span> の3つの変化率は <span class="inline-math" data-tex="(1,0,-1)">(1,0,-1)</span>、<span class="inline-math" data-tex="e_2">e_2</span> では <span class="inline-math" data-tex="(0,1,-1)">(0,1,-1)</span> でした。したがって内積 <span class="inline-math" data-tex="g_{12}=g_P(e_1,e_2)">g_{12}=g_P(e_1,e_2)</span> に寄与するのは、どちらでも減る結果3です。</p>
+<div class="equation" data-tex="(g_{ab})=\begin{pmatrix}1/P(1)+1/P(3)&amp;1/P(3)\\1/P(3)&amp;1/P(2)+1/P(3)\end{pmatrix}.">(g_{ab})=\begin{pmatrix}1/P(1)+1/P(3)&amp;1/P(3)\\1/P(3)&amp;1/P(2)+1/P(3)\end{pmatrix}.</div>
 <figure class="geometry-lab" id="fisher-lab">
 <p class="map-key" data-basepoint></p>
 
-<svg viewBox="0 0 350 205" role="img" aria-label="実線が e₁、破線が e₂。接平面をフィッシャー計量で測った長さと角度が、そのまま紙面上の長さの比と角度になるように描いています。"></svg>
+<svg data-plot viewBox="0 0 350 205" role="img" aria-label="実線が e₁、破線が e₂。接平面をフィッシャー計量で測った長さと角度が、そのまま紙面上の長さの比と角度になるように描いています。"></svg>
 <figcaption>実線が e₁、破線が e₂。接平面をフィッシャー計量で測った長さと角度が、そのまま紙面上の長さの比と角度になるように描いています。</figcaption><p class="reading" data-reading></p>
 </figure>
-<p>ここでは <span class="inline-math" data-tex="p_2=0.30">p_2=0.30</span> を固定し、<span class="inline-math" data-tex="p_3=0.70-p_1">p_3=0.70-p_1</span> としています。初期値では <span class="inline-math" data-tex="g_{11}=7,\ g_{22}=16/3,\ g_{12}=2">g_{11}=7,\ g_{22}=16/3,\ g_{12}=2</span>。座標図で横と縦だった基底のなす角 <span class="inline-math" data-tex="\theta">\theta</span> を求めるには、内積を両者の長さで割ります。</p>
+<p>ここでは <span class="inline-math" data-tex="P(2)=0.30">P(2)=0.30</span> を固定し、<span class="inline-math" data-tex="P(3)=0.70-P(1)">P(3)=0.70-P(1)</span> としています。初期値では <span class="inline-math" data-tex="g_{11}=7,\ g_{22}=16/3,\ g_{12}=2">g_{11}=7,\ g_{22}=16/3,\ g_{12}=2</span>。座標図で横と縦だった基底のなす角 <span class="inline-math" data-tex="\theta">\theta</span> を求めるには、内積を両者の長さで割ります。</p>
 <div class="equation" data-tex="\cos\theta=\frac{g_{12}}{\sqrt{g_{11}g_{22}}}.">\cos\theta=\frac{g_{12}}{\sqrt{g_{11}g_{22}}}.</div>
 </section>
 <section id="fisher-geodesic"><h2>8. 球面で見る最短経路</h2>
@@ -236,8 +237,8 @@
 </div>
 
 <p>接ベクトルの長さが決まると、曲線に沿って速さを積分して道のりを測れます。その計算を球面上の問題に移す写像が <span class="inline-math" data-tex="F">F</span> です。</p>
-<div class="equation" data-tex="F(P)=2\bigl(\sqrt{p_1},\sqrt{p_2},\sqrt{p_3}\bigr),\qquad \|F(P)\|^2=4.">F(P)=2\bigl(\sqrt{p_1},\sqrt{p_2},\sqrt{p_3}\bigr),\qquad \|F(P)\|^2=4.</div>
-<p>半径2の球面のうち、3成分がすべて正の部分に分布が移ります。各成分を微分すると <span class="inline-math" data-tex="(\mathrm dF_P U)_i=u_i/\sqrt{p_i}">(\mathrm dF_P U)_i=u_i/\sqrt{p_i}</span> なので、球面での通常の内積が前節の <span class="inline-math" data-tex="g_P(U,V)">g_P(U,V)</span> と一致します。</p>
+<div class="equation" data-tex="F(P)=2\bigl(\sqrt{P(1)},\sqrt{P(2)},\sqrt{P(3)}\bigr),\qquad \|F(P)\|^2=4.">F(P)=2\bigl(\sqrt{P(1)},\sqrt{P(2)},\sqrt{P(3)}\bigr),\qquad \|F(P)\|^2=4.</div>
+<p>半径2の球面のうち、3成分がすべて正の部分に分布が移ります。各成分を微分すると <span class="inline-math" data-tex="(\mathrm dF_P U)_i=u_i/\sqrt{P(i)}">(\mathrm dF_P U)_i=u_i/\sqrt{P(i)}</span> なので、球面での通常の内積が前節の <span class="inline-math" data-tex="g_P(U,V)">g_P(U,V)</span> と一致します。</p>
 <div class="equation" data-tex="\mathrm dF_P(U)\cdot\mathrm dF_P(V)=g_P(U,V).">\mathrm dF_P(U)\cdot\mathrm dF_P(V)=g_P(U,V).</div>
 <p>出発点を <span class="inline-math" data-tex="P=(0.20,0.30,0.50)">P=(0.20,0.30,0.50)</span>、終点を <span class="inline-math" data-tex="Q=(0.78,0.02,0.20)">Q=(0.78,0.02,0.20)</span> とします。以下は分布を確率の組で表した記法です。球面上の最短経路は、球の中心と両端を通る平面で切った大円の短い弧です。</p>
 <figure class="geometry-lab" id="sphere-lab">
@@ -246,7 +247,7 @@
 <div class="map-arrow">↓　<span class="inline-math" data-tex="R\xrightarrow{F}2(\sqrt{R(1)},\sqrt{R(2)},\sqrt{R(3)})">R → 2(√R(1), √R(2), √R(3))</span></div>
 <h3>半径2の球面上の像</h3>
 
-<svg viewBox="0 0 350 205" role="img" aria-label="曲線で囲まれた領域が球面の正の八分体、太い線が大円弧です。選んだ点までの弧の長さを下に示します。"></svg>
+<svg data-plot viewBox="0 0 350 205" role="img" aria-label="曲線で囲まれた領域が球面の正の八分体、太い線が大円弧です。選んだ点までの弧の長さを下に示します。"></svg>
 <figcaption>上の金色の点が分布、下の金色の点がその球面上の像です。上の経路全体が、下の球面上では大円弧に写ります。</figcaption><p class="reading" data-reading></p>
 </figure>
 <p>中心角を <span class="inline-math" data-tex="\omega">\omega</span> とすると、半径が2なので弧の全長は次の値です。</p>
@@ -266,7 +267,7 @@
 <div class="equation" data-tex="\frac{\mathrm d^2 x^a}{\mathrm dt^2}=0,\qquad x^a(t)=(1-t)x^a(0)+t x^a(1).">\frac{\mathrm d^2 x^a}{\mathrm dt^2}=0,\qquad x^a(t)=(1-t)x^a(0)+t x^a(1).</div>
 <figure class="geometry-lab" id="dual-lab">
 
-<svg viewBox="0 0 350 205" role="img" aria-label="確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。"></svg>
+<svg data-plot viewBox="0 0 350 205" role="img" aria-label="確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。"></svg>
 <figcaption>確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。</figcaption><p class="reading" data-reading></p>
 </figure>
 <p>両端では分布が一致します。途中の <span class="inline-math" data-tex="t=1/2">t=1/2</span> では、混合接続は確率の算術平均、指数接続は幾何平均を正規化した分布を通ります。前節の大円弧は、フィッシャー計量のレヴィ＝チヴィタ接続に対応します。</p>
@@ -283,7 +284,7 @@
 <div class="equation" data-tex="D(s)=0.20\log\frac{0.20}{0.20+s}+0.50\log\frac{0.50}{0.50-s}.">D(s)=0.20\log\frac{0.20}{0.20+s}+0.50\log\frac{0.50}{0.50-s}.</div>
 <figure class="geometry-lab" id="kl-lab">
 
-<svg viewBox="0 0 350 205" role="img" aria-label="実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。"></svg>
+<svg data-plot viewBox="0 0 350 205" role="img" aria-label="実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。"></svg>
 <figcaption>実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。</figcaption><p class="reading" data-reading></p>
 </figure>
 <p><span class="inline-math" data-tex="s=0">s=0</span> で値と一階微分がともにゼロです。二階微分には、第7節で求めた基底の長さの二乗が現れます。</p>

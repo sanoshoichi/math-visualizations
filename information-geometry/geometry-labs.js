@@ -140,7 +140,7 @@
     const lab=document.getElementById(draw.name+'-lab');
     const slider=document.getElementById(draw.name+'-control');
     const output=slider.parentElement.querySelector('output');
-    const svg=lab.querySelector('svg:not([data-domain])');
+    const svg=lab.querySelector('[data-plot]');
     function update() {
       const value=Number(slider.value);
       output.value=fmt(value);
