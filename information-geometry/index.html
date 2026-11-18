@@ -70,11 +70,11 @@
     <p><span class="inline-math" data-tex="p\in(0,1)">p ∈ (0,1)</span> と <span class="inline-math" data-tex="a\in\mathbb R">a ∈ ℝ</span> を固定します。<span class="inline-math" data-tex="p+as\in(0,1)">p + as ∈ (0,1)</span> を満たす <span class="inline-math" data-tex="s=0">s = 0</span> の近くで、曲線 <span class="inline-math" data-tex="\gamma">γ</span> を取ります。</p>
     <div class="equation" data-tex="\gamma(s)=P_{p+as}\in M,\qquad \gamma(0)=P_p.">γ(s) = Pₚ₊ₐₛ ∈ M, γ(0) = Pₚ.</div>
     <p>その点での接ベクトル <span class="inline-math" data-tex="W=\dot\gamma(0)\in T_{P_p}M">W ∈ TₚM</span> は、滑らかな関数 <span class="inline-math" data-tex="f:M\to\mathbb R">f : M → ℝ</span> に作用して、曲線に沿った変化率を返します。</p>
-    <div class="equation" data-tex="\begin{aligned}W(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}f(\gamma(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(f\circ\pi^{-1})(p+as)\right|_{s=0}\\&amp;=a\,(f\circ\pi^{-1})'(p).\end{aligned}">W(f) = a(f ∘ π⁻¹)′(p).</div>
+    <div class="equation" data-tex="\begin{aligned}W(f)=(\dot\gamma(0))(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}f(\gamma(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(f\circ\pi^{-1})(p+as)\right|_{s=0}\\&amp;=a\,(f\circ\pi^{-1})'(p).\end{aligned}">W(f) = a(f ∘ π⁻¹)′(p).</div>
     <p>最後の等号は連鎖律です。<span class="inline-math" data-tex="(f\circ\pi^{-1})'(p)"> (f ∘ π⁻¹)′(p)</span> は座標基底を <span class="inline-math" data-tex="f">f</span> に作用させた値なので、</p>
     <div class="equation" data-tex="W=a\left.\frac{\partial}{\partial\pi}\right|_{P_p}\in T_{P_p}M.">W = a (∂/∂π)|ₚ ∈ TₚM.</div>
     <p>表の確率を返す関数 <span class="inline-math" data-tex="\pi">π</span> と裏の確率を返す関数 <span class="inline-math" data-tex="1-\pi">1 − π</span> を入れると、表の変化率と裏の変化率がそれぞれ得られます。</p>
-    <div class="equation" data-tex="W(\pi)=a,\qquad W(1-\pi)=-a.">W(π) = a, W(1 − π) = −a.</div>
+<div class="equation" data-tex="\begin{aligned}W(\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(p+as)\right|_{s=0}=a,\\ W(1-\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(1-p-as)\right|_{s=0}=-a.\end{aligned}">\begin{aligned}W(\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(p+as)\right|_{s=0}=a,\\ W(1-\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(1-p-as)\right|_{s=0}=-a.\end{aligned}</div>
   </section>
 
   <section id="coordinates">
@@ -99,7 +99,7 @@
 
     <p>2 で取った曲線 <span class="inline-math" data-tex="\gamma(s)=P_{p+as}">γ(s) = Pₚ₊ₐₛ</span> をそのまま使います。曲線上の分布を、二つの座標で読むと次のようになります。</p>
     <div class="equation" data-tex="\begin{aligned}\pi(\gamma(s))&amp;=p+as,\\ \eta(\gamma(s))&amp;=2(p+as)-1.\end{aligned}">π(γ(s)) = p + as, η(γ(s)) = 2(p + as) − 1.</div>
-    <p>それぞれを <span class="inline-math" data-tex="s">s</span> で微分して <span class="inline-math" data-tex="s=0">s = 0</span> で評価すると、<span class="inline-math" data-tex="W(\pi)=a">W(π) = a</span> と <span class="inline-math" data-tex="W(\eta)=2a">W(η) = 2a</span> が得られます。</p>
+    <p>図の矢印に表示する数は、曲線に沿って座標を読んでから、出発点 <span class="inline-math" data-tex="s=0">s = 0</span> で微分した値です。下の計算にスライダーの値が入ります。</p>
     <div class="equation" data-tex="\begin{aligned}W&amp;=a\left.\frac{\partial}{\partial\pi}\right|_{P_p}\\&amp;=2a\left.\frac{\partial}{\partial\eta}\right|_{P_p}\quad\in T_{P_p}M.\end{aligned}">W = a (∂/∂π)|ₚ = 2a (∂/∂η)|ₚ ∈ TₚM.</div>
     <p>図の数直線は、<span class="inline-math" data-tex="0">0</span> と <span class="inline-math" data-tex="1">1</span> がそれぞれ同じ横位置に来るように揃えています。点は分布の座標値、矢印の向きと横幅は接ベクトルの成分を表します。</p>
     <div id="coin-tangent-coordinates">
@@ -109,6 +109,12 @@
   <div class="coin-legend">
     <span><span class="coin-dot" aria-hidden="true">●</span> 分布 <i>P</i><sub><i>p</i></sub></span>
     <span><span class="coin-arrow" aria-hidden="true">→</span> 接ベクトル <i>W</i> の表示</span>
+  </div>
+  <div class="coin-calculations">
+    <h3>矢印の成分を計算する</h3>
+    <p>スライダーで選んだ値を <span class="inline-math" data-tex="p+as">p + as</span> に代入し、曲線 <span class="inline-math" data-tex="\gamma(s)=P_{p+as}">γ(s) = Pₚ₊ₐₛ</span> に沿った変化率を求めます。</p>
+    <div class="equation" data-tex="\begin{aligned}W(\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\pi(\gamma(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20+0.15s)\right|_{s=0}\\&amp;=+0.15.\end{aligned}" data-coin-pi>W(π) = d/ds [π(γ(s))] at s = 0 = d/ds [0.20 + 0.15s] at s = 0 = +0.15.</div>
+    <div class="equation" data-tex="\begin{aligned}W(\eta)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\eta(\gamma(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}\big[2(0.20+0.15s)-1\big]\right|_{s=0}\\&amp;=2(0.15)=+0.30.\end{aligned}" data-coin-eta>W(η) = d/ds [η(γ(s))] at s = 0 = d/ds [2(0.20 + 0.15s) − 1] at s = 0 = +0.30.</div>
   </div>
   <div class="sr-only" aria-live="polite" data-coin-summary></div>
 </div>
@@ -186,11 +192,18 @@
       <div><span class="name-first">━</span> <span class="inline-math" data-tex="e_1=\dot\gamma_1(0)">e₁ = γ̇₁(0)</span>　結果3から1へ</div>
       <div><span class="name-second">┄</span> <span class="inline-math" data-tex="e_2=\dot\gamma_2(0)">e₂ = γ̇₂(0)</span>　結果3から2へ</div>
     </div>
-    <p class="base-note">矢印の根元は、この接平面の零ベクトル <span class="inline-math" data-tex="0_P">0ₚ</span> です。点 <span class="inline-math" data-tex="P">P</span> が接空間を決め、そこを通る曲線の速度が矢印を決めます。</p>
+    <p class="base-note">矢印の根元は、この接平面の零ベクトル <span class="inline-math" data-tex="0_P">0ₚ</span> です。点 <span class="inline-math" data-tex="P">P</span> が接空間を決め、そこを通る曲線の速度が矢印を決めます。速度の定義と計算は図のすぐ下にあります。</p>
   </div>
 </div>
 </div>
-<p><span class="inline-math" data-tex="s=0">s=0</span> では2点が <span class="inline-math" data-tex="P">P</span> で重なります。この瞬間の速度を、それぞれ同じ接空間 <span class="inline-math" data-tex="T_PM_3">T_PM_3</span> の矢印として描いたものが下の接平面です。</p>
+<h3>曲線の速度をどう定義するか</h3>
+<p>図の2本の矢印は、どちらも <span class="inline-math" data-tex="s=0">s = 0</span> での速度です。曲線 <span class="inline-math" data-tex="\gamma_j:I\to M_3">γⱼ : I → M₃</span> に対して、接ベクトル <span class="inline-math" data-tex="\dot\gamma_j(0)\in T_PM_3">γ̇ⱼ(0) ∈ TₚM₃</span> の作用を、任意の滑らかな関数 <span class="inline-math" data-tex="f:M_3\to\mathbb R">f : M₃ → ℝ</span> について次の式で定義します。</p>
+<div class="equation" data-tex="(\dot\gamma_j(0))(f):=\left.\frac{\mathrm d}{\mathrm ds}(f\circ\gamma_j)(s)\right|_{s=0}=\lim_{h\to0}\frac{f(\gamma_j(h))-f(P)}{h}.">(\dot\gamma_j(0))(f):=\left.\frac{\mathrm d}{\mathrm ds}(f\circ\gamma_j)(s)\right|_{s=0}=\lim_{h\to0}\frac{f(\gamma_j(h))-f(P)}{h}.</div>
+<p>たとえば横座標を返す関数 <span class="inline-math" data-tex="p_1">p₁</span> を入れます。青い曲線では横座標が <span class="inline-math" data-tex="0.20+s">0.20 + s</span>、金色の曲線では <span class="inline-math" data-tex="0.20">0.20</span> です。</p>
+<div class="equation" data-tex="\begin{aligned}(\dot\gamma_1(0))(p_1)&amp;=\left.\frac{\mathrm d}{\mathrm ds}p_1(\gamma_1(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20+s)\right|_{s=0}=1,\\[.3em](\dot\gamma_2(0))(p_1)&amp;=\left.\frac{\mathrm d}{\mathrm ds}p_1(\gamma_2(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20)\right|_{s=0}=0.\end{aligned}">\begin{aligned}(\dot\gamma_1(0))(p_1)&amp;=\left.\frac{\mathrm d}{\mathrm ds}p_1(\gamma_1(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20+s)\right|_{s=0}=1,\\[.3em](\dot\gamma_2(0))(p_1)&amp;=\left.\frac{\mathrm d}{\mathrm ds}p_1(\gamma_2(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20)\right|_{s=0}=0.\end{aligned}</div>
+<p>同様に縦座標 <span class="inline-math" data-tex="p_2">p₂</span> を入れると、青は <span class="inline-math" data-tex="0">0</span>、金色は <span class="inline-math" data-tex="1">1</span> です。任意の <span class="inline-math" data-tex="f">f</span> についても、座標写像 <span class="inline-math" data-tex="\phi=(p_1,p_2)">φ = (p₁, p₂)</span> を使って <span class="inline-math" data-tex="\tilde f=f\circ\phi^{-1}">f̃ = f ∘ φ⁻¹</span> と書けば、連鎖律から次の式が得られます。</p>
+<div class="equation" data-tex="\begin{aligned}(\dot\gamma_1(0))(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\tilde f(0.20+s,0.30)\right|_{s=0}\\&amp;=(\partial_1\tilde f)(0.20,0.30),\\[.3em](\dot\gamma_2(0))(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\tilde f(0.20,0.30+s)\right|_{s=0}\\&amp;=(\partial_2\tilde f)(0.20,0.30).\end{aligned}">\begin{aligned}(\dot\gamma_1(0))(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\tilde f(0.20+s,0.30)\right|_{s=0}\\&amp;=(\partial_1\tilde f)(0.20,0.30),\\[.3em](\dot\gamma_2(0))(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\tilde f(0.20,0.30+s)\right|_{s=0}\\&amp;=(\partial_2\tilde f)(0.20,0.30).\end{aligned}</div>
+<p>これは座標基底の作用そのものなので、図の2本を次のように書けます。</p>
 <div class="equation" data-tex="e_1=\dot\gamma_1(0)=\left.\frac{\partial}{\partial p_1}\right|_P,\qquad e_2=\dot\gamma_2(0)=\left.\frac{\partial}{\partial p_2}\right|_P.">e_1=\dot\gamma_1(0)=\left.\frac{\partial}{\partial p_1}\right|_P,\qquad e_2=\dot\gamma_2(0)=\left.\frac{\partial}{\partial p_2}\right|_P.</div>
 <p>接ベクトル <span class="inline-math" data-tex="W=\dot\gamma(0)">W=\dot\gamma(0)</span> に関数 <span class="inline-math" data-tex="p_i">p_i</span> を渡すと、結果 <span class="inline-math" data-tex="i">i</span> の確率の変化率が得られます。<span class="inline-math" data-tex="W=ae_1+be_2">W=ae_1+be_2</span> と書いたとき、<span class="inline-math" data-tex="a,b">a,b</span> がそのまま初めの2つの変化率になります。</p>
 <div class="equation" data-tex="W(p_i)=\left.\frac{\mathrm d}{\mathrm ds}p_i(\gamma(s))\right|_{s=0},\qquad (W(p_1),W(p_2),W(p_3))=(a,b,-a-b).">W(p_i)=\left.\frac{\mathrm d}{\mathrm ds}p_i(\gamma(s))\right|_{s=0},\qquad (W(p_1),W(p_2),W(p_3))=(a,b,-a-b).</div>
@@ -294,6 +307,8 @@
   const aValue = root.querySelector("#coin-a-value");
   const svg = root.querySelector(".coin-figure");
   const summary = root.querySelector("[data-coin-summary]");
+  const piCalculation = root.querySelector("[data-coin-pi]");
+  const etaCalculation = root.querySelector("[data-coin-eta]");
   const fg = "var(--ink)";
   const neutral = "var(--muted)";
   const blue = "var(--blue)";
@@ -316,6 +331,19 @@
     return line(x,y,base,y,blue,2.6)
       + '<path d="M'+end+','+y+'L'+base+','+(y-head*.48)+'L'+base+','+(y+head*.48)+'Z" fill="'+blue+'"/>';
   }
+  function renderCalculations(p, a) {
+    const curve = format(p) + (a < 0 ? "-" : "+") + format(Math.abs(a)) + "s";
+    const pi = "\\begin{aligned}W(\\pi)&=\\left.\\frac{\\mathrm d}{\\mathrm ds}\\pi(\\gamma(s))\\right|_{s=0}\\\\&=\\left.\\frac{\\mathrm d}{\\mathrm ds}(CURVE)\\right|_{s=0}\\\\&=RESULT.\\end{aligned}"
+      .replace("CURVE", curve).replace("RESULT", format(a,true));
+    const eta = "\\begin{aligned}W(\\eta)&=\\left.\\frac{\\mathrm d}{\\mathrm ds}\\eta(\\gamma(s))\\right|_{s=0}\\\\&=\\left.\\frac{\\mathrm d}{\\mathrm ds}\\big[2(CURVE)-1\\big]\\right|_{s=0}\\\\&=2(RATE)=RESULT.\\end{aligned}"
+      .replace("CURVE", curve).replace("RATE", format(a)).replace("RESULT", format(2*a,true));
+    if (piCalculation.dataset.tex === pi) return;
+    piCalculation.dataset.tex = pi;
+    etaCalculation.dataset.tex = eta;
+    piCalculation.textContent = "W(π) = d/ds [π(γ(s))] at s = 0 = d/ds [" + curve + "] at s = 0 = " + format(a,true) + ".";
+    etaCalculation.textContent = "W(η) = d/ds [η(γ(s))] at s = 0 = d/ds [2(" + curve + ") − 1] at s = 0 = " + format(2*a,true) + ".";
+    window.renderLessonMath?.(piCalculation.parentElement);
+  }
   function render() {
     const {width,height} = svg.getBoundingClientRect();
     if (!width || !height) return;
@@ -323,6 +351,7 @@
     const p = Number(pInput.value);
     const a = Number(aInput.value);
     const eta = 2*p-1;
+    renderCalculations(p,a);
     pValue.textContent = format(p);
     aValue.textContent = format(a,true);
     const summaryText = "分布の座標。π は "+format(p)+"、η は "+format(eta)
