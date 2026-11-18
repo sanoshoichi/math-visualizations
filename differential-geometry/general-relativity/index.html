@@ -16,13 +16,39 @@
     #sphere-coordinate-basis .sphere-status { color:var(--muted); min-height:1.5em; margin:.4em 0 0; text-align:center; font-size:.88rem; }
     @media(pointer:coarse) { #sphere-coordinate-basis .sphere-fields label { min-height:64px; } }
   </style>
+<style>
+#three-curvatures .tabs {flex-wrap:wrap;overflow:visible}
+#three-curvatures [role="tab"] {scroll-margin-top:4rem}
+#three-curvatures [role="tabpanel"] {margin:.7rem 0 0}
+#three-curvatures .fields label {display:block;min-width:0}
+#three-curvatures .fields select,#three-curvatures .fields input {min-width:0}
+#three-curvatures .fields input[type="range"] {min-height:30px}
+#three-curvatures .form-check {min-height:36px}
+#three-curvatures .form-check input {min-width:0;min-height:0;flex:none}
+#three-curvatures svg.figure {max-height:none;max-width:44rem;margin:0 auto}
+#three-curvatures .answer {font-variant-numeric:tabular-nums}
+@media(pointer:coarse){#three-curvatures .fields input[type="range"] {min-height:44px}}
+#three-curvatures .fields {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:.35rem .75rem;margin:.75rem 0}
+#three-curvatures .fields input {width:100%;display:block}
+#three-curvatures .fields select {width:100%;display:block}
+#three-curvatures .figure {display:block;width:100%;height:252px}
+#three-curvatures .legend {display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1rem;margin:.3rem 0}
+#three-curvatures .key {display:inline-block;width:1rem;margin-right:.35rem;vertical-align:middle;border-top:2px solid var(--blue)}
+#three-curvatures .key.second {border-top:2px dashed var(--gold)}
+#three-curvatures .answer {display:block;text-align:center;margin:.4rem 0;min-height:1.5em}
+#three-curvatures svg text {fill:var(--ink);font-family:inherit}
+#three-curvatures [hidden] {display:none}
+#three-curvatures .section-values {display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.1rem;margin:.35rem 0}
+#three-curvatures .angle-labels text {paint-order:stroke;stroke:var(--paper);stroke-width:3;stroke-linejoin:round}
+</style>
+<script defer src="../../assets/curvature-lab.js"></script>
 </head><body data-legacy="geometry"><main>
 <nav aria-label="学習ページ"><a href="../../">数学の可視化一覧</a><a href="../../relativity/special/">特殊相対性理論</a><a href="../../relativity/general/">一般相対性理論 · 測地線</a><a href="backup/">旧版のバックアップ</a></nav>
 <h1>微分幾何学</h1>
 <p class="lead">ベクトルを比べる規則から始め、曲率を計算し、重力の式につなぐ。</p>
 <p>ベクトル・基底・計量から復習する場合は <a href="backup/">旧版の16項目</a> から始められる。</p>
 <p>各項目の末尾に <a href="https://eman-physics.net/relativity/contents.html">EMAN「相対性理論」</a> の対応記事へのリンクがある。時空の計量の符号は <span class="inline-math" data-tex="(-,+,+,+)">(-,+,+,+)</span>、時間座標は <span class="inline-math" data-tex="x^0=ct">x^0=ct</span> とする。</p>
-<nav class="sr-parts" aria-label="部を選ぶ"><a href="#part-5">第5部 リーマン幾何学</a></nav><div class="chapter-bar"><label for="chapter-select">項目を選ぶ</label><select id="chapter-select"><option value="">目次</option><optgroup label="第5部 リーマン幾何学"><option value="sphere-basis">単位球面の座標基底</option><option value="covariant">5.1 共変微分は何を足しているか</option><option value="parallel">5.2 平行移動で成分が変わる理由</option><option value="geodesics">5.3 測地線は接ベクトル自身を運ぶ</option><option value="normal-coordinates">5.4 接続係数を一点でゼロにする</option><option value="tensor-derivative">5.5 テンソルでは添字ごとに補正する</option><option value="riemann">5.6 閉じた経路で平行移動を比べる</option><option value="ricci">5.7 Ricci は同じ方向を含む断面曲率の和</option><option value="bianchi">5.8 ビアンキの恒等式と発散の消える組</option><option value="newton">5.9 低速・弱い重力で Newton の運動に戻る</option><option value="field-equation">5.10 Newton の極限で結合定数を決める</option></optgroup></select></div><div class="sr-part" id="part-5"><h2>第5部 リーマン幾何学</h2>
+<nav class="sr-parts" aria-label="部を選ぶ"><a href="#part-5">第5部 リーマン幾何学</a></nav><div class="chapter-bar"><label for="chapter-select">項目を選ぶ</label><select id="chapter-select"><option value="">目次</option><optgroup label="第5部 リーマン幾何学"><option value="sphere-basis">単位球面の座標基底</option><option value="covariant">5.1 共変微分は何を足しているか</option><option value="parallel">5.2 平行移動で成分が変わる理由</option><option value="geodesics">5.3 測地線は接ベクトル自身を運ぶ</option><option value="normal-coordinates">5.4 接続係数を一点でゼロにする</option><option value="tensor-derivative">5.5 テンソルでは添字ごとに補正する</option><option value="riemann">5.6 閉じた経路で平行移動を比べる</option><option value="ricci">5.7 Ricci は同じ方向を含む断面曲率の和</option><option value="curvature-lab">共変微分・リーマン曲率・スカラー曲率の図</option><option value="bianchi">5.8 ビアンキの恒等式と発散の消える組</option><option value="newton">5.9 低速・弱い重力で Newton の運動に戻る</option><option value="field-equation">5.10 Newton の極限で結合定数を決める</option></optgroup></select></div><div class="sr-part" id="part-5"><h2>第5部 リーマン幾何学</h2>
 <section id="sphere-basis" class="sr-topic">
 <h2>単位球面の座標基底</h2>
 <p>単位球面の点を <span class="inline-math" data-tex="P=F(\theta,\phi)">P=F(θ,φ)</span> と書く。<span class="inline-math" data-tex="\theta">θ</span> は北極からの角度、<span class="inline-math" data-tex="\phi">φ</span> は経度で、<span class="inline-math" data-tex="+x">+x</span> 方向から <span class="inline-math" data-tex="+y">+y</span> 方向に測る。</p>
@@ -71,6 +97,7 @@
   <p class="caption">経度は 0 に固定した断面。点 P での矢印を同じ倍率で描く。赤道では緑の接成分がゼロ。</p>
 </figure>
 <p>他の例も <a href="../covariant-derivative/">円・球面の共変微分</a> で試せる。</p>
+<p><a href="#tc-tab-derivative">平面と球面で共変微分の矢印を比べる</a></p>
 <p class="source"><a href="https://eman-physics.net/relativity/co_dif.html">EMAN の対応記事 ↗</a></p>
 </section>
 
@@ -174,6 +201,7 @@
   <p class="caption">左は球を北極の上から見た図。N→A、A→B、B→N の順。右は北極の接平面だけを拡大。</p>
 </figure>
 <p>面の曲率は <a href="../surface-curvature/">球面・円柱・鞍型の断面図</a> でも比較できる。</p>
+<p><a href="#tc-tab-riemann">出発点と移動幅を変えて、二つの経路の結果を比べる</a></p>
 <p class="source"><a href="https://eman-physics.net/relativity/riemann.html">EMAN の対応記事 ↗</a></p>
 </section>
 
@@ -194,7 +222,66 @@
   <p class="caption">正規直交基底での対角三成分を表示する。数値表に三成分の和も出す。</p>
 </figure>
 
+<p><a href="#tc-tab-scalar">断面上の円を動かして、スカラー曲率の計算を見る</a></p>
 <p class="source"><a href="https://eman-physics.net/relativity/ricci.html">EMAN の対応記事 ↗</a></p>
+</section>
+
+<section id="curvature-lab" class="sr-topic">
+<h2>共変微分・リーマン曲率・スカラー曲率を比べる</h2>
+<p>平面と球面で矢印を動かし、二つの経路で運んだ結果を比べる。最後のタブでは、三次元空間の断面曲率からスカラー曲率を求める。</p>
+<div id="three-curvatures" data-tabs>
+<div class="tabs" role="tablist" aria-label="表示する概念">
+ <button id="tc-tab-derivative" role="tab" aria-selected="false" aria-controls="tc-derivative" type="button">共変微分</button>
+ <button id="tc-tab-riemann" role="tab" aria-selected="true" aria-controls="tc-riemann" type="button">リーマン曲率</button>
+ <button id="tc-tab-scalar" role="tab" aria-selected="false" aria-controls="tc-scalar" type="button">スカラー曲率</button>
+</div>
+<section id="tc-derivative" role="tabpanel" aria-labelledby="tc-tab-derivative" hidden>
+ <div class="fields">
+  <label class="form-label">曲面<select class="form-select" data-geometry><option value="sphere">単位球面</option><option value="plane">平面</option></select></label>
+  <label class="form-label"><span data-coordinate>半径 r</span> <output data-coordinate-value></output><input data-location class="form-range" type="range" min="20" max="130" value="55"></label>
+  <label class="form-label">偏角・経度 φ <output data-phi-value></output><input data-phi class="form-range" type="range" min="-65" max="65" value="40"></label>
+ </div>
+ <label class="form-check" data-angle-control><input class="form-check-input" type="checkbox" data-angles checked><span class="form-check-label">θ・φ の弧を表示</span></label>
+ <svg class="figure" role="img" aria-label="単位矢印とその共変微分。球面では北極からの角度と赤道上で測る経度も表示できる。"></svg>
+ <div class="legend"><span><i class="key" aria-hidden="true"></i>円周・緯線に沿う単位ベクトル Y</span><span><i class="key second" aria-hidden="true"></i>φ 方向の共変微分</span></div>
+ <output class="answer tabular-nums" aria-live="polite"></output>
+ <p>円周や緯線に沿う単位ベクトル <span class="inline-math" data-tex="Y=e_\phi/\lVert e_\phi\rVert">Y = eφ/‖eφ‖</span> を、偏角・経度を増やす方向に共変微分します。角度の微分はラジアンで取ります。</p>
+ <div class="equation" data-tex="\text{平面}\colon\ \nabla_{e_\phi}Y=-e_r,\qquad \text{単位球面}\colon\ \nabla_{e_\phi}Y=-\cos\theta\,e_\theta.">平面では −eᵣ、単位球面では −cos θ eθ。</div>
+ <p>平面でも金の矢印が現れます。青の矢印として選んだ <span class="inline-math" data-tex="Y">Y</span> が、円周に沿って向きを変えるためです。</p>
+</section>
+<section id="tc-riemann" role="tabpanel" aria-labelledby="tc-tab-riemann">
+ <div class="fields">
+  <label class="form-label">曲面<select class="form-select" data-geometry><option value="sphere">単位球面</option><option value="plane">平面</option></select></label>
+  <label class="form-label" data-start-theta-control>出発点 P の θ <output data-start-theta-value></output><input data-start-theta class="form-range" type="range" min="25" max="95" value="50"></label>
+  <label class="form-label">出発点 P の φ <output data-start-phi-value></output><input data-start-phi class="form-range" type="range" min="-70" max="10" value="-25"></label>
+  <label class="form-label" data-theta-span-control>θ の移動幅 <output data-theta-span-value></output><input data-theta-span class="form-range" type="range" min="0" max="48" value="32"></label>
+  <label class="form-label">φ の移動幅 <output data-span-value></output><input data-span class="form-range" type="range" min="8" max="75" value="55"></label>
+ </div>
+ <svg class="figure" role="img" aria-label="同じ出発点と終点を結ぶ二経路と、終点での矢印の比較"></svg>
+ <div class="legend"><span><i class="key" aria-hidden="true"></i>A　半径・経線 → 円弧・緯線</span><span><i class="key second" aria-hidden="true"></i>B　円弧・緯線 → 半径・経線</span></div>
+ <output class="answer tabular-nums" aria-live="polite"></output>
+ <p>同じ矢印を二つの経路で運び、右側の <span class="inline-math" data-tex="T_QM">T_QM</span> で比べます。単位球面で囲む面積は、北極からの角度の範囲にも依存します。式では <span class="inline-math" data-tex="\Delta\phi">Δφ</span> をラジアンで代入します。</p>
+ <div class="equation" data-tex="A=\Delta\phi\bigl(\cos\theta_P-\cos(\theta_P+\Delta\theta)\bigr).">A = Δφ［cos θP − cos(θP + Δθ)］。</div>
+ <p>単位球面では、図の向きで測った二本の角度差はラジアンで <span class="inline-math" data-tex="A">A</span> に等しく、平面ではゼロです。<span class="inline-math" data-tex="\Delta\theta=0">Δθ = 0</span> では二つの道が重なり、囲む面積がゼロになるので比は定まりません。</p>
+</section>
+<section id="tc-scalar" role="tabpanel" aria-labelledby="tc-tab-scalar" hidden>
+ <div class="fields">
+  <label class="form-label">空間<select class="form-select" data-geometry><option value="sphere">球面 × 直線</option><option value="plane">ユークリッド空間 ℝ³</option></select></label>
+  <label class="form-label">球面の半径 a <output data-radius-value></output><input data-radius class="form-range" type="range" min=".5" max="2.5" step=".05" value="1"></label>
+  <label class="form-label">表示する断面<select class="form-select" data-plane><option value="0">e₁・e₂（球面の二方向）</option><option value="1">e₁・e₃</option><option value="2">e₂・e₃</option></select></label>
+ </div>
+ <svg class="figure" role="img" aria-label="選んだ断面上の測地円。中心から測った半径はすべて0.55。"></svg>
+ <div class="legend"><span><i class="key" aria-hidden="true"></i>断面上の円（半径 0.55）</span></div>
+ <output class="answer" data-circle aria-live="polite"></output>
+ <div class="section-values tabular-nums" aria-label="三つの断面曲率">
+   <span>K₁₂ <output data-k="0"></output></span><span>K₁₃ <output data-k="1"></output></span><span>K₂₃ <output data-k="2"></output></span>
+ </div>
+ <output class="answer tabular-nums" aria-live="polite"></output>
+ <p><span class="inline-math" data-tex="e_1,e_2">e₁, e₂</span> は球面に沿う方向、<span class="inline-math" data-tex="e_3">e₃</span> は直線方向です。選んだ断面で、中心から断面に沿って同じ距離だけ進んだ点を結びます。球面の二方向の断面では、球の半径 <span class="inline-math" data-tex="a">a</span> を小さくすると、この円の円周が短くなり、<span class="inline-math" data-tex="K_{12}=1/a^2">K₁₂ = 1/a²</span> が大きくなります。</p>
+ <div class="equation" data-tex="\mathrm{Scal}=2(K_{12}+K_{13}+K_{23}).">Scal = 2(K₁₂ + K₁₃ + K₂₃)。</div>
+ <p>三つの断面のうち、直線方向を含む二つの座標断面は平らです。各断面はリッチ曲率の対角和で二回ずつ数えられるので、和を二倍します。</p>
+</section>
+</div>
 </section>
 
 <section id="bianchi" class="sr-topic">
