@@ -10,7 +10,7 @@
       const surface = 'color-mix(in srgb, var(--blue) 10%, transparent)';
       const ns = 'http://www.w3.org/2000/svg';
       const position = (index, s) => P.map((p, i) => p + s * directions[index][i]);
-      let yaw = -0.68, drag = null;
+      let yaw = 0.72, drag = null;
 
       function add(svg, kind, attrs, text) {
         const element = document.createElementNS(ns, kind);
@@ -101,10 +101,10 @@
 
       function drawTangent() {
         tangent.replaceChildren();
-        const origin = [160, 38];
+        const origin = [160, 45];
         const v = directions.map(direction => {
-          const [x,y] = project(direction, -.68);
-          return [34 * x, -34 * y];
+          const [x,y] = project(direction);
+          return [26 * x, -26 * y];
         });
         const at = (a, b) => origin.map((o, i) => o + a * v[0][i] + b * v[1][i]);
         polygon(tangent, [at(-.62,-.62), at(1.25,-.62), at(1.25,1.25), at(-.62,1.25)], false);
@@ -114,14 +114,26 @@
           label(tangent, [end[0] + (end[0] >= origin[0] ? 12 : -12), end[1] + 5], ['e₁','e₂'][i]);
         });
         point(tangent, origin);
-        label(tangent, [origin[0], origin[1] - 9], '0');
+        label(tangent, [origin[0], origin[1] - 9], '0ₚ');
       }
 
       function updatePositions() {
         const s = Number(slider.value);
         role('value').value = s.toFixed(2);
+        const axis = role('parameter-axis');
+        axis.replaceChildren();
+        const x = v => 30 + (v + .19) * 360;
+        line(axis, [18,24], [301,24]);
+        line(axis, [x(0),19], [x(0),29]);
+        label(axis, [x(0),45], '0');
+        point(axis, [x(s),24]);
+        label(axis, [x(s),15], 's = ' + s.toFixed(2));
         directions.forEach((_, i) => {
-          const [p1,p2] = position(i, s);
+          const distribution = position(i, s);
+          const [p1,p2] = distribution;
+          const image = 'γ' + (i === 0 ? '₁' : '₂') + '(' + s.toFixed(2) + ')';
+          role(i === 0 ? 'image-first' : 'image-second').textContent =
+            image + ' ↔ (' + distribution.map(p => p.toFixed(2)).join(', ') + ')';
           role(i === 0 ? 'first' : 'second').textContent = '(' + p1.toFixed(2) + ', ' + p2.toFixed(2) + ')';
         });
         drawManifold(s);
@@ -139,6 +151,7 @@
         yaw += (event.clientX - drag.x) * .009;
         drag.x = event.clientX;
         drawManifold(Number(slider.value));
+        drawTangent();
       });
       manifold.addEventListener('lostpointercapture', () => { drag = null; });
       updatePositions();

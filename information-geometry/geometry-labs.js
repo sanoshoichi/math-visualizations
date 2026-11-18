@@ -36,6 +36,7 @@
     const length = Math.sqrt(g11), horizontal = g12/length;
     const vertical = Math.sqrt(g22-horizontal*horizontal);
     const angle = Math.atan2(vertical,horizontal);
+    svg.parentElement.querySelector('[data-basepoint]').textContent = '分布 P '+tuple([p,.30,r])+' → この点の接平面で基底を測る';
     const origin = [58,153], scale = 32;
     const first = [origin[0]+scale*length,origin[1]];
     const second = [origin[0]+scale*horizontal,origin[1]-scale*vertical];
@@ -55,6 +56,20 @@
     return north.map((x,i)=>(Math.sin((1-t)*omega)*x+Math.sin(t*omega)*south[i])/Math.sin(omega));
   }
   function sphere(svg,t) {
+    const domain = svg.parentElement.querySelector('[data-domain]');
+    domain.replaceChildren();
+    const toChart = ([x,y]) => [88+172*x,178-172*y];
+    const probabilities = u => spherePoint(u).map(x=>x*x);
+    path(domain,[[88,6],[88,178],[260,178]]);
+    path(domain,[[88,6],[260,178]],muted,1,'4 3');
+    label(domain,[69,20],'p₂'); label(domain,[276,181],'p₁');
+    path(domain,sample(u=>toChart(probabilities(u))),blue,2.7);
+    for(const [p,name] of [[P,'P'],[Q,'Q']]) {
+      const at = toChart(p);
+      dot(domain,at,ink);
+      label(domain,[at[0]+8,at[1]-7],name);
+    }
+    dot(domain,toChart(probabilities(t)),gold);
     // Orthographic view along (1,1,1). Work in unit-radius coordinates for drawing.
     const map = ([x,y,z]) => [175+137*(x-y)/Math.sqrt(2),100-108*(2*z-x-y)/Math.sqrt(6)];
     for (let axis = 0; axis < 3; axis++) {
@@ -125,7 +140,7 @@
     const lab=document.getElementById(draw.name+'-lab');
     const slider=document.getElementById(draw.name+'-control');
     const output=slider.parentElement.querySelector('output');
-    const svg=lab.querySelector('svg');
+    const svg=lab.querySelector('svg:not([data-domain])');
     function update() {
       const value=Number(slider.value);
       output.value=fmt(value);

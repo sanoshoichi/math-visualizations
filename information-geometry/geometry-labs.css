@@ -61,3 +61,18 @@
 @media print {
   .slider-bar {position:static;}
 }
+
+.map-source,.map-space {max-width:25rem;margin:.7rem auto;text-align:center;}
+.map-space,.map-branch {background:var(--wash);border:1px solid var(--line);border-radius:.5rem;padding:.55rem;}
+.map-arrow,.map-key {text-align:center;margin:.45rem auto;}
+.map-arrow {color:var(--ink);font-weight:600;}
+.map-branches {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;}
+.map-branch {min-width:0;text-align:center;}
+.map-branch > p {margin:.4rem 0;}
+.map-readings {font-size:.9rem;font-variant-numeric:tabular-nums;}
+.base-note {color:var(--muted);font-size:.85rem;margin:.5rem 0;}
+#sphere-lab h3 {margin:.4rem 0;text-align:center;}
+@media(max-width:580px) {
+  .map-branches {grid-template-columns:1fr;}
+  .map-branch svg {max-width:20rem;margin:auto;}
+}
