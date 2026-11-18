@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="コインの確率分布を多様体の点として定義し、接ベクトルを二つの座標で表して比べる。">
+  <title>情報幾何学 · コインの分布と接ベクトル</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+  <link rel="stylesheet" href="../assets/lesson.css">
+  <link rel="stylesheet" href="../assets/figure-theme.css">
+  <link rel="stylesheet" href="../assets/math-layout.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <script defer src="../assets/lesson.js"></script>
+  <style>
+    #coin-tangent-coordinates .coin-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem; }
+    #coin-tangent-coordinates .coin-controls label { display:block; min-width:0; }
+    #coin-tangent-coordinates .coin-controls input { display:block; width:100%; }
+    #coin-tangent-coordinates .coin-figure { display:block; width:100%; max-width:42rem; height:179px; margin:.35rem auto; }
+    #coin-tangent-coordinates .coin-figure text { fill:var(--ink); }
+    #coin-tangent-coordinates .coin-figure .tick { fill:var(--muted); }
+    #coin-tangent-coordinates .coin-legend { display:flex; justify-content:center; flex-wrap:wrap; gap:.2rem 1rem; }
+    #coin-tangent-coordinates .coin-dot { color:var(--ink); }
+    #coin-tangent-coordinates .coin-arrow { color:var(--blue); }
+    @media(pointer:coarse){#coin-tangent-coordinates .coin-controls label {min-height:62px;}}
+
+    main > section { scroll-margin-top:4rem; margin:1.6rem 0 2.1rem; }
+    #coin-tangent-coordinates .coin-controls input { min-width:0; }
+    #coin-tangent-coordinates .coin-figure { max-height:none; }
+    #coin-tangent-coordinates .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  </style>
+</head>
+<body>
+<main>
+  <nav aria-label="学習ページ">
+    <a href="../">数学の可視化一覧</a>
+    <a href="../differential-geometry/general-relativity/#sphere-basis">微分幾何学の座標基底</a>
+  </nav>
+  <h1>情報幾何学</h1>
+  <p class="lead">コインの確率分布を多様体の点とみなします。一つの分布から確率を変える向きと速さを、接ベクトルとして二つの座標で表します。</p>
+  <div class="chapter-bar">
+    <label for="chapter-select">項目を選ぶ</label>
+    <select id="chapter-select">
+      <option value="">目次</option>
+      <option value="distributions">1. 確率分布と多様体</option>
+      <option value="tangent-vector">2. 接ベクトル</option>
+      <option value="coordinates">3. 同じ分布を別の座標で読む</option>
+      <option value="coordinate-components">4. 同じ接ベクトルの成分を比べる</option>
+    </select>
+  </div>
+
+  <section id="distributions">
+    <h2>1. 確率分布 <span class="inline-math" data-tex="P_p">Pₚ</span> と多様体 <span class="inline-math" data-tex="M">M</span></h2>
+    <p>コインを一回投げた結果の集合を <span class="inline-math" data-tex="\Omega=\{\mathrm H,\mathrm T\}">Ω = {H, T}</span> とします。<span class="inline-math" data-tex="\mathrm H">H</span> が表、<span class="inline-math" data-tex="\mathrm T">T</span> が裏です。各結果に正の確率を割り当てる関数を集めます。</p>
+    <div class="equation" data-tex="M=\{P:\Omega\to(0,1)\mid P(\mathrm H)+P(\mathrm T)=1\}.">M = {P : Ω → (0,1) | P(H) + P(T) = 1}.</div>
+    <p>各 <span class="inline-math" data-tex="p\in(0,1)">p ∈ (0,1)</span> に対して、<span class="inline-math" data-tex="P_p\in M">Pₚ ∈ M</span> を次で定義します。</p>
+    <div class="equation" data-tex="P_p(\mathrm H)=p,\qquad P_p(\mathrm T)=1-p.">Pₚ(H) = p, Pₚ(T) = 1 − p.</div>
+    <p>表の確率を返す写像 <span class="inline-math" data-tex="\pi">π</span> を座標に取ります。表の確率を一つ決めると裏の確率も決まるので、この写像は全単射です。</p>
+    <div class="equation" data-tex="\begin{aligned}\pi&amp;:M\to(0,1),&amp;\pi(P)&amp;=P(\mathrm H),\\ \pi^{-1}&amp;:(0,1)\to M,&amp;\pi^{-1}(p)&amp;=P_p.\end{aligned}">π(P) = P(H), π⁻¹(p) = Pₚ.</div>
+    <p>この写像を大域座標とする一次元の滑らかな構造を <span class="inline-math" data-tex="M">M</span> に入れます。<span class="inline-math" data-tex="P_p\in M">Pₚ ∈ M</span> が多様体上の点で、<span class="inline-math" data-tex="\pi(P_p)=p">π(Pₚ) = p</span> がその点の座標値です。</p>
+  </section>
+
+  <section id="tangent-vector">
+    <h2>2. 分布 <span class="inline-math" data-tex="P_p">Pₚ</span> での接ベクトル</h2>
+    <p><span class="inline-math" data-tex="p\in(0,1)">p ∈ (0,1)</span> と <span class="inline-math" data-tex="a\in\mathbb R">a ∈ ℝ</span> を固定します。<span class="inline-math" data-tex="p+as\in(0,1)">p + as ∈ (0,1)</span> を満たす <span class="inline-math" data-tex="s=0">s = 0</span> の近くで、曲線 <span class="inline-math" data-tex="\gamma">γ</span> を取ります。</p>
+    <div class="equation" data-tex="\gamma(s)=P_{p+as}\in M,\qquad \gamma(0)=P_p.">γ(s) = Pₚ₊ₐₛ ∈ M, γ(0) = Pₚ.</div>
+    <p>その点での接ベクトル <span class="inline-math" data-tex="W=\dot\gamma(0)\in T_{P_p}M">W ∈ TₚM</span> は、滑らかな関数 <span class="inline-math" data-tex="f:M\to\mathbb R">f : M → ℝ</span> に作用して、曲線に沿った変化率を返します。</p>
+    <div class="equation" data-tex="\begin{aligned}W(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}f(\gamma(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(f\circ\pi^{-1})(p+as)\right|_{s=0}\\&amp;=a\,(f\circ\pi^{-1})'(p).\end{aligned}">W(f) = a(f ∘ π⁻¹)′(p).</div>
+    <p>最後の等号は連鎖律です。<span class="inline-math" data-tex="(f\circ\pi^{-1})'(p)"> (f ∘ π⁻¹)′(p)</span> は座標基底を <span class="inline-math" data-tex="f">f</span> に作用させた値なので、</p>
+    <div class="equation" data-tex="W=a\left.\frac{\partial}{\partial\pi}\right|_{P_p}\in T_{P_p}M.">W = a (∂/∂π)|ₚ ∈ TₚM.</div>
+    <p>表の確率を返す関数 <span class="inline-math" data-tex="\pi">π</span> と裏の確率を返す関数 <span class="inline-math" data-tex="1-\pi">1 − π</span> を入れると、表の変化率と裏の変化率がそれぞれ得られます。</p>
+    <div class="equation" data-tex="W(\pi)=a,\qquad W(1-\pi)=-a.">W(π) = a, W(1 − π) = −a.</div>
+  </section>
+
+  <section id="coordinates">
+    <h2>3. 同じ分布に、もう一つの座標を入れる</h2>
+    <p>表と裏の確率の差を返す写像 <span class="inline-math" data-tex="\eta">η</span> を座標に取ります。</p>
+    <div class="equation" data-tex="\eta:M\to(-1,1),\qquad \eta(P)=P(\mathrm H)-P(\mathrm T).">η : M → (−1,1), η(P) = P(H) − P(T).</div>
+    <p>すべての <span class="inline-math" data-tex="P\in M">P ∈ M</span> で確率の和が <span class="inline-math" data-tex="1">1</span> なので、座標変換とその逆は</p>
+    <div class="equation" data-tex="\begin{aligned}(\eta\circ\pi^{-1})(p)&amp;=2p-1,\\ (\pi\circ\eta^{-1})(u)&amp;=\frac{u+1}{2},\qquad u\in(-1,1).\end{aligned}">η ∘ π⁻¹(p) = 2p − 1, π ∘ η⁻¹(u) = (u + 1)/2.</div>
+    <p>たとえば、同じ分布 <span class="inline-math" data-tex="P_{0.2}\in M">P₀.₂ ∈ M</span> の座標値は、表の確率で <span class="inline-math" data-tex="0.2">0.2</span>、表と裏の確率の差では <span class="inline-math" data-tex="-0.6">−0.6</span> です。</p>
+  </section>
+
+  <section id="coordinate-components">
+    <h2>4. 同じ接ベクトルを二つの座標で表す</h2>
+    <p>2 で取った曲線 <span class="inline-math" data-tex="\gamma(s)=P_{p+as}">γ(s) = Pₚ₊ₐₛ</span> をそのまま使います。曲線上の分布を、二つの座標で読むと次のようになります。</p>
+    <div class="equation" data-tex="\begin{aligned}\pi(\gamma(s))&amp;=p+as,\\ \eta(\gamma(s))&amp;=2(p+as)-1.\end{aligned}">π(γ(s)) = p + as, η(γ(s)) = 2(p + as) − 1.</div>
+    <p>それぞれを <span class="inline-math" data-tex="s">s</span> で微分して <span class="inline-math" data-tex="s=0">s = 0</span> で評価すると、<span class="inline-math" data-tex="W(\pi)=a">W(π) = a</span> と <span class="inline-math" data-tex="W(\eta)=2a">W(η) = 2a</span> が得られます。</p>
+    <div class="equation" data-tex="\begin{aligned}W&amp;=a\left.\frac{\partial}{\partial\pi}\right|_{P_p}\\&amp;=2a\left.\frac{\partial}{\partial\eta}\right|_{P_p}\quad\in T_{P_p}M.\end{aligned}">W = a (∂/∂π)|ₚ = 2a (∂/∂η)|ₚ ∈ TₚM.</div>
+    <p>図の数直線は、<span class="inline-math" data-tex="0">0</span> と <span class="inline-math" data-tex="1">1</span> がそれぞれ同じ横位置に来るように揃えています。点は分布の座標値、矢印の向きと横幅は接ベクトルの成分を表します。</p>
+    <div id="coin-tangent-coordinates">
+  <div class="coin-controls">
+    <label class="form-label" for="coin-p">表の確率 <i>p</i> <output id="coin-p-value" class="tabular-nums" for="coin-p">0.20</output>
+      <input class="form-range" id="coin-p" type="range" min=".20" max=".80" step=".01" value=".20">
+    </label>
+    <label class="form-label" for="coin-a">表の確率の変化率 <i>a</i> <output id="coin-a-value" class="tabular-nums" for="coin-a">+0.15</output>
+      <input class="form-range" id="coin-a" type="range" min="-.18" max=".18" step=".01" value=".15">
+    </label>
+  </div>
+  <svg class="coin-figure" role="img" aria-label="同じ数値スケールで、表の確率と表裏の確率の差の座標値および接ベクトルの成分を比較する"></svg>
+  <div class="coin-legend">
+    <span><span class="coin-dot" aria-hidden="true">●</span> 分布 <i>P</i><sub><i>p</i></sub></span>
+    <span><span class="coin-arrow" aria-hidden="true">→</span> 接ベクトル <i>W</i> の表示</span>
+  </div>
+  <div class="sr-only" aria-live="polite" data-coin-summary></div>
+</div>
+    <p><span class="inline-math" data-tex="p">p</span> を固定して <span class="inline-math" data-tex="a">a</span> を変えると、点は動かず矢印が変わります。横軸の目盛りが共通なので、<span class="inline-math" data-tex="a\ne0">a ≠ 0</span> では下の矢印の横幅が上の二倍になります。この二倍は、座標成分 <span class="inline-math" data-tex="2a">2a</span> と <span class="inline-math" data-tex="a">a</span> の比の大きさです。</p>
+  </section>
+</main>
+<script>(() => {
+  const root = document.getElementById("coin-tangent-coordinates");
+  const pInput = root.querySelector("#coin-p");
+  const aInput = root.querySelector("#coin-a");
+  const pValue = root.querySelector("#coin-p-value");
+  const aValue = root.querySelector("#coin-a-value");
+  const svg = root.querySelector(".coin-figure");
+  const summary = root.querySelector("[data-coin-summary]");
+  const fg = "var(--ink)";
+  const neutral = "var(--muted)";
+  const blue = "var(--blue)";
+  const format = (number, signed = false) => {
+    const rounded = Math.round(number * 100);
+    const sign = rounded < 0 ? "−" : (signed && rounded > 0 ? "+" : "");
+    return sign + (Math.abs(rounded)/100).toFixed(2);
+  };
+  const tickText = (value) => String(value).replace("-", "−");
+  const text = (x,y,value,anchor="start",className="") =>
+    '<text x="'+x+'" y="'+y+'" class="'+className+'" text-anchor="'+anchor+'">'+value+'</text>';
+  const line = (x1,y1,x2,y2,color,weight=1,dash="") =>
+    '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+color+'" stroke-width="'+weight+'" stroke-dasharray="'+dash+'"/>';
+  const circle = (x,y,r,fill,stroke="none") =>
+    '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.3"/>';
+  function vectorArrow(x, end, y) {
+    if (Math.abs(end-x) < .01) return circle(x,y,6.3,"none",blue);
+    const head = Math.min(7, Math.abs(end-x) * .56);
+    const base = end - Math.sign(end-x)*head;
+    return line(x,y,base,y,blue,2.6)
+      + '<path d="M'+end+','+y+'L'+base+','+(y-head*.48)+'L'+base+','+(y+head*.48)+'Z" fill="'+blue+'"/>';
+  }
+  function render() {
+    const {width,height} = svg.getBoundingClientRect();
+    if (!width || !height) return;
+    svg.setAttribute("viewBox","0 0 "+width+" "+height);
+    const p = Number(pInput.value);
+    const a = Number(aInput.value);
+    const eta = 2*p-1;
+    pValue.textContent = format(p);
+    aValue.textContent = format(a,true);
+    const summaryText = "分布の座標。π は "+format(p)+"、η は "+format(eta)
+      +"。接ベクトルの成分。π では "+format(a,true)+"、η では "+format(2*a,true)+"。";
+    if (summary.textContent !== summaryText) summary.textContent = summaryText;
+
+    const start = 18, finish = width - 18;
+    const toX = (value) => start + (finish-start)*(value+1)/2;
+    const parts = [];
+    for (const row of [
+      {y:46,name:"π（表の確率）",coordinate:p,component:a,symbol:"π",min:0,max:1},
+      {y:134,name:"η（表と裏の確率の差）",coordinate:eta,component:2*a,symbol:"η",min:-1,max:1},
+    ]) {
+      const {y,name,coordinate,component,symbol,min,max} = row;
+      parts.push(text(start,y-24,name));
+      parts.push(text(finish,y-24,symbol+" = "+format(coordinate),"end"));
+      parts.push(line(toX(min),y,toX(max),y,neutral,1));
+      const tickValues = width<365 ? [-1,0,1] : [-1,-.5,0,.5,1];
+      for (const t of tickValues.filter(value=>value>=min && value<=max)) {
+        const xTick = toX(t);
+        parts.push(line(xTick,y-4,xTick,y+4,neutral));
+        parts.push(text(xTick,y+21,tickText(t),"middle","tick"));
+      }
+      for(const bound of [min,max]) parts.push(circle(toX(bound),y,3,"var(--paper)",neutral));
+      const x = toX(coordinate), end = toX(coordinate+component);
+      parts.push(vectorArrow(x,end,y),circle(x,y,3.7,fg));
+      parts.push(text(finish,y+41,"W("+symbol+") = "+format(component,true),"end"));
+    }
+    svg.innerHTML = parts.join("");
+  }
+  root.addEventListener("input",render);
+  new ResizeObserver(render).observe(svg);
+  render();
+})();
+</script>
+</body>
+</html>
