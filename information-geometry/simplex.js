@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const root = document.getElementById('simplex-widget');
+  const root = document.getElementById('three-outcome-distributions');
   const el = id => root.querySelector('#' + id);
   const svg = el('view'), mode = el('mode'), s1 = el('slider1'), s2 = el('slider2');
   let a=20,b=30, yaw=-0.68, elevation=0.56, dragging=null;

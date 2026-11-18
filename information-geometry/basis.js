@@ -1,5 +1,5 @@
 (() => {
-      const root = document.getElementById('simplex-two-curve-explorer');
+      const root = document.getElementById('coordinate-basis');
       const role = (name) => root.querySelector('[data-role="' + name + '"]');
       const slider = root.querySelector('#simplex-curve-s');
       const manifold = role('manifold'), coordinates = role('coordinates'), tangent = role('tangent');

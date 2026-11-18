@@ -123,10 +123,12 @@
 
   for(const draw of [fisher,sphere,dual,kl]) {
     const lab=document.getElementById(draw.name+'-lab');
-    const slider=lab.querySelector('input'), svg=lab.querySelector('svg');
+    const slider=document.getElementById(draw.name+'-control');
+    const output=slider.parentElement.querySelector('output');
+    const svg=lab.querySelector('svg');
     function update() {
       const value=Number(slider.value);
-      lab.querySelector('output').value=fmt(value);
+      output.value=fmt(value);
       svg.replaceChildren();
       lab.querySelector('[data-reading]').textContent=draw(svg,value);
     }
