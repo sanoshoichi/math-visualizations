@@ -3,7 +3,7 @@
     #simplex-two-curve-explorer .parameter {max-width:360px;margin:0 auto .9rem;}
     #simplex-two-curve-explorer .parameter label {display:flex;justify-content:space-between;align-items:center;}
     #simplex-two-curve-explorer .plane-views {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem 1rem;}
-    #simplex-two-curve-explorer svg {display:block;width:100%;height:auto;}
+    #simplex-two-curve-explorer svg[role="img"] {display:block;width:100%;height:auto;}
     #simplex-two-curve-explorer .rotate {touch-action:pan-y;user-select:none;cursor:grab;}
     #simplex-two-curve-explorer .rotate:active {cursor:grabbing;}
     #simplex-two-curve-explorer .angle-caption {text-align:center;color:var(--muted-foreground);margin:.12rem 0 0;}
@@ -18,12 +18,12 @@
     }
 #simplex-two-curve-explorer {--foreground:var(--ink);--background:var(--paper);--muted-foreground:var(--muted);--orange:var(--gold);}
 #simplex-two-curve-explorer input {width:100%;}
-#simplex-two-curve-explorer svg text, .geometry-lab svg text {font:14px system-ui;fill:var(--ink);}
+#simplex-two-curve-explorer svg[role="img"] text, .geometry-lab svg[role="img"] text {font:14px system-ui;fill:var(--ink);}
 .geometry-lab {max-width:34rem;margin:1rem auto;padding:.8rem;border:1px solid var(--line);background:var(--wash);border-radius:.6rem;}
 .geometry-lab label {display:flex;justify-content:space-between;align-items:center;}
 .geometry-lab input {width:100%;min-height:36px;accent-color:var(--blue);}
 .geometry-lab output,.geometry-lab [data-reading] {font-variant-numeric:tabular-nums;}
-.geometry-lab svg {max-width:27rem;margin:auto;}
+.geometry-lab svg[role="img"] {max-width:27rem;margin:auto;}
 .geometry-lab figcaption,.geometry-lab [data-reading] {margin:.35rem 0;}
 .geometry-lab [data-reading] {padding:.4rem .6rem;}
 
@@ -74,5 +74,5 @@
 #sphere-lab h3 {margin:.4rem 0;text-align:center;}
 @media(max-width:580px) {
   .map-branches {grid-template-columns:1fr;}
-  .map-branch svg {max-width:20rem;margin:auto;}
+  .map-branch svg[role="img"] {max-width:20rem;margin:auto;}
 }
