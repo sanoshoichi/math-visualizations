@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="コインの確率分布と接ベクトルを座標で表し、3つの結果の確率分布を2次元と3次元の図で見る。">
-  <title>情報幾何学 · コインの分布と接ベクトル</title>
+  <title>情報幾何学 · 確率分布から計量・接続まで</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
   <link rel="stylesheet" href="../assets/lesson.css">
   <link rel="stylesheet" href="../assets/figure-theme.css">
@@ -30,6 +30,9 @@
     #coin-tangent-coordinates .coin-figure { max-height:none; }
     #coin-tangent-coordinates .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
   </style>
+<link rel="stylesheet" href="geometry-labs.css">
+<script defer src="basis.js"></script>
+<script defer src="geometry-labs.js"></script>
 </head>
 <body>
 <main>
@@ -38,7 +41,7 @@
     <a href="../differential-geometry/general-relativity/#sphere-basis">微分幾何学の座標基底</a>
   </nav>
   <h1>情報幾何学</h1>
-  <p class="lead">コインの確率分布を多様体の点とみなします。一つの分布から確率を変える向きと速さを、接ベクトルとして二つの座標で表します。</p>
+  <p class="lead">コインの分布で座標と接ベクトルを定め、結果を3つに増やして接平面を描きます。そこで測った長さが、分布の間の最短経路や予測の損失とどう結びつくかを考えます。</p>
   <div class="chapter-bar">
     <label for="chapter-select">項目を選ぶ</label>
     <select id="chapter-select">
@@ -48,7 +51,12 @@
       <option value="coordinates">3. 同じ分布を別の座標で読む</option>
       <option value="coordinate-components">4. 同じ接ベクトルの成分を比べる</option>
       <option value="three-outcome-distributions">5. 3つの結果の確率分布</option>
-    </select>
+      <option value="coordinate-basis">6. 曲線の速度と座標基底</option>
+  <option value="fisher-metric">7. 基底の長さとフィッシャー計量</option>
+  <option value="fisher-geodesic">8. 球面で見る最短経路</option>
+  <option value="dual-geodesics">9. 混合接続と指数接続</option>
+  <option value="relative-entropy">10. KLダイバージェンスと計量の関係</option>
+</select>
   </div>
 
   <section id="distributions">
@@ -134,6 +142,109 @@
     <div class="equation" data-tex="(p_1,p_2)(M_3)=\{(u,v)\in\mathbb R^2\mid u>0,\ v>0,\ u+v&lt;1\}.">(p₁, p₂)(M₃) = {(u,v) ∈ ℝ² | u &gt; 0, v &gt; 0, u + v &lt; 1}.</div>
     <p>辺や頂点では少なくとも1つの確率が0になります。図では境界の位置として描き、操作できる範囲は各確率が <span class="inline-math" data-tex="0.01">0.01</span> 以上の分布にしています。</p>
   </section>
+<section id="coordinate-basis"><h2>6. 曲線の速度と座標基底</h2>
+<p>分布 <span class="inline-math" data-tex="P\in M_3">P\in M_3</span> を <span class="inline-math" data-tex="(P(1),P(2),P(3))=(0.20,0.30,0.50)">(P(1),P(2),P(3))=(0.20,0.30,0.50)</span> に固定します。結果3の確率を結果1へ移す曲線を <span class="inline-math" data-tex="\gamma_1">\gamma_1</span>、結果2へ移す曲線を <span class="inline-math" data-tex="\gamma_2">\gamma_2</span> とします。両方に同じ実数 <span class="inline-math" data-tex="s">s</span> を入れます。</p>
+<div class="equation" data-tex="\begin{aligned}(p_i(\gamma_1(s)))_{i=1}^3&amp;=(0.20+s,0.30,0.50-s),\\(p_i(\gamma_2(s)))_{i=1}^3&amp;=(0.20,0.30+s,0.50-s).\end{aligned}">\begin{aligned}(p_i(\gamma_1(s)))_{i=1}^3&amp;=(0.20+s,0.30,0.50-s),\\(p_i(\gamma_2(s)))_{i=1}^3&amp;=(0.20,0.30+s,0.50-s).\end{aligned}</div>
+<div id="simplex-two-curve-explorer" aria-label="実数直線、分布の空間、座標空間、接平面で見る2本の座標曲線">
+
+
+  <div class="parameter">
+    <h3>実数直線 ℝ</h3>
+    <label class="form-label" for="simplex-curve-s"><span>共通のパラメータ <i>s</i></span><output data-role="value" for="simplex-curve-s" class="tabular-nums">0.15</output></label>
+    <input class="form-range" id="simplex-curve-s" type="range" min="-0.19" max="0.49" step="0.01" value="0.15">
+  </div>
+
+  <div class="plane-views">
+    <div>
+      <h3>分布の空間 <i>M</i><sub>3</sub></h3>
+      <svg data-role="manifold" class="rotate" viewBox="0 0 320 210" role="img" aria-label="三次元空間に置いた確率の三角形。白または黒の点が共通の出発点。円と四角は両方の曲線の現在の位置"></svg>
+      <p class="angle-caption text-small">横にドラッグして回転</p>
+    </div>
+    <div>
+      <h3>座標空間 ℝ²</h3>
+      <svg data-role="coordinates" viewBox="0 0 320 210" role="img" aria-label="同じ分布を横軸 p1、縦軸 p2 の座標で表示"></svg>
+    </div>
+  </div>
+
+  <div class="values tabular-nums" aria-label="両曲線上の点の座標 p1 と p2">
+    <div><span class="name-first">● <i>γ</i><sub>1</sub></span> <span data-role="first">(0.35, 0.30)</span></div>
+    <div><span class="name-second">■ <i>γ</i><sub>2</sub></span> <span data-role="second">(0.20, 0.45)</span></div>
+  </div>
+
+  <div class="tangent">
+    <h3>接平面 <i>T</i><sub><i>P</i></sub><i>M</i><sub>3</sub></h3>
+    <svg data-role="tangent" viewBox="0 0 320 130" role="img" aria-label="固定した出発点での速度。零ベクトルから出る実線が e1、破線が e2"></svg>
+  </div>
+
+
+</div>
+<p><span class="inline-math" data-tex="s=0">s=0</span> では2点が <span class="inline-math" data-tex="P">P</span> で重なります。この瞬間の速度を、それぞれ同じ接空間 <span class="inline-math" data-tex="T_PM_3">T_PM_3</span> の矢印として描いたものが下の接平面です。</p>
+<div class="equation" data-tex="e_1=\dot\gamma_1(0)=\left.\frac{\partial}{\partial p_1}\right|_P,\qquad e_2=\dot\gamma_2(0)=\left.\frac{\partial}{\partial p_2}\right|_P.">e_1=\dot\gamma_1(0)=\left.\frac{\partial}{\partial p_1}\right|_P,\qquad e_2=\dot\gamma_2(0)=\left.\frac{\partial}{\partial p_2}\right|_P.</div>
+<p>接ベクトル <span class="inline-math" data-tex="W=\dot\gamma(0)">W=\dot\gamma(0)</span> に関数 <span class="inline-math" data-tex="p_i">p_i</span> を渡すと、結果 <span class="inline-math" data-tex="i">i</span> の確率の変化率が得られます。<span class="inline-math" data-tex="W=ae_1+be_2">W=ae_1+be_2</span> と書いたとき、<span class="inline-math" data-tex="a,b">a,b</span> がそのまま初めの2つの変化率になります。</p>
+<div class="equation" data-tex="W(p_i)=\left.\frac{\mathrm d}{\mathrm ds}p_i(\gamma(s))\right|_{s=0},\qquad (W(p_1),W(p_2),W(p_3))=(a,b,-a-b).">W(p_i)=\left.\frac{\mathrm d}{\mathrm ds}p_i(\gamma(s))\right|_{s=0},\qquad (W(p_1),W(p_2),W(p_3))=(a,b,-a-b).</div>
+<p>最後の成分は <span class="inline-math" data-tex="p_3=1-p_1-p_2">p_3=1-p_1-p_2</span> を微分して得られます。</p>
+</section>
+<section id="fisher-metric"><h2>7. 基底の長さとフィッシャー計量</h2>
+<p>同じ確率の増分でも、もとの確率が小さいほど相対変化は大きくなります。点 <span class="inline-math" data-tex="P">P</span> で接ベクトル <span class="inline-math" data-tex="U,V\in T_PM_3">U,V\in T_PM_3</span> を取り、確率の変化率を <span class="inline-math" data-tex="u_i=U(p_i),\ v_i=V(p_i)">u_i=U(p_i),\ v_i=V(p_i)</span> と書きます。対数確率の変化率は <span class="inline-math" data-tex="U(\log p_i)=u_i/P(i)">U(\log p_i)=u_i/P(i)</span> です。この変化率の積を分布 <span class="inline-math" data-tex="P">P</span> で平均すると、フィッシャー計量が得られます。</p>
+<div class="equation" data-tex="g_P:T_PM_3\times T_PM_3\longrightarrow\mathbb R">g_P:T_PM_3\times T_PM_3\longrightarrow\mathbb R</div>
+<div class="equation" data-tex="g_P(U,V)=\sum_{i=1}^3P(i)\frac{u_i}{P(i)}\frac{v_i}{P(i)}=\sum_{i=1}^3\frac{u_iv_i}{P(i)}.">g_P(U,V)=\sum_{i=1}^3P(i)\frac{u_i}{P(i)}\frac{v_i}{P(i)}=\sum_{i=1}^3\frac{u_iv_i}{P(i)}.</div>
+<p>以下、<span class="inline-math" data-tex="p_i=P(i)">p_i=P(i)</span> と略記します。<span class="inline-math" data-tex="e_1">e_1</span> の3つの変化率は <span class="inline-math" data-tex="(1,0,-1)">(1,0,-1)</span>、<span class="inline-math" data-tex="e_2">e_2</span> では <span class="inline-math" data-tex="(0,1,-1)">(0,1,-1)</span> でした。したがって内積 <span class="inline-math" data-tex="g_{12}=g_P(e_1,e_2)">g_{12}=g_P(e_1,e_2)</span> に寄与するのは、どちらでも減る結果3です。</p>
+<div class="equation" data-tex="(g_{ab})=\begin{pmatrix}1/p_1+1/p_3&amp;1/p_3\\1/p_3&amp;1/p_2+1/p_3\end{pmatrix}.">(g_{ab})=\begin{pmatrix}1/p_1+1/p_3&amp;1/p_3\\1/p_3&amp;1/p_2+1/p_3\end{pmatrix}.</div>
+<figure class="geometry-lab" id="fisher-lab">
+<label for="fisher-control">出発点の確率 p₁ <output for="fisher-control">0.20</output></label>
+<input type="range" id="fisher-control" min="0.02" max="0.68" value="0.20" step="0.01">
+<svg viewBox="0 0 350 205" role="img" aria-label="実線が e₁、破線が e₂。接平面をフィッシャー計量で測った長さと角度が、そのまま紙面上の長さの比と角度になるように描いています。"></svg>
+<figcaption>実線が e₁、破線が e₂。接平面をフィッシャー計量で測った長さと角度が、そのまま紙面上の長さの比と角度になるように描いています。</figcaption><p class="reading" data-reading></p>
+</figure>
+<p>ここでは <span class="inline-math" data-tex="p_2=0.30">p_2=0.30</span> を固定し、<span class="inline-math" data-tex="p_3=0.70-p_1">p_3=0.70-p_1</span> としています。初期値では <span class="inline-math" data-tex="g_{11}=7,\ g_{22}=16/3,\ g_{12}=2">g_{11}=7,\ g_{22}=16/3,\ g_{12}=2</span>。座標図で横と縦だった基底のなす角 <span class="inline-math" data-tex="\theta">\theta</span> を求めるには、内積を両者の長さで割ります。</p>
+<div class="equation" data-tex="\cos\theta=\frac{g_{12}}{\sqrt{g_{11}g_{22}}}.">\cos\theta=\frac{g_{12}}{\sqrt{g_{11}g_{22}}}.</div>
+</section>
+<section id="fisher-geodesic"><h2>8. 球面で見る最短経路</h2>
+<p>接ベクトルの長さが決まると、曲線に沿って速さを積分して道のりを測れます。その計算を球面上の問題に移す写像が <span class="inline-math" data-tex="F">F</span> です。</p>
+<div class="equation" data-tex="F(P)=2\bigl(\sqrt{p_1},\sqrt{p_2},\sqrt{p_3}\bigr),\qquad \|F(P)\|^2=4.">F(P)=2\bigl(\sqrt{p_1},\sqrt{p_2},\sqrt{p_3}\bigr),\qquad \|F(P)\|^2=4.</div>
+<p>半径2の球面のうち、3成分がすべて正の部分に分布が移ります。各成分を微分すると <span class="inline-math" data-tex="(\mathrm dF_P U)_i=u_i/\sqrt{p_i}">(\mathrm dF_P U)_i=u_i/\sqrt{p_i}</span> なので、球面での通常の内積が前節の <span class="inline-math" data-tex="g_P(U,V)">g_P(U,V)</span> と一致します。</p>
+<div class="equation" data-tex="\mathrm dF_P(U)\cdot\mathrm dF_P(V)=g_P(U,V).">\mathrm dF_P(U)\cdot\mathrm dF_P(V)=g_P(U,V).</div>
+<p>出発点を <span class="inline-math" data-tex="P=(0.20,0.30,0.50)">P=(0.20,0.30,0.50)</span>、終点を <span class="inline-math" data-tex="Q=(0.78,0.02,0.20)">Q=(0.78,0.02,0.20)</span> とします。以下は分布を確率の組で表した記法です。球面上の最短経路は、球の中心と両端を通る平面で切った大円の短い弧です。</p>
+<figure class="geometry-lab" id="sphere-lab">
+<label for="sphere-control">弧を進んだ割合 t <output for="sphere-control">0.50</output></label>
+<input type="range" id="sphere-control" min="0" max="1" value="0.50" step="0.01">
+<svg viewBox="0 0 350 205" role="img" aria-label="曲線で囲まれた領域が球面の正の八分体、太い線が大円弧です。選んだ点までの弧の長さを下に示します。"></svg>
+<figcaption>曲線で囲まれた領域が球面の正の八分体、太い線が大円弧です。選んだ点までの弧の長さを下に示します。</figcaption><p class="reading" data-reading></p>
+</figure>
+<p>中心角を <span class="inline-math" data-tex="\omega">\omega</span> とすると、半径が2なので弧の全長は次の値です。</p>
+<div class="equation" data-tex="d_{\rm FR}(P,Q)=2\omega=2\arccos\!\left(\sum_{i=1}^3\sqrt{P(i)Q(i)}\right).">d_{\rm FR}(P,Q)=2\omega=2\arccos\!\left(\sum_{i=1}^3\sqrt{P(i)Q(i)}\right).</div>
+</section>
+<section id="dual-geodesics"><h2>9. 混合接続と指数接続</h2>
+<p>同じ <span class="inline-math" data-tex="P,Q">P,Q</span> の間を、今度は「どの座標を一定の速さで変えるか」で結びます。混合接続（<span class="inline-math" data-tex="m">m</span> 接続）では、確率そのものが線形に変わります。</p>
+<div class="equation" data-tex="P_t^{(m)}(i)=(1-t)P(i)+tQ(i).">P_t^{(m)}(i)=(1-t)P(i)+tQ(i).</div>
+<p>指数接続（<span class="inline-math" data-tex="e">e</span> 接続）では、結果3を基準とする対数比 <span class="inline-math" data-tex="\theta^a(P)=\log(P(a)/P(3))">\theta^a(P)=\log(P(a)/P(3))</span>（<span class="inline-math" data-tex="a=1,2">a=1,2</span>）が線形に変わります。指数を取って確率の和を1に戻すと、次の曲線になります。</p>
+<div class="equation" data-tex="P_t^{(e)}(i)=\frac{P(i)^{1-t}Q(i)^t}{\sum_j P(j)^{1-t}Q(j)^t}.">P_t^{(e)}(i)=\frac{P(i)^{1-t}Q(i)^t}{\sum_j P(j)^{1-t}Q(j)^t}.</div>
+<p>ここで使う接続は、それぞれの座標でクリストッフェル記号がゼロになる接続です。その座標では測地線方程式は次の形になり、両端の座標値を直線で結べば解が得られます。</p>
+<div class="equation" data-tex="\frac{\mathrm d^2 x^a}{\mathrm dt^2}=0,\qquad x^a(t)=(1-t)x^a(0)+t x^a(1).">\frac{\mathrm d^2 x^a}{\mathrm dt^2}=0,\qquad x^a(t)=(1-t)x^a(0)+t x^a(1).</div>
+<figure class="geometry-lab" id="dual-lab">
+<label for="dual-control">共通のパラメータ t <output for="dual-control">0.50</output></label>
+<input type="range" id="dual-control" min="0" max="1" value="0.50" step="0.01">
+<svg viewBox="0 0 350 205" role="img" aria-label="確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。"></svg>
+<figcaption>確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。</figcaption><p class="reading" data-reading></p>
+</figure>
+<p>両端では分布が一致します。途中の <span class="inline-math" data-tex="t=1/2">t=1/2</span> では、混合接続は確率の算術平均、指数接続は幾何平均を正規化した分布を通ります。前節の大円弧は、フィッシャー計量のレヴィ＝チヴィタ接続に対応します。</p>
+</section>
+<section id="relative-entropy"><h2>10. KLダイバージェンスと計量の関係</h2>
+<p>データが分布 <span class="inline-math" data-tex="P">P</span> から出るとします。結果 <span class="inline-math" data-tex="i">i</span> をモデル <span class="inline-math" data-tex="Q">Q</span> で予測したときの対数損失を <span class="inline-math" data-tex="-\log Q(i)">-\log Q(i)</span> とすると、<span class="inline-math" data-tex="P">P</span> 自身で予測した場合からの平均損失の増加がKLダイバージェンスです。自然対数を使います。</p>
+<div class="equation" data-tex="D_{\rm KL}(P\Vert Q)=\sum_i P(i)\log\frac{P(i)}{Q(i)}.">D_{\rm KL}(P\Vert Q)=\sum_i P(i)\log\frac{P(i)}{Q(i)}.</div>
+<p>第6節の曲線 <span class="inline-math" data-tex="Q=\gamma_1(s)">Q=\gamma_1(s)</span> を使うと、結果2の項はゼロになります。</p>
+<div class="equation" data-tex="D(s)=0.20\log\frac{0.20}{0.20+s}+0.50\log\frac{0.50}{0.50-s}.">D(s)=0.20\log\frac{0.20}{0.20+s}+0.50\log\frac{0.50}{0.50-s}.</div>
+<figure class="geometry-lab" id="kl-lab">
+<label for="kl-control">結果3から結果1へ移す確率 s <output for="kl-control">0.10</output></label>
+<input type="range" id="kl-control" min="-0.18" max="0.35" value="0.10" step="0.01">
+<svg viewBox="0 0 350 205" role="img" aria-label="実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。"></svg>
+<figcaption>実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。</figcaption><p class="reading" data-reading></p>
+</figure>
+<p><span class="inline-math" data-tex="s=0">s=0</span> で値と一階微分がともにゼロです。二階微分には、第7節で求めた基底の長さの二乗が現れます。</p>
+<div class="equation" data-tex="D^{\prime\prime}(0)=\frac{1}{0.20}+\frac{1}{0.50}=g_P(e_1,e_1)=7,\qquad D(s)=\frac{7}{2}s^2+O(s^3).">D^{\prime\prime}(0)=\frac{1}{0.20}+\frac{1}{0.50}=g_P(e_1,e_1)=7,\qquad D(s)=\frac{7}{2}s^2+O(s^3).</div>
+<p>スライダーを0に近づけると2つの値が近づきます。離れた2点のKLは順序にも依存し、一般に <span class="inline-math" data-tex="D_{\rm KL}(P\Vert Q)\ne D_{\rm KL}(Q\Vert P)">D_{\rm KL}(P\Vert Q)\ne D_{\rm KL}(Q\Vert P)</span> です。</p>
+</section>
+<footer>参考文献　藤岡敦『入門 情報幾何』共立出版。 <a href="https://www.kyoritsu-pub.co.jp/bookdetail/9784320114456">書籍情報</a> · <a href="https://franknielsen.github.io/InvitationIG4ML-NeuripsMeetupJapan-14DEC2021.pdf">F. Nielsen の講義資料（フィッシャー・ラオ距離）</a></footer>
 </main>
 <script>(() => {
   const root = document.getElementById("coin-tangent-coordinates");
