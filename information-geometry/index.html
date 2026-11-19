@@ -25,7 +25,7 @@
     #coin-tangent-coordinates .coin-figure { max-height:none; }
     #coin-tangent-coordinates .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
   </style>
-<link rel="stylesheet" href="geometry-labs.css?v=explain-figures">
+<link rel="stylesheet" href="geometry-labs.css?v=visual-legends">
 <link rel="stylesheet" href="information-tabs.css?v=chapter-order">
 <script defer src="information-tabs.js?v=axis-labels"></script>
 <script defer src="distribution-labs.js?v=axis-labels"></script>
@@ -85,6 +85,9 @@
 <div class="slider-bar"><label for="binomial-p">成功確率 p <output for="binomial-p">0.35</output><input type="range" id="binomial-p" min="0.02" max="0.98" value="0.35" step="0.01"></label></div>
 <figure class="geometry-lab" id="binomial-lab">
 <svg data-plot-0 viewBox="0 0 360 190" role="img" aria-label="試行回数 n = 2 の二項分布。横軸は成功回数 j、縦軸は確率 P(X=j)"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><rect x="10" y="1" width="8" height="12" fill="var(--blue)"/></svg><span>成功回数ごとの確率</span></li>
+</ul>
 <figcaption>横軸の <span class="inline-math" data-tex="j">j</span> は成功回数、縦軸の <span class="inline-math" data-tex="P(X=j)">P(X=j)</span> はその確率です。試行回数は <span class="inline-math" data-tex="n=2">n=2</span> に固定しています。つまみで動かすのは1回あたりの成功確率 <span class="inline-math" data-tex="p">p</span> です。</figcaption>
 <p class="reading" data-values></p>
 </figure>
@@ -190,12 +193,16 @@
 </div>
     <p><span class="inline-math" data-tex="r">r</span> を固定して <span class="inline-math" data-tex="a">a</span> を変えると、点は動かず矢印が変わります。横軸の目盛りが共通なので、<span class="inline-math" data-tex="a\ne0">a ≠ 0</span> では下の矢印の横幅が上の二倍になります。この二倍は、座標成分 <span class="inline-math" data-tex="2a">2a</span> と <span class="inline-math" data-tex="a">a</span> の比の大きさです。</p>
   </div>
+<p>座標を取り替えたときの数も、初期値で確認できます。曲線に沿う表の確率は <span class="inline-math" data-tex="0.20+0.15s">0.20+0.15s</span>。表と裏の差は <span class="inline-math" data-tex="(0.20+0.15s)-(0.80-0.15s)=-0.60+0.30s">(0.20+0.15s)-(0.80-0.15s)=-0.60+0.30s</span> です。<span class="inline-math" data-tex="s=0">s=0</span> の値は図の点の位置、<span class="inline-math" data-tex="s">s</span> の係数は矢印に対応します。</p>
 </section>
 <section id="binomial-metric"><h2>3. 二項分布のフィッシャー計量</h2>
 <p><span class="inline-math" data-tex="X=j">X=j</span> を固定して、確率 <span class="inline-math" data-tex="b_j(p)=P_p(X=j)">b_j(p)=P_p(X=j)</span> の対数を展開します。組合せの個数は <span class="inline-math" data-tex="n,j">n,j</span> だけで決まるので、<span class="inline-math" data-tex="p">p</span> で微分すると消えます。</p>
 <div class="equation" data-tex="\log b_j(p)=\log\binom nj+j\log p+(n-j)\log(1-p).">\log b_j(p)=\log\binom nj+j\log p+(n-j)\log(1-p).</div>
 <p>対数確率を <span class="inline-math" data-tex="p">p</span> で微分すると <span class="inline-math" data-tex="S_p(j)=j/p-(n-j)/(1-p)=(j-np)/[p(1-p)]">S_p(j)=j/p-(n-j)/(1-p)=(j-np)/[p(1-p)]</span> です。成功回数は独立な0・1変数の和なので、平均は <span class="inline-math" data-tex="np">np</span>、分散は <span class="inline-math" data-tex="np(1-p)">np(1-p)</span>。したがって</p>
 <div class="equation" data-tex="g_{pp}(P_p)=\mathbb E_{P_p}[S_p^2]=\frac{np(1-p)}{p^2(1-p)^2}=\frac{n}{p(1-p)}.">g_{pp}(P_p)=\mathbb E_{P_p}[S_p^2]=\frac{np(1-p)}{p^2(1-p)^2}=\frac{n}{p(1-p)}.</div>
+<p>共通の分母でスコアを整理する際、分子は <span class="inline-math" data-tex="j(1-p)-(n-j)p=j-jp-np+jp=j-np">j(1-p)-(n-j)p=j-jp-np+jp=j-np</span> です。これを二乗して <span class="inline-math" data-tex="X">X</span> について平均します。</p>
+<div class="equation" data-tex="g_{pp}=\frac{1}{p^2(1-p)^2}\sum_{j=0}^n (j-np)^2 P_p(X=j).">g_{pp}=\frac{1}{p^2(1-p)^2}\sum_{j=0}^n (j-np)^2 P_p(X=j).</div>
+<p>この和が <span class="inline-math" data-tex="\mathbb E[(X-np)^2]">\mathbb E[(X-np)^2]</span> です。分散を求めれば、和を項ごとに計算しなくても値が分かります。</p>
 <p>式の分子にあった <span class="inline-math" data-tex="np(1-p)">np(1-p)</span> は、成功回数とその平均の差を二乗して足し合わせた値です。<span class="inline-math" data-tex="X=Y_1+\cdots+Y_n">X=Y_1+\cdots+Y_n</span> として、第 <span class="inline-math" data-tex="i">i</span> 回に成功したときだけ <span class="inline-math" data-tex="Y_i=1">Y_i=1</span> とすれば、<span class="inline-math" data-tex="\mathbb E[Y_i]=p">\mathbb E[Y_i]=p</span>、<span class="inline-math" data-tex="\mathbb E[Y_i^2]=p">\mathbb E[Y_i^2]=p</span>。各回の分散は <span class="inline-math" data-tex="p-p^2">p-p^2</span> です。独立なので異なる回の共分散は0となり、<span class="inline-math" data-tex="X">X</span> の分散は <span class="inline-math" data-tex="n(p-p^2)">n(p-p^2)</span> です。</p>
 <p>第1章のグラフと同じ <span class="inline-math" data-tex="n=2,\ p=0.35">n=2,\ p=0.35</span> に戻ります。座標基底の長さの二乗は <span class="inline-math" data-tex="g_{pp}=2/(0.35\cdot0.65)\approx8.79">g_{pp}=2/(0.35\cdot0.65)\approx8.79</span> です。<span class="inline-math" data-tex="p">p</span> を速さ <span class="inline-math" data-tex="a">a</span> で動かす速度 <span class="inline-math" data-tex="a\left.\partial/\partial p\right|_{P_p}">a\left.\partial/\partial p\right|_{P_p}</span> の長さの二乗は、両方の引数に <span class="inline-math" data-tex="a">a</span> が掛かるので <span class="inline-math" data-tex="a^2g_{pp}">a^2g_{pp}</span> です。</p>
 </section>
@@ -204,6 +211,9 @@
 
 <p><span class="inline-math" data-tex="n=2">n=2</span> で実際に平方根を取ると <span class="inline-math" data-tex="F(P_p)=2(1-p,\sqrt{2p(1-p)},p)">F(P_p)=2(1-p,\sqrt{2p(1-p)},p)</span>。この3成分には <span class="inline-math" data-tex="F_1^2=2F_0F_2">F_1^2=2F_0F_2</span> という制約があり、球面上でも動けるのは1方向です。</p>
 
+<p>平方根を取っても計量で測る速さが保たれることを、成分で確かめられます。<span class="inline-math" data-tex="j">j</span> 番目の成分 <span class="inline-math" data-tex="2\sqrt{b_j}">2\sqrt{b_j}</span> を <span class="inline-math" data-tex="p">p</span> で微分すると <span class="inline-math" data-tex="b_j&#x27;/\sqrt{b_j}">b_j&#x27;/\sqrt{b_j}</span>。二乗して足すと、</p>
+<div class="equation" data-tex="\sum_{j=0}^n\frac{(b&#x27;_j)^2}{b_j}=\sum_{j=0}^n b_j\left(\frac{b&#x27;_j}{b_j}\right)^2=\mathbb E[S_p(X)^2].">\sum_{j=0}^n\frac{(b&#x27;_j)^2}{b_j}=\sum_{j=0}^n b_j\left(\frac{b&#x27;_j}{b_j}\right)^2=\mathbb E[S_p(X)^2].</div>
+<p>右辺は前章で求めた <span class="inline-math" data-tex="g_{pp}">g_{pp}</span> です。</p>
 <p>曲線の速さは計量から <span class="inline-math" data-tex="\sqrt{n/[p(1-p)]}\,|\dot p|">\sqrt{n/[p(1-p)]}\,|\dot p|</span> です。<span class="inline-math" data-tex="u(p)=2\sqrt n\arcsin\sqrt p">u(p)=2\sqrt n\arcsin\sqrt p</span> と置けば <span class="inline-math" data-tex="u&#x27;(p)=\sqrt{n/[p(1-p)]}">u&#x27;(p)=\sqrt{n/[p(1-p)]}</span> なので、速さは <span class="inline-math" data-tex="|\dot u|">|\dot u|</span>。よってモデル内の距離は <span class="inline-math" data-tex="|u(q)-u(p)|">|u(q)-u(p)|</span> です。</p>
 
 <p><span class="inline-math" data-tex="u&#x27;(p)">u&#x27;(p)</span> の計算は、外側の逆正弦と内側の平方根を順に微分します。</p>
@@ -216,11 +226,15 @@
 <div class="equation" data-tex="b_j(p)=\binom nj\exp[j\theta-\psi(\theta)],\qquad \psi(\theta)=n\log(1+e^\theta).">b_j(p)=\binom nj\exp[j\theta-\psi(\theta)],\qquad \psi(\theta)=n\log(1+e^\theta).</div>
 <p>統計量は成功回数 <span class="inline-math" data-tex="j">j</span> です。期待値座標は <span class="inline-math" data-tex="\eta=\psi&#x27;(\theta)=np">\eta=\psi&#x27;(\theta)=np</span>。もう一度微分する際は <span class="inline-math" data-tex="\mathrm dp/\mathrm d\theta=p(1-p)">\mathrm dp/\mathrm d\theta=p(1-p)</span> なので、自然座標での計量成分は <span class="inline-math" data-tex="\psi&#x27;&#x27;(\theta)=np(1-p)">\psi&#x27;&#x27;(\theta)=np(1-p)</span> です。第3章の <span class="inline-math" data-tex="g_{pp}">g_{pp}</span> に <span class="inline-math" data-tex="(\mathrm dp/\mathrm d\theta)^2">(\mathrm dp/\mathrm d\theta)^2</span> を掛けても同じ値になります。</p>
 
+<p>置換の途中では、成功回数に由来する分子と、試行回数に由来する分母が分かれます。</p>
+<div class="equation" data-tex="\begin{aligned}p^j(1-p)^{n-j} &amp;=\frac{e^{j\theta}}{(1+e^\theta)^j(1+e^\theta)^{n-j}}\\ &amp;=\frac{e^{j\theta}}{(1+e^\theta)^n} =\exp[j\theta-n\log(1+e^\theta)]. \end{aligned}">\begin{aligned}p^j(1-p)^{n-j} &amp;=\frac{e^{j\theta}}{(1+e^\theta)^j(1+e^\theta)^{n-j}}\\ &amp;=\frac{e^{j\theta}}{(1+e^\theta)^n} =\exp[j\theta-n\log(1+e^\theta)]. \end{aligned}</div>
+<p><span class="inline-math" data-tex="\psi&#x27;(\theta)=ne^\theta/(1+e^\theta)=np">\psi&#x27;(\theta)=ne^\theta/(1+e^\theta)=np</span> です。もう一度微分するとき、<span class="inline-math" data-tex="p&#x27;(\theta)=e^\theta/(1+e^\theta)^2=p(1-p)">p&#x27;(\theta)=e^\theta/(1+e^\theta)^2=p(1-p)</span> なので、<span class="inline-math" data-tex="\psi&#x27;&#x27;(\theta)=np(1-p)">\psi&#x27;&#x27;(\theta)=np(1-p)</span> が出ます。</p>
 </section>
 <section id="binomial-geodesics"><h2>6. 何を一定の速さで変えるか</h2>
 <p>端点の成功確率を <span class="inline-math" data-tex="p_0,p_1">p_0,p_1</span> とします。指数接続では <span class="inline-math" data-tex="\theta">\theta</span>、混合接続では <span class="inline-math" data-tex="\eta=np">\eta=np</span>、計量の接続では第4章の <span class="inline-math" data-tex="u">u</span> を一定の速さで変えます。3本とも <span class="inline-math" data-tex="p_0">p_0</span> と <span class="inline-math" data-tex="p_1">p_1</span> の間の同じ区間を通り、パラメータ <span class="inline-math" data-tex="t">t</span> でどの点にいるかが変わります。例えば <span class="inline-math" data-tex="p_0=0.1,\ p_1=0.6">p_0=0.1,\ p_1=0.6</span> なら、</p>
 
 <p>どの場合も、まずその接続に対応する座標 <span class="inline-math" data-tex="z">z</span> の中点を <span class="inline-math" data-tex="z_*=(z(p_0)+z(p_1))/2">z_*=(z(p_0)+z(p_1))/2</span> と計算し、次に <span class="inline-math" data-tex="p">p</span> へ戻します。指数接続なら <span class="inline-math" data-tex="z=\log[p/(1-p)]">z=\log[p/(1-p)]</span> なので、指数を取って中点のオッズ <span class="inline-math" data-tex="e^{z_*}">e^{z_*}</span> を求め、<span class="inline-math" data-tex="p_*=e^{z_*}/(1+e^{z_*})">p_*=e^{z_*}/(1+e^{z_*})</span> を使います。計量の接続なら <span class="inline-math" data-tex="z=2\sqrt n\arcsin\sqrt p">z=2\sqrt n\arcsin\sqrt p</span> なので、戻す式は <span class="inline-math" data-tex="p_*=\sin^2(z_*/(2\sqrt n))">p_*=\sin^2(z_*/(2\sqrt n))</span> です。</p>
+<p>中点以外でも手順は同じです。<span class="inline-math" data-tex="0\le t\le1">0\le t\le1</span> として、先に <span class="inline-math" data-tex="z(t)=(1-t)z(p_0)+tz(p_1)">z(t)=(1-t)z(p_0)+tz(p_1)</span> を計算します。式を <span class="inline-math" data-tex="t">t</span> で微分すると <span class="inline-math" data-tex="z&#x27;(t)=z(p_1)-z(p_0)">z&#x27;(t)=z(p_1)-z(p_0)</span> と一定です。各時刻の成功確率を得るには、その <span class="inline-math" data-tex="z(t)">z(t)</span> を成功確率に戻します。</p>
 <table><tr><th>座標</th><th>時刻 <span class="inline-math" data-tex="t=1/2">t=1/2</span> での成功確率</th></tr>
 <tr><td>自然座標 <span class="inline-math" data-tex="\theta">\theta</span> の中点</td><td><span class="inline-math" data-tex="\sqrt{(0.1/0.9)(0.6/0.4)}/[1+\sqrt{(0.1/0.9)(0.6/0.4)}]\approx0.290">\sqrt{(0.1/0.9)(0.6/0.4)}/[1+\sqrt{(0.1/0.9)(0.6/0.4)}]\approx0.290</span></td></tr>
 <tr><td>期待値座標 <span class="inline-math" data-tex="\eta">\eta</span> の中点</td><td><span class="inline-math" data-tex="(0.1+0.6)/2=0.350">(0.1+0.6)/2=0.350</span></td></tr>
@@ -233,6 +247,8 @@
 <div class="equation" data-tex="D_{\mathrm{KL}}(P_p\Vert P_q)=n\left[p\log\frac pq+(1-p)\log\frac{1-p}{1-q}\right].">D_{\mathrm{KL}}(P_p\Vert P_q)=n\left[p\log\frac pq+(1-p)\log\frac{1-p}{1-q}\right].</div>
 <p><span class="inline-math" data-tex="q">q</span> で微分すると <span class="inline-math" data-tex="n[-p/q+(1-p)/(1-q)]">n[-p/q+(1-p)/(1-q)]</span> で、<span class="inline-math" data-tex="q=p">q=p</span> で0。二階微分を <span class="inline-math" data-tex="q=p">q=p</span> で評価すると <span class="inline-math" data-tex="n[1/p+1/(1-p)]=g_{pp}">n[1/p+1/(1-p)]=g_{pp}</span> になります。</p>
 
+<p>微分を二段に分けます。<span class="inline-math" data-tex="p">p</span> と <span class="inline-math" data-tex="n">n</span> は固定で、<span class="inline-math" data-tex="q">q</span> は予測側の成功確率です。</p>
+<div class="equation" data-tex="\begin{aligned} \partial_q D&amp;=n\left[-\frac p q+\frac{1-p}{1-q}\right],\\ \partial_q^2 D&amp;=n\left[\frac p{q^2}+\frac{1-p}{(1-q)^2}\right],\\ \left.\partial_q^2 D\right|_{q=p} &amp;=n\left[\frac1p+\frac1{1-p}\right] =\frac{n}{p(1-p)}. \end{aligned}">\begin{aligned} \partial_q D&amp;=n\left[-\frac p q+\frac{1-p}{1-q}\right],\\ \partial_q^2 D&amp;=n\left[\frac p{q^2}+\frac{1-p}{(1-q)^2}\right],\\ \left.\partial_q^2 D\right|_{q=p} &amp;=n\left[\frac1p+\frac1{1-p}\right] =\frac{n}{p(1-p)}. \end{aligned}</div>
 </section>
 </div>
 <div id="simplex-course" class="information-course" role="tabpanel" aria-labelledby="simplex-tab" tabindex="0">
@@ -273,7 +289,8 @@
       </section>
 
     </div>
-  </section>
+  <p>図で点を横だけに動かす例を計算します。<span class="inline-math" data-tex="(x^1,x^2)=(0.20,0.30)">(x^1,x^2)=(0.20,0.30)</span> から <span class="inline-math" data-tex="(0.25,0.30)">(0.25,0.30)</span> に移ると、第3の確率は <span class="inline-math" data-tex="1-0.25-0.30=0.45">1-0.25-0.30=0.45</span> になります。第1の確率の増分 <span class="inline-math" data-tex="0.05">0.05</span> を、第3の確率から同じだけ引いたことになります。</p>
+</section>
 <section id="coordinate-basis"><h2>2. 曲線の速度と座標基底</h2>
 <div class="slider-bar">
 
@@ -298,7 +315,11 @@
   <div class="angle-caption">横にドラッグして回転</div>
   <div class="map-readings"><div><span class="name-first">●</span> <span data-role="image-first"></span></div>
     <div><span class="name-second">■</span> <span data-role="image-second"></span></div></div>
-  <p class="base-note">白い点 <span class="inline-math" data-tex="P=\gamma_1(0)=\gamma_2(0)">P = γ₁(0) = γ₂(0)</span> が両方の曲線の出発点です。</p>
+  <ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/><circle cx="14" cy="7" r="4" fill="var(--blue)"/></svg><span>第1の曲線 <i>γ</i><sub>1</sub></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="4 3"/><rect x="10" y="3" width="8" height="8" fill="var(--gold)"/></svg><span>第2の曲線 <i>γ</i><sub>2</sub></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--ink)"/></svg><span>共通の出発点 <i>P</i></span></li>
+</ul>
 </div>
 <div class="map-branches">
   <div class="map-branch">
@@ -306,6 +327,10 @@
     <p><span class="inline-math" data-tex="Q\in M_3\;\xrightarrow{\ (\rho_1,\rho_2)\ }\;(Q(A_1),Q(A_2))">Q ↦ (Q(A_1), Q(A_2))</span></p>
     <h3>座標空間 <span class="inline-math" data-tex="\mathbb R^2">ℝ²</span></h3>
 <svg data-role="coordinates" viewBox="0 0 320 210" role="img" aria-label="同じ分布を横軸 x¹、縦軸 x² の座標で表示"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/><circle cx="14" cy="7" r="4" fill="var(--blue)"/></svg><span>第1の曲線 <i>γ</i><sub>1</sub></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="4 3"/><rect x="10" y="3" width="8" height="8" fill="var(--gold)"/></svg><span>第2の曲線 <i>γ</i><sub>2</sub></span></li>
+</ul>
     <div class="map-readings"><div><span class="name-first">●</span> 座標 <span data-role="first"></span></div>
       <div><span class="name-second">■</span> 座標 <span data-role="second"></span></div></div>
   </div>
@@ -314,6 +339,10 @@
     <p>曲線を微分　<span class="inline-math" data-tex="\gamma_j\;\longmapsto\;\dot\gamma_j(0)\in T_PM_3">γⱼ ↦ γ̇ⱼ(0) ∈ TₚM₃</span></p>
     <h3>点 <span class="inline-math" data-tex="P">P</span> の接平面 <span class="inline-math" data-tex="T_PM_3">TₚM₃</span></h3>
 <svg data-role="tangent" viewBox="0 0 320 130" role="img" aria-label="固定した出発点での速度。零ベクトルから出る実線が e1、破線が e2"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--blue)" stroke-width="2.2"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/></svg><span>座標基底 <i>e</i><sub>1</sub></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="4 3"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--gold)" stroke-width="2.2"/></svg><span>座標基底 <i>e</i><sub>2</sub></span></li>
+</ul>
     <div class="map-readings">
       <div><span class="name-first">━</span> <span class="inline-math" data-tex="e_1=\dot\gamma_1(0)=\left.\frac{\partial}{\partial\rho_1}\right|_P">e₁ = (∂/∂ρ₁)|ₚ</span>　A₃ → A₁</div>
       <div><span class="name-second">┄</span> <span class="inline-math" data-tex="e_2=\dot\gamma_2(0)=\left.\frac{\partial}{\partial\rho_2}\right|_P">e₂ = (∂/∂ρ₂)|ₚ</span>　A₃ → A₂</div>
@@ -325,7 +354,7 @@
 <h3>曲線の速度をどう定義するか</h3>
 <p>図の2本の矢印は、どちらも <span class="inline-math" data-tex="s=0">s = 0</span> での速度です。曲線 <span class="inline-math" data-tex="\gamma_j:I\to M_3">γⱼ : I → M₃</span> に対して、接ベクトル <span class="inline-math" data-tex="\dot\gamma_j(0)\in T_PM_3">γ̇ⱼ(0) ∈ TₚM₃</span> の作用を、任意の滑らかな関数 <span class="inline-math" data-tex="f:M_3\to\mathbb R">f : M₃ → ℝ</span> について次の式で定義します。</p>
 <div class="equation" data-tex="(\dot\gamma_j(0))(f):=\left.\frac{\mathrm d}{\mathrm ds}(f\circ\gamma_j)(s)\right|_{s=0}=\lim_{h\to0}\frac{f(\gamma_j(h))-f(P)}{h}.">(\dot\gamma_j(0))(f):=\left.\frac{\mathrm d}{\mathrm ds}(f\circ\gamma_j)(s)\right|_{s=0}=\lim_{h\to0}\frac{f(\gamma_j(h))-f(P)}{h}.</div>
-<p>たとえば横座標を返す関数 <span class="inline-math" data-tex="\rho_1">ρ₁</span> を入れます。青い曲線では横座標が <span class="inline-math" data-tex="0.20+s">0.20 + s</span>、金色の曲線では <span class="inline-math" data-tex="0.20">0.20</span> です。</p>
+<p>たとえば横座標を返す関数 <span class="inline-math" data-tex="\rho_1">ρ₁</span> を入れます。<span class="inline-math" data-tex="\gamma_1">γ₁</span> では横座標が <span class="inline-math" data-tex="0.20+s">0.20 + s</span>、<span class="inline-math" data-tex="\gamma_2">γ₂</span> では <span class="inline-math" data-tex="0.20">0.20</span> です。</p>
 <div class="equation" data-tex="\begin{aligned}(\dot\gamma_1(0))(\rho_1)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\rho_1(\gamma_1(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20+s)\right|_{s=0}=1,\\[.3em](\dot\gamma_2(0))(\rho_1)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\rho_1(\gamma_2(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20)\right|_{s=0}=0.\end{aligned}">\begin{aligned}(\dot\gamma_1(0))(\rho_1)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\rho_1(\gamma_1(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20+s)\right|_{s=0}=1,\\[.3em](\dot\gamma_2(0))(\rho_1)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\rho_1(\gamma_2(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.20)\right|_{s=0}=0.\end{aligned}</div>
 <p>縦座標にも同じ操作をします。第1の曲線は <span class="inline-math" data-tex="A_2">A_2</span> の確率を固定し、第2の曲線は <span class="inline-math" data-tex="A_2">A_2</span> の確率を速さ1で増やします。</p>
 <div class="equation" data-tex="\begin{aligned}\dot\gamma_1(0)(\rho_2)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.30)\right|_{s=0}=0,\\ \dot\gamma_2(0)(\rho_2)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.30+s)\right|_{s=0}=1.\end{aligned}">\begin{aligned}\dot\gamma_1(0)(\rho_2)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.30)\right|_{s=0}=0,\\ \dot\gamma_2(0)(\rho_2)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(0.30+s)\right|_{s=0}=1.\end{aligned}</div>
@@ -335,6 +364,7 @@
 <div class="equation" data-tex="\left(\left.\frac{\partial}{\partial\rho_j}\right|_P\right)(f):=\frac{\partial\tilde f}{\partial x^j}\bigl(\phi(P)\bigr),\qquad j=1,2.">\left(\left.\frac{\partial}{\partial\rho_j}\right|_P\right)(f):=\frac{\partial\tilde f}{\partial x^j}\bigl(\phi(P)\bigr),\qquad j=1,2.</div>
 <p>左辺は分布の関数に作用し、右辺ではもう一方の座標値を固定して偏微分します。直前に求めた2本の速度は任意の <span class="inline-math" data-tex="f">f</span> に対してこの作用と一致するので、図の矢印は接空間の次の元です。</p>
 <div class="equation" data-tex="\begin{aligned}e_1&amp;=\dot\gamma_1(0)=\left.\frac{\partial}{\partial\rho_1}\right|_P,\\e_2&amp;=\dot\gamma_2(0)=\left.\frac{\partial}{\partial\rho_2}\right|_P.\end{aligned}">\begin{aligned}e_1&amp;=\dot\gamma_1(0)=\left.\frac{\partial}{\partial\rho_1}\right|_P,\\e_2&amp;=\dot\gamma_2(0)=\left.\frac{\partial}{\partial\rho_2}\right|_P.\end{aligned}</div>
+<p>座標関数以外に作用する例も見ておきます。<span class="inline-math" data-tex="f(P)=\rho_1(P)\rho_2(P)">f(P)=\rho_1(P)\rho_2(P)</span> を取ると、第1の曲線に沿う値は <span class="inline-math" data-tex="(0.20+s)0.30">(0.20+s)0.30</span>、第2の曲線に沿う値は <span class="inline-math" data-tex="0.20(0.30+s)">0.20(0.30+s)</span> です。<span class="inline-math" data-tex="s">s</span> の係数を取れば、<span class="inline-math" data-tex="e_1(f)=0.30">e_1(f)=0.30</span> と <span class="inline-math" data-tex="e_2(f)=0.20">e_2(f)=0.20</span> が得られます。</p>
 <h3>任意の曲線の速度をこの基底で書く</h3>
 <p>今度は <span class="inline-math" data-tex="P">P</span> を通る任意の滑らかな曲線 <span class="inline-math" data-tex="\gamma">\gamma</span> を取り、<span class="inline-math" data-tex="\gamma(0)=P">\gamma(0)=P</span> とします。その座標を <span class="inline-math" data-tex="x^j(s)=\rho_j(\gamma(s))">x^j(s)=\rho_j(\gamma(s))</span>、初速度の成分を <span class="inline-math" data-tex="a=(x^1)&#x27;(0),\ b=(x^2)&#x27;(0)">a=(x^1)&#x27;(0),\ b=(x^2)&#x27;(0)</span> と置きます。どんな <span class="inline-math" data-tex="f">f</span> についても二変数の連鎖律により、</p>
 <div class="equation" data-tex="\begin{aligned}W(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\tilde f(x^1(s),x^2(s))\right|_{s=0}\\&amp;=a\frac{\partial\tilde f}{\partial x^1}(\phi(P))+b\frac{\partial\tilde f}{\partial x^2}(\phi(P)).\end{aligned}">\begin{aligned}W(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}\tilde f(x^1(s),x^2(s))\right|_{s=0}\\&amp;=a\frac{\partial\tilde f}{\partial x^1}(\phi(P))+b\frac{\partial\tilde f}{\partial x^2}(\phi(P)).\end{aligned}</div>
@@ -393,6 +423,9 @@
 <p>二階微分では <span class="inline-math" data-tex="(P(A_i)+su_i)^{-1}">(P(A_i)+su_i)^{-1}</span> をもう一度微分します。逆数の微分でマイナスが出て、内側の式の微分から <span class="inline-math" data-tex="u_i">u_i</span> がもう1つ掛かります。</p>
 <div class="equation" data-tex="L&#x27;&#x27;(s)=\sum_i P(A_i)\frac{u_i^2}{(P(A_i)+su_i)^2}.">L&#x27;&#x27;(s)=\sum_i P(A_i)\frac{u_i^2}{(P(A_i)+su_i)^2}.</div>
 <div class="equation" data-tex="\begin{aligned}L&#x27;&#x27;(0)&amp;=\sum_i P(A_i)\left(\frac{u_i}{P(A_i)}\right)^2\\&amp;=\sum_i\frac{u_i^2}{P(A_i)}.\end{aligned}">\begin{aligned}L&#x27;&#x27;(0)&amp;=\sum_i P(A_i)\left(\frac{u_i}{P(A_i)}\right)^2\\&amp;=\sum_i\frac{u_i^2}{P(A_i)}.\end{aligned}</div>
+<p>数値例に戻ると、<span class="inline-math" data-tex="s=0">s=0</span> では</p>
+<div class="equation" data-tex="\begin{aligned}L&#x27;&#x27;(0) &amp;=\frac{0.20\cdot1^2}{0.20^2}  +\frac{0.30\cdot0^2}{0.30^2}  +\frac{0.50\cdot(-1)^2}{0.50^2}\\ &amp;=\frac1{0.20}+0+\frac1{0.50}=5+2=7. \end{aligned}">\begin{aligned}L&#x27;&#x27;(0) &amp;=\frac{0.20\cdot1^2}{0.20^2}  +\frac{0.30\cdot0^2}{0.30^2}  +\frac{0.50\cdot(-1)^2}{0.50^2}\\ &amp;=\frac1{0.20}+0+\frac1{0.50}=5+2=7. \end{aligned}</div>
+<p>ここで分子の <span class="inline-math" data-tex="1,0,-1">1,0,-1</span> は第2章の <span class="inline-math" data-tex="e_1">e_1</span> の三つの確率変化率です。分母は、いずれも出発点の確率の二乗です。</p>
 <p>三つの分母は <span class="inline-math" data-tex="s=0">s=0</span> で正であり、0の十分近くでも正です。この範囲で対数は滑らかなので、以下の二次までのテイラー展開が使えます。<span class="inline-math" data-tex="O(s^3)">O(s^3)</span> は、0の近くで絶対値がある定数倍の <span class="inline-math" data-tex="|s|^3">|s|^3</span> 以下になる残りの項を表します。</p>
 <p>出発点の近くでは、次のようにテイラー展開できます。<span class="inline-math" data-tex="Q_0=P">Q_0=P</span> から <span class="inline-math" data-tex="L(0)=0">L(0)=0</span>、上の計算から <span class="inline-math" data-tex="L&#x27;(0)=0">L&#x27;(0)=0</span> です。</p>
 <div class="equation" data-tex="\begin{aligned}L(s)&amp;=L(0)+sL&#x27;(0)+\tfrac12s^2L&#x27;&#x27;(0)+O(s^3)\\&amp;=\tfrac12s^2\sum_i\frac{u_i^2}{P(A_i)}+O(s^3).\end{aligned}">\begin{aligned}L(s)&amp;=L(0)+sL&#x27;(0)+\tfrac12s^2L&#x27;&#x27;(0)+O(s^3)\\&amp;=\tfrac12s^2\sum_i\frac{u_i^2}{P(A_i)}+O(s^3).\end{aligned}</div>
@@ -425,7 +458,11 @@
 <p class="map-key" data-basepoint></p>
 
 <svg data-plot viewBox="0 0 350 205" role="img" aria-label="実線が e₁、破線が e₂。接平面をフィッシャー計量で測った長さと角度が、そのまま紙面上の長さの比と角度になるように描いています。"></svg>
-<figcaption>実線が e₁、破線が e₂。接平面をフィッシャー計量で測った長さと角度が、そのまま紙面上の長さの比と角度になるように描いています。</figcaption><p class="reading" data-reading></p>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--blue)" stroke-width="2.2"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/></svg><span>座標基底 <i>e</i><sub>1</sub></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="5 3"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--gold)" stroke-width="2.2"/></svg><span>座標基底 <i>e</i><sub>2</sub></span></li>
+</ul>
+<figcaption>矢印の長さの比と角度はフィッシャー計量で測っています。</figcaption><p class="reading" data-reading></p>
 </figure>
 <p>ここでは <span class="inline-math" data-tex="P(A_2)=0.30">P(A_2)=0.30</span> を固定し、<span class="inline-math" data-tex="P(A_3)=0.70-P(A_1)">P(A_3)=0.70-P(A_1)</span> としています。初期値では <span class="inline-math" data-tex="g_{11}=7,\ g_{22}=16/3,\ g_{12}=2">g_{11}=7,\ g_{22}=16/3,\ g_{12}=2</span>。座標図で横と縦だった基底のなす角 <span class="inline-math" data-tex="\theta">\theta</span> を求めるには、内積を両者の長さで割ります。</p>
 <div class="equation" data-tex="\cos\theta=\frac{g_{12}}{\sqrt{g_{11}g_{22}}}.">\cos\theta=\frac{g_{12}}{\sqrt{g_{11}g_{22}}}.</div>
@@ -442,6 +479,7 @@
 <p>曲線の長さを求めるには、各点でフィッシャー計量を使って速度の長さを測り、それを積分します。同じ計算をユークリッド空間の内積でできるように、各確率 <span class="inline-math" data-tex="q">q</span> を実数 <span class="inline-math" data-tex="f(q)">f(q)</span> に移すと考えます。</p>
 <p>確率が <span class="inline-math" data-tex="u_i">u_i</span> の速さで変化するなら、新しい成分の速さは連鎖律から <span class="inline-math" data-tex="f&#x27;(P(A_i))u_i">f&#x27;(P(A_i))u_i</span> です。この速さを二乗して足したものを、前節の <span class="inline-math" data-tex="\sum_i u_i^2/P(A_i)">\sum_i u_i^2/P(A_i)</span> と一致させたいので、<span class="inline-math" data-tex="f&#x27;(q)=1/\sqrt q">f&#x27;(q)=1/\sqrt q</span> と取ります。積分して定数を0に選ぶと <span class="inline-math" data-tex="f(q)=2\sqrt q">f(q)=2\sqrt q</span> です。</p>
 <div class="equation" data-tex="F(P)=2\bigl(\sqrt{P(A_1)},\sqrt{P(A_2)},\sqrt{P(A_3)}\bigr).">F(P)=2\bigl(\sqrt{P(A_1)},\sqrt{P(A_2)},\sqrt{P(A_3)}\bigr).</div>
+<p>どの関数を使うかを決めた式を、一成分について書くと <span class="inline-math" data-tex="[f&#x27;(q)u]^2=u^2/q">[f&#x27;(q)u]^2=u^2/q</span> です。両辺で <span class="inline-math" data-tex="u^2">u^2</span> が共通なので <span class="inline-math" data-tex="f&#x27;(q)^2=1/q">f&#x27;(q)^2=1/q</span>。確率とともに増える写像を選んで <span class="inline-math" data-tex="f&#x27;(q)=q^{-1/2}">f&#x27;(q)=q^{-1/2}</span> とすると、これを積分した値は <span class="inline-math" data-tex="2q^{1/2}">2q^{1/2}</span> に定数を足したものです。定数は0にします。</p>
 <p>3成分を二乗して足すと、確率の和が1であることから半径2が出ます。</p>
 <div class="equation" data-tex="\|F(P)\|^2=4\sum_i P(A_i)=4.">\|F(P)\|^2=4\sum_i P(A_i)=4.</div>
 <p><span class="inline-math" data-tex="F">F</span> の像は球面のうち3成分がすべて正の部分です。実際、この部分の点 <span class="inline-math" data-tex="y=(y_1,y_2,y_3)">y=(y_1,y_2,y_3)</span> に対して <span class="inline-math" data-tex="P(A_i)=y_i^2/4">P(A_i)=y_i^2/4</span> と置けば、確率の和は1で <span class="inline-math" data-tex="F(P)=y">F(P)=y</span> となります。</p>
@@ -462,11 +500,21 @@
 <figure class="geometry-lab" id="sphere-lab">
 <h3>分布の空間（確率座標）</h3>
 <svg data-domain viewBox="0 0 350 205" role="img" aria-label="分布 R の動きを確率三角形に描いたもの"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/></svg><span>分布の経路</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--gold)"/></svg><span>現在の分布</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--ink)"/></svg><span>端点 <i>P</i>, <i>Q</i></span></li>
+</ul>
 <div class="map-arrow">↓　<span class="inline-math" data-tex="R\xrightarrow{F}2(\sqrt{R(A_1)},\sqrt{R(A_2)},\sqrt{R(A_3)})">R → 2(√R(A_1), √R(A_2), √R(A_3))</span></div>
 <h3>半径2の球面上の像</h3>
 
 <svg data-plot viewBox="0 0 350 205" role="img" aria-label="曲線で囲まれた領域が球面の正の八分体、太い線が大円弧です。選んだ点までの弧の長さを下に示します。"></svg>
-<figcaption>上の金色の点が分布、下の金色の点がその球面上の像です。上の経路全体が、下の球面上では大円弧に写ります。</figcaption><p class="reading" data-reading></p>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/></svg><span>大円弧</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--gold)"/></svg><span>球面上の現在点</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--ink)"/></svg><span>端点 <i>F</i>(<i>P</i>), <i>F</i>(<i>Q</i>)</span></li>
+</ul>
+<figcaption>二つの図の現在点は、平方根写像で対応しています。</figcaption><p class="reading" data-reading></p>
 </figure>
 <p>球面上の2点と原点がつくる角を <span class="inline-math" data-tex="\omega">\omega</span> とします。内積を両方の長さの積で割ると、その角度の余弦になります。両方とも半径2の位置にあるので、分母は4です。</p>
 <div class="equation" data-tex="\begin{aligned}\cos\omega&amp;=\frac{F(P)\cdot F(Q)}{\|F(P)\|\|F(Q)\|}\\&amp;=\frac{4\sum_i\sqrt{P(A_i)Q(A_i)}}4\\&amp;=\sum_i\sqrt{P(A_i)Q(A_i)}.\end{aligned}">\begin{aligned}\cos\omega&amp;=\frac{F(P)\cdot F(Q)}{\|F(P)\|\|F(Q)\|}\\&amp;=\frac{4\sum_i\sqrt{P(A_i)Q(A_i)}}4\\&amp;=\sum_i\sqrt{P(A_i)Q(A_i)}.\end{aligned}</div>
@@ -483,6 +531,8 @@
 <p>分母の対数 <span class="inline-math" data-tex="\psi">\psi</span> を <span class="inline-math" data-tex="\theta^a">\theta^a</span> で微分すると <span class="inline-math" data-tex="e^{\theta^a}/(1+e^{\theta^1}+e^{\theta^2})=P(A_a)">e^{\theta^a}/(1+e^{\theta^1}+e^{\theta^2})=P(A_a)</span>。自然座標の相手になる期待値座標 <span class="inline-math" data-tex="\eta_a=\mathbb E_P[T_a]">\eta_a=\mathbb E_P[T_a]</span> は、三角形の確率座標そのものです。<a href="#general-dual-coordinates">一般の式と基底変換の計算</a></p>
 
 <p>数値で順にたどります。<span class="inline-math" data-tex="P=(0.20,0.30,0.50)">P=(0.20,0.30,0.50)</span> なら <span class="inline-math" data-tex="e^{\theta^1}=0.20/0.50=0.4">e^{\theta^1}=0.20/0.50=0.4</span>、<span class="inline-math" data-tex="e^{\theta^2}=0.30/0.50=0.6">e^{\theta^2}=0.30/0.50=0.6</span>。分母は <span class="inline-math" data-tex="1+0.4+0.6=2">1+0.4+0.6=2</span> なので、<span class="inline-math" data-tex="\partial_1\psi=0.4/2=0.20">\partial_1\psi=0.4/2=0.20</span>、<span class="inline-math" data-tex="\partial_2\psi=0.6/2=0.30">\partial_2\psi=0.6/2=0.30</span> と元の座標値が戻ります。</p>
+<p>微分中に動く分母の項も明記します。例えば <span class="inline-math" data-tex="\theta^1">\theta^1</span> で微分するとき、<span class="inline-math" data-tex="1">1</span> と <span class="inline-math" data-tex="e^{\theta^2}">e^{\theta^2}</span> は固定です。従って</p>
+<div class="equation" data-tex="\frac{\partial\psi}{\partial\theta^1} =\frac{1}{1+e^{\theta^1}+e^{\theta^2}}\frac{\partial}{\partial\theta^1}(1+e^{\theta^1}+e^{\theta^2}) =\frac{e^{\theta^1}}{1+e^{\theta^1}+e^{\theta^2}}.">\frac{\partial\psi}{\partial\theta^1} =\frac{1}{1+e^{\theta^1}+e^{\theta^2}}\frac{\partial}{\partial\theta^1}(1+e^{\theta^1}+e^{\theta^2}) =\frac{e^{\theta^1}}{1+e^{\theta^1}+e^{\theta^2}}.</div>
 </section>
 <section id="dual-geodesics"><h2>6. 混合接続と指数接続</h2>
 <div class="slider-bar">
@@ -513,10 +563,16 @@
 <p>スライダーで動く2点の速度も書けます。<span class="inline-math" data-tex="R_m=P_t^{(m)},\ R_e=P_t^{(e)}">R_m=P_t^{(m)},\ R_e=P_t^{(e)}</span> を、それぞれ時刻 <span class="inline-math" data-tex="t">t</span> で通る分布とします。直線補間を微分した係数 <span class="inline-math" data-tex="k^a">k^a</span> を、それぞれの分布での基底に掛けます。</p>
 <div class="equation" data-tex="\begin{aligned}\dot P_t^{(m)}&amp;=\sum_{a=1}^2[Q(A_a)-P(A_a)]\left.\frac{\partial}{\partial\rho_a}\right|_{R_m},\\\dot P_t^{(e)}&amp;=\sum_{a=1}^2[\theta^a(Q)-\theta^a(P)]\left.\frac{\partial}{\partial\theta^a}\right|_{R_e}.\end{aligned}">\begin{aligned}\dot P_t^{(m)}&amp;=\sum_{a=1}^2[Q(A_a)-P(A_a)]\left.\frac{\partial}{\partial\rho_a}\right|_{R_m},\\\dot P_t^{(e)}&amp;=\sum_{a=1}^2[\theta^a(Q)-\theta^a(P)]\left.\frac{\partial}{\partial\theta^a}\right|_{R_e}.\end{aligned}</div>
 <p>図は両方を確率座標で描きます。指数接続で一定なのは対数確率比の速度なので、その曲線を確率座標に戻すと図の破線のように曲がります。</p>
+<p>図の中点では <span class="inline-math" data-tex="t=1/2">t=1/2</span> です。混合接続の第1確率は <span class="inline-math" data-tex="(0.20+0.78)/2=0.49">(0.20+0.78)/2=0.49</span>。指数接続では、まず三つの重みがそれぞれ <span class="inline-math" data-tex="\sqrt{0.20\cdot0.78}\approx0.395">\sqrt{0.20\cdot0.78}\approx0.395</span>、<span class="inline-math" data-tex="\sqrt{0.30\cdot0.02}\approx0.077">\sqrt{0.30\cdot0.02}\approx0.077</span>、<span class="inline-math" data-tex="\sqrt{0.50\cdot0.20}\approx0.316">\sqrt{0.50\cdot0.20}\approx0.316</span> です。重みの和は約 <span class="inline-math" data-tex="0.789">0.789</span> なので、第1確率は <span class="inline-math" data-tex="0.395/0.789\approx0.50">0.395/0.789\approx0.50</span> となります。</p>
 <figure class="geometry-lab" id="dual-lab">
 
 <svg data-plot viewBox="0 0 350 205" role="img" aria-label="確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。"></svg>
-<figcaption>確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。</figcaption><p class="reading" data-reading></p>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/><circle cx="14" cy="7" r="4" fill="var(--blue)"/></svg><span>混合接続（<i>m</i>）</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="5 3"/><rect x="10" y="3" width="8" height="8" fill="var(--gold)"/></svg><span>指数接続（<i>e</i>）</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--ink)"/></svg><span>共通の端点 <i>P</i>, <i>Q</i></span></li>
+</ul>
+<figcaption>確率座標で二つの測地線を重ねています。</figcaption><p class="reading" data-reading></p>
 </figure>
 <figure class="explain-figure">
 <figcaption>中間点をどの座標で作るかで、通る分布が変わる</figcaption>
@@ -541,13 +597,18 @@
 <figure class="geometry-lab" id="kl-lab">
 
 <svg data-plot viewBox="0 0 350 205" role="img" aria-label="実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。"></svg>
-<figcaption>実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。</figcaption><p class="reading" data-reading></p>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/><circle cx="14" cy="7" r="4" fill="var(--blue)"/></svg><span>KLダイバージェンス</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="5 3"/><rect x="10" y="3" width="8" height="8" fill="var(--gold)"/></svg><span>フィッシャー計量による二次近似</span></li>
+</ul>
+<figcaption>縦軸は平均対数損失の増加量（nat）です。</figcaption><p class="reading" data-reading></p>
 </figure>
 <p><span class="inline-math" data-tex="s=0">s=0</span> ではすべての確率比が1なので <span class="inline-math" data-tex="D(0)=0">D(0)=0</span> です。残った2項を微分します。第1項の分母の変化率は <span class="inline-math" data-tex="+1">+1</span>、第3項の分母の変化率は <span class="inline-math" data-tex="-1">-1</span> です。</p>
 <div class="equation" data-tex="\begin{aligned}D&#x27;(s)&amp;=-\frac{0.20}{0.20+s}+\frac{0.50}{0.50-s},\\D&#x27;(0)&amp;=-1+1=0.\end{aligned}">\begin{aligned}D&#x27;(s)&amp;=-\frac{0.20}{0.20+s}+\frac{0.50}{0.50-s},\\D&#x27;(0)&amp;=-1+1=0.\end{aligned}</div>
 <p>いま動かしている曲線は、第2章の <span class="inline-math" data-tex="\gamma_1">\gamma_1</span> です。<span class="inline-math" data-tex="P=\gamma_1(0)">P=\gamma_1(0)</span> での速度を基底付きで書くと、第2座標は固定されているので</p>
 <div class="equation" data-tex="U=\dot\gamma_1(0)=1\left.\frac{\partial}{\partial\rho_1}\right|_P+0\left.\frac{\partial}{\partial\rho_2}\right|_P.">U=\dot\gamma_1(0)=1\left.\frac{\partial}{\partial\rho_1}\right|_P+0\left.\frac{\partial}{\partial\rho_2}\right|_P.</div>
 <p>この方向では <span class="inline-math" data-tex="U(\rho_1)=1,\ U(\rho_2)=0,\ U(\rho_3)=-1">U(\rho_1)=1,\ U(\rho_2)=0,\ U(\rho_3)=-1</span> でした。これを第3章の内積に代入した値と、以下の二階微分を比べます。</p>
+<p>第3項の符号も追えます。<span class="inline-math" data-tex="-0.50\log(0.50-s)">-0.50\log(0.50-s)</span> の微分では、対数の内側の微分が <span class="inline-math" data-tex="-1">-1</span> なので <span class="inline-math" data-tex="+0.50/(0.50-s)">+0.50/(0.50-s)</span> です。この逆数をもう一度微分すると <span class="inline-math" data-tex="-(0.50-s)^{-2}">-(0.50-s)^{-2}</span> に内側の <span class="inline-math" data-tex="-1">-1</span> が掛かり、やはり正になります。</p>
 <p>さらに微分すると両方の項が正になり、<span class="inline-math" data-tex="s=0">s=0</span> を代入すると第3章の <span class="inline-math" data-tex="g_P(e_1,e_1)">g_P(e_1,e_1)</span> が得られます。</p>
 <div class="equation" data-tex="\begin{aligned}D&#x27;&#x27;(s)&amp;=\frac{0.20}{(0.20+s)^2}+\frac{0.50}{(0.50-s)^2},\\D&#x27;&#x27;(0)&amp;=\frac{1}{0.20}+\frac{1}{0.50}=7.\end{aligned}">\begin{aligned}D&#x27;&#x27;(s)&amp;=\frac{0.20}{(0.20+s)^2}+\frac{0.50}{(0.50-s)^2},\\D&#x27;&#x27;(0)&amp;=\frac{1}{0.20}+\frac{1}{0.50}=7.\end{aligned}</div>
 <p>したがって図の破線は、テイラー展開の二次の項 <span class="inline-math" data-tex="\frac12D^{\prime\prime}(0)s^2=\frac72s^2">\frac12D^{\prime\prime}(0)s^2=\frac72s^2</span> です。</p>
@@ -581,7 +642,13 @@
 </div>
 <figure class="geometry-lab" id="projection-lab">
 <svg data-projection viewBox="0 0 360 235" role="img" aria-label="確率三角形の中に、目標、制約線分、候補、KLを最小にする分布を表示"></svg>
-<figcaption>破線が「A₁ の確率が r」の制約。金色の丸が候補 Q、青い四角が最小点 Q*、白い丸が目標 P です。</figcaption>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--muted)" stroke-width="2.2" stroke-dasharray="5 4"/></svg><span>制約 <i>Q</i>(<i>A</i><sub>1</sub>) = <i>r</i></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--gold)"/></svg><span>候補 <i>Q</i></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><rect x="10" y="3" width="8" height="8" fill="var(--blue)"/></svg><span>最小点 <i>Q</i><sub>*</sub></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--ink)"/></svg><span>目標 <i>P</i></span></li>
+</ul>
+<figcaption>制約上で候補を動かし、下の表でKLの値を比べます。</figcaption>
 <p class="reading" data-projection-points></p>
 <table class="explain-table">
 <thead><tr><th scope="col">KLの引数</th><th scope="col">値（自然対数）</th></tr></thead>
@@ -594,6 +661,7 @@
 </table>
 </figure>
 <p>図では <span class="inline-math" data-tex="D_{\rm KL}(Q\Vert P)">D_{\rm KL}(Q\Vert P)</span> と、右辺の二つの値を表示します。たとえば初期値 <span class="inline-math" data-tex="r=0.45">r=0.45</span> なら <span class="inline-math" data-tex="Q_*=(0.45,0.20625,0.34375)">Q_*=(0.45,0.20625,0.34375)</span> です。制約を動かすつまみと、同じ制約内で候補 <span class="inline-math" data-tex="Q">Q</span> を動かすつまみを分けています。</p>
+<p>図の等式を第2・第3事象で確かめます。三つのKLを差し引くと、各事象の項は <span class="inline-math" data-tex="(Q(A_i)-Q_*(A_i))\log[Q_*(A_i)/P(A_i)]">(Q(A_i)-Q_*(A_i))\log[Q_*(A_i)/P(A_i)]</span> です。第1事象では <span class="inline-math" data-tex="Q(A_1)-Q_*(A_1)=r-r=0">Q(A_1)-Q_*(A_1)=r-r=0</span>。第2・第3事象は対数比が同じで、二つの確率差を足すと0なので、合計が0になります。</p>
 <p>三角形の例では、<span class="inline-math" data-tex="Q_*(A_2)/P(A_2)=Q_*(A_3)/P(A_3)=(1-r)/0.80">Q_*(A_2)/P(A_2)=Q_*(A_3)/P(A_3)=(1-r)/0.80</span> でした。この二つの対数比が等しいため、第2事象の確率を増やして第3事象の確率を同じだけ減らす方向では、一階微分が打ち消し合います。図で <span class="inline-math" data-tex="Q">Q</span> を動かしても、<span class="inline-math" data-tex="D_{\rm KL}(Q_*\Vert P)">D_{\rm KL}(Q_*\Vert P)</span> は同じ値のままです。</p>
 <p><a href="#general-kl-projection">KLのピタゴラスの等式が成り立つ一般の条件</a></p></section>
 <section id="categorical-binomial"><h2>9. 比較 · 三角形に二項分布を重ねる</h2>
@@ -601,7 +669,12 @@
 <div class="slider-bar"><label for="simplex-binomial-p">成功確率 p <output for="simplex-binomial-p">0.35</output><input type="range" id="simplex-binomial-p" min="0.02" max="0.98" value="0.35" step="0.01"></label></div>
 <figure class="geometry-lab" id="simplex-binomial-lab">
 <svg data-plot-0 viewBox="0 0 360 205" role="img" aria-label="3カテゴリの三角形に二項分布の曲線と接線を重ねた図"></svg>
-<figcaption>青い線が二項分布でたどれる経路、青い点が選んだ分布です。金色の矢印は p を増やす向きの接ベクトルを縮小して描いたものです。</figcaption>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/></svg><span>二項分布の経路</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--blue)"/></svg><span>選んだ分布</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--gold)" stroke-width="2.2"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--gold)" stroke-width="2.2"/></svg><span><i>p</i> を増やす方向</span></li>
+</ul>
+<figcaption>接ベクトルは縮小して描いています。</figcaption>
 <p class="reading" data-values></p>
 </figure>
 <h3>曲線の接ベクトルを三角形の基底で読む</h3>
@@ -610,6 +683,7 @@
 <div class="equation" data-tex="\begin{aligned}\frac{\mathrm d}{\mathrm dp}(1-p)^2&amp;=-2(1-p),\\\frac{\mathrm d}{\mathrm dp}[2p(1-p)]&amp;=2(1-2p).\end{aligned}">\begin{aligned}\frac{\mathrm d}{\mathrm dp}(1-p)^2&amp;=-2(1-p),\\\frac{\mathrm d}{\mathrm dp}[2p(1-p)]&amp;=2(1-2p).\end{aligned}</div>
 <div class="equation" data-tex="\begin{aligned}\mathrm d\iota_{P_p}\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)&amp;=-2(1-p)\left.\frac{\partial}{\partial\rho_1}\right|_{\iota(P_p)}\\&amp;\quad+2(1-2p)\left.\frac{\partial}{\partial\rho_2}\right|_{\iota(P_p)}.\end{aligned}">\begin{aligned}\mathrm d\iota_{P_p}\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)&amp;=-2(1-p)\left.\frac{\partial}{\partial\rho_1}\right|_{\iota(P_p)}\\&amp;\quad+2(1-2p)\left.\frac{\partial}{\partial\rho_2}\right|_{\iota(P_p)}.\end{aligned}</div>
 <p>二項モデルではこの1本の方向と、その実数倍が接空間を作ります。三角形のモデルでは2本の座標基底の係数を独立に選べます。</p>
+<p>たとえば <span class="inline-math" data-tex="p=1/2">p=1/2</span> なら三つの確率は <span class="inline-math" data-tex="(1/4,1/2,1/4)">(1/4,1/2,1/4)</span> です。上の式の二つの係数に代入すると <span class="inline-math" data-tex="-2(1-1/2)=-1">-2(1-1/2)=-1</span>、<span class="inline-math" data-tex="2(1-2\cdot1/2)=0">2(1-2\cdot1/2)=0</span>。したがって、この位置の矢印は横座標だけを減らします。第2確率は <span class="inline-math" data-tex="p=1/2">p=1/2</span> で最大なので、その変化率が0です。</p>
 </section>
 </div>
 <div id="four-course" class="information-course" role="tabpanel" aria-labelledby="four-tab" tabindex="0">
@@ -620,7 +694,13 @@
 <div class="equation" data-tex="\{(x^1,x^2,x^3)\mid x^1,x^2,x^3&gt;0,\quad x^1+x^2+x^3&lt;1\}.">\{(x^1,x^2,x^3)\mid x^1,x^2,x^3&gt;0,\quad x^1+x^2+x^3&lt;1\}.</div>
 <p>これは四面体の内部です。各頂点は一つの結果に確率1を割り当てた極限です。図の点は、それぞれの頂点の位置を確率で重み付けした平均として描いています。四面体は見やすい方向から平面に投影しています。</p>
 <div class="slider-bar distribution-sliders"><label for="four-a">A₁ の確率 <output for="four-a">0.20</output><input type="range" id="four-a" min="0.02" max="0.53" value="0.2" step="0.01"></label><label for="four-b">A₂ の確率 <output for="four-b">0.30</output><input type="range" id="four-b" min="0.02" max="0.63" value="0.3" step="0.01"></label><label for="four-c">A₃ の確率 <output for="four-c">0.15</output><input type="range" id="four-c" min="0.02" max="0.48" value="0.15" step="0.01"></label></div>
-<figure class="geometry-lab" id="four-lab"><svg data-plot-0 viewBox="0 0 360 215" role="img" aria-label="四面体と、選んだ4カテゴリ分布の位置"></svg><figcaption>残りが A₄ の確率です。他の二つの値に応じて、各つまみの上限が変わります。金色の矢印は A₄ から各カテゴリに確率を移す座標方向です。</figcaption><p class="reading" data-values></p></figure>
+<figure class="geometry-lab" id="four-lab"><svg data-plot-0 viewBox="0 0 360 215" role="img" aria-label="四面体と、選んだ4カテゴリ分布の位置"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--blue)"/></svg><span>選んだ分布 <i>P</i></span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--gold)" stroke-width="2.2"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--gold)" stroke-width="2.2"/></svg><span><i>A</i><sub>4</sub> から確率を移す方向</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--muted)" stroke-width="2.2" stroke-dasharray="5 4"/></svg><span>奥の辺</span></li>
+</ul><figcaption>残りが <i>A</i><sub>4</sub> の確率です。他の二つの値に応じて、各つまみの上限が変わります。</figcaption><p class="reading" data-values></p></figure>
+<p>図の初期値では残りが <span class="inline-math" data-tex="1-0.20-0.30-0.15=0.35">1-0.20-0.30-0.15=0.35</span> です。第2、第3の確率を固定して第1を <span class="inline-math" data-tex="0.01">0.01</span> だけ増やせば、四つの確率は <span class="inline-math" data-tex="(0.21,0.30,0.15,0.34)">(0.21,0.30,0.15,0.34)</span> になります。動かした量を最後の確率から引いたので、四つの和は1のままです。</p>
 </section>
 <section id="four-tangent"><h2>2. 四面体の3本の座標基底</h2>
 <p><span class="inline-math" data-tex="e_a=\left.\partial/\partial\rho_a\right|_P">e_a=\left.\partial/\partial\rho_a\right|_P</span>（<span class="inline-math" data-tex="a=1,2,3">a=1,2,3</span>）は第 <span class="inline-math" data-tex="a">a</span> の確率を増やし、第4の確率を同じ速さで減らします。したがって <span class="inline-math" data-tex="e_a(\rho_b)=\delta_{ab}">e_a(\rho_b)=\delta_{ab}</span>（<span class="inline-math" data-tex="b=1,2,3">b=1,2,3</span>）、<span class="inline-math" data-tex="e_a(\rho_4)=-1">e_a(\rho_4)=-1</span> です。</p>
@@ -628,6 +708,8 @@
 <p>点 <span class="inline-math" data-tex="P">P</span> の確率を <span class="inline-math" data-tex="p_i=P(A_i)">p_i=P(A_i)</span> と書きます。基底を実際の曲線で作ることもできます。たとえば <span class="inline-math" data-tex="e_2">e_2</span> なら、<span class="inline-math" data-tex="A_2">A_2</span> に <span class="inline-math" data-tex="s">s</span> を足して <span class="inline-math" data-tex="A_4">A_4</span> から同じだけ引きます。次の <span class="inline-math" data-tex="\gamma_2">\gamma_2</span> を <span class="inline-math" data-tex="s=0">s=0</span> で微分した接ベクトルが <span class="inline-math" data-tex="\left.\partial/\partial\rho_2\right|_P">\left.\partial/\partial\rho_2\right|_P</span> です。</p>
 <div class="equation" data-tex="\bigl(\rho_1(\gamma_2(s)),\ldots,\rho_4(\gamma_2(s))\bigr)=(p_1,p_2+s,p_3,p_4-s).">\bigl(\rho_1(\gamma_2(s)),\ldots,\rho_4(\gamma_2(s))\bigr)=(p_1,p_2+s,p_3,p_4-s).</div>
 <p>その確率変化率は <span class="inline-math" data-tex="(0,1,0,-1)">(0,1,0,-1)</span> です。</p>
+<p>任意の速度 <span class="inline-math" data-tex="U">U</span> の第4成分は、第4確率の式そのものに <span class="inline-math" data-tex="U">U</span> を作用させて求められます。</p>
+<div class="equation" data-tex="U(\rho_4)=U(1-\rho_1-\rho_2-\rho_3)=0-a_1-a_2-a_3.">U(\rho_4)=U(1-\rho_1-\rho_2-\rho_3)=0-a_1-a_2-a_3.</div>
 </section>
 <section id="four-metric"><h2>3. フィッシャー計量</h2>
 <p><span class="inline-math" data-tex="p_i=P(A_i)">p_i=P(A_i)</span> と置きます。前の章で計算した <span class="inline-math" data-tex="e_a(\rho_i)">e_a(\rho_i)</span> をフィッシャー内積の4項に入れます。</p>
@@ -636,22 +718,26 @@
 <p>ここで <span class="inline-math" data-tex="\delta_{ab}">\delta_{ab}</span> は <span class="inline-math" data-tex="a=b">a=b</span> なら1、それ以外なら0です。計算を分けて書くと、初めの3項で両方の基底が同時に変える確率は、<span class="inline-math" data-tex="a=b">a=b</span> のときの <span class="inline-math" data-tex="p_a">p_a</span> だけです。4項目はどの基底の組でも <span class="inline-math" data-tex="(-1)(-1)/p_4">(-1)(-1)/p_4</span> になります。</p>
 <div class="equation" data-tex="\sum_{i=1}^4\frac{e_a(\rho_i)e_b(\rho_i)}{p_i} =\sum_{i=1}^3\frac{\delta_{ai}\delta_{bi}}{p_i}+\frac{(-1)(-1)}{p_4}.">\sum_{i=1}^4\frac{e_a(\rho_i)e_b(\rho_i)}{p_i} =\sum_{i=1}^3\frac{\delta_{ai}\delta_{bi}}{p_i}+\frac{(-1)(-1)}{p_4}.</div>
 <p>たとえば <span class="inline-math" data-tex="g_{12}=1/P(A_4)">g_{12}=1/P(A_4)</span> です。最初の3項では二つの基底が同時に変える確率がありません。第4項だけで <span class="inline-math" data-tex="(-1)(-1)=1">(-1)(-1)=1</span> が残ります。</p>
+<p>例えば最初の二つの基底では、全4項を書けば <span class="inline-math" data-tex="g_{12}=1\cdot0/p_1+0\cdot1/p_2+0\cdot0/p_3+(-1)(-1)/p_4">g_{12}=1\cdot0/p_1+0\cdot1/p_2+0\cdot0/p_3+(-1)(-1)/p_4</span>。図の初期値なら <span class="inline-math" data-tex="1/0.35\approx2.857">1/0.35\approx2.857</span> です。第1基底を二度入れた場合は <span class="inline-math" data-tex="1/0.20+1/0.35\approx7.857">1/0.20+1/0.35\approx7.857</span> になります。</p>
 </section>
 <section id="four-sphere"><h2>4. 四面体から3次元球面へ</h2>
 <p>各確率を <span class="inline-math" data-tex="p_i=P(A_i)">p_i=P(A_i)</span> と書き、平方根を取った4成分を <span class="inline-math" data-tex="F(P)=2(\sqrt{p_1},\ldots,\sqrt{p_4})">F(P)=2(\sqrt{p_1},\ldots,\sqrt{p_4})</span> と置けば、二乗和は <span class="inline-math" data-tex="4\sum_i p_i=4">4\sum_i p_i=4</span>。三角形を球面へ移したのと同じ手順で、四面体の内部が <span class="inline-math" data-tex="\mathbb R^4">\mathbb R^4</span> 内の半径2の3次元球面の正成分部分に写ります。</p>
 
 <p>速度 <span class="inline-math" data-tex="U">U</span> の第 <span class="inline-math" data-tex="i">i</span> 成分は写像を微分して <span class="inline-math" data-tex="U(\rho_i)/\sqrt{p_i}">U(\rho_i)/\sqrt{p_i}</span> です。これを <span class="inline-math" data-tex="V">V</span> の成分と掛けて足すと <span class="inline-math" data-tex="\sum_i U(\rho_i)V(\rho_i)/p_i=g_P(U,V)">\sum_i U(\rho_i)V(\rho_i)/p_i=g_P(U,V)</span>。したがって曲線の長さが保たれます。</p>
 
+<p>逆向きには、正の成分 <span class="inline-math" data-tex="y_1,\dots,y_4">y_1,\dots,y_4</span> を持つ球面上の点から <span class="inline-math" data-tex="p_i=y_i^2/4">p_i=y_i^2/4</span> と戻します。球面の条件 <span class="inline-math" data-tex="\sum_i y_i^2=4">\sum_i y_i^2=4</span> を使えば <span class="inline-math" data-tex="\sum_i p_i=1">\sum_i p_i=1</span>。逆に各 <span class="inline-math" data-tex="p_i">p_i</span> の正の平方根を取ると、もとの <span class="inline-math" data-tex="y_i">y_i</span> が戻ります。</p>
 </section>
 <section id="four-dual"><h2>5. 自然座標と期待値座標</h2>
 <p><span class="inline-math" data-tex="\theta^a=\log(p_a/p_4)">\theta^a=\log(p_a/p_4)</span>（<span class="inline-math" data-tex="a=1,2,3">a=1,2,3</span>）とすると、<span class="inline-math" data-tex="1=p_4(1+\sum_{a=1}^3e^{\theta^a})">1=p_4(1+\sum_{a=1}^3e^{\theta^a})</span>。<span class="inline-math" data-tex="\psi=\log(1+\sum_{a=1}^3e^{\theta^a})">\psi=\log(1+\sum_{a=1}^3e^{\theta^a})</span> と置くと <span class="inline-math" data-tex="p_a=e^{\theta^a-\psi}">p_a=e^{\theta^a-\psi}</span>、<span class="inline-math" data-tex="p_4=e^{-\psi}">p_4=e^{-\psi}</span> です。<span class="inline-math" data-tex="\theta^a">\theta^a</span> で <span class="inline-math" data-tex="\psi">\psi</span> を微分すると <span class="inline-math" data-tex="p_a">p_a</span> が出ます。3カテゴリの計算を3本の基底へ増やした形です。</p>
 
+<p>第2自然座標を例にすると、<span class="inline-math" data-tex="\partial_{\theta^2}e^{\theta^2}=e^{\theta^2}">\partial_{\theta^2}e^{\theta^2}=e^{\theta^2}</span> で、他の項の微分は0です。従って <span class="inline-math" data-tex="\partial_{\theta^2}\psi=e^{\theta^2}/(1+\sum_a e^{\theta^a})=p_2">\partial_{\theta^2}\psi=e^{\theta^2}/(1+\sum_a e^{\theta^a})=p_2</span>。統計量を「<span class="inline-math" data-tex="A_2">A_2</span> で1、他で0」とすれば、その平均も <span class="inline-math" data-tex="1\cdot p_2=p_2">1\cdot p_2=p_2</span> です。</p>
 </section>
 <section id="four-geodesics"><h2>6. 4つの確率で測地線を比べる</h2>
 <p>端点を <span class="inline-math" data-tex="P=(p_i)">P=(p_i)</span>、<span class="inline-math" data-tex="Q=(q_i)">Q=(q_i)</span> とします。混合接続では期待値座標 <span class="inline-math" data-tex="p_a">p_a</span> を線形補間し、第4成分も和が1になるように決めると全成分が <span class="inline-math" data-tex="(1-t)p_i+tq_i">(1-t)p_i+tq_i</span> になります。指数接続では <span class="inline-math" data-tex="\log(p_a/p_4)">\log(p_a/p_4)</span> を線形補間し、指数を取って和を1にそろえると全成分が <span class="inline-math" data-tex="p_i^{1-t}q_i^t/\sum_jp_j^{1-t}q_j^t">p_i^{1-t}q_i^t/\sum_jp_j^{1-t}q_j^t</span> になります。</p>
 
 <p>計量の測地線は平方根写像で移した球面上の短い大円弧です。端点の正の線形結合を半径2に正規化すると、その弧を最初から最後までたどれます。全成分は正のままなので、弧を四面体の内部へ戻せます。中心角は <span class="inline-math" data-tex="\arccos(\sum_i\sqrt{p_iq_i})">\arccos(\sum_i\sqrt{p_iq_i})</span> で、距離はその2倍です。</p>
 
+<p>例として <span class="inline-math" data-tex="P=(0.10,0.20,0.30,0.40)">P=(0.10,0.20,0.30,0.40)</span>、<span class="inline-math" data-tex="Q=(0.40,0.20,0.30,0.10)">Q=(0.40,0.20,0.30,0.10)</span> を取ります。混合接続の中点では成分ごとに足して2で割り、<span class="inline-math" data-tex="(0.25,0.20,0.30,0.25)">(0.25,0.20,0.30,0.25)</span> になります。指数接続では成分ごとの幾何平均が <span class="inline-math" data-tex="(0.20,0.20,0.30,0.20)">(0.20,0.20,0.30,0.20)</span>。和 <span class="inline-math" data-tex="0.90">0.90</span> で四つとも割るので、例えば第1確率は <span class="inline-math" data-tex="0.20/0.90\approx0.222">0.20/0.90\approx0.222</span> です。</p>
 </section>
 <section id="four-kl"><h2>7. 4項の KL と第4確率</h2>
 <p>確率 <span class="inline-math" data-tex="p_i">p_i</span> の分布 <span class="inline-math" data-tex="P">P</span> を固定し、予測 <span class="inline-math" data-tex="Q_s">Q_s</span> で <span class="inline-math" data-tex="A_4">A_4</span> から <span class="inline-math" data-tex="A_1">A_1</span> へ <span class="inline-math" data-tex="s">s</span> だけ移します。第2・第3項では確率比が1なので、</p>
@@ -661,6 +747,7 @@
 
 <p>微分するのは予測のずれ <span class="inline-math" data-tex="s">s</span> です。実際の分布の重み <span class="inline-math" data-tex="p_1,p_4">p_1,p_4</span> を固定して、対数の内側を微分しています。</p>
 <div class="equation" data-tex="\begin{aligned}D&#x27;(s)&amp;=-\frac{p_1}{p_1+s}+\frac{p_4}{p_4-s},\\ D&#x27;&#x27;(s)&amp;=\frac{p_1}{(p_1+s)^2}+\frac{p_4}{(p_4-s)^2}.\end{aligned}">\begin{aligned}D&#x27;(s)&amp;=-\frac{p_1}{p_1+s}+\frac{p_4}{p_4-s},\\ D&#x27;&#x27;(s)&amp;=\frac{p_1}{(p_1+s)^2}+\frac{p_4}{(p_4-s)^2}.\end{aligned}</div>
+<p>例えば図の初期値 <span class="inline-math" data-tex="p_1=0.20,p_4=0.35">p_1=0.20,p_4=0.35</span> なら、<span class="inline-math" data-tex="s=0">s=0</span> を二階微分に入れると <span class="inline-math" data-tex="0.20/0.20^2+0.35/0.35^2=5+2.857\ldots">0.20/0.20^2+0.35/0.35^2=5+2.857\ldots</span> です。第3章で第1基底を二度入れた値と一致します。</p>
 </section>
 </div>
 <div id="poisson-course" class="information-course" role="tabpanel" aria-labelledby="poisson-tab" tabindex="0">
@@ -674,7 +761,10 @@
 <div class="equation" data-tex="\frac{P(X=j+1)}{P(X=j)} =\frac{\lambda^{j+1}}{(j+1)!}\frac{j!}{\lambda^j} =\frac{\lambda}{j+1}.">\frac{P(X=j+1)}{P(X=j)} =\frac{\lambda^{j+1}}{(j+1)!}\frac{j!}{\lambda^j} =\frac{\lambda}{j+1}.</div>
 <p>例えば <span class="inline-math" data-tex="\lambda=3">\lambda=3</span> なら、0回・1回・2回の確率は順に <span class="inline-math" data-tex="e^{-3}">e^{-3}</span>、<span class="inline-math" data-tex="3e^{-3}">3e^{-3}</span>、<span class="inline-math" data-tex="\tfrac92e^{-3}">\tfrac92e^{-3}</span> です。</p>
 <div class="slider-bar"><label for="poisson-mean">平均回数 λ <output for="poisson-mean">3.00</output><input type="range" id="poisson-mean" min="0.25" max="10" value="3" step="0.05"></label></div>
-<figure class="geometry-lab" id="poisson-lab"><svg data-plot-0 viewBox="0 0 360 195" role="img" aria-label="ポアソン分布。横軸は観測回数 j、縦軸は確率 P(X=j)。0回から18回まで表示"></svg><figcaption>棒は0〜18回の確率です。19回以上の確率も下にまとめて表示します。縦軸の範囲は共通です。</figcaption><p class="reading" data-values></p></figure>
+<figure class="geometry-lab" id="poisson-lab"><svg data-plot-0 viewBox="0 0 360 195" role="img" aria-label="ポアソン分布。横軸は観測回数 j、縦軸は確率 P(X=j)。0回から18回まで表示"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><rect x="10" y="1" width="8" height="12" fill="var(--blue)"/></svg><span>観測回数ごとの確率</span></li>
+</ul><figcaption>棒は0〜18回の確率です。19回以上の確率も下にまとめて表示します。縦軸の範囲は共通です。</figcaption><p class="reading" data-values></p></figure>
 </section>
 <section id="poisson-tangent"><h2>2. 一つの座標基底</h2>
 <p><span class="inline-math" data-tex="\gamma(s)=P_{\lambda+as}">\gamma(s)=P_{\lambda+as}</span> とし、<span class="inline-math" data-tex="s">s</span> を0の近くに取ります。<span class="inline-math" data-tex="\dot\gamma(0)=a\left.\partial/\partial\lambda\right|_{P_\lambda}">\dot\gamma(0)=a\left.\partial/\partial\lambda\right|_{P_\lambda}</span> を <span class="inline-math" data-tex="P\mapsto P(X=j)">P\mapsto P(X=j)</span> に作用させると、確率を <span class="inline-math" data-tex="\lambda">\lambda</span> で微分した値が得られます。</p>
@@ -682,6 +772,7 @@
 <div class="equation" data-tex="\left.\frac{\mathrm d}{\mathrm ds}p_{\lambda+as}(j)\right|_{s=0}=a\,p_\lambda(j)\left(\frac{j}{\lambda}-1\right).">\left.\frac{\mathrm d}{\mathrm ds}p_{\lambda+as}(j)\right|_{s=0}=a\,p_\lambda(j)\left(\frac{j}{\lambda}-1\right).</div>
 <p>座標基底のスコアは、対数確率を直接 <span class="inline-math" data-tex="\lambda">λ</span> で微分して得られます。<span class="inline-math" data-tex="j/\lambda-1">j/\lambda-1</span> です。次の章ではこの二乗を平均します。</p>
 
+<p>例えば <span class="inline-math" data-tex="j=0">j=0</span> なら <span class="inline-math" data-tex="p_\lambda(0)=e^{-\lambda}">p_\lambda(0)=e^{-\lambda}</span> なので、曲線に沿って <span class="inline-math" data-tex="e^{-(\lambda+as)}">e^{-(\lambda+as)}</span> を微分すると <span class="inline-math" data-tex="-ae^{-\lambda}">-ae^{-\lambda}</span> です。上の一般式に <span class="inline-math" data-tex="j=0">j=0</span> を入れても、括弧が <span class="inline-math" data-tex="-1">-1</span> になり同じ結果が得られます。</p>
 </section>
 <section id="poisson-metric"><h2>3. フィッシャー計量</h2>
 <p>平均を計算するとき、<span class="inline-math" data-tex="j\ge1">j\ge1</span> なら <span class="inline-math" data-tex="j/j!=1/(j-1)!">j/j!=1/(j-1)!</span> なので、</p>
@@ -691,6 +782,7 @@
 <p>同様に <span class="inline-math" data-tex="j(j-1)/j!=1/(j-2)!">j(j-1)/j!=1/(j-2)!</span> から <span class="inline-math" data-tex="\mathbb E[X(X-1)]=\lambda^2">\mathbb E[X(X-1)]=\lambda^2</span>。よって <span class="inline-math" data-tex="\mathbb E[X^2]=\lambda^2+\lambda">\mathbb E[X^2]=\lambda^2+\lambda</span> で、分散は <span class="inline-math" data-tex="\lambda">\lambda</span> です。</p>
 <p><span class="inline-math" data-tex="\log p_\lambda(j)=-\lambda+j\log\lambda-\log(j!)">\log p_\lambda(j)=-\lambda+j\log\lambda-\log(j!)</span> を微分すると、スコアは <span class="inline-math" data-tex="(j-\lambda)/\lambda">(j-\lambda)/\lambda</span>。座標基底 <span class="inline-math" data-tex="\left.\partial/\partial\lambda\right|_{P_\lambda}">\left.\partial/\partial\lambda\right|_{P_\lambda}</span> の長さの二乗は</p>
 <div class="equation" data-tex="g_{\lambda\lambda}(P_\lambda)=\frac{\mathbb E[(X-\lambda)^2]}{\lambda^2}=\frac1\lambda.">g_{\lambda\lambda}(P_\lambda)=\frac{\mathbb E[(X-\lambda)^2]}{\lambda^2}=\frac1\lambda.</div>
+<p>最後の等号では <span class="inline-math" data-tex="\mathbb E[(X-\lambda)^2]">\mathbb E[(X-\lambda)^2]</span> を分散と読みます。実際に展開すると <span class="inline-math" data-tex="(\lambda^2+\lambda)-2\lambda\cdot\lambda+\lambda^2=\lambda">(\lambda^2+\lambda)-2\lambda\cdot\lambda+\lambda^2=\lambda</span>。分母 <span class="inline-math" data-tex="\lambda^2">\lambda^2</span> で割るため <span class="inline-math" data-tex="g_{\lambda\lambda}=1/\lambda">g_{\lambda\lambda}=1/\lambda</span> になります。初期値 <span class="inline-math" data-tex="\lambda=3">\lambda=3</span> なら、図の基底の長さは <span class="inline-math" data-tex="\sqrt{1/3}\approx0.577">\sqrt{1/3}\approx0.577</span> です。</p>
 </section>
 <section id="poisson-sphere"><h2>4. 平方根写像とモデル内の距離</h2>
 <p>座標ごとの平方根 <span class="inline-math" data-tex="F(P_\lambda)_j=2\sqrt{p_\lambda(j)}">F(P_\lambda)_j=2\sqrt{p_\lambda(j)}</span> を無限に並べます。全成分の二乗和は4です。異なる平均 <span class="inline-math" data-tex="\lambda,\kappa">\lambda,\kappa</span> に対して指数関数の級数を使うと、</p>
@@ -698,15 +790,18 @@
 <div class="equation" data-tex="\sum_{j=0}^\infty\sqrt{p_\lambda(j)p_\kappa(j)}=e^{-(\lambda+\kappa)/2}\sum_{j=0}^\infty\frac{(\sqrt{\lambda\kappa})^j}{j!}=e^{-(\sqrt\lambda-\sqrt\kappa)^2/2}.">\sum_{j=0}^\infty\sqrt{p_\lambda(j)p_\kappa(j)}=e^{-(\lambda+\kappa)/2}\sum_{j=0}^\infty\frac{(\sqrt{\lambda\kappa})^j}{j!}=e^{-(\sqrt\lambda-\sqrt\kappa)^2/2}.</div>
 <p>この値は移した2点の角の余弦です。モデル内では計量が <span class="inline-math" data-tex="1/\lambda">1/\lambda</span> なので <span class="inline-math" data-tex="u(\lambda)=2\sqrt\lambda">u(\lambda)=2\sqrt\lambda</span> を使うと速さは <span class="inline-math" data-tex="|\dot u|">|\dot u|</span>。したがってモデル内の距離は <span class="inline-math" data-tex="|u(\kappa)-u(\lambda)|">|u(\kappa)-u(\lambda)|</span> です。</p>
 
+<p>余弦を作るとき、<span class="inline-math" data-tex="F">F</span> の各成分に付く2を二つ掛けた内積は <span class="inline-math" data-tex="4\sum_j\sqrt{p_\lambda(j)p_\kappa(j)}">4\sum_j\sqrt{p_\lambda(j)p_\kappa(j)}</span>。長さの積は <span class="inline-math" data-tex="2\cdot2=4">2\cdot2=4</span> なので、この4が消えます。級数を足した後の指数は <span class="inline-math" data-tex="-(\lambda+\kappa)/2+\sqrt{\lambda\kappa}">-(\lambda+\kappa)/2+\sqrt{\lambda\kappa}</span> で、平方を完成させると <span class="inline-math" data-tex="-(\sqrt\lambda-\sqrt\kappa)^2/2">-(\sqrt\lambda-\sqrt\kappa)^2/2</span> です。</p>
 </section>
 <section id="poisson-dual"><h2>5. 自然座標と期待値座標</h2>
 <p><span class="inline-math" data-tex="\theta=\log\lambda">\theta=\log\lambda</span> と置くと <span class="inline-math" data-tex="p_\lambda(j)=(1/j!)\exp[j\theta-e^\theta]">p_\lambda(j)=(1/j!)\exp[j\theta-e^\theta]</span>。したがって統計量は <span class="inline-math" data-tex="j">j</span>、正規化関数は <span class="inline-math" data-tex="\psi(\theta)=e^\theta">\psi(\theta)=e^\theta</span> です。<span class="inline-math" data-tex="\eta=\psi&#x27;(\theta)=e^\theta=\lambda">\eta=\psi&#x27;(\theta)=e^\theta=\lambda</span> が期待値座標で、<span class="inline-math" data-tex="\psi&#x27;&#x27;(\theta)=\lambda">\psi&#x27;&#x27;(\theta)=\lambda</span> が自然座標での計量です。<span class="inline-math" data-tex="g_{\lambda\lambda}(\mathrm d\lambda/\mathrm d\theta)^2=(1/\lambda)\lambda^2">g_{\lambda\lambda}(\mathrm d\lambda/\mathrm d\theta)^2=(1/\lambda)\lambda^2</span> でも同じ値になります。</p>
 
+<p>置換では <span class="inline-math" data-tex="\lambda^j=(e^\theta)^j=e^{j\theta}">\lambda^j=(e^\theta)^j=e^{j\theta}</span> と <span class="inline-math" data-tex="e^{-\lambda}=e^{-e^\theta}">e^{-\lambda}=e^{-e^\theta}</span> を掛けています。対数を取ると <span class="inline-math" data-tex="\log(1/j!)+j\theta-e^\theta">\log(1/j!)+j\theta-e^\theta</span> です。<span class="inline-math" data-tex="-e^\theta">-e^\theta</span> は <span class="inline-math" data-tex="j">j</span> に依存しない項なので、この形から正規化関数 <span class="inline-math" data-tex="\psi=e^\theta">\psi=e^\theta</span> を読めます。</p>
 </section>
 <section id="poisson-geodesics"><h2>6. 同じ端点を結ぶ三つの補間</h2>
 <p><span class="inline-math" data-tex="\lambda_0,\lambda_1">\lambda_0,\lambda_1</span> を端点とします。指数接続では <span class="inline-math" data-tex="\log\lambda">\log\lambda</span>、混合接続では <span class="inline-math" data-tex="\lambda">\lambda</span>、計量の接続では <span class="inline-math" data-tex="2\sqrt\lambda">2\sqrt\lambda</span> が一次式になります。端点を <span class="inline-math" data-tex="1,9">1,9</span> にすると、時刻 <span class="inline-math" data-tex="t=1/2">t=1/2</span> での平均回数は順に <span class="inline-math" data-tex="\sqrt{1\cdot9}=3">\sqrt{1\cdot9}=3</span>、<span class="inline-math" data-tex="(1+9)/2=5">(1+9)/2=5</span>、<span class="inline-math" data-tex="[(\sqrt1+\sqrt9)/2]^2=4">[(\sqrt1+\sqrt9)/2]^2=4</span>。どの曲線も同じ区間を通り、一定の速さとする座標で中点が変わります。</p>
 
 <p>例えば指数接続では、まず <span class="inline-math" data-tex="\theta(t)=(1-t)\log\lambda_0+t\log\lambda_1">\theta(t)=(1-t)\log\lambda_0+t\log\lambda_1</span> を求め、それから指数を取って <span class="inline-math" data-tex="\lambda(t)=\lambda_0^{1-t}\lambda_1^t">\lambda(t)=\lambda_0^{1-t}\lambda_1^t</span> に戻します。計量の接続でも同じ二段階です。<span class="inline-math" data-tex="u(t)=2[(1-t)\sqrt{\lambda_0}+t\sqrt{\lambda_1}]">u(t)=2[(1-t)\sqrt{\lambda_0}+t\sqrt{\lambda_1}]</span> を作り、<span class="inline-math" data-tex="\lambda(t)=(u(t)/2)^2">\lambda(t)=(u(t)/2)^2</span> に戻します。</p>
+<p><span class="inline-math" data-tex="\lambda_0=1,\lambda_1=9">\lambda_0=1,\lambda_1=9</span> なら、自然座標の端点は <span class="inline-math" data-tex="0,\log9">0,\log9</span>、期待値座標は <span class="inline-math" data-tex="1,9">1,9</span>、計量座標は <span class="inline-math" data-tex="2,6">2,6</span> です。中点を取って元に戻すと、それぞれ <span class="inline-math" data-tex="e^{(\log9)/2}=3">e^{(\log9)/2}=3</span>、<span class="inline-math" data-tex="(1+9)/2=5">(1+9)/2=5</span>、<span class="inline-math" data-tex="(4/2)^2=4">(4/2)^2=4</span> になります。</p>
 </section>
 <section id="poisson-kl"><h2>7. ポアソン分布どうしの KL</h2>
 <p>二つの対数確率の差は <span class="inline-math" data-tex="\kappa-\lambda+j\log(\lambda/\kappa)">\kappa-\lambda+j\log(\lambda/\kappa)</span> です。<span class="inline-math" data-tex="P_\lambda">P_\lambda</span> で平均すると <span class="inline-math" data-tex="\mathbb E[X]=\lambda">\mathbb E[X]=\lambda</span> なので、</p>
@@ -714,6 +809,7 @@
 <div class="equation" data-tex="D_{\rm KL}(P_\lambda\Vert P_\kappa)=\kappa-\lambda+\lambda\log(\lambda/\kappa).">D_{\rm KL}(P_\lambda\Vert P_\kappa)=\kappa-\lambda+\lambda\log(\lambda/\kappa).</div>
 <p><span class="inline-math" data-tex="\kappa">\kappa</span> で一度微分すると <span class="inline-math" data-tex="1-\lambda/\kappa">1-\lambda/\kappa</span>、二度微分すると <span class="inline-math" data-tex="\lambda/\kappa^2">\lambda/\kappa^2</span>。<span class="inline-math" data-tex="\kappa=\lambda">\kappa=\lambda</span> での二階微分が <span class="inline-math" data-tex="1/\lambda">1/\lambda</span> になります。</p>
 
+<p>例えば <span class="inline-math" data-tex="\lambda=3,\kappa=4">\lambda=3,\kappa=4</span> なら <span class="inline-math" data-tex="D(P_3\Vert P_4)=1+3\log(3/4)\approx0.137">D(P_3\Vert P_4)=1+3\log(3/4)\approx0.137</span> です。予測側の <span class="inline-math" data-tex="\kappa">\kappa</span> を3へ戻すと、差の項 <span class="inline-math" data-tex="3-3">3-3</span> と対数の項 <span class="inline-math" data-tex="3\log1">3\log1</span> が両方0になります。</p>
 </section>
 </div>
 <div id="normal-course" class="information-course" role="tabpanel" aria-labelledby="normal-tab" tabindex="0">
@@ -722,6 +818,7 @@
 
 <p>正規分布 <span class="inline-math" data-tex="P_{\mu,\sigma}=\mathcal N(\mu,\sigma^2)">P_{\mu,\sigma}=\mathcal N(\mu,\sigma^2)</span> の族を考えます。座標は平均 <span class="inline-math" data-tex="\mu\in\mathbb R">\mu\in\mathbb R</span> と標準偏差 <span class="inline-math" data-tex="\sigma&gt;0">\sigma&gt;0</span> です。両方を指定すると密度が決まります。</p>
 <div class="equation" data-tex="p_{\mu,\sigma}(x)=\frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).">p_{\mu,\sigma}(x)=\frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).</div>
+<p>図の初期値 <span class="inline-math" data-tex="\mu=0,\sigma=1">\mu=0,\sigma=1</span> を密度に代入すると、<span class="inline-math" data-tex="\exp(-x^2/2)/\sqrt{2\pi}">\exp(-x^2/2)/\sqrt{2\pi}</span> になります。山の頂上 <span class="inline-math" data-tex="x=\mu">x=\mu</span> では指数が <span class="inline-math" data-tex="e^0=1">e^0=1</span> なので、どの <span class="inline-math" data-tex="\mu">\mu</span> でも高さは <span class="inline-math" data-tex="1/(\sqrt{2\pi}\sigma)">1/(\sqrt{2\pi}\sigma)</span> です。幅 <span class="inline-math" data-tex="\sigma">\sigma</span> を2倍にすると、頂上の高さは半分になります。</p>
 <div class="slider-bar slider-pair" aria-label="正規分布の操作">
   <label for="normal-mu">平均 μ <output for="normal-mu">0.00</output><input type="range" id="normal-mu" min="-2" max="2" value="0" step="0.05"></label>
   <label for="normal-sigma">標準偏差 σ <output for="normal-sigma">1.00</output><input type="range" id="normal-sigma" min="0.5" max="2" value="1" step="0.05"></label>
@@ -731,13 +828,22 @@
     <div class="map-branch">
       <h4>パラメータ空間</h4>
       <svg data-normal-plane viewBox="0 0 330 180" role="img" aria-label="座標平面上の点と、平均または標準偏差だけを増やす方向"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><circle cx="14" cy="7" r="4" fill="var(--blue)"/></svg><span>選んだ分布</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--blue)" stroke-width="2.2"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/></svg><span>平均 <i>μ</i> を増やす</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="4 2"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--gold)" stroke-width="2.2"/></svg><span>標準偏差 <i>σ</i> を増やす</span></li>
+</ul>
     </div>
     <div class="map-branch">
       <h4>選んだ分布の密度</h4>
       <svg data-normal-profile viewBox="0 0 330 180" role="img" aria-label="横軸が観測値 x、縦軸が正規分布の密度。破線は標準正規分布"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/></svg><span>選んだ分布の密度</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--muted)" stroke-width="2.2" stroke-dasharray="5 4"/></svg><span>標準正規分布の密度</span></li>
+</ul>
     </div>
   </div>
-  <figcaption>パラメータ空間の青い点が分布の位置。青い実線矢印は平均、金色の破線矢印は標準偏差を増やす向きです。密度図の青い実線は選んだ分布、灰色の破線は比較用の標準正規分布です。</figcaption>
+  <figcaption>上のつまみでパラメータ空間の点と密度が一緒に変わります。</figcaption>
   <p class="reading"><span>フィッシャー計量で測った基底の長さ</span><br>
     <span data-tex="\|\partial/\partial\mu\|_g" class="inline-math">‖∂/∂μ‖</span> = <strong data-normal-length-mu>1.000</strong>　
     <span data-tex="\|\partial/\partial\sigma\|_g" class="inline-math">‖∂/∂σ‖</span> = <strong data-normal-length-sigma>1.414</strong>
@@ -748,18 +854,44 @@
 <p><span class="inline-math" data-tex="\gamma(s)=P_{\mu+as,\sigma+bs}">\gamma(s)=P_{\mu+as,\sigma+bs}</span> とすると、<span class="inline-math" data-tex="s=0">s=0</span> での接ベクトルは</p>
 
 <div class="equation" data-tex="\dot\gamma(0)=a\left.\frac{\partial}{\partial\mu}\right|_{P_{\mu,\sigma}}+b\left.\frac{\partial}{\partial\sigma}\right|_{P_{\mu,\sigma}}.">\dot\gamma(0)=a\left.\frac{\partial}{\partial\mu}\right|_{P_{\mu,\sigma}}+b\left.\frac{\partial}{\partial\sigma}\right|_{P_{\mu,\sigma}}.</div>
+<p>ここで <span class="inline-math" data-tex="a=\mathrm d(\mu+as)/\mathrm ds">a=\mathrm d(\mu+as)/\mathrm ds</span>、<span class="inline-math" data-tex="b=\mathrm d(\sigma+bs)/\mathrm ds">b=\mathrm d(\sigma+bs)/\mathrm ds</span> です。観測値 <span class="inline-math" data-tex="x">x</span> を固定して <span class="inline-math" data-tex="f(P)=p_P(x)">f(P)=p_P(x)</span> と置けば、二変数の連鎖律で次の二項が出ます。</p>
+<div class="equation" data-tex="\left.\frac{\mathrm d}{\mathrm ds}p_{\mu+as,\sigma+bs}(x)\right|_{0}=a\,\partial_\mu p_{\mu,\sigma}(x)+b\,\partial_\sigma p_{\mu,\sigma}(x).">\left.\frac{\mathrm d}{\mathrm ds}p_{\mu+as,\sigma+bs}(x)\right|_{0}=a\,\partial_\mu p_{\mu,\sigma}(x)+b\,\partial_\sigma p_{\mu,\sigma}(x).</div>
 <p>密度を読む関数に作用させれば <span class="inline-math" data-tex="a\partial_\mu p+b\partial_\sigma p">a\partial_\mu p+b\partial_\sigma p</span> です。平均だけを動かすと密度は横にずれ、標準偏差だけを増やすと広がります。<a href="#general-normal">密度の図に戻る</a></p>
 
 <p>例えば <span class="inline-math" data-tex="x=\mu">x=\mu</span> で密度を読みます。平均を動かす方向の変化率は <span class="inline-math" data-tex="\partial_\mu p_{\mu,\sigma}(x)=p_{\mu,\sigma}(x)(x-\mu)/\sigma^2">\partial_\mu p_{\mu,\sigma}(x)=p_{\mu,\sigma}(x)(x-\mu)/\sigma^2</span> に <span class="inline-math" data-tex="x=\mu">x=\mu</span> を入れると0です。密度の山の頂上では、横に少しずらしても高さは一次では変化しません。幅を変える方向では <span class="inline-math" data-tex="\partial_\sigma p_{\mu,\sigma}(x)">\partial_\sigma p_{\mu,\sigma}(x)</span> に <span class="inline-math" data-tex="x=\mu">x=\mu</span> を入れると <span class="inline-math" data-tex="-p_{\mu,\sigma}(\mu)/\sigma">-p_{\mu,\sigma}(\mu)/\sigma</span> です。こちらは一次で変わります。</p>
 </section>
 <section id="normal-metric"><h2>3. フィッシャー計量</h2>
-<p><span class="inline-math" data-tex="e_\mu=\left.\frac{\partial}{\partial\mu}\right|_P">e_\mu=\left.\frac{\partial}{\partial\mu}\right|_P</span> は <span class="inline-math" data-tex="\sigma">\sigma</span> を固定し、<span class="inline-math" data-tex="e_\sigma=\left.\frac{\partial}{\partial\sigma}\right|_P">e_\sigma=\left.\frac{\partial}{\partial\sigma}\right|_P</span> は <span class="inline-math" data-tex="\mu">\mu</span> を固定する方向です。密度の対数を取ると <span class="inline-math" data-tex="-\tfrac12\log(2\pi)-\log\sigma-(x-\mu)^2/(2\sigma^2)">-\tfrac12\log(2\pi)-\log\sigma-(x-\mu)^2/(2\sigma^2)</span> です。この式をそれぞれの座標で微分し、<span class="inline-math" data-tex="z=(x-\mu)/\sigma">z=(x-\mu)/\sigma</span> と置きます。</p>
-<div class="equation" data-tex="\begin{aligned}S_\mu(x)&amp;=\frac{x-\mu}{\sigma^2}=\frac{z}{\sigma},\\S_\sigma(x)&amp;=-\frac1\sigma+\frac{(x-\mu)^2}{\sigma^3}=\frac{z^2-1}{\sigma}.\end{aligned}">\begin{aligned}S_\mu(x)&amp;=\frac{x-\mu}{\sigma^2}=\frac{z}{\sigma},\\S_\sigma(x)&amp;=-\frac1\sigma+\frac{(x-\mu)^2}{\sigma^3}=\frac{z^2-1}{\sigma}.\end{aligned}</div>
-<p>例えば尺度側のスコアは、対数密度の <span class="inline-math" data-tex="-\log\sigma">-\log\sigma</span> と <span class="inline-math" data-tex="-(x-\mu)^2/(2\sigma^2)">-(x-\mu)^2/(2\sigma^2)</span> の両方から出ます。微分中は <span class="inline-math" data-tex="x">x</span> と <span class="inline-math" data-tex="\mu">\mu</span> を固定しています。</p>
-<div class="equation" data-tex="\frac{\partial}{\partial\sigma}\left[-\log\sigma-\tfrac12(x-\mu)^2\sigma^{-2}\right] =-\frac1\sigma+(x-\mu)^2\sigma^{-3}.">\frac{\partial}{\partial\sigma}\left[-\log\sigma-\tfrac12(x-\mu)^2\sigma^{-2}\right] =-\frac1\sigma+(x-\mu)^2\sigma^{-3}.</div>
-<p>観測値 <span class="inline-math" data-tex="X">X</span> が <span class="inline-math" data-tex="P_{\mu,\sigma}">P_{\mu,\sigma}</span> に従うとき、<span class="inline-math" data-tex="Z=(X-\mu)/\sigma">Z=(X-\mu)/\sigma</span> は標準正規分布に従います。対称性から <span class="inline-math" data-tex="\mathbb E[Z]=\mathbb E[Z^3]=0">\mathbb E[Z]=\mathbb E[Z^3]=0</span>。<span class="inline-math" data-tex="\mathbb E[Z^2]=1">\mathbb E[Z^2]=1</span> で、標準正規密度 <span class="inline-math" data-tex="\varphi&#x27;(z)=-z\varphi(z)">\varphi&#x27;(z)=-z\varphi(z)</span> を使って部分積分すると <span class="inline-math" data-tex="\mathbb E[Z^4]=3\mathbb E[Z^2]=3">\mathbb E[Z^4]=3\mathbb E[Z^2]=3</span> です。これをスコアの積に代入します。</p>
-<div class="equation" data-tex="\begin{aligned}g_P(e_\mu,e_\mu)&amp;=\frac{\mathbb E[Z^2]}{\sigma^2}=\frac1{\sigma^2},\\g_P(e_\mu,e_\sigma)&amp;=\frac{\mathbb E[Z^3-Z]}{\sigma^2}=0,\\g_P(e_\sigma,e_\sigma)&amp;=\frac{\mathbb E[Z^4-2Z^2+1]}{\sigma^2}=\frac2{\sigma^2}.\end{aligned}">\begin{aligned}g_P(e_\mu,e_\mu)&amp;=\frac{\mathbb E[Z^2]}{\sigma^2}=\frac1{\sigma^2},\\g_P(e_\mu,e_\sigma)&amp;=\frac{\mathbb E[Z^3-Z]}{\sigma^2}=0,\\g_P(e_\sigma,e_\sigma)&amp;=\frac{\mathbb E[Z^4-2Z^2+1]}{\sigma^2}=\frac2{\sigma^2}.\end{aligned}</div>
-<p>したがって基底の長さは <span class="inline-math" data-tex="1/\sigma,\sqrt2/\sigma">1/\sigma,\sqrt2/\sigma</span> です。図で <span class="inline-math" data-tex="\sigma">\sigma</span> を上げると、密度が広がり、同時に基底の長さがどちらも短くなります。たとえば平均を0.1だけ動かすとき、密度が広いほど、そのずれによる平均対数損失の二次の増加は小さくなります。</p>
+<p>前章の二つの座標基底を <span class="inline-math" data-tex="e_\mu=\left.\frac{\partial}{\partial\mu}\right|_P">e_\mu=\left.\frac{\partial}{\partial\mu}\right|_P</span>、<span class="inline-math" data-tex="e_\sigma=\left.\frac{\partial}{\partial\sigma}\right|_P">e_\sigma=\left.\frac{\partial}{\partial\sigma}\right|_P</span> と書きます。スコアは、各基底を対数密度に作用させた値です。まず対数密度を三項に分けます。</p>
+<div class="equation" data-tex="\ell(x)=\log p_{\mu,\sigma}(x)=-\tfrac12\log(2\pi)-\log\sigma-\frac{(x-\mu)^2}{2\sigma^2}.">\ell(x)=\log p_{\mu,\sigma}(x)=-\tfrac12\log(2\pi)-\log\sigma-\frac{(x-\mu)^2}{2\sigma^2}.</div>
+<p>平均で微分するときは <span class="inline-math" data-tex="x,\sigma">x,\sigma</span> を固定します。最後の項の <span class="inline-math" data-tex="(x-\mu)^2">(x-\mu)^2</span> だけが動きます。二乗の微分で <span class="inline-math" data-tex="2(x-\mu)">2(x-\mu)</span>、内側の微分で <span class="inline-math" data-tex="-1">-1</span> が出ます。</p>
+<div class="equation" data-tex="\begin{aligned}S_\mu(x)=\partial_\mu\ell(x) &amp;=-\frac{2(x-\mu)(-1)}{2\sigma^2}\\&amp;=\frac{x-\mu}{\sigma^2}. \end{aligned}">\begin{aligned}S_\mu(x)=\partial_\mu\ell(x) &amp;=-\frac{2(x-\mu)(-1)}{2\sigma^2}\\&amp;=\frac{x-\mu}{\sigma^2}. \end{aligned}</div>
+<p>幅で微分するときは <span class="inline-math" data-tex="x,\mu">x,\mu</span> を固定します。<span class="inline-math" data-tex="-\log\sigma">-\log\sigma</span> と <span class="inline-math" data-tex="\sigma^{-2}">\sigma^{-2}</span> を含む項の二つが動きます。</p>
+<div class="equation" data-tex="\begin{aligned}S_\sigma(x)=\partial_\sigma\ell(x) &amp;=-\frac1\sigma-\tfrac12(x-\mu)^2(-2)\sigma^{-3}\\&amp;=-\frac1\sigma+\frac{(x-\mu)^2}{\sigma^3}. \end{aligned}">\begin{aligned}S_\sigma(x)=\partial_\sigma\ell(x) &amp;=-\frac1\sigma-\tfrac12(x-\mu)^2(-2)\sigma^{-3}\\&amp;=-\frac1\sigma+\frac{(x-\mu)^2}{\sigma^3}. \end{aligned}</div>
+<h3>何を平均するか</h3>
+<p>分布を <span class="inline-math" data-tex="P=P_{\mu,\sigma}">P=P_{\mu,\sigma}</span> に固定します。<span class="inline-math" data-tex="X">X</span> はこの分布から得る観測値、<span class="inline-math" data-tex="x">x</span> はその具体的な値です。<span class="inline-math" data-tex="e_\mu">e_\mu</span> は幅を固定して平均を変える方向、<span class="inline-math" data-tex="e_\sigma">e_\sigma</span> は平均を固定して幅を変える方向でした。</p>
+<p>ここでの内積は、同じ観測値での二つのスコアを掛け、その積を分布 <span class="inline-math" data-tex="P">P</span> で平均した値です。例えば <span class="inline-math" data-tex="g_P(e_\mu,e_\sigma)">g_P(e_\mu,e_\sigma)</span> では、各 <span class="inline-math" data-tex="x">x</span> で <span class="inline-math" data-tex="S_\mu(x)S_\sigma(x)">S_\mu(x)S_\sigma(x)</span> を作り、確率密度 <span class="inline-math" data-tex="p_{\mu,\sigma}(x)">p_{\mu,\sigma}(x)</span> を掛けて積分します。</p>
+<div class="equation" data-tex="\begin{aligned}g_P(e_\mu,e_\sigma) &amp;=\mathbb E_P[S_\mu(X)S_\sigma(X)]\\ &amp;=\int_{-\infty}^{\infty}S_\mu(x)S_\sigma(x)\,p_{\mu,\sigma}(x)\,\mathrm dx. \end{aligned}">\begin{aligned}g_P(e_\mu,e_\sigma) &amp;=\mathbb E_P[S_\mu(X)S_\sigma(X)]\\ &amp;=\int_{-\infty}^{\infty}S_\mu(x)S_\sigma(x)\,p_{\mu,\sigma}(x)\,\mathrm dx. \end{aligned}</div>
+<h3>平均を計算しやすい変数に移す</h3>
+<p><span class="inline-math" data-tex="Z=(X-\mu)/\sigma">Z=(X-\mu)/\sigma</span> と置き、観測値 <span class="inline-math" data-tex="x">x</span> に対応する値を <span class="inline-math" data-tex="z=(x-\mu)/\sigma">z=(x-\mu)/\sigma</span> と書きます。スコアの式に <span class="inline-math" data-tex="x-\mu=\sigma z">x-\mu=\sigma z</span> を代入すると、</p>
+<div class="equation" data-tex="\begin{aligned}S_\mu(x)&amp;=\frac{\sigma z}{\sigma^2}=\frac z\sigma,\\ S_\sigma(x)&amp;=-\frac1\sigma+\frac{\sigma^2 z^2}{\sigma^3}=\frac{z^2-1}{\sigma}. \end{aligned}">\begin{aligned}S_\mu(x)&amp;=\frac{\sigma z}{\sigma^2}=\frac z\sigma,\\ S_\sigma(x)&amp;=-\frac1\sigma+\frac{\sigma^2 z^2}{\sigma^3}=\frac{z^2-1}{\sigma}. \end{aligned}</div>
+<p>期待値の積分も <span class="inline-math" data-tex="x=\mu+\sigma z">x=\mu+\sigma z</span> で置換できます。指数の <span class="inline-math" data-tex="(x-\mu)^2/(2\sigma^2)">(x-\mu)^2/(2\sigma^2)</span> は <span class="inline-math" data-tex="z^2/2">z^2/2</span> になり、<span class="inline-math" data-tex="\mathrm dx=\sigma\,\mathrm dz">\mathrm dx=\sigma\,\mathrm dz</span> が密度の分母の <span class="inline-math" data-tex="\sigma">\sigma</span> を消します。</p>
+<div class="equation" data-tex="\begin{aligned}p_{\mu,\sigma}(x)\,\mathrm dx &amp;=\frac{1}{\sqrt{2\pi}\,\sigma}e^{-z^2/2}\,\sigma\,\mathrm dz\\ &amp;=\underbrace{\frac{1}{\sqrt{2\pi}}e^{-z^2/2}}_{\varphi(z)}\,\mathrm dz. \end{aligned}">\begin{aligned}p_{\mu,\sigma}(x)\,\mathrm dx &amp;=\frac{1}{\sqrt{2\pi}\,\sigma}e^{-z^2/2}\,\sigma\,\mathrm dz\\ &amp;=\underbrace{\frac{1}{\sqrt{2\pi}}e^{-z^2/2}}_{\varphi(z)}\,\mathrm dz. \end{aligned}</div>
+<p>したがって <span class="inline-math" data-tex="\mathbb E[Z^j]">\mathbb E[Z^j]</span> は、<span class="inline-math" data-tex="z^j\varphi(z)">z^j\varphi(z)</span> を実数全体で積分したものです。<span class="inline-math" data-tex="\mu,\sigma">\mu,\sigma</span> は固定しているので、積に現れる <span class="inline-math" data-tex="1/\sigma^2">1/\sigma^2</span> は平均の外に出せます。</p>
+<h3>使う四つの平均を求める</h3>
+<p><span class="inline-math" data-tex="\varphi(-z)=\varphi(z)">\varphi(-z)=\varphi(z)</span> です。<span class="inline-math" data-tex="z">z</span> や <span class="inline-math" data-tex="z^3">z^3</span> を掛けると、<span class="inline-math" data-tex="z">z</span> と <span class="inline-math" data-tex="-z">-z</span> の値が符号だけ逆になるため、積分が打ち消し合います。よって <span class="inline-math" data-tex="\mathbb E[Z]=\mathbb E[Z^3]=0">\mathbb E[Z]=\mathbb E[Z^3]=0</span> です。</p>
+<p>二乗と四乗は部分積分で求めます。<span class="inline-math" data-tex="\varphi&#x27;(z)=-z\varphi(z)">\varphi&#x27;(z)=-z\varphi(z)</span> なので、一つの <span class="inline-math" data-tex="z">z</span> を密度の微分に置き換えます。端の項は、指数の減衰が <span class="inline-math" data-tex="z,z^3">z,z^3</span> の増加より速いので0です。</p>
+<div class="equation" data-tex="\begin{aligned}\mathbb E[Z^2] &amp;=-\int_{\mathbb R}z\varphi&#x27;(z)\,\mathrm dz\\ &amp;=-[z\varphi(z)]_{-\infty}^{\infty}+\int_{\mathbb R}\varphi(z)\,\mathrm dz\\ &amp;=0+1=1. \end{aligned} =\begin{aligned}\mathbb E[Z^4] &amp;=-\int_{\mathbb R}z^3\varphi&#x27;(z)\,\mathrm dz\\ &amp;=-[z^3\varphi(z)]_{-\infty}^{\infty}+3\int_{\mathbb R}z^2\varphi(z)\,\mathrm dz\\ &amp;=0+3\mathbb E[Z^2]=3. \end{aligned}">\begin{aligned}\mathbb E[Z^2] &amp;=-\int_{\mathbb R}z\varphi&#x27;(z)\,\mathrm dz\\ &amp;=-[z\varphi(z)]_{-\infty}^{\infty}+\int_{\mathbb R}\varphi(z)\,\mathrm dz\\ &amp;=0+1=1. \end{aligned} =\begin{aligned}\mathbb E[Z^4] &amp;=-\int_{\mathbb R}z^3\varphi&#x27;(z)\,\mathrm dz\\ &amp;=-[z^3\varphi(z)]_{-\infty}^{\infty}+3\int_{\mathbb R}z^2\varphi(z)\,\mathrm dz\\ &amp;=0+3\mathbb E[Z^2]=3. \end{aligned}</div>
+<h3>各成分を一つずつ計算する</h3>
+<p>まず平均方向を二度入れます。掛けるのは <span class="inline-math" data-tex="Z/\sigma">Z/\sigma</span> と <span class="inline-math" data-tex="Z/\sigma">Z/\sigma</span> です。</p>
+<div class="equation" data-tex="\begin{aligned}g_P(e_\mu,e_\mu) &amp;=\mathbb E\!\left[\frac Z\sigma\frac Z\sigma\right]\\ &amp;=\frac{\mathbb E[Z^2]}{\sigma^2} =\frac{1}{\sigma^2}. \end{aligned}">\begin{aligned}g_P(e_\mu,e_\mu) &amp;=\mathbb E\!\left[\frac Z\sigma\frac Z\sigma\right]\\ &amp;=\frac{\mathbb E[Z^2]}{\sigma^2} =\frac{1}{\sigma^2}. \end{aligned}</div>
+<p>次に平均方向と幅方向を一度ずつ入れます。積 <span class="inline-math" data-tex="Z(Z^2-1)">Z(Z^2-1)</span> を開くと <span class="inline-math" data-tex="Z^3-Z">Z^3-Z</span> です。平均は引き算の各項に分けられます。</p>
+<div class="equation" data-tex="\begin{aligned}g_P(e_\mu,e_\sigma) &amp;=\mathbb E\!\left[\frac Z\sigma\frac{Z^2-1}{\sigma}\right]\\ &amp;=\frac{\mathbb E[Z^3]-\mathbb E[Z]}{\sigma^2}\\ &amp;=\frac{0-0}{\sigma^2}=0. \end{aligned}">\begin{aligned}g_P(e_\mu,e_\sigma) &amp;=\mathbb E\!\left[\frac Z\sigma\frac{Z^2-1}{\sigma}\right]\\ &amp;=\frac{\mathbb E[Z^3]-\mathbb E[Z]}{\sigma^2}\\ &amp;=\frac{0-0}{\sigma^2}=0. \end{aligned}</div>
+<p>最後に幅方向を二度入れます。二乗の中の <span class="inline-math" data-tex="-2Z^2">-2Z^2</span> は、<span class="inline-math" data-tex="Z^2">Z^2</span> と <span class="inline-math" data-tex="-1">-1</span> の積が二度現れる項です。定数 <span class="inline-math" data-tex="1">1</span> の平均はそのまま <span class="inline-math" data-tex="1">1</span> です。</p>
+<div class="equation" data-tex="\begin{aligned}g_P(e_\sigma,e_\sigma) &amp;=\mathbb E\!\left[\frac{(Z^2-1)^2}{\sigma^2}\right]\\ &amp;=\frac{\mathbb E[Z^4]-2\mathbb E[Z^2]+1}{\sigma^2}\\ &amp;=\frac{3-2\cdot1+1}{\sigma^2}=\frac2{\sigma^2}. \end{aligned}">\begin{aligned}g_P(e_\sigma,e_\sigma) &amp;=\mathbb E\!\left[\frac{(Z^2-1)^2}{\sigma^2}\right]\\ &amp;=\frac{\mathbb E[Z^4]-2\mathbb E[Z^2]+1}{\sigma^2}\\ &amp;=\frac{3-2\cdot1+1}{\sigma^2}=\frac2{\sigma^2}. \end{aligned}</div>
+<h3>三つの値を行列と図へ戻す</h3>
+<p>基底の順を <span class="inline-math" data-tex="(e_\mu,e_\sigma)">(e_\mu,e_\sigma)</span> とします。一行一列が平均の基底を二度入れた値、一行二列が二つを一度ずつ入れた値です。二行一列は掛ける順を逆にした同じ積なので0です。</p>
+<div class="equation" data-tex="G(P)=\begin{pmatrix}1/\sigma^2&amp;0\\0&amp;2/\sigma^2\end{pmatrix}.">G(P)=\begin{pmatrix}1/\sigma^2&amp;0\\0&amp;2/\sigma^2\end{pmatrix}.</div>
+<p>例えば図の初期値 <span class="inline-math" data-tex="\sigma=1">\sigma=1</span> では、内積が0で長さはそれぞれ <span class="inline-math" data-tex="\sqrt1=1">\sqrt1=1</span>、<span class="inline-math" data-tex="\sqrt2\approx1.414">\sqrt2\approx1.414</span> です。<span class="inline-math" data-tex="\sigma=2">\sigma=2</span> に動かすと行列の対角は <span class="inline-math" data-tex="1/4,1/2">1/4,1/2</span> になり、長さは <span class="inline-math" data-tex="0.500,0.707">0.500,0.707</span> になります。</p>
 </section>
 <section id="normal-sphere"><h2>4. 平方根写像とモデル内の距離</h2>
 <p>正規分布の密度から <span class="inline-math" data-tex="F(P)(x)=2\sqrt{p_P(x)}">F(P)(x)=2\sqrt{p_P(x)}</span> を作ると、二乗の積分は4です。前章の計量は、この写像で移した曲線の速さを測ります。ここでは同じ平均を持つ2点で、モデル内の距離と球面全体の距離を比較します。</p>
@@ -767,6 +899,7 @@
 <p>曲線 <span class="inline-math" data-tex="c(t)=P_{\mu(t),\sigma(t)}">c(t)=P_{\mu(t),\sigma(t)}</span> の速度は <span class="inline-math" data-tex="\dot\mu(t)\left.\frac{\partial}{\partial\mu}\right|_{c(t)}+\dot\sigma(t)\left.\frac{\partial}{\partial\sigma}\right|_{c(t)}">\dot\mu(t)\left.\frac{\partial}{\partial\mu}\right|_{c(t)}+\dot\sigma(t)\left.\frac{\partial}{\partial\sigma}\right|_{c(t)}</span> です。上の内積を使えば、</p>
 <div class="equation" data-tex="\begin{aligned}\ell_g(c)&amp;=\int_0^1\frac{\sqrt{\dot\mu^2+2\dot\sigma^2}}{\sigma}\,\mathrm dt\\&amp;\ge\sqrt{2}\int_0^1\frac{|\dot\sigma|}{\sigma}\,\mathrm dt\\&amp;\ge\sqrt{2}\left|\log\frac{\sigma(1)}{\sigma(0)}\right|.\end{aligned}">\begin{aligned}\ell_g(c)&amp;=\int_0^1\frac{\sqrt{\dot\mu^2+2\dot\sigma^2}}{\sigma}\,\mathrm dt\\&amp;\ge\sqrt{2}\int_0^1\frac{|\dot\sigma|}{\sigma}\,\mathrm dt\\&amp;\ge\sqrt{2}\left|\log\frac{\sigma(1)}{\sigma(0)}\right|.\end{aligned}</div>
 <p>第1の不等号は平方根の中から <span class="inline-math" data-tex="\dot\mu^2">\dot\mu^2</span> を外したものです。第2の不等号では、絶対値を付ける前の被積分関数 <span class="inline-math" data-tex="\dot\sigma/\sigma">\dot\sigma/\sigma</span> が <span class="inline-math" data-tex="\log\sigma">\log\sigma</span> の微分であることを使いました。平均が同じ端点なら、<span class="inline-math" data-tex="\mu">\mu</span> を固定し、<span class="inline-math" data-tex="\log\sigma(t)=(1-t)\log\sigma(0)+t\log\sigma(1)">\log\sigma(t)=(1-t)\log\sigma(0)+t\log\sigma(1)</span> と置くと両方で等号が成り立ちます。これで正規分布の族の中での最短経路が一本求まりました。</p>
+<p>長さの式の第1の不等式は、平方根の中の <span class="inline-math" data-tex="\dot\mu^2\ge0">\dot\mu^2\ge0</span> を外して得ます。第2の不等式では <span class="inline-math" data-tex="\int |\dot\sigma/\sigma|\,\mathrm dt\ge|\int \dot\sigma/\sigma\,\mathrm dt|">\int |\dot\sigma/\sigma|\,\mathrm dt\ge|\int \dot\sigma/\sigma\,\mathrm dt|</span> を使います。中の積分は <span class="inline-math" data-tex="\log\sigma">\log\sigma</span> の端点での差です。同じ平均を保ち、<span class="inline-math" data-tex="\sigma">\sigma</span> を一方向に動かせば、どちらも等号になります。</p>
 <h3>球面上の距離と比べる</h3>
 <p><span class="inline-math" data-tex="P=\mathcal N(0,1)">P=\mathcal N(0,1)</span>、<span class="inline-math" data-tex="Q=\mathcal N(0,2^2)">Q=\mathcal N(0,2^2)</span> とします。直前の計算でモデル内の距離は <span class="inline-math" data-tex="\sqrt2\log 2">\sqrt2\log 2</span> と決まりました。一方、平方根写像で移した2点の角度を計算するには、密度の幾何平均を積分します。</p>
 <div class="equation" data-tex="\begin{aligned}\sqrt{p_P(x)p_Q(x)}&amp;=\frac{1}{2\sqrt\pi}e^{-5x^2/16},\\\int_{\mathbb R}\sqrt{p_Pp_Q}\,\mathrm dx&amp;=\frac{1}{2\sqrt\pi}\sqrt{\frac{16\pi}{5}}=\frac2{\sqrt5}.\end{aligned}">\begin{aligned}\sqrt{p_P(x)p_Q(x)}&amp;=\frac{1}{2\sqrt\pi}e^{-5x^2/16},\\\int_{\mathbb R}\sqrt{p_Pp_Q}\,\mathrm dx&amp;=\frac{1}{2\sqrt\pi}\sqrt{\frac{16\pi}{5}}=\frac2{\sqrt5}.\end{aligned}</div>
@@ -778,6 +911,7 @@
 <p>対数密度で <span class="inline-math" data-tex="x,x^2">x,x^2</span> の係数を拾うと、<span class="inline-math" data-tex="\theta^1=\mu/\sigma^2,\ \theta^2=-1/(2\sigma^2)">\theta^1=\mu/\sigma^2,\ \theta^2=-1/(2\sigma^2)</span> です。統計量は <span class="inline-math" data-tex="T_1(x)=x,\ T_2(x)=x^2">T_1(x)=x,\ T_2(x)=x^2</span> なので、対応する期待値座標は <span class="inline-math" data-tex="\eta_1=\mu,\ \eta_2=\mu^2+\sigma^2">\eta_1=\mu,\ \eta_2=\mu^2+\sigma^2</span>。分散の定義を使うと <span class="inline-math" data-tex="\sigma=\sqrt{\eta_2-\eta_1^2}">\sigma=\sqrt{\eta_2-\eta_1^2}</span> と逆算できます。<a href="#general-exponential">対数密度を展開する計算</a></p>
 
 <p>正規化関数は <span class="inline-math" data-tex="\psi(\theta)=\mu^2/(2\sigma^2)+\log(\sqrt{2\pi}\,\sigma)">\psi(\theta)=\mu^2/(2\sigma^2)+\log(\sqrt{2\pi}\,\sigma)</span> です。ここで <span class="inline-math" data-tex="\sigma^2=-1/(2\theta^2)">\sigma^2=-1/(2\theta^2)</span>、<span class="inline-math" data-tex="\mu=\theta^1\sigma^2">\mu=\theta^1\sigma^2</span> を代入すれば自然座標だけの関数になります。<span class="inline-math" data-tex="\partial_a\psi=\eta_a">\partial_a\psi=\eta_a</span> は <a href="#general-dual-coordinates">一般論の第8節</a> と同じ関係です。</p>
+<p>例えば <span class="inline-math" data-tex="\mu=1,\sigma=2">\mu=1,\sigma=2</span> なら、自然座標は <span class="inline-math" data-tex="(1/4,-1/8)">(1/4,-1/8)</span>、期待値座標は <span class="inline-math" data-tex="(1,1^2+2^2)=(1,5)">(1,1^2+2^2)=(1,5)</span> です。期待値座標から戻すときは <span class="inline-math" data-tex="\eta_2-\eta_1^2=5-1=4">\eta_2-\eta_1^2=5-1=4</span> を先に計算し、その正の平方根を取って <span class="inline-math" data-tex="\sigma=2">\sigma=2</span> を得ます。</p>
 </section>
 <section id="normal-geodesics"><h2>6. 正規分布の3本の測地線</h2>
 <h3>正規分布の端点をそろえて比べる</h3>
@@ -791,9 +925,16 @@
 <label for="normal-path-control">3本を比較する横位置 μ <output for="normal-path-control">0.00</output></label>
 <input type="range" id="normal-path-control" min="-1" max="1" step="0.01" value="0">
 </div>
+<p>図で <span class="inline-math" data-tex="\mu=0">\mu=0</span> を選ぶと、指数接続では <span class="inline-math" data-tex="\sigma=1">\sigma=1</span>。混合接続では <span class="inline-math" data-tex="\sigma^2=2-0^2=2">\sigma^2=2-0^2=2</span>。計量の測地線では <span class="inline-math" data-tex="\sigma^2=3/2-0^2/2=3/2">\sigma^2=3/2-0^2/2=3/2</span> です。図に表示する値はそれぞれの正の平方根なので、順に <span class="inline-math" data-tex="1.000,1.414,1.225">1.000,1.414,1.225</span> になります。</p>
 <figure class="geometry-lab" id="normal-paths">
 <svg data-paths viewBox="0 0 360 210" role="img" aria-label="平均と標準偏差の平面上で、同じ端点を結ぶ3本の測地線"></svg>
-<figcaption>横軸は平均、縦軸は標準偏差です。青の実線が指数接続、金の破線が混合接続、紫の点線がフィッシャー計量の測地線です。縦の補助線で同じ平均の断面を比べます。</figcaption>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/><circle cx="14" cy="7" r="4" fill="var(--blue)"/></svg><span>指数接続（<i>e</i>）</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="7 4"/><circle cx="14" cy="7" r="4" fill="var(--gold)"/></svg><span>混合接続（<i>m</i>）</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="#bf9af2" stroke-width="2.2" stroke-dasharray="2 4"/><circle cx="14" cy="7" r="4" fill="#bf9af2"/></svg><span>フィッシャー計量</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--muted)" stroke-width="2.2" stroke-dasharray="4 4"/></svg><span>同じ平均 <i>μ</i> の断面</span></li>
+</ul>
+<figcaption>横軸は平均、縦軸は標準偏差です。</figcaption>
 <p class="reading" data-path-readout>標準偏差　指数接続 1.000 ／ 混合接続 1.414 ／ フィッシャー計量 1.225</p>
 </figure>
 <h3>計量の測地線の弧はどこから来るか</h3>
@@ -811,6 +952,10 @@
 <p><span class="inline-math" data-tex="P=\mathcal N(\mu,\sigma^2),\ Q=\mathcal N(m,s^2)">P=\mathcal N(\mu,\sigma^2),\ Q=\mathcal N(m,s^2)</span> とします。対数密度の差を取り、<span class="inline-math" data-tex="P">P</span> で平均すると、</p>
 
 <div class="equation" data-tex="\begin{aligned}D_{\rm KL}(P\Vert Q)&amp;=\log(s/\sigma)+\frac{\mathbb E_P[(X-m)^2]}{2s^2}-\frac{\mathbb E_P[(X-\mu)^2]}{2\sigma^2}\\&amp;=\log(s/\sigma)+\frac{\sigma^2+(\mu-m)^2}{2s^2}-\frac12.\end{aligned}">\begin{aligned}D_{\rm KL}(P\Vert Q)&amp;=\log(s/\sigma)+\frac{\mathbb E_P[(X-m)^2]}{2s^2}-\frac{\mathbb E_P[(X-\mu)^2]}{2\sigma^2}\\&amp;=\log(s/\sigma)+\frac{\sigma^2+(\mu-m)^2}{2s^2}-\frac12.\end{aligned}</div>
+<p>引く順を明示すると、<span class="inline-math" data-tex="P">P</span> の対数密度から <span class="inline-math" data-tex="Q">Q</span> の対数密度を引きます。共通の <span class="inline-math" data-tex="-\tfrac12\log(2\pi)">-\tfrac12\log(2\pi)</span> が消え、<span class="inline-math" data-tex="-\log\sigma+\log s=\log(s/\sigma)">-\log\sigma+\log s=\log(s/\sigma)</span>。残った二つの二乗項には逆の符号が付きます。</p>
+<div class="equation" data-tex="\log p_P(x)-\log p_Q(x)=\log(s/\sigma)+\frac{(x-m)^2}{2s^2}-\frac{(x-\mu)^2}{2\sigma^2}.">\log p_P(x)-\log p_Q(x)=\log(s/\sigma)+\frac{(x-m)^2}{2s^2}-\frac{(x-\mu)^2}{2\sigma^2}.</div>
+<p>期待値の二乗項も展開すると、</p>
+<div class="equation" data-tex="\begin{aligned}\mathbb E_P[(X-m)^2] &amp;=\mathbb E_P[(X-\mu)^2]+2(\mu-m)\mathbb E_P[X-\mu]+(\mu-m)^2\\ &amp;=\sigma^2+2(\mu-m)\cdot0+(\mu-m)^2. \end{aligned}">\begin{aligned}\mathbb E_P[(X-m)^2] &amp;=\mathbb E_P[(X-\mu)^2]+2(\mu-m)\mathbb E_P[X-\mu]+(\mu-m)^2\\ &amp;=\sigma^2+2(\mu-m)\cdot0+(\mu-m)^2. \end{aligned}</div>
 <p>第2項は <span class="inline-math" data-tex="X-m=(X-\mu)+(\mu-m)">X-m=(X-\mu)+(\mu-m)</span> と分けて二乗すると、交差項の平均が0になることを使いました。例えば <span class="inline-math" data-tex="s=\sigma">s=\sigma</span> を固定して平均だけを <span class="inline-math" data-tex="m=\mu+\delta">m=\mu+\delta</span> に動かせば <span class="inline-math" data-tex="D_{\rm KL}=\delta^2/(2\sigma^2)">D_{\rm KL}=\delta^2/(2\sigma^2)</span> です。二階微分 <span class="inline-math" data-tex="1/\sigma^2">1/\sigma^2</span> は第3章の計量成分です。</p>
 
 <p>標準偏差の方向も確認できます。今度は <span class="inline-math" data-tex="m=\mu">m=\mu</span> に固定し、<span class="inline-math" data-tex="s">s</span> を微分します。</p>
@@ -826,7 +971,15 @@
 <div class="equation" data-tex="p_{k,\theta}(x)=\frac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k},\qquad \Gamma(k)=\int_0^\infty t^{k-1}e^{-t}\,\mathrm dt.">p_{k,\theta}(x)=\frac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k},\qquad \Gamma(k)=\int_0^\infty t^{k-1}e^{-t}\,\mathrm dt.</div>
 <p><span class="inline-math" data-tex="x=\theta t">x=\theta t</span> と置いて積分すると、分子の積分は <span class="inline-math" data-tex="\theta^k\Gamma(k)">\theta^k\Gamma(k)</span>。分母で割れば全体が1になります。以下の図では、<span class="inline-math" data-tex="k">k</span> と <span class="inline-math" data-tex="\theta">\theta</span> の一方を固定して他方を動かせます。</p>
 <div class="slider-bar slider-pair"><label for="gamma-shape">形状 k <output for="gamma-shape">2.00</output><input type="range" id="gamma-shape" min="1" max="6" value="2" step="0.05"></label><label for="gamma-scale">尺度 θ <output for="gamma-scale">1.00</output><input type="range" id="gamma-scale" min="0.5" max="2" value="1" step="0.05"></label></div>
-<figure class="geometry-lab" id="gamma-lab"><svg data-plot-0 viewBox="0 0 360 210" role="img" aria-label="ガンマ分布。横軸は観測値 x、縦軸は密度 p_{k,θ}(x)"></svg><svg data-plot-1 viewBox="0 0 360 185" role="img" aria-label="フィッシャー計量で描いたガンマ分布の座標基底"></svg><figcaption>上は密度を x = 0 から 20 まで表示。下はフィッシャー計量で測った基底です。青の実線が形状、金の破線が尺度を増やす向きです。矢印の長さの比と角度が計量に対応します。</figcaption><p class="reading" data-values></p></figure>
+<figure class="geometry-lab" id="gamma-lab"><svg data-plot-0 viewBox="0 0 360 210" role="img" aria-label="ガンマ分布。横軸は観測値 x、縦軸は密度 p_{k,θ}(x)"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H26" stroke="var(--blue)" stroke-width="2.2"/></svg><span>選んだガンマ分布の密度</span></li>
+</ul><svg data-plot-1 viewBox="0 0 360 185" role="img" aria-label="フィッシャー計量で描いたガンマ分布の座標基底"></svg>
+<ul class="ig-legend" aria-label="凡例">
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--blue)" stroke-width="2.2"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/></svg><span>形状 <i>k</i> を増やす</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 28 14"><path d="M2 7H22" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="6 4"/><path d="m18 3 5 4-5 4" fill="none" stroke="var(--gold)" stroke-width="2.2"/></svg><span>尺度 <i>θ</i> を増やす</span></li>
+</ul><figcaption>密度は観測値 <i>x</i> が0から20までの範囲を表示しています。矢印の長さの比と角度はフィッシャー計量で測っています。</figcaption><p class="reading" data-values></p></figure>
+<p>例えば <span class="inline-math" data-tex="k=1,\theta=2">k=1,\theta=2</span> なら <span class="inline-math" data-tex="\Gamma(1)=\int_0^\infty e^{-t}\,\mathrm dt=1">\Gamma(1)=\int_0^\infty e^{-t}\,\mathrm dt=1</span>、<span class="inline-math" data-tex="x^{k-1}=1">x^{k-1}=1</span> なので、密度は <span class="inline-math" data-tex="\tfrac12 e^{-x/2}">\tfrac12 e^{-x/2}</span> になります。その積分は <span class="inline-math" data-tex="[-e^{-x/2}]_0^\infty=1">[-e^{-x/2}]_0^\infty=1</span> です。密度の式で分母に尺度が入る働きを、この例でも確認できます。</p>
 </section>
 <section id="gamma-tangent"><h2>2. 形状と尺度を動かす</h2>
 <p><span class="inline-math" data-tex="P=P_{k,\theta}">P=P_{k,\theta}</span> で、曲線 <span class="inline-math" data-tex="s\mapsto P_{k+as,\theta+bs}">s\mapsto P_{k+as,\theta+bs}</span> の初速度は</p>
@@ -838,6 +991,7 @@
 <p>形状と尺度の座標基底のスコアは、それぞれ <span class="inline-math" data-tex="a,b">a,b</span> に掛かる括弧です。</p>
 
 <p>尺度側の括弧は、<span class="inline-math" data-tex="x">x</span> と <span class="inline-math" data-tex="k">k</span> を固定して <span class="inline-math" data-tex="-x\theta^{-1}">-x\theta^{-1}</span> と <span class="inline-math" data-tex="-k\log\theta">-k\log\theta</span> を微分した和です。形状側では <span class="inline-math" data-tex="\theta">\theta</span> を固定して、<span class="inline-math" data-tex="(k-1)\log x">(k-1)\log x</span>、<span class="inline-math" data-tex="-\log\Gamma(k)">-\log\Gamma(k)</span>、<span class="inline-math" data-tex="-k\log\theta">-k\log\theta</span> の三つを微分します。</p>
+<p>例えば尺度の方向だけを取るなら <span class="inline-math" data-tex="a=0,b=1">a=0,b=1</span> です。図の初期値 <span class="inline-math" data-tex="k=2,\theta=1">k=2,\theta=1</span> を入れると、<span class="inline-math" data-tex="U\ell=x-2">U\ell=x-2</span>。<span class="inline-math" data-tex="x=1">x=1</span> では <span class="inline-math" data-tex="-1">-1</span>、<span class="inline-math" data-tex="x=3">x=3</span> では <span class="inline-math" data-tex="+1">+1</span> と、観測値によって符号が変わります。</p>
 </section>
 <section id="gamma-metric"><h2>3. フィッシャー計量と基底の角度</h2>
 <p><span class="inline-math" data-tex="e_k=\left.\partial/\partial k\right|_P">e_k=\left.\partial/\partial k\right|_P</span> と <span class="inline-math" data-tex="e_\theta=\left.\partial/\partial\theta\right|_P">e_\theta=\left.\partial/\partial\theta\right|_P</span> を、同じ点 <span class="inline-math" data-tex="P=P_{k,\theta}">P=P_{k,\theta}</span> で取ります。密度の対数を <span class="inline-math" data-tex="\ell=(k-1)\log x-x/\theta-\log\Gamma(k)-k\log\theta">\ell=(k-1)\log x-x/\theta-\log\Gamma(k)-k\log\theta</span> と置きます。フィッシャー行列は、スコアの積を平均するほかに、次の形でも計算できます。</p>
@@ -847,6 +1001,8 @@
 <div class="equation" data-tex="g_P(e_k,e_\theta)=-\mathbb E_P[-1/\theta]=1/\theta.">g_P(e_k,e_\theta)=-\mathbb E_P[-1/\theta]=1/\theta.</div>
 <p><span class="inline-math" data-tex="k">k</span> で二回微分した項は <span class="inline-math" data-tex="-(\log\Gamma)&#x27;&#x27;(k)">-(\log\Gamma)&#x27;&#x27;(k)</span>。尺度で二回微分した項は <span class="inline-math" data-tex="-2x/\theta^3+k/\theta^2">-2x/\theta^3+k/\theta^2</span> です。尺度のスコアの平均が0なので <span class="inline-math" data-tex="\mathbb E[X]=k\theta">\mathbb E[X]=k\theta</span>。この値を入れて行列をまとめます。</p>
 <div class="equation" data-tex="(g_{ab})_{a,b\in\{k,\theta\}}=\begin{pmatrix}(\log\Gamma)&#x27;&#x27;(k)&amp;1/\theta\\1/\theta&amp;k/\theta^2\end{pmatrix}.">(g_{ab})_{a,b\in\{k,\theta\}}=\begin{pmatrix}(\log\Gamma)&#x27;&#x27;(k)&amp;1/\theta\\1/\theta&amp;k/\theta^2\end{pmatrix}.</div>
+<p>尺度側の対角成分では、<span class="inline-math" data-tex="-2x/\theta^3+k/\theta^2">-2x/\theta^3+k/\theta^2</span> の平均にマイナスを付けます。平均を取るのは <span class="inline-math" data-tex="x">x</span> の項だけです。</p>
+<div class="equation" data-tex="\begin{aligned}g_{\theta\theta} &amp;=-\mathbb E_P[-2X/\theta^3+k/\theta^2]\\ &amp;=\frac{2}{\theta^3}\mathbb E_P[X]-\frac{k}{\theta^2}\\ &amp;=\frac{2k\theta}{\theta^3}-\frac{k}{\theta^2}=\frac{k}{\theta^2}. \end{aligned}">\begin{aligned}g_{\theta\theta} &amp;=-\mathbb E_P[-2X/\theta^3+k/\theta^2]\\ &amp;=\frac{2}{\theta^3}\mathbb E_P[X]-\frac{k}{\theta^2}\\ &amp;=\frac{2k\theta}{\theta^3}-\frac{k}{\theta^2}=\frac{k}{\theta^2}. \end{aligned}</div>
 <p>基底のなす角 <span class="inline-math" data-tex="\alpha">\alpha</span> は <span class="inline-math" data-tex="\cos\alpha=g_{k\theta}/\sqrt{g_{kk}g_{\theta\theta}}=1/\sqrt{k(\log\Gamma)&#x27;&#x27;(k)}">\cos\alpha=g_{k\theta}/\sqrt{g_{kk}g_{\theta\theta}}=1/\sqrt{k(\log\Gamma)&#x27;&#x27;(k)}</span> から求まります。この座標では <span class="inline-math" data-tex="\theta">\theta</span> だけを動かすと尺度基底の長さが変わりますが、角度は <span class="inline-math" data-tex="k">k</span> だけで決まります。<a href="#general-normal">正規分布の直交する基底と比べる</a></p>
 <p>数値で区別すると、たとえば <span class="inline-math" data-tex="k=2,\theta=1">k=2,\theta=1</span> では <span class="inline-math" data-tex="g_{k\theta}=1">g_{k\theta}=1</span>、<span class="inline-math" data-tex="g_{\theta\theta}=2">g_{\theta\theta}=2</span>、<span class="inline-math" data-tex="g_{kk}\approx0.645">g_{kk}\approx0.645</span> です。二つの長さを掛けた値は <span class="inline-math" data-tex="\sqrt{0.645}\sqrt2\approx1.136">\sqrt{0.645}\sqrt2\approx1.136</span>。従って <span class="inline-math" data-tex="\cos\alpha\approx1/1.136=0.880">\cos\alpha\approx1/1.136=0.880</span> で、角度は約 <span class="inline-math" data-tex="28">28</span> 度です。内積 <span class="inline-math" data-tex="1">1</span> と、角度の余弦 <span class="inline-math" data-tex="0.880">0.880</span> は、長さで割る前後の値です。</p>
 </section>
@@ -859,12 +1015,14 @@
 <p>分子の指数を足すと減衰率は <span class="inline-math" data-tex="(1/\theta+1/\tau)/2">(1/\theta+1/\tau)/2</span> です。第1章と同じ置換で積分すると上式になります。この値は球面上の角の余弦です。</p>
 
 <p>積分で使った尺度を式にしておきます。<span class="inline-math" data-tex="b=2\theta\tau/(\theta+\tau)">b=2\theta\tau/(\theta+\tau)</span> とすると、幾何平均は <span class="inline-math" data-tex="x^{k-1}e^{-x/b}/[\Gamma(k)(\theta\tau)^{k/2}]">x^{k-1}e^{-x/b}/[\Gamma(k)(\theta\tau)^{k/2}]</span> です。<span class="inline-math" data-tex="x=bt">x=bt</span> と置けば積分は <span class="inline-math" data-tex="b^k\Gamma(k)/[\Gamma(k)(\theta\tau)^{k/2}]">b^k\Gamma(k)/[\Gamma(k)(\theta\tau)^{k/2}]</span>。<span class="inline-math" data-tex="b">b</span> の式を入れて約分すると上式になります。</p>
+<p>例えば <span class="inline-math" data-tex="k=2,\theta=1,\tau=2">k=2,\theta=1,\tau=2</span> なら、括弧の中は <span class="inline-math" data-tex="2\sqrt{2}/3">2\sqrt{2}/3</span> です。二乗して <span class="inline-math" data-tex="8/9">8/9</span> が角度の余弦になります。半径は2なので、大円弧の長さは <span class="inline-math" data-tex="2\arccos(8/9)">2\arccos(8/9)</span> です。モデル内部での曲線長との関係は、<a href="#general-sphere">一般論の平方根写像</a>で確認できます。</p>
 </section>
 <section id="gamma-dual"><h2>5. 自然座標と期待値座標</h2>
 <p>対数密度で <span class="inline-math" data-tex="\log x,x">\log x,x</span> の係数を取ると、自然座標は <span class="inline-math" data-tex="\alpha^1=k-1,\ \alpha^2=-1/\theta">\alpha^1=k-1,\ \alpha^2=-1/\theta</span>。期待値座標は <span class="inline-math" data-tex="\eta_1=\mathbb E[\log X],\ \eta_2=\mathbb E[X]">\eta_1=\mathbb E[\log X],\ \eta_2=\mathbb E[X]</span> です。第2章の各スコアの平均を0と置いて解くと、</p>
 
 <div class="equation" data-tex="\eta_1=(\log\Gamma)&#x27;(k)+\log\theta,\qquad\eta_2=k\theta.">\eta_1=(\log\Gamma)&#x27;(k)+\log\theta,\qquad\eta_2=k\theta.</div>
 <p>指数型分布族としての正規化関数は <span class="inline-math" data-tex="\log\Gamma(k)+k\log\theta">\log\Gamma(k)+k\log\theta</span> です。自然座標で微分すると、<span class="inline-math" data-tex="\partial_{\alpha^1}k=1">\partial_{\alpha^1}k=1</span>、<span class="inline-math" data-tex="\partial_{\alpha^2}\theta=\theta^2">\partial_{\alpha^2}\theta=\theta^2</span> なので、それぞれ <span class="inline-math" data-tex="\eta_1,\eta_2">\eta_1,\eta_2</span> が得られます。</p>
+<p>自然座標から元へ戻す式は <span class="inline-math" data-tex="k=\alpha^1+1">k=\alpha^1+1</span>、<span class="inline-math" data-tex="\theta=-1/\alpha^2">\theta=-1/\alpha^2</span> です。例えば <span class="inline-math" data-tex="k=2,\theta=1">k=2,\theta=1</span> なら自然座標は <span class="inline-math" data-tex="(1,-1)">(1,-1)</span>。期待値座標の第2成分は <span class="inline-math" data-tex="k\theta=2">k\theta=2</span> です。第1成分で使う <span class="inline-math" data-tex="\log\theta">\log\theta</span> は、この例では <span class="inline-math" data-tex="\log1=0">\log1=0</span> になります。</p>
 </section>
 <section id="gamma-geodesics"><h2>6. 形状が同じ端点の補間</h2>
 <p>形状を <span class="inline-math" data-tex="k=2">k=2</span> にそろえ、尺度が1と4の分布を結びます。指数接続では <span class="inline-math" data-tex="\alpha^1">\alpha^1</span> を固定し、<span class="inline-math" data-tex="\alpha^2">\alpha^2</span> を線形補間します。中点で <span class="inline-math" data-tex="\alpha^2=(-1-1/4)/2=-5/8">\alpha^2=(-1-1/4)/2=-5/8</span>、したがって <span class="inline-math" data-tex="\theta=8/5">\theta=8/5</span> です。</p>
@@ -874,6 +1032,7 @@
 <h3>フィッシャー計量の測地線の出だし</h3>
 <p>第3章の行列を使います。<span class="inline-math" data-tex="y=\log\theta">y=\log\theta</span> と書くと <span class="inline-math" data-tex="\partial\theta/\partial y=\theta">\partial\theta/\partial y=\theta</span> なので、<span class="inline-math" data-tex="g_{ky}=\theta g_{k\theta}=1">g_{ky}=\theta g_{k\theta}=1</span>、<span class="inline-math" data-tex="g_{yy}=\theta^2g_{\theta\theta}=k">g_{yy}=\theta^2g_{\theta\theta}=k</span> です。<span class="inline-math" data-tex="g_{kk}=(\log\Gamma)^{\prime\prime}(k)">g_{kk}=(\log\Gamma)^{\prime\prime}(k)</span> と書きます。計量は <span class="inline-math" data-tex="y">y</span> に依存しないので、一般論で出てきたクリストッフェル記号の式では、<span class="inline-math" data-tex="\Gamma^k_{yy}">\Gamma^k_{yy}</span> に <span class="inline-math" data-tex="-\tfrac12g^{kk}\partial_k g_{yy}">-\tfrac12g^{kk}\partial_k g_{yy}</span> だけが残ります。</p>
 <div class="equation" data-tex="\Gamma^k_{yy}=-\frac{k}{2[k(\log\Gamma)^{\prime\prime}(k)-1]}.">\Gamma^k_{yy}=-\frac{k}{2[k(\log\Gamma)^{\prime\prime}(k)-1]}.</div>
+<p>逆行列の左上成分を作るときは、もとの行列の右下成分 <span class="inline-math" data-tex="k">k</span> を行列式で割ります。<span class="inline-math" data-tex="\partial_k g_{yy}=\partial_k k=1">\partial_k g_{yy}=\partial_k k=1</span> を掛けて <span class="inline-math" data-tex="-1/2">-1/2</span> 倍したものが上の記号です。</p>
 <p>分母の角括弧は計量行列の行列式で、正です。初速を尺度方向だけに取ると <span class="inline-math" data-tex="\dot k=0">\dot k=0</span> なので、測地線方程式から <span class="inline-math" data-tex="\ddot k=-\Gamma^k_{yy}\dot y^2&gt;0">\ddot k=-\Gamma^k_{yy}\dot y^2&gt;0</span> です。形状一定の指数接続の経路と比べると、計量の測地線は、尺度方向に出発しても形状が増える側へ曲がり始めます。これは初速をそろえた比較です。</p>
 </section>
 <section id="gamma-kl"><h2>7. 尺度を変えたときの KL</h2>
@@ -882,6 +1041,8 @@
 <div class="equation" data-tex="D_{\rm KL}(P_{k,\theta}\Vert P_{k,\tau})=k[\log(\tau/\theta)+\theta/\tau-1].">D_{\rm KL}(P_{k,\theta}\Vert P_{k,\tau})=k[\log(\tau/\theta)+\theta/\tau-1].</div>
 <p><span class="inline-math" data-tex="\tau">\tau</span> を変えて二度微分すると <span class="inline-math" data-tex="k[-1/\tau^2+2\theta/\tau^3]">k[-1/\tau^2+2\theta/\tau^3]</span>、<span class="inline-math" data-tex="\tau=\theta">\tau=\theta</span> を代入すると <span class="inline-math" data-tex="k/\theta^2">k/\theta^2</span>。これは第3章の尺度方向の計量成分です。</p>
 
+<p>二度目の微分だけで結論を出す前に、一度目も確かめます。<span class="inline-math" data-tex="k,\theta">k,\theta</span> を固定して <span class="inline-math" data-tex="\tau">\tau</span> を動かすので、</p>
+<div class="equation" data-tex="\begin{aligned}\partial_\tau D&amp;=k(1/\tau-\theta/\tau^2),\\ \left.\partial_\tau D\right|_{\tau=\theta}&amp;=k(1/\theta-1/\theta)=0,\\ \left.\partial_\tau^2 D\right|_{\tau=\theta}&amp;=k(-1/\theta^2+2/\theta^2)=k/\theta^2. \end{aligned}">\begin{aligned}\partial_\tau D&amp;=k(1/\tau-\theta/\tau^2),\\ \left.\partial_\tau D\right|_{\tau=\theta}&amp;=k(1/\theta-1/\theta)=0,\\ \left.\partial_\tau^2 D\right|_{\tau=\theta}&amp;=k(-1/\theta^2+2/\theta^2)=k/\theta^2. \end{aligned}</div>
 </section>
 </div>
 <div id="general-course" class="information-course" role="tabpanel" aria-labelledby="general-tab" tabindex="0">
@@ -901,6 +1062,7 @@
 <h3>これからの計算に使う仮定</h3>
 <p>以下では、どの分布でも結果の範囲を同じ <span class="inline-math" data-tex="\Omega">\Omega</span> に取り、その範囲で確率または密度が正だとします。<span class="inline-math" data-tex="p_\vartheta(x)=p_{P_\vartheta}(x)">p_\vartheta(x)=p_{P_\vartheta}(x)</span> は座標について滑らかとします。ここで扱うKLは有限とします。和や積分を微分するときは、その中に微分を入れてよい場合を扱います。有限個の結果では、各項を微分してから足せます。無限の和や積分では追加の条件がいります。たとえば、座標を少し動かしても各導関数の絶対値を一つの関数で上から抑えられ、その関数の和や積分が有限なら、交換できます。フィッシャー行列が有限かつ正定値で、座標に滑らかに依存することも仮定し、これらの条件を満たす正則なモデルを扱います。</p>
 <p>異なる座標値が異なる分布を表すという条件は、有限のずれを区別する条件です。正定値性は、どの非零方向にも一次の密度変化があるという、各点での条件です。この意味は第3節で計算します。</p>
+<p>座標の向きは、正規分布で具体的に区別できます。たとえば実数の組 <span class="inline-math" data-tex="(0,1)">(0,1)</span> を入れると分布 <span class="inline-math" data-tex="P_{0,1}">P_{0,1}</span> が得られます。逆向きの座標写像 <span class="inline-math" data-tex="\theta">\theta</span> に <span class="inline-math" data-tex="P_{0,1}">P_{0,1}</span> を入れると、平均と標準偏差を読んで <span class="inline-math" data-tex="(0,1)">(0,1)</span> が戻ります。観測値 <span class="inline-math" data-tex="x">x</span> を入れて密度を読む関数は、これらとは別に <span class="inline-math" data-tex="p_{P_{0,1}}(x)">p_{P_{0,1}}(x)</span> と書きます。</p>
 </section>
 <section id="general-tangent"><h2>2. 分布を動かして、接ベクトルを取る</h2>
 <p>滑らかな曲線 <span class="inline-math" data-tex="\gamma:(-\varepsilon,\varepsilon)\to\mathcal M">\gamma:(-\varepsilon,\varepsilon)\to\mathcal M</span> を取り、<span class="inline-math" data-tex="P=\gamma(0)">P=\gamma(0)</span> とします。曲線に沿う座標値を <span class="inline-math" data-tex="\vartheta^a(s)=\theta^a(\gamma(s))">\vartheta^a(s)=\theta^a(\gamma(s))</span>、その初速度を <span class="inline-math" data-tex="u^a=(\vartheta^a)&#x27;(0)">u^a=(\vartheta^a)&#x27;(0)</span> と置きます。</p>
@@ -915,6 +1077,9 @@
 <p>ここからの計算では観測値 <span class="inline-math" data-tex="x">x</span> を一つ固定します。<span class="inline-math" data-tex="R\mapsto p_R(x)">R\mapsto p_R(x)</span> を関数として <span class="inline-math" data-tex="U">U</span> に渡すと、その <span class="inline-math" data-tex="x">x</span> での密度が曲線に沿って変わる速さが得られます。これを <span class="inline-math" data-tex="Up(x)">Up(x)</span> と略します。ここでは、座標を動かしたとき滑らかに変化する式で確率や密度を表します。</p>
 <div class="equation" data-tex="Up(x)=\sum_a u^a\frac{\partial p_\vartheta(x)}{\partial\vartheta^a}\bigg|_{\vartheta=\theta(P)}.">Up(x)=\sum_a u^a\frac{\partial p_\vartheta(x)}{\partial\vartheta^a}\bigg|_{\vartheta=\theta(P)}.</div>
 <p><span class="inline-math" data-tex="\mathcal I\!\left[p_{\gamma(s)}\right]=1">\mathcal I\!\left[p_{\gamma(s)}\right]=1</span> を <span class="inline-math" data-tex="s">s</span> で微分すると <span class="inline-math" data-tex="\mathcal I\!\left[Up\right]=0">\mathcal I\!\left[Up\right]=0</span> です。三角形で3つの確率の変化率を足すと0になることに対応します。</p>
+<p>正規化の微分は、各確率や密度を動かしても全体が1である、という事実の微分です。先ほどの記号で書くと、</p>
+<div class="equation" data-tex="0=\left.\frac{\mathrm d}{\mathrm ds}\mathcal I[p_{\gamma(s)}]\right|_{0} =\mathcal I\!\left[\left.\frac{\mathrm d}{\mathrm ds}p_{\gamma(s)}\right|_0\right] =\mathcal I[Up].">0=\left.\frac{\mathrm d}{\mathrm ds}\mathcal I[p_{\gamma(s)}]\right|_{0} =\mathcal I\!\left[\left.\frac{\mathrm d}{\mathrm ds}p_{\gamma(s)}\right|_0\right] =\mathcal I[Up].</div>
+<p>中央の等号で、第1節の「和や積分の中で微分できる」という仮定を使いました。</p>
 <p>今度は <span class="inline-math" data-tex="R\mapsto\log p_R(x)">R\mapsto\log p_R(x)</span> を <span class="inline-math" data-tex="U">U</span> に渡します。連鎖律を使うと、<span class="inline-math" data-tex="x">x</span> での対数密度の変化率は</p>
 <div class="equation" data-tex="U\log p(x)=\frac{Up(x)}{p_P(x)}.">U\log p(x)=\frac{Up(x)}{p_P(x)}.</div>
 <p>座標基底ごとの対数密度の変化率 <span class="inline-math" data-tex="S_a(x)=\partial_a\log p_\vartheta(x)">S_a(x)=\partial_a\log p_\vartheta(x)</span> をスコアと呼びます。以降、<span class="inline-math" data-tex="\partial_a">\partial_a</span> は座標値 <span class="inline-math" data-tex="\vartheta^a">\vartheta^a</span> での偏微分です。したがって <span class="inline-math" data-tex="U\log p(x)=\sum_a u^a S_a(x)">U\log p(x)=\sum_a u^a S_a(x)</span> です。</p>
@@ -940,6 +1105,9 @@
 <p><span class="inline-math" data-tex="P">P</span> による期待値を <span class="inline-math" data-tex="\mathbb E_P[h]=\mathcal I\!\left[p_P h\right]">\mathbb E_P[h]=\mathcal I\!\left[p_P h\right]</span> と書けば、行列の成分は座標基底を代入して得られます。</p>
 <div class="equation" data-tex="\begin{aligned}g_{ab}(P)&amp;=g_P\left(\left.\frac{\partial}{\partial\theta^a}\right|_P,\left.\frac{\partial}{\partial\theta^b}\right|_P\right)\\&amp;=\mathbb E_P[S_aS_b],\\g_P(U,V)&amp;=\sum_{a,b=1}^d u^a g_{ab}(P)v^b.\end{aligned}">\begin{aligned}g_{ab}(P)&amp;=g_P\left(\left.\frac{\partial}{\partial\theta^a}\right|_P,\left.\frac{\partial}{\partial\theta^b}\right|_P\right)\\&amp;=\mathbb E_P[S_aS_b],\\g_P(U,V)&amp;=\sum_{a,b=1}^d u^a g_{ab}(P)v^b.\end{aligned}</div>
 <p><span class="inline-math" data-tex="\mathbb E_P[S_a]=\mathcal I\!\left[\partial_a p_\vartheta\right]=0">\mathbb E_P[S_a]=\mathcal I\!\left[\partial_a p_\vartheta\right]=0</span> なので、行列はスコアの共分散行列です。内積の候補である g は対称で、各引数について線形です。<span class="inline-math" data-tex="g_P(U,U)=0">g_P(U,U)=0</span> なら、離散の場合すべての結果で変化率が0です。連続の場合は、変化率の二乗を密度で割って積分した値が0です。非零の <span class="inline-math" data-tex="U">U</span> についてこれが起きないという正則性の条件のもとで、各点で内積になります。三角形なら積分が3項の和に置き換わり、<span class="inline-math" data-tex="g_P(U,V)=\sum_i U(\rho_i)V(\rho_i)/P(A_i)">g_P(U,V)=\sum_i U(\rho_i)V(\rho_i)/P(A_i)</span> が戻ります。</p>
+<p>期待値の記号には、どの分布で平均するかが含まれています。例えば二つの密度変化率の積を平均する形では、</p>
+<div class="equation" data-tex="\begin{aligned}\mathbb E_P[(U\log p)(V\log p)] &amp;=\mathcal I\!\left[p_P\frac{Up}{p_P}\frac{Vp}{p_P}\right]\\ &amp;=\mathcal I\!\left[\frac{(Up)(Vp)}{p_P}\right]. \end{aligned}">\begin{aligned}\mathbb E_P[(U\log p)(V\log p)] &amp;=\mathcal I\!\left[p_P\frac{Up}{p_P}\frac{Vp}{p_P}\right]\\ &amp;=\mathcal I\!\left[\frac{(Up)(Vp)}{p_P}\right]. \end{aligned}</div>
+<p>掛けた分母は二つ、平均の重みは一つなので、分母に <span class="inline-math" data-tex="p_P">p_P</span> が一つ残ります。</p>
 <h3>座標を変えても内積は同じ</h3>
 <p>別の座標値 <span class="inline-math" data-tex="\xi^i">\xi^i</span> を使うとき、<span class="inline-math" data-tex="p">p</span> は合成関数 <span class="inline-math" data-tex="p_{\vartheta(\xi)}">p_{\vartheta(\xi)}</span> として表されます。連鎖律から、新しい座標でのスコアは <span class="inline-math" data-tex="S_i^{\mathrm{new}}=\sum_a(\partial\vartheta^a/\partial\xi^i)S_a">S_i^{\mathrm{new}}=\sum_a(\partial\vartheta^a/\partial\xi^i)S_a</span> です。これを成分の定義 <span class="inline-math" data-tex="g_{ij}^{\mathrm{new}}=\mathbb E_P[S_i^{\mathrm{new}}S_j^{\mathrm{new}}]">g_{ij}^{\mathrm{new}}=\mathbb E_P[S_i^{\mathrm{new}}S_j^{\mathrm{new}}]</span> に代入すると</p>
 <div class="equation" data-tex="g_{ij}^{\mathrm{new}}=\sum_{a,b}\frac{\partial\vartheta^a}{\partial\xi^i}\frac{\partial\vartheta^b}{\partial\xi^j}g_{ab}.">g_{ij}^{\mathrm{new}}=\sum_{a,b}\frac{\partial\vartheta^a}{\partial\xi^i}\frac{\partial\vartheta^b}{\partial\xi^j}g_{ab}.</div>
@@ -959,9 +1127,13 @@
 <h3>どの大円弧がモデルの中にあるか</h3>
 <p>フィッシャー・ラオ距離 <span class="inline-math" data-tex="d_{\mathcal M}(P,Q)">d_{\mathcal M}(P,Q)</span> は、モデル内で両端を結ぶ曲線の長さの下限です。球面全体での短い大円弧の長さは、その候補をすべて含む球面上で測るので、モデル内の距離の下界になります。角度の余弦は <span class="inline-math" data-tex="\langle F(P),F(Q)\rangle/4">\langle F(P),F(Q)\rangle/4</span> です。</p>
 <div class="equation" data-tex="d_{\mathcal M}(P,Q)\ \ge\ 2\arccos\!\left(\mathcal I\!\left[\sqrt{p_Pp_Q}\right]\right).">d_{\mathcal M}(P,Q)\ \ge\ 2\arccos\!\left(\mathcal I\!\left[\sqrt{p_Pp_Q}\right]\right).</div>
+<p>角度の余弦で分母が4になる段階を明示すると、<span class="inline-math" data-tex="\|F(P)\|=\|F(Q)\|=2">\|F(P)\|=\|F(Q)\|=2</span> だからです。分子の内積では各写像の先頭の2を掛けます。</p>
+<div class="equation" data-tex="\cos\omega =\frac{\langle F(P),F(Q)\rangle}{2\cdot2} =\frac{4\mathcal I[\sqrt{p_Pp_Q}]}4 =\mathcal I[\sqrt{p_Pp_Q}].">\cos\omega =\frac{\langle F(P),F(Q)\rangle}{2\cdot2} =\frac{4\mathcal I[\sqrt{p_Pp_Q}]}4 =\mathcal I[\sqrt{p_Pp_Q}].</div>
+<p>この角度をラジアンで測った値に、球面の半径2を掛けて大円弧の長さを得ます。</p>
 <p>3結果の全分布では、正の座標を持つ球面部分がまるごと像になり、短い大円弧も像に含まれました。一般のモデルで等号を得るには、たとえば、その大円弧の各点が選んだモデルの分布に戻ることを確かめます。</p>
 </section>
-<section id="general-normal-example"><h2>5. 正規分布で計量と距離を確かめる</h2><p>平均と標準偏差を座標に選び、ここまでの内積と曲線長の式を使って計算します。平方根写像で得られる球面上の距離と、正規分布の族の中だけで測った距離も比べます。 <a href="#general-normal">正規分布の計算と図</a></p></section>
+<section id="general-normal-example"><h2>5. 正規分布で計量と距離を確かめる</h2><p>平均と標準偏差を座標に選び、ここまでの内積と曲線長の式を使って計算します。平方根写像で得られる球面上の距離と、正規分布の族の中だけで測った距離も比べます。 <a href="#general-normal">正規分布の計算と図</a></p><p>計算をたどるなら、<a href="#normal-metric">スコアの積から計量の3成分を出す章</a>、次に <a href="#normal-sphere">同じ2点の距離を二通りで測る章</a> の順です。最初は <span class="inline-math" data-tex="\mu,\sigma">\mu,\sigma</span> を固定して観測値を平均し、次に <span class="inline-math" data-tex="\mu(t),\sigma(t)">\mu(t),\sigma(t)</span> を曲線に沿って動かします。</p>
+</section>
 <section id="general-connections"><h2>6. 接続を選ぶと測地線が決まる</h2>
 <p><a href="#dual-geodesics">3カテゴリの第6章</a>では、三角形のどの座標基底を平行に運ぶかで、混合接続と指数接続を区別しました。一般のモデルでは、平行な基底が取れるとは限りません。各点での基底の共変微分を、内積を使って指定します。</p>
 <p><span class="inline-math" data-tex="e_a=\partial/\partial\theta^a">e_a=\partial/\partial\theta^a</span> を座標基底のベクトル場とし、<span class="inline-math" data-tex="\ell=\log p_\vartheta(x)">\ell=\log p_\vartheta(x)</span> と書きます。ここでは下の積が可積分で、これらの期待値が座標に滑らかに依存すると仮定します。指数接続 <span class="inline-math" data-tex="\nabla^{(e)}">\nabla^{(e)}</span>、混合接続 <span class="inline-math" data-tex="\nabla^{(m)}">\nabla^{(m)}</span> は次の規則で定義します。</p>
@@ -982,6 +1154,8 @@
 <h3>フィッシャー計量との関係</h3>
 <p>計量を微分すると、<span class="inline-math" data-tex="g_{bc}=\mathcal I\!\left[p_\vartheta S_b S_c\right]">g_{bc}=\mathcal I\!\left[p_\vartheta S_b S_c\right]</span> の3つの因子それぞれから項が出ます。ここでも積分と微分を交換できると仮定します。<span class="inline-math" data-tex="\partial_a p_\vartheta=p_\vartheta S_a">\partial_a p_\vartheta=p_\vartheta S_a</span> を使えば、</p>
 <div class="equation" data-tex="\begin{aligned}\partial_a g_{bc}&amp;=\mathbb E_P[(\partial_a S_b)S_c]+\mathbb E_P[S_b(\partial_a S_c+S_aS_c)]\\&amp;=g_P(\nabla^{(e)}_{e_a}e_b,e_c)+g_P(e_b,\nabla^{(m)}_{e_a}e_c).\end{aligned}">\begin{aligned}\partial_a g_{bc}&amp;=\mathbb E_P[(\partial_a S_b)S_c]+\mathbb E_P[S_b(\partial_a S_c+S_aS_c)]\\&amp;=g_P(\nabla^{(e)}_{e_a}e_b,e_c)+g_P(e_b,\nabla^{(m)}_{e_a}e_c).\end{aligned}</div>
+<p>双対な二つの式から計量を保つ式を作るには、今の式と、添字 <span class="inline-math" data-tex="b,c">b,c</span> を交換した式を足して2で割ります。左辺は <span class="inline-math" data-tex="g_{bc}=g_{cb}">g_{bc}=g_{cb}</span> なのでそのままです。右辺は各箇所で <span class="inline-math" data-tex="\nabla^{(e)}">\nabla^{(e)}</span> と <span class="inline-math" data-tex="\nabla^{(m)}">\nabla^{(m)}</span> が一度ずつ現れます。平均を <span class="inline-math" data-tex="\bar\nabla=(\nabla^{(e)}+\nabla^{(m)})/2">\bar\nabla=(\nabla^{(e)}+\nabla^{(m)})/2</span> と書けば、</p>
+<div class="equation" data-tex="\partial_a g_{bc}=g_P(\bar\nabla_{e_a}e_b,e_c)+g_P(e_b,\bar\nabla_{e_a}e_c).">\partial_a g_{bc}=g_P(\bar\nabla_{e_a}e_b,e_c)+g_P(e_b,\bar\nabla_{e_a}e_c).</div>
 <p>この関係を、二つの接続がフィッシャー計量に関して双対であるといいます。<span class="inline-math" data-tex="b,c">b,c</span> を入れ替えた式と平均すると、接続の平均 <span class="inline-math" data-tex="(\nabla^{(e)}+\nabla^{(m)})/2">(\nabla^{(e)}+\nabla^{(m)})/2</span> は計量を保ちます。両接続の係数は <span class="inline-math" data-tex="a,b">a,b</span> について対称なので平均も捩率ゼロです。これら二条件で一意に定まるのが計量のレヴィ＝チヴィタ接続です。第4・5節で長さから求めた経路は、弧長に比例するパラメータを取ると、この接続の測地線になります。</p>
 </section>
 <section id="general-exponential"><h2>7. 指数型分布族</h2>
@@ -1002,6 +1176,7 @@
 <p><span class="inline-math" data-tex="(x-\mu)^2=x^2-2\mu x+\mu^2">(x-\mu)^2=x^2-2\mu x+\mu^2</span> を密度の対数に代入し、<span class="inline-math" data-tex="x">x</span> にかかる項、<span class="inline-math" data-tex="x^2">x^2</span> にかかる項、それ以外に分けます。</p>
 <div class="equation" data-tex="\log p_{\mu,\sigma}(x)=\frac{\mu}{\sigma^2}x-\frac1{2\sigma^2}x^2-\left(\frac{\mu^2}{2\sigma^2}+\log(\sqrt{2\pi}\,\sigma)\right).">\log p_{\mu,\sigma}(x)=\frac{\mu}{\sigma^2}x-\frac1{2\sigma^2}x^2-\left(\frac{\mu^2}{2\sigma^2}+\log(\sqrt{2\pi}\,\sigma)\right).</div>
 <p>したがって <span class="inline-math" data-tex="h(x)=1">h(x)=1</span>、<span class="inline-math" data-tex="T(x)=(x,x^2)">T(x)=(x,x^2)</span>、<span class="inline-math" data-tex="\theta=(\mu/\sigma^2,-1/(2\sigma^2))">\theta=(\mu/\sigma^2,-1/(2\sigma^2))</span> です。丸括弧の部分が <span class="inline-math" data-tex="\psi(\theta)">\psi(\theta)</span> です。元の座標へは <span class="inline-math" data-tex="\sigma^2=-1/(2\theta^2)">\sigma^2=-1/(2\theta^2)</span>、<span class="inline-math" data-tex="\mu=\theta^1\sigma^2">\mu=\theta^1\sigma^2</span> で戻れます。</p>
+<p>正規分布の例で、例えば <span class="inline-math" data-tex="\mu=1,\sigma=1">\mu=1,\sigma=1</span> なら <span class="inline-math" data-tex="\theta=(1,-1/2)">\theta=(1,-1/2)</span> です。<span class="inline-math" data-tex="T(x)=(x,x^2)">T(x)=(x,x^2)</span> と内積を取ると <span class="inline-math" data-tex="x-x^2/2">x-x^2/2</span>、正規化関数は <span class="inline-math" data-tex="1/2+\log\sqrt{2\pi}">1/2+\log\sqrt{2\pi}</span>。これを引いて指数を取ると、指数部分が <span class="inline-math" data-tex="x-x^2/2-1/2=-(x-1)^2/2">x-x^2/2-1/2=-(x-1)^2/2</span> に戻ります。</p>
 </section>
 <section id="general-dual-coordinates"><h2>8. 自然パラメータと期待値座標</h2>
 <h3>三角形で一度微分する</h3>
@@ -1015,6 +1190,7 @@
 <h3>もう一度微分すると計量が出る</h3>
 <p>対数密度を微分すると、スコアは <span class="inline-math" data-tex="S_b=T_b-\partial_b\psi=T_b-\eta_b">S_b=T_b-\partial_b\psi=T_b-\eta_b</span> です。したがって <span class="inline-math" data-tex="\partial_b p_\theta=p_\theta(T_b-\eta_b)">\partial_b p_\theta=p_\theta(T_b-\eta_b)</span>。この式を期待値の微分に代入します。</p>
 <div class="equation" data-tex="\begin{aligned}\partial_b\eta_a&amp;=\mathcal I[T_a\,\partial_b p_\theta]\\&amp;=\mathbb E_{P_\theta}[T_aT_b]-\eta_a\eta_b\\&amp;=\mathbb E_{P_\theta}[(T_a-\eta_a)(T_b-\eta_b)]\\&amp;=g_P\!\left(\left.\frac{\partial}{\partial\theta^a}\right|_P,\left.\frac{\partial}{\partial\theta^b}\right|_P\right).\end{aligned}">\begin{aligned}\partial_b\eta_a&amp;=\mathcal I[T_a\,\partial_b p_\theta]\\&amp;=\mathbb E_{P_\theta}[T_aT_b]-\eta_a\eta_b\\&amp;=\mathbb E_{P_\theta}[(T_a-\eta_a)(T_b-\eta_b)]\\&amp;=g_P\!\left(\left.\frac{\partial}{\partial\theta^a}\right|_P,\left.\frac{\partial}{\partial\theta^b}\right|_P\right).\end{aligned}</div>
+<p>第2行から第3行で使った共分散の展開を確認します。積を開くと <span class="inline-math" data-tex="T_aT_b-T_a\eta_b-\eta_aT_b+\eta_a\eta_b">T_aT_b-T_a\eta_b-\eta_aT_b+\eta_a\eta_b</span>。平均では <span class="inline-math" data-tex="\eta_a,\eta_b">\eta_a,\eta_b</span> は固定なので、二つの引き算はそれぞれ <span class="inline-math" data-tex="-\eta_a\eta_b">-\eta_a\eta_b</span>。最後の足し算と合わせて <span class="inline-math" data-tex="-\eta_a\eta_b">-\eta_a\eta_b</span> が一つ残ります。</p>
 <p>つまりヤコビ行列 <span class="inline-math" data-tex="(\partial_b\eta_a)">(\partial_b\eta_a)</span> はフィッシャー行列です。正定値で逆行列があるので、逆関数定理により <span class="inline-math" data-tex="\eta">\eta</span> も局所座標になります。自然パラメータの範囲を凸としたので、離れた2点でも <span class="inline-math" data-tex="\eta">\eta</span> の値が同じにはなりません。実際、2点の差を <span class="inline-math" data-tex="v">v</span> とすると、線分に沿った <span class="inline-math" data-tex="v\cdot\eta">v\cdot\eta</span> の微分は <span class="inline-math" data-tex="v^{\mathsf T}gv&gt;0">v^{\mathsf T}gv&gt;0</span> です。そのため <span class="inline-math" data-tex="\theta">\theta</span> を <span class="inline-math" data-tex="\eta">\eta</span> の関数として書けます。</p>
 <p>異なる2点で値が異なることも式にできます。<span class="inline-math" data-tex="v=\theta_1-\theta_0">v=\theta_1-\theta_0</span> とし、<span class="inline-math" data-tex="\theta(t)=\theta_0+tv">\theta(t)=\theta_0+tv</span> を使うと、</p>
 <div class="equation" data-tex="\begin{aligned} v\cdot[\eta(\theta_1)-\eta(\theta_0)] &amp;=\int_0^1\frac{\mathrm d}{\mathrm dt}[v\cdot\eta(\theta(t))]\,\mathrm dt\\ &amp;=\int_0^1v^{\mathsf T}g(\theta(t))v\,\mathrm dt&gt;0. \end{aligned}">\begin{aligned} v\cdot[\eta(\theta_1)-\eta(\theta_0)] &amp;=\int_0^1\frac{\mathrm d}{\mathrm dt}[v\cdot\eta(\theta(t))]\,\mathrm dt\\ &amp;=\int_0^1v^{\mathsf T}g(\theta(t))v\,\mathrm dt&gt;0. \end{aligned}</div>
@@ -1033,6 +1209,7 @@
 <div class="equation" data-tex="\begin{aligned}g(e_a,m^b) &amp;=\sum_c g_{ac}\frac{\partial\theta^c}{\partial\eta_b}\\ &amp;=\sum_c\frac{\partial\eta_a}{\partial\theta^c}\frac{\partial\theta^c}{\partial\eta_b} =\frac{\partial\eta_a}{\partial\eta_b}=\delta_a^b. \end{aligned}">\begin{aligned}g(e_a,m^b) &amp;=\sum_c g_{ac}\frac{\partial\theta^c}{\partial\eta_b}\\ &amp;=\sum_c\frac{\partial\eta_a}{\partial\theta^c}\frac{\partial\theta^c}{\partial\eta_b} =\frac{\partial\eta_a}{\partial\eta_b}=\delta_a^b. \end{aligned}</div>
 <p>中央は <span class="inline-math" data-tex="\eta">\eta</span> から <span class="inline-math" data-tex="\theta">\theta</span> へ戻し、また <span class="inline-math" data-tex="\eta">\eta</span> を読む合成写像の連鎖律です。</p>
 <p>最初の項は0なので、最後の共変微分はすべての <span class="inline-math" data-tex="e_a">e_a</span> と内積が0です。したがってそのベクトル自体が0になります。<span class="inline-math" data-tex="e_c">e_c</span> はどの方向も張るので、期待値座標の基底は混合接続で平行です。よって <span class="inline-math" data-tex="m">m</span> 測地線では <span class="inline-math" data-tex="\eta">\eta</span> が一次式になります。端点をつなぐ座標線分がモデルの座標範囲に収まる場合、この補間で全区間の曲線が求まります。</p>
+<p>クリストッフェル記号が0の座標を <span class="inline-math" data-tex="z">z</span> と書くと、基底に掛かる測地線方程式は各成分で <span class="inline-math" data-tex="\ddot z^a=0">\ddot z^a=0</span> です。1回積分して <span class="inline-math" data-tex="\dot z^a">\dot z^a</span> が定数、2回目で <span class="inline-math" data-tex="z^a(t)=z^a(0)+t\,\dot z^a">z^a(t)=z^a(0)+t\,\dot z^a</span>。<span class="inline-math" data-tex="z^a(1)">z^a(1)</span> を入れて <span class="inline-math" data-tex="\dot z^a=z^a(1)-z^a(0)">\dot z^a=z^a(1)-z^a(0)</span> と決めると、座標での直線補間が出ます。</p>
 <p><a href="#normal-geodesics">正規分布タブでは、同じ端点を結ぶ2本の接続の測地線と、計量の測地線を重ねて比べられます。</a></p>
 <h3>どの接続の曲率を測るか</h3>
 <p>第9節の最初に確かめたように、指数型分布族では、指数接続は自然座標で、混合接続は期待値座標で、それぞれクリストッフェル記号がすべて0です。曲率を計算する式には、これらの係数の微分と積しか現れないので、両接続の曲率は0です。</p>
@@ -1052,6 +1229,7 @@
 <p>この一階微分を取っている曲線は、期待値座標で <span class="inline-math" data-tex="\eta(s)=\eta(Q_*)+s[\eta(Q)-\eta(Q_*)]">\eta(s)=\eta(Q_*)+s[\eta(Q)-\eta(Q_*)]</span> です。<span class="inline-math" data-tex="s=0">s=0</span> の近くなら制約を満たします。<span class="inline-math" data-tex="\varphi(\eta(s))">\varphi(\eta(s))</span> から <span class="inline-math" data-tex="\theta(Q_*)\cdot\eta&#x27;(0)">\theta(Q_*)\cdot\eta&#x27;(0)</span> が、KLの線形項から <span class="inline-math" data-tex="-\theta(P)\cdot\eta&#x27;(0)">-\theta(P)\cdot\eta&#x27;(0)</span> が出るので、上の内積になります。</p>
 <p>三つのKLを上の <span class="inline-math" data-tex="\varphi">\varphi</span> の式で展開し、共通項を消すと、この内積が残ります。</p>
 <div class="equation" data-tex="\begin{aligned}&amp;D_{\rm KL}(Q\Vert P)-D_{\rm KL}(Q\Vert Q_*)-D_{\rm KL}(Q_*\Vert P)\\&amp;\qquad=[\theta(Q_*)-\theta(P)]\cdot[\eta(Q)-\eta(Q_*)]=0.\end{aligned}">\begin{aligned}&amp;D_{\rm KL}(Q\Vert P)-D_{\rm KL}(Q\Vert Q_*)-D_{\rm KL}(Q_*\Vert P)\\&amp;\qquad=[\theta(Q_*)-\theta(P)]\cdot[\eta(Q)-\eta(Q_*)]=0.\end{aligned}</div>
+<p><span class="inline-math" data-tex="D(Q\Vert P)">D(Q\Vert P)</span> から引く二つのうち、<span class="inline-math" data-tex="D(Q\Vert Q_*)">D(Q\Vert Q_*)</span> では接平面を <span class="inline-math" data-tex="Q_*">Q_*</span> で取り、<span class="inline-math" data-tex="D(Q_*\Vert P)">D(Q_*\Vert P)</span> では <span class="inline-math" data-tex="P">P</span> で取ります。どちらの引数が接平面を決めるかをそろえると、次の整理で符号を追えます。</p>
 <p>三つの項を展開する際、<span class="inline-math" data-tex="x=\eta(Q),\ y=\eta(Q_*),\ z=\eta(P)">x=\eta(Q),\ y=\eta(Q_*),\ z=\eta(P)</span> と略します。<span class="inline-math" data-tex="\varphi">\varphi</span> の値は <span class="inline-math" data-tex="+\varphi(x)">+\varphi(x)</span> と <span class="inline-math" data-tex="-\varphi(x)">-\varphi(x)</span> のように打ち消し合い、線形項だけ残ります。</p>
 <div class="equation" data-tex="\begin{aligned} &amp;-\theta(P)\cdot(x-z)+\theta(Q_*)\cdot(x-y)\\ &amp;\qquad+\theta(P)\cdot(y-z)\\ &amp;=[\theta(Q_*)-\theta(P)]\cdot(x-y). \end{aligned}">\begin{aligned} &amp;-\theta(P)\cdot(x-z)+\theta(Q_*)\cdot(x-y)\\ &amp;\qquad+\theta(P)\cdot(y-z)\\ &amp;=[\theta(Q_*)-\theta(P)]\cdot(x-y). \end{aligned}</div>
 <p>これがこの向きでのピタゴラスの等式です。 <a href="#categorical-projection">三角形の図で両辺の値を比べる</a></p>

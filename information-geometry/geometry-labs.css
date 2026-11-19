@@ -172,3 +172,30 @@
   .explain-arrow .arrow-side { display: none; }
   .explain-arrow .arrow-down { display: block; }
 }
+
+.ig-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .3rem .85rem;
+  margin: .45rem 0 .65rem;
+  padding: 0;
+  list-style: none;
+  color: var(--ink);
+  font-size: .84rem;
+  line-height: 1.4;
+}
+
+.ig-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  text-align: left;
+}
+
+.ig-legend li > svg[aria-hidden] {
+  flex: none;
+  width: 1.75rem;
+  height: .875rem;
+  margin: 0;
+}
