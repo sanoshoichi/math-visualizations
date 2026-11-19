@@ -267,25 +267,36 @@
 <p>予測をずらす方向を <span class="inline-math" data-tex="U\in T_PM_3">U\in T_PM_3</span> とします。<span class="inline-math" data-tex="u_i=U(\rho_i)">u_i=U(\rho_i)</span> は事象 <span class="inline-math" data-tex="A_i">A_i</span> の確率の変化率です。これを使って、予測に使う分布 <span class="inline-math" data-tex="Q_s">Q_s</span> を次のように動かします。</p>
 <div class="equation" data-tex="Q_s(A_i)=P(A_i)+su_i,\qquad Q_0=P.">Q_s(A_i)=P(A_i)+su_i,\qquad Q_0=P.</div>
 <p>第6節で見たように <span class="inline-math" data-tex="\sum_i u_i=0">\sum_i u_i=0</span> なので、動かしても確率の和は1です。ここではすべての確率が正になるよう、<span class="inline-math" data-tex="s">s</span> を0の近くに取ります。</p>
-<p>事象 <span class="inline-math" data-tex="A_i">A_i</span> が起きた場合、予測を <span class="inline-math" data-tex="P">P</span> から <span class="inline-math" data-tex="Q_s">Q_s</span> に変えたときの損失の差は <span class="inline-math" data-tex="[-\log Q_s(A_i)]-[-\log P(A_i)]">[-\log Q_s(A_i)]-[-\log P(A_i)]</span> です。この差を、事象が実際に起きる確率 <span class="inline-math" data-tex="P(A_i)">P(A_i)</span> で重みづけして足します。平均損失の増加を <span class="inline-math" data-tex="L(s)">L(s)</span> とすると、次の式になります。</p>
-<div class="equation" data-tex="L(s)=\sum_i P(A_i)\log\frac{P(A_i)}{P(A_i)+su_i}.">L(s)=\sum_i P(A_i)\log\frac{P(A_i)}{P(A_i)+su_i}.</div>
+<h4>各モデルの平均損失を計算して、差を取る</h4>
+<p>ここからは、実際の結果が分布 <span class="inline-math" data-tex="P">P</span> に従うとします。予測には任意の分布 <span class="inline-math" data-tex="R">R</span> を使います。たとえば <span class="inline-math" data-tex="A_1">A_1</span> が起きたときの損失は <span class="inline-math" data-tex="-\log R(A_1)">-\log R(A_1)</span> で、それが起きる確率は <span class="inline-math" data-tex="P(A_1)">P(A_1)</span> です。同じ計算を3つの事象について足すと、<span class="inline-math" data-tex="R">R</span> を使った1回あたりの平均損失 <span class="inline-math" data-tex="C_P(R)">C_P(R)</span> が求まります。</p>
+<div class="equation" data-tex="\begin{aligned}C_P(R)&amp;=P(A_1)[-\log R(A_1)]\\&amp;\quad+P(A_2)[-\log R(A_2)]\\&amp;\quad+P(A_3)[-\log R(A_3)]\\&amp;=-\sum_{i=1}^3 P(A_i)\log R(A_i).\end{aligned}">\begin{aligned}C_P(R)&amp;=P(A_1)[-\log R(A_1)]\\&amp;\quad+P(A_2)[-\log R(A_2)]\\&amp;\quad+P(A_3)[-\log R(A_3)]\\&amp;=-\sum_{i=1}^3 P(A_i)\log R(A_i).\end{aligned}</div>
+<p>この式に予測モデルとして <span class="inline-math" data-tex="R=Q_s">R=Q_s</span> と <span class="inline-math" data-tex="R=P">R=P</span> をそれぞれ入れます。実際の分布はどちらも <span class="inline-math" data-tex="P">P</span> なので、外側の重み <span class="inline-math" data-tex="P(A_i)">P(A_i)</span> は共通です。予測をずらした後の平均損失から、出発点での平均損失を引いた差を <span class="inline-math" data-tex="L(s)">L(s)</span> とします。</p>
+<div class="equation" data-tex="\begin{aligned}L(s)&amp;=C_P(Q_s)-C_P(P)\\&amp;=-\sum_i P(A_i)\log Q_s(A_i)\\&amp;\quad+\sum_i P(A_i)\log P(A_i)\\&amp;=\sum_i P(A_i)\bigl[\log P(A_i)-\log Q_s(A_i)\bigr].\end{aligned}">\begin{aligned}L(s)&amp;=C_P(Q_s)-C_P(P)\\&amp;=-\sum_i P(A_i)\log Q_s(A_i)\\&amp;\quad+\sum_i P(A_i)\log P(A_i)\\&amp;=\sum_i P(A_i)\bigl[\log P(A_i)-\log Q_s(A_i)\bigr].\end{aligned}</div>
+<p>各項に <span class="inline-math" data-tex="\log a-\log b=\log(a/b)">\log a-\log b=\log(a/b)</span> を使い、分母の <span class="inline-math" data-tex="Q_s(A_i)">Q_s(A_i)</span> に、先ほど決めた <span class="inline-math" data-tex="P(A_i)+su_i">P(A_i)+su_i</span> を代入します。</p>
+<div class="equation" data-tex="\begin{aligned}L(s)&amp;=\sum_i P(A_i)\log\frac{P(A_i)}{Q_s(A_i)}\\&amp;=\sum_i P(A_i)\log\frac{P(A_i)}{P(A_i)+su_i}.\end{aligned}">\begin{aligned}L(s)&amp;=\sum_i P(A_i)\log\frac{P(A_i)}{Q_s(A_i)}\\&amp;=\sum_i P(A_i)\log\frac{P(A_i)}{P(A_i)+su_i}.\end{aligned}</div>
+<p>第6節の <span class="inline-math" data-tex="e_1">e_1</span> 方向を例にします。出発点の確率は <span class="inline-math" data-tex="(0.20,0.30,0.50)">(0.20,0.30,0.50)</span> で、<span class="inline-math" data-tex="s=0.10">s=0.10</span> のとき予測は <span class="inline-math" data-tex="(0.30,0.30,0.40)">(0.30,0.30,0.40)</span> です。2つの平均損失を引くと、予測をずらしたことで1回あたり約0.03048 nat増えたと分かります。</p>
+<div class="equation" data-tex="\begin{aligned}C_P(P)&amp;=-0.20\log 0.20-0.30\log 0.30\\&amp;\quad-0.50\log 0.50\approx 1.02965,\\ C_P(Q_{0.10})&amp;=-0.20\log 0.30-0.30\log 0.30\\&amp;\quad-0.50\log 0.40\approx 1.06013,\\L(0.10)&amp;\approx1.06013-1.02965=0.03048.\end{aligned}">\begin{aligned}C_P(P)&amp;=-0.20\log 0.20-0.30\log 0.30\\&amp;\quad-0.50\log 0.50\approx 1.02965,\\ C_P(Q_{0.10})&amp;=-0.20\log 0.30-0.30\log 0.30\\&amp;\quad-0.50\log 0.40\approx 1.06013,\\L(0.10)&amp;\approx1.06013-1.02965=0.03048.\end{aligned}</div>
 <h3>損失を微分して、長さの二乗を求める</h3>
 <p>予測をどれだけずらしたかを表す <span class="inline-math" data-tex="s">s</span> で微分します。まず各項の対数確率を微分すると、ここで元の確率で割る式が出てきます。</p>
 <div class="equation" data-tex="\left.\frac{\mathrm d}{\mathrm ds}\log Q_s(A_i)\right|_{s=0}=\left.\frac{u_i}{P(A_i)+su_i}\right|_{s=0}=\frac{u_i}{P(A_i)}.">\left.\frac{\mathrm d}{\mathrm ds}\log Q_s(A_i)\right|_{s=0}=\left.\frac{u_i}{P(A_i)+su_i}\right|_{s=0}=\frac{u_i}{P(A_i)}.</div>
 <p>右辺は、確率の変化率を元の確率に対する割合で読んだ値です。同じ <span class="inline-math" data-tex="u_i=0.01">u_i=0.01</span> でも、元の確率が <span class="inline-math" data-tex="0.20">0.20</span> なら <span class="inline-math" data-tex="0.05">0.05</span>、<span class="inline-math" data-tex="0.50">0.50</span> なら <span class="inline-math" data-tex="0.02">0.02</span> になります。</p>
-<p>この計算を平均損失に適用します。一階微分では、重み <span class="inline-math" data-tex="P(A_i)">P(A_i)</span> と分母が打ち消し合い、残った変化率の和も0になります。</p>
-<div class="equation" data-tex="L^\prime(0)=-\sum_i P(A_i)\frac{u_i}{P(A_i)}=-\sum_i u_i=0.">L^\prime(0)=-\sum_i P(A_i)\frac{u_i}{P(A_i)}=-\sum_i u_i=0.</div>
-<p>さらにもう一度微分すると、対数確率の変化率の二乗を、実際に各事象が起きる確率で重みづけした式が残ります。</p>
-<div class="equation" data-tex="\begin{aligned}L^{\prime\prime}(0)&amp;=\sum_i P(A_i)\left(\frac{u_i}{P(A_i)}\right)^2\\&amp;=\sum_i\frac{u_i^2}{P(A_i)}.\end{aligned}">\begin{aligned}L^{\prime\prime}(0)&amp;=\sum_i P(A_i)\left(\frac{u_i}{P(A_i)}\right)^2\\&amp;=\sum_i\frac{u_i^2}{P(A_i)}.\end{aligned}</div>
-<p><span class="inline-math" data-tex="L(0)=0">L(0)=0</span> で、一階の変化も0なので、出発点の近くでは <span class="inline-math" data-tex="L(s)=\tfrac12 s^2L^{\prime\prime}(0)+O(s^3)">L(s)=\tfrac12 s^2L^{\prime\prime}(0)+O(s^3)</span> です。同じ小さな <span class="inline-math" data-tex="s">s</span> だけ動かしたとき、<span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> が大きい方向ほど平均損失が急に増えます。そこで、この値を方向 <span class="inline-math" data-tex="U">U</span> の長さの二乗 <span class="inline-math" data-tex="g_P(U,U)">g_P(U,U)</span> とします。</p>
+<p>この微分を平均損失の式に戻します。<span class="inline-math" data-tex="\log P(A_i)">\log P(A_i)</span> と重み <span class="inline-math" data-tex="P(A_i)">P(A_i)</span> は <span class="inline-math" data-tex="s">s</span> によらないので、微分するのは <span class="inline-math" data-tex="-\log Q_s(A_i)">-\log Q_s(A_i)</span> だけです。</p>
+<div class="equation" data-tex="L&#x27;(s)=-\sum_i P(A_i)\frac{u_i}{P(A_i)+su_i}.">L&#x27;(s)=-\sum_i P(A_i)\frac{u_i}{P(A_i)+su_i}.</div>
+<p><span class="inline-math" data-tex="s=0">s=0</span> を代入すると分母と重みが同じになります。その後、確率の和の条件 <span class="inline-math" data-tex="\sum_i u_i=0">\sum_i u_i=0</span> を使います。</p>
+<div class="equation" data-tex="L&#x27;(0)=-\sum_i P(A_i)\frac{u_i}{P(A_i)}=-\sum_i u_i=0.">L&#x27;(0)=-\sum_i P(A_i)\frac{u_i}{P(A_i)}=-\sum_i u_i=0.</div>
+<p>二階微分では <span class="inline-math" data-tex="(P(A_i)+su_i)^{-1}">(P(A_i)+su_i)^{-1}</span> をもう一度微分します。逆数の微分でマイナスが出て、内側の式の微分から <span class="inline-math" data-tex="u_i">u_i</span> がもう1つ掛かります。</p>
+<div class="equation" data-tex="L&#x27;&#x27;(s)=\sum_i P(A_i)\frac{u_i^2}{(P(A_i)+su_i)^2}.">L&#x27;&#x27;(s)=\sum_i P(A_i)\frac{u_i^2}{(P(A_i)+su_i)^2}.</div>
+<div class="equation" data-tex="\begin{aligned}L&#x27;&#x27;(0)&amp;=\sum_i P(A_i)\left(\frac{u_i}{P(A_i)}\right)^2\\&amp;=\sum_i\frac{u_i^2}{P(A_i)}.\end{aligned}">\begin{aligned}L&#x27;&#x27;(0)&amp;=\sum_i P(A_i)\left(\frac{u_i}{P(A_i)}\right)^2\\&amp;=\sum_i\frac{u_i^2}{P(A_i)}.\end{aligned}</div>
+<p>出発点の近くでは、次のようにテイラー展開できます。<span class="inline-math" data-tex="Q_0=P">Q_0=P</span> から <span class="inline-math" data-tex="L(0)=0">L(0)=0</span>、上の計算から <span class="inline-math" data-tex="L&#x27;(0)=0">L&#x27;(0)=0</span> です。</p>
+<div class="equation" data-tex="\begin{aligned}L(s)&amp;=L(0)+sL&#x27;(0)+\tfrac12s^2L&#x27;&#x27;(0)+O(s^3)\\&amp;=\tfrac12s^2\sum_i\frac{u_i^2}{P(A_i)}+O(s^3).\end{aligned}">\begin{aligned}L(s)&amp;=L(0)+sL&#x27;(0)+\tfrac12s^2L&#x27;&#x27;(0)+O(s^3)\\&amp;=\tfrac12s^2\sum_i\frac{u_i^2}{P(A_i)}+O(s^3).\end{aligned}</div>
+<p>同じ小さな <span class="inline-math" data-tex="s">s</span> だけ予測をずらすと、二次の項が大きい方向ほど損失が増えます。その大きさを測るため、<span class="inline-math" data-tex="L&#x27;&#x27;(0)">L&#x27;&#x27;(0)</span> を接ベクトル <span class="inline-math" data-tex="U">U</span> の長さの二乗 <span class="inline-math" data-tex="g_P(U,U)">g_P(U,U)</span> とします。</p>
 <figure class="explain-figure">
 <figcaption>予測に使う分布をずらしたとき、平均損失のどの項が効くか</figcaption>
 <table class="explain-table"><thead><tr><th scope="col">次数</th><th scope="col">値</th><th scope="col">出発点で分かること</th></tr></thead><tbody><tr><th scope="row">0次</th><td><span class="inline-math" data-tex="L(0)=0">L(0)=0</span></td><td>ずれがない</td></tr><tr><th scope="row">1次</th><td><span class="inline-math" data-tex="L&#x27;(0)=0">L′(0) = 0</span></td><td>確率の変化率が相殺される</td></tr><tr><th scope="row">2次</th><td><span class="inline-math" data-tex="L&#x27;&#x27;(0)=g_P(U,U)">L″(0) = gₚ(U,U)</span></td><td>最初に現れる損失の増加</td></tr></tbody></table>
 </figure>
 <h3>長さの二乗から、2本の内積へ</h3>
 <p>もう1本の接ベクトル <span class="inline-math" data-tex="V\in T_PM_3">V\in T_PM_3</span> を取り、<span class="inline-math" data-tex="v_i=V(\rho_i)">v_i=V(\rho_i)</span> とします。<span class="inline-math" data-tex="U+V">U+V</span> の長さの二乗を展開すると、各項に <span class="inline-math" data-tex="(u_i+v_i)^2=u_i^2+2u_iv_i+v_i^2">(u_i+v_i)^2=u_i^2+2u_iv_i+v_i^2</span> が現れます。<span class="inline-math" data-tex="U">U</span> と <span class="inline-math" data-tex="V">V</span> の長さの二乗をそれぞれ引き、2で割ると、2本の内積が得られます。</p>
-<div class="equation" data-tex="g_P(U,V)=\tfrac12\bigl[g_P(U+V,U+V)-g_P(U,U)-g_P(V,V)\bigr].">g_P(U,V)=\tfrac12\bigl[g_P(U+V,U+V)-g_P(U,U)-g_P(V,V)\bigr].</div>
-<div class="equation" data-tex="g_P(U,V)=\sum_{i=1}^3\frac{u_iv_i}{P(A_i)}.">g_P(U,V)=\sum_{i=1}^3\frac{u_iv_i}{P(A_i)}.</div>
+<div class="equation" data-tex="\begin{aligned}g_P(U,V)&amp;=\tfrac12\bigl[g_P(U+V,U+V)\\&amp;\qquad-g_P(U,U)-g_P(V,V)\bigr]\\&amp;=\tfrac12\sum_i\frac{(u_i+v_i)^2-u_i^2-v_i^2}{P(A_i)}\\&amp;=\sum_i\frac{u_iv_i}{P(A_i)}.\end{aligned}">\begin{aligned}g_P(U,V)&amp;=\tfrac12\bigl[g_P(U+V,U+V)\\&amp;\qquad-g_P(U,U)-g_P(V,V)\bigr]\\&amp;=\tfrac12\sum_i\frac{(u_i+v_i)^2-u_i^2-v_i^2}{P(A_i)}\\&amp;=\sum_i\frac{u_iv_i}{P(A_i)}.\end{aligned}</div>
 <p>この内積を、各分布 <span class="inline-math" data-tex="P">P</span> の接空間に入れたものがフィッシャー計量です。第10節では最初に定めた平均損失 <span class="inline-math" data-tex="L(s)">L(s)</span> を、KLダイバージェンスとして図で確認できます。</p>
 <h3>基底で計量を行列にする</h3>
 <p><span class="inline-math" data-tex="g_{ab}=g_P(e_a,e_b)">g_{ab}=g_P(e_a,e_b)</span> の添字 <span class="inline-math" data-tex="a,b">a,b</span> は、行と列に置く基底の番号です。両方を1と2で動かすと、行列全体になります。</p>
@@ -307,10 +318,16 @@
 <input type="range" id="sphere-control" min="0" max="1" value="0.50" step="0.01">
 </div>
 
-<p>接ベクトルの長さが決まると、曲線に沿って速さを積分して道のりを測れます。その計算を球面上の問題に移す写像が <span class="inline-math" data-tex="F">F</span> です。</p>
-<div class="equation" data-tex="F(P)=2\bigl(\sqrt{P(A_1)},\sqrt{P(A_2)},\sqrt{P(A_3)}\bigr),\qquad \|F(P)\|^2=4.">F(P)=2\bigl(\sqrt{P(A_1)},\sqrt{P(A_2)},\sqrt{P(A_3)}\bigr),\qquad \|F(P)\|^2=4.</div>
-<p>半径2の球面のうち、3成分がすべて正の部分に分布が移ります。各成分を微分すると <span class="inline-math" data-tex="(\mathrm dF_P U)_i=u_i/\sqrt{P(A_i)}">(\mathrm dF_P U)_i=u_i/\sqrt{P(A_i)}</span> なので、球面での通常の内積が前節の <span class="inline-math" data-tex="g_P(U,V)">g_P(U,V)</span> と一致します。</p>
-<div class="equation" data-tex="\mathrm dF_P(U)\cdot\mathrm dF_P(V)=g_P(U,V).">\mathrm dF_P(U)\cdot\mathrm dF_P(V)=g_P(U,V).</div>
+<p>曲線の長さを求めるには、各点でフィッシャー計量を使って速度の長さを測り、それを積分します。同じ計算をユークリッド空間の内積でできるように、各確率 <span class="inline-math" data-tex="q">q</span> を実数 <span class="inline-math" data-tex="f(q)">f(q)</span> に移すと考えます。</p>
+<p>確率が <span class="inline-math" data-tex="u_i">u_i</span> の速さで変化するなら、新しい成分の速さは連鎖律から <span class="inline-math" data-tex="f&#x27;(P(A_i))u_i">f&#x27;(P(A_i))u_i</span> です。この速さを二乗して足したものを、前節の <span class="inline-math" data-tex="\sum_i u_i^2/P(A_i)">\sum_i u_i^2/P(A_i)</span> と一致させたいので、<span class="inline-math" data-tex="f&#x27;(q)=1/\sqrt q">f&#x27;(q)=1/\sqrt q</span> と取ります。積分して定数を0に選ぶと <span class="inline-math" data-tex="f(q)=2\sqrt q">f(q)=2\sqrt q</span> です。</p>
+<div class="equation" data-tex="F(P)=2\bigl(\sqrt{P(A_1)},\sqrt{P(A_2)},\sqrt{P(A_3)}\bigr).">F(P)=2\bigl(\sqrt{P(A_1)},\sqrt{P(A_2)},\sqrt{P(A_3)}\bigr).</div>
+<p>3成分を二乗して足すと、確率の和が1であることから半径2が出ます。</p>
+<div class="equation" data-tex="\|F(P)\|^2=4\sum_i P(A_i)=4.">\|F(P)\|^2=4\sum_i P(A_i)=4.</div>
+<p>接ベクトル <span class="inline-math" data-tex="U,V">U,V</span> の確率の変化率を <span class="inline-math" data-tex="u_i,v_i">u_i,v_i</span> とします。たとえば <span class="inline-math" data-tex="U">U</span> について、<span class="inline-math" data-tex="Q_s(A_i)=P(A_i)+su_i">Q_s(A_i)=P(A_i)+su_i</span> と動かすと、写像 <span class="inline-math" data-tex="F">F</span> の第 <span class="inline-math" data-tex="i">i</span> 成分の速度は次の値です。</p>
+<div class="equation" data-tex="(\mathrm dF_P U)_i=\left.\frac{\mathrm d}{\mathrm ds}2\sqrt{P(A_i)+su_i}\right|_{s=0}=\frac{u_i}{\sqrt{P(A_i)}}.">(\mathrm dF_P U)_i=\left.\frac{\mathrm d}{\mathrm ds}2\sqrt{P(A_i)+su_i}\right|_{s=0}=\frac{u_i}{\sqrt{P(A_i)}}.</div>
+<p>2本の像のユークリッド内積を取ると、分母の平方根が2つ掛かって、前節の内積に戻ります。</p>
+<div class="equation" data-tex="\mathrm dF_P(U)\cdot\mathrm dF_P(V)=\sum_i\frac{u_i}{\sqrt{P(A_i)}}\frac{v_i}{\sqrt{P(A_i)}}=g_P(U,V).">\mathrm dF_P(U)\cdot\mathrm dF_P(V)=\sum_i\frac{u_i}{\sqrt{P(A_i)}}\frac{v_i}{\sqrt{P(A_i)}}=g_P(U,V).</div>
+<p>曲線の速度にこの等式を使えば、各点で速度の長さが一致します。したがって曲線に沿って積分して得られる長さも一致します。</p>
 <figure class="explain-figure">
 <figcaption>同じ点と速度を、確率三角形と球面で対応させる</figcaption>
 <div class="explain-row"><div class="explain-box "><span>分布の空間の点</span><strong><span class="inline-math" data-tex="P">P</span></strong></div><div class="explain-arrow"><span>平方根の写像</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box "><span>球面上の点</span><strong><span class="inline-math" data-tex="F(P)">F(P)</span></strong></div></div>
@@ -326,8 +343,10 @@
 <svg data-plot viewBox="0 0 350 205" role="img" aria-label="曲線で囲まれた領域が球面の正の八分体、太い線が大円弧です。選んだ点までの弧の長さを下に示します。"></svg>
 <figcaption>上の金色の点が分布、下の金色の点がその球面上の像です。上の経路全体が、下の球面上では大円弧に写ります。</figcaption><p class="reading" data-reading></p>
 </figure>
-<p>中心角を <span class="inline-math" data-tex="\omega">\omega</span> とすると、半径が2なので弧の全長は次の値です。</p>
-<div class="equation" data-tex="d_{\rm FR}(P,Q)=2\omega=2\arccos\!\left(\sum_{i=1}^3\sqrt{P(A_i)Q(A_i)}\right).">d_{\rm FR}(P,Q)=2\omega=2\arccos\!\left(\sum_{i=1}^3\sqrt{P(A_i)Q(A_i)}\right).</div>
+<p>球面上の2点と原点がつくる角を <span class="inline-math" data-tex="\omega">\omega</span> とします。内積を両方の長さの積で割ると、その角度の余弦になります。両方とも半径2の位置にあるので、分母は4です。</p>
+<div class="equation" data-tex="\begin{aligned}\cos\omega&amp;=\frac{F(P)\cdot F(Q)}{\|F(P)\|\|F(Q)\|}\\&amp;=\frac{4\sum_i\sqrt{P(A_i)Q(A_i)}}4\\&amp;=\sum_i\sqrt{P(A_i)Q(A_i)}.\end{aligned}">\begin{aligned}\cos\omega&amp;=\frac{F(P)\cdot F(Q)}{\|F(P)\|\|F(Q)\|}\\&amp;=\frac{4\sum_i\sqrt{P(A_i)Q(A_i)}}4\\&amp;=\sum_i\sqrt{P(A_i)Q(A_i)}.\end{aligned}</div>
+<p>中心角をラジアンで測ると、弧の長さは半径と中心角の積です。したがって、球面上の短い弧の長さと等しいフィッシャー・ラオ距離は</p>
+<div class="equation" data-tex="d_{\rm FR}(P,Q)=2\omega=2\arccos\!\left(\sum_i\sqrt{P(A_i)Q(A_i)}\right).">d_{\rm FR}(P,Q)=2\omega=2\arccos\!\left(\sum_i\sqrt{P(A_i)Q(A_i)}\right).</div>
 </section>
 <section id="dual-geodesics"><h2>9. 混合接続と指数接続</h2>
 <div class="slider-bar">
@@ -337,10 +356,14 @@
 
 <p>同じ <span class="inline-math" data-tex="P,Q">P,Q</span> の間を、今度は「どの座標を一定の速さで変えるか」で結びます。混合接続（<span class="inline-math" data-tex="m">m</span> 接続）では、確率そのものが線形に変わります。</p>
 <div class="equation" data-tex="P_t^{(m)}(A_i)=(1-t)P(A_i)+tQ(A_i).">P_t^{(m)}(A_i)=(1-t)P(A_i)+tQ(A_i).</div>
-<p>指数接続（<span class="inline-math" data-tex="e">e</span> 接続）では、事象 A₃を基準とする対数比 <span class="inline-math" data-tex="\theta^a(P)=\log(P(A_a)/P(A_3))">\theta^a(P)=\log(P(A_a)/P(A_3))</span>（<span class="inline-math" data-tex="a=1,2">a=1,2</span>）が線形に変わります。指数を取って確率の和を1に戻すと、次の曲線になります。</p>
+<p>指数接続では <span class="inline-math" data-tex="\theta^a(R)=\log(R(A_a)/R(A_3))">\theta^a(R)=\log(R(A_a)/R(A_3))</span> を座標にします。ここで <span class="inline-math" data-tex="R">R</span> は任意の分布、<span class="inline-math" data-tex="a=1,2">a=1,2</span> です。端点 <span class="inline-math" data-tex="P,Q">P,Q</span> の座標を直線で結び、その途中の分布を <span class="inline-math" data-tex="P_t^{(e)}">P_t^{(e)}</span> とします。</p>
+<div class="equation" data-tex="\theta^a(P_t^{(e)})=(1-t)\theta^a(P)+t\theta^a(Q).">\theta^a(P_t^{(e)})=(1-t)\theta^a(P)+t\theta^a(Q).</div>
+<p>両辺の指数を取ります。対数の係数はべきになり、和は積になるので、求めたい分布の確率比が得られます。</p>
+<div class="equation" data-tex="\frac{P_t^{(e)}(A_a)}{P_t^{(e)}(A_3)}=\left(\frac{P(A_a)}{P(A_3)}\right)^{1-t}\left(\frac{Q(A_a)}{Q(A_3)}\right)^t.">\frac{P_t^{(e)}(A_a)}{P_t^{(e)}(A_3)}=\left(\frac{P(A_a)}{P(A_3)}\right)^{1-t}\left(\frac{Q(A_a)}{Q(A_3)}\right)^t.</div>
+<p><span class="inline-math" data-tex="w_i=P(A_i)^{1-t}Q(A_i)^t">w_i=P(A_i)^{1-t}Q(A_i)^t</span> と置くと、右辺は <span class="inline-math" data-tex="w_a/w_3">w_a/w_3</span> です。したがって3つの確率は <span class="inline-math" data-tex="w_1,w_2,w_3">w_1,w_2,w_3</span> に比例します。確率の合計が1になるよう、各 <span class="inline-math" data-tex="w_i">w_i</span> を重みの合計で割ります。</p>
 <div class="equation" data-tex="P_t^{(e)}(A_i)=\frac{P(A_i)^{1-t}Q(A_i)^t}{\sum_j P(A_j)^{1-t}Q(A_j)^t}.">P_t^{(e)}(A_i)=\frac{P(A_i)^{1-t}Q(A_i)^t}{\sum_j P(A_j)^{1-t}Q(A_j)^t}.</div>
-<p>それぞれの接続でクリストッフェル記号がゼロになる座標を <span class="inline-math" data-tex="z^a">z^a</span> と書きます。混合接続では <span class="inline-math" data-tex="z^a=x^a">z^a=x^a</span>、指数接続では <span class="inline-math" data-tex="z^a=\theta^a">z^a=\theta^a</span> です。この座標での測地線方程式は次の形になり、両端の座標値を直線で結べば解が得られます。</p>
-<div class="equation" data-tex="\frac{\mathrm d^2 z^a}{\mathrm dt^2}=0,\qquad z^a(t)=(1-t)z^a(0)+t z^a(1).">\frac{\mathrm d^2 z^a}{\mathrm dt^2}=0,\qquad z^a(t)=(1-t)z^a(0)+t z^a(1).</div>
+<p>混合接続では <span class="inline-math" data-tex="z^a=x^a">z^a=x^a</span> を、指数接続では <span class="inline-math" data-tex="z^a=\theta^a">z^a=\theta^a</span> を使うと、それぞれのクリストッフェル記号が0になります。測地線方程式はこの座標で <span class="inline-math" data-tex="\mathrm d^2z^a/\mathrm dt^2=0">\mathrm d^2z^a/\mathrm dt^2=0</span> です。1回積分すると速度が定数になり、もう一度積分すると座標は <span class="inline-math" data-tex="t">t</span> の一次式になります。<span class="inline-math" data-tex="t=0,1">t=0,1</span> の値を合わせると、上で使った直線補間が出ます。</p>
+<div class="equation" data-tex="z^a(t)=z^a(0)+t[z^a(1)-z^a(0)]=(1-t)z^a(0)+tz^a(1).">z^a(t)=z^a(0)+t[z^a(1)-z^a(0)]=(1-t)z^a(0)+tz^a(1).</div>
 <figure class="geometry-lab" id="dual-lab">
 
 <svg data-plot viewBox="0 0 350 205" role="img" aria-label="確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。"></svg>
@@ -360,15 +383,19 @@
 
 <p>データが分布 <span class="inline-math" data-tex="P">P</span> から出るとします。事象 <span class="inline-math" data-tex="A_i">Aᵢ</span> をモデル <span class="inline-math" data-tex="Q">Q</span> で予測したときの対数損失を <span class="inline-math" data-tex="-\log Q(A_i)">-\log Q(A_i)</span> とすると、<span class="inline-math" data-tex="P">P</span> 自身で予測した場合からの平均損失の増加がKLダイバージェンスです。自然対数を使います。</p>
 <div class="equation" data-tex="D_{\rm KL}(P\Vert Q)=\sum_i P(A_i)\log\frac{P(A_i)}{Q(A_i)}.">D_{\rm KL}(P\Vert Q)=\sum_i P(A_i)\log\frac{P(A_i)}{Q(A_i)}.</div>
-<p>第6節の曲線 <span class="inline-math" data-tex="Q=\gamma_1(s)">Q=\gamma_1(s)</span> を使うと、事象 A₂の項はゼロになります。</p>
-<div class="equation" data-tex="D(s)=0.20\log\frac{0.20}{0.20+s}+0.50\log\frac{0.50}{0.50-s}.">D(s)=0.20\log\frac{0.20}{0.20+s}+0.50\log\frac{0.50}{0.50-s}.</div>
+<p>第7節の <span class="inline-math" data-tex="L(s)">L(s)</span> は、ここで予測モデルを <span class="inline-math" data-tex="Q_s">Q_s</span> にした値です。スライダーの例では <span class="inline-math" data-tex="Q_s=\gamma_1(s)">Q_s=\gamma_1(s)</span> とし、KLの値を <span class="inline-math" data-tex="D(s)=D_{\rm KL}(P\Vert Q_s)">D(s)=D_{\rm KL}(P\Vert Q_s)</span> と書きます。出発点の確率 <span class="inline-math" data-tex="(0.20,0.30,0.50)">(0.20,0.30,0.50)</span> と、<span class="inline-math" data-tex="\gamma_1(s)">\gamma_1(s)</span> での確率 <span class="inline-math" data-tex="(0.20+s,0.30,0.50-s)">(0.20+s,0.30,0.50-s)</span> を、3項それぞれに代入します。</p>
+<div class="equation" data-tex="\begin{aligned}D(s)&amp;=0.20\log\frac{0.20}{0.20+s}\\&amp;\quad+0.30\log\frac{0.30}{0.30}\\&amp;\quad+0.50\log\frac{0.50}{0.50-s}.\end{aligned}">\begin{aligned}D(s)&amp;=0.20\log\frac{0.20}{0.20+s}\\&amp;\quad+0.30\log\frac{0.30}{0.30}\\&amp;\quad+0.50\log\frac{0.50}{0.50-s}.\end{aligned}</div>
+<p>中央の項は <span class="inline-math" data-tex="\log(0.30/0.30)=\log 1=0">\log(0.30/0.30)=\log 1=0</span> なので、計算には両端の2項が残ります。</p>
 <figure class="geometry-lab" id="kl-lab">
 
 <svg data-plot viewBox="0 0 350 205" role="img" aria-label="実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。"></svg>
 <figcaption>実線が KL の値、破線がフィッシャー計量から得た二次近似。縦軸は平均対数損失の増加量（nat）です。</figcaption><p class="reading" data-reading></p>
 </figure>
-<p><span class="inline-math" data-tex="s=0">s=0</span> で値と一階微分がともにゼロです。二階微分には、第7節で求めた基底の長さの二乗が現れます。</p>
-<div class="equation" data-tex="D^{\prime\prime}(0)=\frac{1}{0.20}+\frac{1}{0.50}=g_P(e_1,e_1)=7,\qquad D(s)=\frac{7}{2}s^2+O(s^3).">D^{\prime\prime}(0)=\frac{1}{0.20}+\frac{1}{0.50}=g_P(e_1,e_1)=7,\qquad D(s)=\frac{7}{2}s^2+O(s^3).</div>
+<p><span class="inline-math" data-tex="s=0">s=0</span> ではすべての確率比が1なので <span class="inline-math" data-tex="D(0)=0">D(0)=0</span> です。残った2項を微分します。第1項の分母の変化率は <span class="inline-math" data-tex="+1">+1</span>、第3項の分母の変化率は <span class="inline-math" data-tex="-1">-1</span> です。</p>
+<div class="equation" data-tex="\begin{aligned}D&#x27;(s)&amp;=-\frac{0.20}{0.20+s}+\frac{0.50}{0.50-s},\\D&#x27;(0)&amp;=-1+1=0.\end{aligned}">\begin{aligned}D&#x27;(s)&amp;=-\frac{0.20}{0.20+s}+\frac{0.50}{0.50-s},\\D&#x27;(0)&amp;=-1+1=0.\end{aligned}</div>
+<p>さらに微分すると両方の項が正になり、<span class="inline-math" data-tex="s=0">s=0</span> を代入すると第7節の <span class="inline-math" data-tex="g_P(e_1,e_1)">g_P(e_1,e_1)</span> が得られます。</p>
+<div class="equation" data-tex="\begin{aligned}D&#x27;&#x27;(s)&amp;=\frac{0.20}{(0.20+s)^2}+\frac{0.50}{(0.50-s)^2},\\D&#x27;&#x27;(0)&amp;=\frac{1}{0.20}+\frac{1}{0.50}=7.\end{aligned}">\begin{aligned}D&#x27;&#x27;(s)&amp;=\frac{0.20}{(0.20+s)^2}+\frac{0.50}{(0.50-s)^2},\\D&#x27;&#x27;(0)&amp;=\frac{1}{0.20}+\frac{1}{0.50}=7.\end{aligned}</div>
+<p>したがって図の破線は、テイラー展開の二次の項 <span class="inline-math" data-tex="\frac12D^{\prime\prime}(0)s^2=\frac72s^2">\frac12D^{\prime\prime}(0)s^2=\frac72s^2</span> です。</p>
 <figure class="explain-figure">
 <figcaption>図の初期値 s = 0.10。事象ごとの寄与を足すと KL の値になる</figcaption>
 <div class="explain-row explain-side">
