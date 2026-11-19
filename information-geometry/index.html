@@ -27,8 +27,8 @@
   </style>
 <link rel="stylesheet" href="geometry-labs.css?v=explain-figures">
 <link rel="stylesheet" href="information-tabs.css?v=chapter-order">
-<script defer src="information-tabs.js?v=chapter-order"></script>
-<script defer src="distribution-labs.js?v=binomial-scope"></script>
+<script defer src="information-tabs.js?v=axis-labels"></script>
+<script defer src="distribution-labs.js?v=axis-labels"></script>
 <script defer src="information-examples.js"></script>
 <script defer src="basis.js?v=coordinate-notation"></script>
 <script defer src="geometry-labs.js?v=coordinate-notation"></script>
@@ -79,8 +79,8 @@
 <div class="equation" data-tex="\bigl(P_p(X=0),P_p(X=1),P_p(X=2)\bigr)=\bigl((1-p)^2,2p(1-p),p^2\bigr).">\bigl(P_p(X=0),P_p(X=1),P_p(X=2)\bigr)=\bigl((1-p)^2,2p(1-p),p^2\bigr).</div>
 <div class="slider-bar"><label for="binomial-p">成功確率 p <output for="binomial-p">0.35</output><input type="range" id="binomial-p" min="0.02" max="0.98" value="0.35" step="0.01"></label></div>
 <figure class="geometry-lab" id="binomial-lab">
-<svg data-plot-0 viewBox="0 0 360 190" role="img" aria-label="二項分布で0回・1回・2回成功する確率"></svg>
-<figcaption>横軸は成功回数、縦軸はその回数になる確率です。つまみを動かすと、同じ成功確率 p から3本の棒が決まります。</figcaption>
+<svg data-plot-0 viewBox="0 0 360 190" role="img" aria-label="試行回数 n = 2 の二項分布。横軸は成功回数 j、縦軸は確率 P(X=j)"></svg>
+<figcaption>横軸の <span class="inline-math" data-tex="j">j</span> は成功回数、縦軸の <span class="inline-math" data-tex="P(X=j)">P(X=j)</span> はその確率です。試行回数は <span class="inline-math" data-tex="n=2">n=2</span> に固定しています。つまみで動かすのは1回あたりの成功確率 <span class="inline-math" data-tex="p">p</span> です。</figcaption>
 <p class="reading" data-values></p>
 </figure>
 
@@ -631,7 +631,7 @@
 <div class="equation" data-tex="p_\lambda(j)=e^{-\lambda}\frac{\lambda^j}{j!}.">p_\lambda(j)=e^{-\lambda}\frac{\lambda^j}{j!}.</div>
 <p>指数関数の級数 <span class="inline-math" data-tex="\sum_{j=0}^\infty\lambda^j/j!=e^\lambda">\sum_{j=0}^\infty\lambda^j/j!=e^\lambda</span> を使うと、確率の和が1になります。棒は各回数の確率です。スライダーは分布を指定する一つの座標 <span class="inline-math" data-tex="\lambda">\lambda</span> を動かします。</p>
 <div class="slider-bar"><label for="poisson-mean">平均回数 λ <output for="poisson-mean">3.00</output><input type="range" id="poisson-mean" min="0.25" max="10" value="3" step="0.05"></label></div>
-<figure class="geometry-lab" id="poisson-lab"><svg data-plot-0 viewBox="0 0 360 195" role="img" aria-label="ポアソン確率を0回から18回まで表示"></svg><figcaption>棒は0〜18回の確率です。19回以上の確率も下にまとめて表示します。縦軸の範囲は共通です。</figcaption><p class="reading" data-values></p></figure>
+<figure class="geometry-lab" id="poisson-lab"><svg data-plot-0 viewBox="0 0 360 195" role="img" aria-label="ポアソン分布。横軸は観測回数 j、縦軸は確率 P(X=j)。0回から18回まで表示"></svg><figcaption>棒は0〜18回の確率です。19回以上の確率も下にまとめて表示します。縦軸の範囲は共通です。</figcaption><p class="reading" data-values></p></figure>
 </section>
 <section id="poisson-tangent"><h2>2. 一つの座標基底</h2>
 <p><span class="inline-math" data-tex="\gamma(s)=P_{\lambda+as}">\gamma(s)=P_{\lambda+as}</span> とし、<span class="inline-math" data-tex="s">s</span> を0の近くに取ります。<span class="inline-math" data-tex="\dot\gamma(0)=a\left.\partial/\partial\lambda\right|_{P_\lambda}">\dot\gamma(0)=a\left.\partial/\partial\lambda\right|_{P_\lambda}</span> を <span class="inline-math" data-tex="P\mapsto P(X=j)">P\mapsto P(X=j)</span> に作用させると、確率を <span class="inline-math" data-tex="\lambda">\lambda</span> で微分した値が得られます。</p>
@@ -770,7 +770,7 @@
 <div class="equation" data-tex="p_{k,\theta}(x)=\frac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k},\qquad \Gamma(k)=\int_0^\infty t^{k-1}e^{-t}\,\mathrm dt.">p_{k,\theta}(x)=\frac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k},\qquad \Gamma(k)=\int_0^\infty t^{k-1}e^{-t}\,\mathrm dt.</div>
 <p><span class="inline-math" data-tex="x=\theta t">x=\theta t</span> と置いて積分すると、分子の積分は <span class="inline-math" data-tex="\theta^k\Gamma(k)">\theta^k\Gamma(k)</span>。分母で割れば全体が1になります。以下の図では、<span class="inline-math" data-tex="k">k</span> と <span class="inline-math" data-tex="\theta">\theta</span> の一方を固定して他方を動かせます。</p>
 <div class="slider-bar slider-pair"><label for="gamma-shape">形状 k <output for="gamma-shape">2.00</output><input type="range" id="gamma-shape" min="1" max="6" value="2" step="0.05"></label><label for="gamma-scale">尺度 θ <output for="gamma-scale">1.00</output><input type="range" id="gamma-scale" min="0.5" max="2" value="1" step="0.05"></label></div>
-<figure class="geometry-lab" id="gamma-lab"><svg data-plot-0 viewBox="0 0 360 210" role="img" aria-label="ガンマ分布の密度"></svg><svg data-plot-1 viewBox="0 0 360 185" role="img" aria-label="フィッシャー計量で描いたガンマ分布の座標基底"></svg><figcaption>上は密度を x = 0 から 20 まで表示。下はフィッシャー計量で測った基底です。青の実線が形状、金の破線が尺度を増やす向きです。矢印の長さの比と角度が計量に対応します。</figcaption><p class="reading" data-values></p></figure>
+<figure class="geometry-lab" id="gamma-lab"><svg data-plot-0 viewBox="0 0 360 210" role="img" aria-label="ガンマ分布。横軸は観測値 x、縦軸は密度 p_{k,θ}(x)"></svg><svg data-plot-1 viewBox="0 0 360 185" role="img" aria-label="フィッシャー計量で描いたガンマ分布の座標基底"></svg><figcaption>上は密度を x = 0 から 20 まで表示。下はフィッシャー計量で測った基底です。青の実線が形状、金の破線が尺度を増やす向きです。矢印の長さの比と角度が計量に対応します。</figcaption><p class="reading" data-values></p></figure>
 </section>
 <section id="gamma-tangent"><h2>2. 形状と尺度を動かす</h2>
 <p><span class="inline-math" data-tex="P=P_{k,\theta}">P=P_{k,\theta}</span> で、曲線 <span class="inline-math" data-tex="s\mapsto P_{k+as,\theta+bs}">s\mapsto P_{k+as,\theta+bs}</span> の初速度は</p>

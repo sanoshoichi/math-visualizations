@@ -122,7 +122,7 @@
       label(profile, 23, y(value) + 4, value);
     }
     label(profile, 309, 169, 'x');
-    label(profile, 22, 18, '密度');
+    label(profile, 87, 18, 'pμ,σ(x)（密度）');
 
     function densityPath(mean, deviation) {
       return Array.from({length: 161}, (_, i) => {
@@ -132,7 +132,6 @@
         return [x(value), y(density)];
       });
     }
-    label(profile, 164, 12, '実線: 選んだ分布');
     line(profile, densityPath(0, 1), muted, 1.5, '5 4');
     line(profile, densityPath(mu, sigma), blue, 2.5);
   }

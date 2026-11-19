@@ -49,8 +49,8 @@
     update();
   }
 
-  function bars(svg, probabilities, height) {
-    const bottom = height - 30, top = 25;
+  function bars(svg, probabilities, height, horizontalLabel, parameters) {
+    const bottom = height - 46, top = 28;
     const step = 283 / probabilities.length;
     const y = probability => bottom - probability * (bottom - top);
     line(svg, [[42, bottom], [336, bottom]]);
@@ -59,7 +59,9 @@
       line(svg, [[38, y(tick)], [42, y(tick)]]);
       text(svg, 32, y(tick) + 4, tick, 'end');
     }
-    text(svg, 32, 13, '確率');
+    text(svg, 42, 15, 'P(X=j)（確率）', 'start');
+    text(svg, 335, 15, parameters, 'end');
+    text(svg, 190, height - 8, horizontalLabel);
     probabilities.forEach((p, i) => {
       const x = 46 + step * (i + .5);
       const width = Math.min(step * .68, 43);
@@ -72,7 +74,7 @@
   const binomial = p => [(1-p)**2, 2*p*(1-p), p*p];
   figures('binomial', ([histogram], [p]) => {
     const probs = binomial(p);
-    bars(histogram, probs, 190);
+    bars(histogram, probs, 190, 'j（成功回数）', 'n = 2（試行回数）');
     return '確率 (0回, 1回, 2回) ' + tuple(probs);
   });
 
@@ -116,7 +118,7 @@
   figures('poisson', ([svg], [lambda]) => {
     const probabilities = [Math.exp(-lambda)];
     for (let j=1; j<=18; j++) probabilities.push(probabilities[j-1]*lambda/j);
-    bars(svg, probabilities, 195);
+    bars(svg, probabilities, 195, 'j（観測した回数）', 'λ = ' + number(lambda, 2));
     const tail=1-probabilities.reduce((sum, p) => sum+p, 0);
     return '19回以上の確率 ' + Math.max(0,tail).toExponential(3) +
       '　∂/∂λ の長さ ' + number(1/Math.sqrt(lambda)) + '　計量の成分 gλλ = ' + number(1/lambda);
@@ -144,8 +146,8 @@
     const at=(x,y) => [43+13.8*x, 172-70*y];
     line(density, [at(0,0), at(20,0)]);
     line(density, [at(0,0), at(0,2.1)]);
-    text(density, 327, 193, 'x');
-    text(density, 24, 17, '密度');
+    text(density, 179, 207, 'x（観測値）');
+    text(density, 43, 16, 'pₖ,θ(x)（密度）', 'start');
     for (const x of [0,5,10,15,20]) text(density, at(x,0)[0], 193, x);
     for (const y of [1,2]) text(density, 30, at(0,y)[1]+4, y, 'end');
     line(density, Array.from({length: 251}, (_, i) => {
