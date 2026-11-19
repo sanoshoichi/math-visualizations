@@ -70,13 +70,18 @@
   }
 
   const binomial = p => [(1-p)**2, 2*p*(1-p), p*p];
-  figures('binomial', ([histogram, simplex], [p]) => {
+  figures('binomial', ([histogram], [p]) => {
     const probs = binomial(p);
     bars(histogram, probs, 190);
+    return '確率 (0回, 1回, 2回) ' + tuple(probs);
+  });
+
+  figures('simplex-binomial', ([simplex], [p]) => {
+    const probs = binomial(p);
     const at = ([a, b]) => [85 + 180*a, 173 - 143*b];
     line(simplex, [[0,0], [1,0], [0,1], [0,0]].map(at));
-    text(simplex, 288, 184, 'P(X=0)');
-    text(simplex, 78, 19, 'P(X=1)');
+    text(simplex, 288, 184, 'P(A₁)');
+    text(simplex, 78, 19, 'P(A₂)');
     text(simplex, 77, 190, '0');
     text(simplex, 265, 194, '1');
     text(simplex, 74, 34, '1');

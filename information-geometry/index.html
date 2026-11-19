@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="geometry-labs.css?v=explain-figures">
 <link rel="stylesheet" href="information-tabs.css?v=chapter-order">
 <script defer src="information-tabs.js?v=chapter-order"></script>
-<script defer src="distribution-labs.js"></script>
+<script defer src="distribution-labs.js?v=binomial-scope"></script>
 <script defer src="information-examples.js"></script>
 <script defer src="basis.js?v=coordinate-notation"></script>
 <script defer src="geometry-labs.js?v=coordinate-notation"></script>
@@ -71,13 +71,18 @@
     <div class="equation" data-tex="\begin{aligned}\pi&amp;:M\to(0,1),&amp;\pi(P)&amp;=P(\mathrm H),\\ \pi^{-1}&amp;:(0,1)\to M,&amp;\pi^{-1}(r)&amp;=P_r.\end{aligned}">π(P) = P(H), π⁻¹(r) = Pᵣ.</div>
     <p>この写像を大域座標とする一次元の滑らかな構造を <span class="inline-math" data-tex="M">M</span> に入れます。<span class="inline-math" data-tex="P_r\in M">Pᵣ ∈ M</span> が多様体上の点で、<span class="inline-math" data-tex="\pi(P_r)=r">π(Pᵣ) = r</span> がその点の座標値です。</p>
 <p>この座標で「滑らか」の意味も決まります。分布の関数 <span class="inline-math" data-tex="f:M\to\mathbb R">f:M\to\mathbb R</span> が滑らかであるとは、実数の関数 <span class="inline-math" data-tex="r\mapsto f(\pi^{-1}(r))=f(P_r)">r\mapsto f(\pi^{-1}(r))=f(P_r)</span> が開区間 <span class="inline-math" data-tex="(0,1)">(0,1)</span> で何度でも微分できることです。次節では、分布を通る曲線に沿って、この関数を一度微分します。</p>
-  <h3 id="binomial">二項分布を三角形に重ねる</h3>
+  <h3 id="binomial">成功回数を記録する二項分布</h3>
 
 <p>ベルヌーイ分布では試行は1回でした。同じ成功確率 <span class="inline-math" data-tex="p\in(0,1)">p\in(0,1)</span> で独立に <span class="inline-math" data-tex="n">n</span> 回試行し、成功の回数 <span class="inline-math" data-tex="X">X</span> だけを記録します。<span class="inline-math" data-tex="n">n</span> は固定します。<span class="inline-math" data-tex="X=j">X=j</span> となる並びは <span class="inline-math" data-tex="\binom nj">\binom nj</span> 通りで、どの並びも確率 <span class="inline-math" data-tex="p^j(1-p)^{n-j}">p^j(1-p)^{n-j}</span> を持つので、分布 <span class="inline-math" data-tex="P_p=\mathrm{Bin}(n,p)">P_p=\mathrm{Bin}(n,p)</span> は</p>
 <div class="equation" data-tex="P_p(X=j)=\binom nj p^j(1-p)^{n-j},\qquad j=0,\ldots,n.">P_p(X=j)=\binom nj p^j(1-p)^{n-j},\qquad j=0,\ldots,n.</div>
-<p><span class="inline-math" data-tex="n=2">n=2</span> なら、結果 <span class="inline-math" data-tex="0,1,2">0,1,2</span> を3カテゴリの <span class="inline-math" data-tex="A_1,A_2,A_3">A_1,A_2,A_3</span> にそれぞれ対応させられます。確率の組は <span class="inline-math" data-tex="((1-p)^2,\,2p(1-p),\,p^2)">((1-p)^2,\,2p(1-p),\,p^2)</span> です。三角形では、この組の最初の二つを横軸と縦軸に取ります。<span class="inline-math" data-tex="p">p</span> を変えると図の曲線を動きます。<a href="#three-outcome-distributions">3カテゴリで三角形全体を見る</a></p>
+<p><span class="inline-math" data-tex="n">n</span> を固定した分布の族を <span class="inline-math" data-tex="\mathcal B_n=\{P_p:0&lt;p&lt;1\}">\mathcal B_n=\{P_p:0&lt;p&lt;1\}</span> とします。たとえば <span class="inline-math" data-tex="P_p(X=n)=p^n">P_p(X=n)=p^n</span> から <span class="inline-math" data-tex="p">p</span> を復元できるので、成功確率 <span class="inline-math" data-tex="p">p</span> がこの族の一次元の座標になります。<span class="inline-math" data-tex="n=1">n=1</span> がベルヌーイ分布です。下の図は <span class="inline-math" data-tex="n=2">n=2</span> に固定した例で、棒は順に0回・1回・2回成功する確率です。</p>
+<div class="equation" data-tex="\bigl(P_p(X=0),P_p(X=1),P_p(X=2)\bigr)=\bigl((1-p)^2,2p(1-p),p^2\bigr).">\bigl(P_p(X=0),P_p(X=1),P_p(X=2)\bigr)=\bigl((1-p)^2,2p(1-p),p^2\bigr).</div>
 <div class="slider-bar"><label for="binomial-p">成功確率 p <output for="binomial-p">0.35</output><input type="range" id="binomial-p" min="0.02" max="0.98" value="0.35" step="0.01"></label></div>
-<figure class="geometry-lab" id="binomial-lab"><svg data-plot-0 viewBox="0 0 360 190" role="img" aria-label="3つの確率を棒で表示"></svg><svg data-plot-1 viewBox="0 0 360 205" role="img" aria-label="確率三角形に二項分布の曲線と接線を重ねた図"></svg><figcaption>上は0・1・2回成功する確率。下は同じ分布を三角形の青い点で表した図です。金色の矢印は成功確率を増やす向きで、紙面上では縮小してあります。</figcaption><p class="reading" data-values></p></figure>
+<figure class="geometry-lab" id="binomial-lab">
+<svg data-plot-0 viewBox="0 0 360 190" role="img" aria-label="二項分布で0回・1回・2回成功する確率"></svg>
+<figcaption>横軸は成功回数、縦軸はその回数になる確率です。つまみを動かすと、同じ成功確率 p から3本の棒が決まります。</figcaption>
+<p class="reading" data-values></p>
+</figure>
 
 </section>
 <section id="tangent-vector">
@@ -99,12 +104,18 @@
 <figcaption>曲線の速度に関数を渡すと、出発点での変化率が返る</figcaption>
 <div class="explain-row"><div class="explain-box "><span>出発点を通る曲線</span><strong><span class="inline-math" data-tex="\gamma(s)=P_{r+as}">γ(s) = Pᵣ₊ₐₛ</span></strong></div><div class="explain-arrow"><span>各点で表の確率を読む</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box blue"><span>実数値の関数</span><strong><span class="inline-math" data-tex="\pi(\gamma(s))=r+as">π(γ(s)) = r + as</span></strong></div><div class="explain-arrow"><span>s = 0 で微分</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box gold"><span>接ベクトルの作用</span><strong><span class="inline-math" data-tex="W(\pi)=a">W(π) = a</span></strong></div></div>
 </figure>
-  <h3>二項モデルを三角形に入れたときの速度</h3>
-
-<p>3カテゴリ側で <span class="inline-math" data-tex="\rho_1(P)=P(X=0)">\rho_1(P)=P(X=0)</span>、<span class="inline-math" data-tex="\rho_2(P)=P(X=1)">\rho_2(P)=P(X=1)</span> とします。二項モデルの点を三角形に入れる写像を <span class="inline-math" data-tex="\iota">\iota</span> と書きます。<span class="inline-math" data-tex="p">p</span> を速さ1で増やしたときの速度を三角形の基底で書くには、<span class="inline-math" data-tex="\rho_1,\rho_2">\rho_1,\rho_2</span> の変化率を計算します。</p>
-<div class="equation" data-tex="\begin{aligned}\frac{\mathrm d}{\mathrm dp}(1-p)^2&amp;=-2(1-p),\\\frac{\mathrm d}{\mathrm dp}[2p(1-p)]&amp;=2(1-2p).\end{aligned}">\begin{aligned}\frac{\mathrm d}{\mathrm dp}(1-p)^2&amp;=-2(1-p),\\\frac{\mathrm d}{\mathrm dp}[2p(1-p)]&amp;=2(1-2p).\end{aligned}</div>
-<div class="equation" data-tex="\begin{aligned}\mathrm d\iota_{P_p}\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)&amp;=-2(1-p)\left.\frac{\partial}{\partial\rho_1}\right|_{\iota(P_p)}\\&amp;\quad+2(1-2p)\left.\frac{\partial}{\partial\rho_2}\right|_{\iota(P_p)}.\end{aligned}">\begin{aligned}\mathrm d\iota_{P_p}\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)&amp;=-2(1-p)\left.\frac{\partial}{\partial\rho_1}\right|_{\iota(P_p)}\\&amp;\quad+2(1-2p)\left.\frac{\partial}{\partial\rho_2}\right|_{\iota(P_p)}.\end{aligned}</div>
-<p>二項モデルではこの1本の方向と、その実数倍が接空間を作ります。三角形のモデルでは2本の座標基底の係数を独立に選べます。</p>
+<h3>二項分布の接ベクトル</h3>
+<p>二項分布でも、曲線 <span class="inline-math" data-tex="s\mapsto P_{p+as}">s\mapsto P_{p+as}</span> に沿って成功確率を動かすと、初速度は <span class="inline-math" data-tex="a\left.\frac{\partial}{\partial p}\right|_{P_p}">a\left.\frac{\partial}{\partial p}\right|_{P_p}</span> です。<span class="inline-math" data-tex="b_j(P)=P(X=j)">b_j(P)=P(X=j)</span> という関数に作用させると、成功回数が <span class="inline-math" data-tex="j">j</span> になる確率の変化率が得られます。第1章の <span class="inline-math" data-tex="n=2">n=2</span> の例では、</p>
+<div class="equation" data-tex="\begin{aligned}
+\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)(b_0)&amp;=-2(1-p),\\
+\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)(b_1)&amp;=2(1-2p),\\
+\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)(b_2)&amp;=2p.
+\end{aligned}">\begin{aligned}
+\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)(b_0)&amp;=-2(1-p),\\
+\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)(b_1)&amp;=2(1-2p),\\
+\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)(b_2)&amp;=2p.
+\end{aligned}</div>
+<p><span class="inline-math" data-tex="a">a</span> を掛ければ曲線に沿った速度になります。たとえば <span class="inline-math" data-tex="p=0.35">p=0.35</span> で <span class="inline-math" data-tex="a=1">a=1</span> なら、三つの確率の変化率は <span class="inline-math" data-tex="(-1.30,0.60,0.70)">(-1.30,0.60,0.70)</span>。すべて一つの <span class="inline-math" data-tex="p">p</span> の変化から決まり、足すと0です。</p>
 <div id="coordinates">
     <h3>ベルヌーイ分布をもう一つの座標で読む</h3>
     <p>表と裏の確率の差を返す写像 <span class="inline-math" data-tex="\eta">η</span> を座標に取ります。</p>
@@ -556,6 +567,21 @@
 <p>図では <span class="inline-math" data-tex="D_{\rm KL}(Q\Vert P)">D_{\rm KL}(Q\Vert P)</span> と、右辺の二つの値を表示します。たとえば初期値 <span class="inline-math" data-tex="r=0.45">r=0.45</span> なら <span class="inline-math" data-tex="Q_*=(0.45,0.20625,0.34375)">Q_*=(0.45,0.20625,0.34375)</span> です。制約を動かすつまみと、同じ制約内で候補 <span class="inline-math" data-tex="Q">Q</span> を動かすつまみを分けています。</p>
 <p>三角形の例では、<span class="inline-math" data-tex="Q_*(A_2)/P(A_2)=Q_*(A_3)/P(A_3)=(1-r)/0.80">Q_*(A_2)/P(A_2)=Q_*(A_3)/P(A_3)=(1-r)/0.80</span> でした。この二つの対数比が等しいため、第2事象の確率を増やして第3事象の確率を同じだけ減らす方向では、一階微分が打ち消し合います。図で <span class="inline-math" data-tex="Q">Q</span> を動かしても、<span class="inline-math" data-tex="D_{\rm KL}(Q_*\Vert P)">D_{\rm KL}(Q_*\Vert P)</span> は同じ値のままです。</p>
 <p><a href="#general-kl-projection">KLのピタゴラスの等式が成り立つ一般の条件</a></p></section>
+<section id="categorical-binomial"><h2>9. 比較 · 三角形に二項分布を重ねる</h2>
+<p>3カテゴリ分布の中で、結果 <span class="inline-math" data-tex="A_1,A_2,A_3">A_1,A_2,A_3</span> を2回の試行の成功回数 <span class="inline-math" data-tex="0,1,2">0,1,2</span> に対応させ、各回の成功確率が共通の <span class="inline-math" data-tex="p">p</span> で独立だとします。この条件を加えた分布は <span class="inline-math" data-tex="\mathrm{Bin}(2,p)">\mathrm{Bin}(2,p)</span> です。三角形の横・縦の座標は最初の二つの確率なので、点は <span class="inline-math" data-tex="((1-p)^2,2p(1-p))">((1-p)^2,2p(1-p))</span> の曲線をたどります。 <a href="#binomial">二項分布の定義と確率の棒グラフ</a></p>
+<div class="slider-bar"><label for="simplex-binomial-p">成功確率 p <output for="simplex-binomial-p">0.35</output><input type="range" id="simplex-binomial-p" min="0.02" max="0.98" value="0.35" step="0.01"></label></div>
+<figure class="geometry-lab" id="simplex-binomial-lab">
+<svg data-plot-0 viewBox="0 0 360 205" role="img" aria-label="3カテゴリの三角形に二項分布の曲線と接線を重ねた図"></svg>
+<figcaption>青い線が二項分布でたどれる経路、青い点が選んだ分布です。金色の矢印は p を増やす向きの接ベクトルを縮小して描いたものです。</figcaption>
+<p class="reading" data-values></p>
+</figure>
+<h3>曲線の接ベクトルを三角形の基底で読む</h3>
+
+<p>対応に従うと <span class="inline-math" data-tex="\rho_1(P)=P(X=0)">\rho_1(P)=P(X=0)</span>、<span class="inline-math" data-tex="\rho_2(P)=P(X=1)">\rho_2(P)=P(X=1)</span> とします。二項モデルの点を三角形に入れる写像を <span class="inline-math" data-tex="\iota">\iota</span> と書きます。<span class="inline-math" data-tex="p">p</span> を速さ1で増やしたときの速度を三角形の基底で書くには、<span class="inline-math" data-tex="\rho_1,\rho_2">\rho_1,\rho_2</span> の変化率を計算します。</p>
+<div class="equation" data-tex="\begin{aligned}\frac{\mathrm d}{\mathrm dp}(1-p)^2&amp;=-2(1-p),\\\frac{\mathrm d}{\mathrm dp}[2p(1-p)]&amp;=2(1-2p).\end{aligned}">\begin{aligned}\frac{\mathrm d}{\mathrm dp}(1-p)^2&amp;=-2(1-p),\\\frac{\mathrm d}{\mathrm dp}[2p(1-p)]&amp;=2(1-2p).\end{aligned}</div>
+<div class="equation" data-tex="\begin{aligned}\mathrm d\iota_{P_p}\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)&amp;=-2(1-p)\left.\frac{\partial}{\partial\rho_1}\right|_{\iota(P_p)}\\&amp;\quad+2(1-2p)\left.\frac{\partial}{\partial\rho_2}\right|_{\iota(P_p)}.\end{aligned}">\begin{aligned}\mathrm d\iota_{P_p}\left(\left.\frac{\partial}{\partial p}\right|_{P_p}\right)&amp;=-2(1-p)\left.\frac{\partial}{\partial\rho_1}\right|_{\iota(P_p)}\\&amp;\quad+2(1-2p)\left.\frac{\partial}{\partial\rho_2}\right|_{\iota(P_p)}.\end{aligned}</div>
+<p>二項モデルではこの1本の方向と、その実数倍が接空間を作ります。三角形のモデルでは2本の座標基底の係数を独立に選べます。</p>
+</section>
 </div>
 <div id="four-course" class="information-course" role="tabpanel" aria-labelledby="four-tab" tabindex="0">
 <section id="four-categories"><h2>1. 4カテゴリ分布と四面体</h2>
