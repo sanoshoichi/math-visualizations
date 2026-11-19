@@ -25,7 +25,7 @@
     #coin-tangent-coordinates .coin-figure { max-height:none; }
     #coin-tangent-coordinates .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
   </style>
-<link rel="stylesheet" href="geometry-labs.css?v=math-arrows">
+<link rel="stylesheet" href="geometry-labs.css?v=explain-figures">
 <script defer src="basis.js?v=coordinate-notation"></script>
 <script defer src="geometry-labs.js?v=coordinate-notation"></script>
 </head>
@@ -60,6 +60,10 @@
     <div class="equation" data-tex="M=\{P:\Omega\to(0,1)\mid P(\mathrm H)+P(\mathrm T)=1\}.">M = {P : Ω → (0,1) | P(H) + P(T) = 1}.</div>
     <p>各 <span class="inline-math" data-tex="r\in(0,1)">r ∈ (0,1)</span> に対して、<span class="inline-math" data-tex="P_r\in M">Pᵣ ∈ M</span> を次で定義します。</p>
     <div class="equation" data-tex="P_r(\mathrm H)=r,\qquad P_r(\mathrm T)=1-r.">Pᵣ(H) = r, Pᵣ(T) = 1 − r.</div>
+<figure class="explain-figure">
+<figcaption>1つの分布が、両方の結果に確率を割り当てる</figcaption>
+<div class="explain-row"><div class="explain-box "><span>多様体上の点</span><strong><span class="inline-math" data-tex="P_{0.20}\in M">P₀.₂₀ ∈ M</span></strong></div><div class="explain-arrow"><span>結果を入れる</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-stack"><div class="explain-box blue"><span>表 <span class="inline-math" data-tex="\mathrm H">H</span></span><strong><span class="inline-math" data-tex="P_{0.20}(\mathrm H)=0.20">P₀.₂₀(H) = 0.20</span></strong></div><div class="explain-box gold"><span>裏 <span class="inline-math" data-tex="\mathrm T">T</span></span><strong><span class="inline-math" data-tex="P_{0.20}(\mathrm T)=0.80">P₀.₂₀(T) = 0.80</span></strong></div></div></div>
+</figure>
     <p>表の確率を返す写像 <span class="inline-math" data-tex="\pi">π</span> を座標に取ります。表の確率を一つ決めると裏の確率も決まるので、この写像は全単射です。</p>
     <div class="equation" data-tex="\begin{aligned}\pi&amp;:M\to(0,1),&amp;\pi(P)&amp;=P(\mathrm H),\\ \pi^{-1}&amp;:(0,1)\to M,&amp;\pi^{-1}(r)&amp;=P_r.\end{aligned}">π(P) = P(H), π⁻¹(r) = Pᵣ.</div>
     <p>この写像を大域座標とする一次元の滑らかな構造を <span class="inline-math" data-tex="M">M</span> に入れます。<span class="inline-math" data-tex="P_r\in M">Pᵣ ∈ M</span> が多様体上の点で、<span class="inline-math" data-tex="\pi(P_r)=r">π(Pᵣ) = r</span> がその点の座標値です。</p>
@@ -71,6 +75,10 @@
     <div class="equation" data-tex="\gamma(s)=P_{r+as}\in M,\qquad \gamma(0)=P_r.">γ(s) = Pᵣ₊ₐₛ ∈ M, γ(0) = Pᵣ.</div>
     <p>その点での接ベクトル <span class="inline-math" data-tex="W=\dot\gamma(0)\in T_{P_r}M">W ∈ T_(Pᵣ)M</span> は、滑らかな関数 <span class="inline-math" data-tex="f:M\to\mathbb R">f : M → ℝ</span> に作用して、曲線に沿った変化率を返します。</p>
     <div class="equation" data-tex="\begin{aligned}W(f)=(\dot\gamma(0))(f)&amp;=\left.\frac{\mathrm d}{\mathrm ds}f(\gamma(s))\right|_{s=0}\\&amp;=\left.\frac{\mathrm d}{\mathrm ds}(f\circ\pi^{-1})(r+as)\right|_{s=0}\\&amp;=a\,(f\circ\pi^{-1})'(r).\end{aligned}">W(f) = a(f ∘ π⁻¹)′(r).</div>
+<figure class="explain-figure">
+<figcaption>曲線の速度に関数を渡すと、出発点での変化率が返る</figcaption>
+<div class="explain-row"><div class="explain-box "><span>出発点を通る曲線</span><strong><span class="inline-math" data-tex="\gamma(s)=P_{r+as}">γ(s) = Pᵣ₊ₐₛ</span></strong></div><div class="explain-arrow"><span>各点で表の確率を読む</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box blue"><span>実数値の関数</span><strong><span class="inline-math" data-tex="\pi(\gamma(s))=r+as">π(γ(s)) = r + as</span></strong></div><div class="explain-arrow"><span>s = 0 で微分</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box gold"><span>接ベクトルの作用</span><strong><span class="inline-math" data-tex="W(\pi)=a">W(π) = a</span></strong></div></div>
+</figure>
     <p>最後の等号は連鎖律です。<span class="inline-math" data-tex="(f\circ\pi^{-1})'(r)"> (f ∘ π⁻¹)′(r)</span> は座標基底を <span class="inline-math" data-tex="f">f</span> に作用させた値なので、</p>
     <div class="equation" data-tex="W=a\left.\frac{\partial}{\partial\pi}\right|_{P_r}\in T_{P_r}M.">W = a (∂/∂π)|ᵣ ∈ T_(Pᵣ)M.</div>
     <p>表の確率を返す関数 <span class="inline-math" data-tex="\pi">π</span> と裏の確率を返す関数 <span class="inline-math" data-tex="1-\pi">1 − π</span> を入れると、表の変化率と裏の変化率がそれぞれ得られます。</p>
@@ -84,6 +92,21 @@
     <p>すべての <span class="inline-math" data-tex="P\in M">P ∈ M</span> で確率の和が <span class="inline-math" data-tex="1">1</span> なので、座標変換とその逆は</p>
     <div class="equation" data-tex="\begin{aligned}(\eta\circ\pi^{-1})(r)&amp;=2r-1,\\ (\pi\circ\eta^{-1})(u)&amp;=\frac{u+1}{2},\qquad u\in(-1,1).\end{aligned}">η ∘ π⁻¹(r) = 2r − 1, π ∘ η⁻¹(u) = (u + 1)/2.</div>
     <p>たとえば、同じ分布 <span class="inline-math" data-tex="P_{0.2}\in M">P₀.₂ ∈ M</span> の座標値は、表の確率で <span class="inline-math" data-tex="0.2">0.2</span>、表と裏の確率の差では <span class="inline-math" data-tex="-0.6">−0.6</span> です。</p>
+<figure class="explain-figure">
+<figcaption>分布 <span class="inline-math" data-tex="P_{0.20}">P₀.₂₀</span> を2通りの座標で読む。同じ目盛りで位置を比べる</figcaption>
+<div class="explain-scale">
+      <span>表の確率 <span class="inline-math" data-tex="\pi">π</span></span>
+      <div class="explain-track" style="--track-start:50%;--marker:60%">
+        <span class="explain-tick" style="left:0%">−1</span><span class="explain-tick" style="left:50%">0</span><span class="explain-tick" style="left:100%">1</span>
+        <span class="explain-marker" aria-hidden="true"></span><strong class="explain-scale-value">0.20</strong>
+      </div></div>
+<div class="explain-scale">
+      <span>表と裏の差 <span class="inline-math" data-tex="\eta">η</span></span>
+      <div class="explain-track" style="--track-start:0%;--marker:20%">
+        <span class="explain-tick" style="left:0%">−1</span><span class="explain-tick" style="left:50%">0</span><span class="explain-tick" style="left:100%">1</span>
+        <span class="explain-marker" aria-hidden="true"></span><strong class="explain-scale-value">−0.60</strong>
+      </div></div>
+</figure>
   </section>
 
   <section id="coordinate-components">
@@ -101,6 +124,11 @@
     <div class="equation" data-tex="\begin{aligned}\pi(\gamma(s))&amp;=r+as,\\ \eta(\gamma(s))&amp;=2(r+as)-1.\end{aligned}">π(γ(s)) = r + as, η(γ(s)) = 2(r + as) − 1.</div>
     <p>図の矢印に表示する数は、曲線に沿って座標を読んでから、出発点 <span class="inline-math" data-tex="s=0">s = 0</span> で微分した値です。下の計算にスライダーの値が入ります。</p>
     <div class="equation" data-tex="\begin{aligned}W&amp;=a\left.\frac{\partial}{\partial\pi}\right|_{P_r}\\&amp;=2a\left.\frac{\partial}{\partial\eta}\right|_{P_r}\quad\in T_{P_r}M.\end{aligned}">W = a (∂/∂π)|ᵣ = 2a (∂/∂η)|ᵣ ∈ T_(Pᵣ)M.</div>
+<figure class="explain-figure">
+<figcaption>同じ曲線を読む関数を変えると、速度の成分が変わる</figcaption>
+<div class="explain-row"><div class="explain-box blue"><span>表の確率</span><strong><span class="inline-math" data-tex="\pi(\gamma(s))=r+as">π(γ(s)) = r + as</span></strong></div><div class="explain-arrow"><span>s = 0 での微分</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box blue"><span>表の確率で読んだ速度</span><strong><span class="inline-math" data-tex="W(\pi)=a">W(π) = a</span></strong></div></div>
+<div class="explain-row"><div class="explain-box gold"><span>表と裏の差</span><strong><span class="inline-math" data-tex="\eta(\gamma(s))=2(r+as)-1">η(γ(s)) = 2(r + as) − 1</span></strong></div><div class="explain-arrow"><span>s = 0 での微分</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box gold"><span>差で読んだ速度</span><strong><span class="inline-math" data-tex="W(\eta)=2a">W(η) = 2a</span></strong></div></div>
+</figure>
     <p>図の数直線は、<span class="inline-math" data-tex="0">0</span> と <span class="inline-math" data-tex="1">1</span> がそれぞれ同じ横位置に来るように揃えています。点は分布の座標値、矢印の向きと横幅は接ベクトルの成分を表します。</p>
     <div id="coin-tangent-coordinates">
 
@@ -146,6 +174,11 @@
     <p>左の <span class="inline-math" data-tex="\rho_i(P)">ρᵢ(P)</span> では確率を読む関数に分布を入れ、右の <span class="inline-math" data-tex="P(A_i)">P(Aᵢ)</span> では分布に事象を入れます。返る数は同じです。図では、その数を軸に載せるために <span class="inline-math" data-tex="x^i">xⁱ</span> と書きます。</p>
     <div class="equation" data-tex="x^i=\rho_i(P)=P(A_i),\quad\text{例として}\quad x^1=\rho_1(P)=P(A_1)=0.20.">x^i=\rho_i(P)=P(A_i),\quad\text{例として}\quad x^1=\rho_1(P)=P(A_1)=0.20.</div>
     <p><span class="inline-math" data-tex="(x^1,x^2)">(x¹, x²)</span> で分布の位置が決まり、3つ目の値は <span class="inline-math" data-tex="x^3=1-x^1-x^2">x³ = 1 − x¹ − x²</span> と決まります。2次元表示で塗られた三角形の内部が、座標写像 <span class="inline-math" data-tex="\phi=(\rho_1,\rho_2)">φ = (ρ₁, ρ₂)</span> の像です。</p>
+<figure class="explain-figure">
+<figcaption>3つの確率の合計は1。初期状態では最初の2つを決めると残りが決まる</figcaption>
+<div class="explain-probability" aria-label="A1 が 0.20、A2 が 0.30、A3 が 0.50"><div>A₁<br>0.20</div><div>A₂<br>0.30</div><div>A₃<br>0.50</div></div>
+<div class="explain-row"><div class="explain-box blue"><span>図の横と縦で指定</span><strong><span class="inline-math" data-tex="x^1=0.20,\ x^2=0.30">x¹ = 0.20, x² = 0.30</span></strong></div><div class="explain-arrow"><span>残りを計算</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box gold"><span>3つ目の確率</span><strong><span class="inline-math" data-tex="x^3=1-0.20-0.30=0.50">x³ = 1 − 0.20 − 0.30 = 0.50</span></strong></div></div>
+</figure>
     <div class="equation" data-tex="\phi(M_3)=\{(x^1,x^2)\in\mathbb R^2\mid x^1&gt;0,\ x^2&gt;0,\ x^1+x^2&lt;1\}.">\phi(M_3)=\{(x^1,x^2)\in\mathbb R^2\mid x^1&gt;0,\ x^2&gt;0,\ x^1+x^2&lt;1\}.</div>
     <p>辺や頂点では少なくとも1つの確率が0になります。図では境界の位置として描き、操作できる範囲は各確率が <span class="inline-math" data-tex="0.01">0.01</span> 以上の分布にしています。</p>
   </section>
@@ -209,6 +242,10 @@
 <p>接ベクトル <span class="inline-math" data-tex="W=\dot\gamma(0)">W=\dot\gamma(0)</span> に関数 <span class="inline-math" data-tex="\rho_i">\rho_i</span> を渡すと、事象 <span class="inline-math" data-tex="A_i">Aᵢ</span> の確率の変化率が得られます。<span class="inline-math" data-tex="W=ae_1+be_2">W=ae_1+be_2</span> と書いたとき、<span class="inline-math" data-tex="a,b">a,b</span> がそのまま初めの2つの変化率になります。</p>
 <div class="equation" data-tex="W(\rho_i)=\left.\frac{\mathrm d}{\mathrm ds}\rho_i(\gamma(s))\right|_{s=0},\qquad (W(\rho_1),W(\rho_2),W(\rho_3))=(a,b,-a-b).">W(\rho_i)=\left.\frac{\mathrm d}{\mathrm ds}\rho_i(\gamma(s))\right|_{s=0},\qquad (W(\rho_1),W(\rho_2),W(\rho_3))=(a,b,-a-b).</div>
 <p>最後の成分は <span class="inline-math" data-tex="\rho_3=1-\rho_1-\rho_2">\rho_3=1-\rho_1-\rho_2</span> を微分して得られます。</p>
+<figure class="explain-figure">
+<figcaption>各矢印が事象ごとにどれだけ確率を動かすか</figcaption>
+<table class="explain-table"><thead><tr><th scope="col">接ベクトル</th><th scope="col">A₁</th><th scope="col">A₂</th><th scope="col">A₃</th></tr></thead><tbody><tr><th scope="row" class="blue">━━ e₁</th><td>↑ +1</td><td>0</td><td>↓ −1</td></tr><tr><th scope="row" class="gold">┄┄ e₂</th><td>0</td><td>↑ +1</td><td>↓ −1</td></tr></tbody></table>
+</figure>
 </section>
 <section id="fisher-metric"><h2>7. 基底の長さとフィッシャー計量</h2>
 <div class="slider-bar">
@@ -222,6 +259,11 @@
 <p>実際に観測した結果に低い確率を付けたときに大きくなり、試行ごとに足せる量を作ります。そこで、この積に負の対数を取ります。対数は積を和に変え、マイナスを付けると、観測に与えた確率が低いほど損失が大きくなります。</p>
 <div class="equation" data-tex="-\log\!\bigl[Q(A_1)Q(A_2)\bigr]=-\log Q(A_1)-\log Q(A_2).">-\log\!\bigl[Q(A_1)Q(A_2)\bigr]=-\log Q(A_1)-\log Q(A_2).</div>
 <p>右辺の各項が、1回分の<strong>対数損失</strong>です。たとえば実際の事象に <span class="inline-math" data-tex="0.20">0.20</span> を割り当てた予測では約1.61、<span class="inline-math" data-tex="0.50">0.50</span> なら約0.69です。以下では自然対数を使います。</p>
+<figure class="explain-figure">
+<figcaption>予測が各回に 0.20 と 0.50 を割り当てた例</figcaption>
+<div class="explain-row explain-side"><div class="explain-box blue"><span>1回目 · A₁</span><strong><span class="inline-math" data-tex="Q(A_1)=0.20">Q(A₁) = 0.20</span></strong></div><div class="explain-box gold"><span>2回目 · A₂</span><strong><span class="inline-math" data-tex="Q(A_2)=0.50">Q(A₂) = 0.50</span></strong></div></div>
+<div class="explain-row"><div class="explain-box "><span>観測された並びの確率</span><strong><span class="inline-math" data-tex="0.20\times0.50=0.10">0.20 × 0.50 = 0.10</span></strong></div><div class="explain-arrow"><span>負の対数を取る</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box "><span>2回分の対数損失</span><strong><span class="inline-math" data-tex="1.61+0.69\approx2.30">1.61 + 0.69 ≈ 2.30</span></strong></div></div>
+</figure>
 <p>予測をずらす方向を <span class="inline-math" data-tex="U\in T_PM_3">U\in T_PM_3</span> とします。<span class="inline-math" data-tex="u_i=U(\rho_i)">u_i=U(\rho_i)</span> は事象 <span class="inline-math" data-tex="A_i">A_i</span> の確率の変化率です。これを使って、予測に使う分布 <span class="inline-math" data-tex="Q_s">Q_s</span> を次のように動かします。</p>
 <div class="equation" data-tex="Q_s(A_i)=P(A_i)+su_i,\qquad Q_0=P.">Q_s(A_i)=P(A_i)+su_i,\qquad Q_0=P.</div>
 <p>第6節で見たように <span class="inline-math" data-tex="\sum_i u_i=0">\sum_i u_i=0</span> なので、動かしても確率の和は1です。ここではすべての確率が正になるよう、<span class="inline-math" data-tex="s">s</span> を0の近くに取ります。</p>
@@ -236,6 +278,10 @@
 <p>さらにもう一度微分すると、対数確率の変化率の二乗を、実際に各事象が起きる確率で重みづけした式が残ります。</p>
 <div class="equation" data-tex="\begin{aligned}L^{\prime\prime}(0)&amp;=\sum_i P(A_i)\left(\frac{u_i}{P(A_i)}\right)^2\\&amp;=\sum_i\frac{u_i^2}{P(A_i)}.\end{aligned}">\begin{aligned}L^{\prime\prime}(0)&amp;=\sum_i P(A_i)\left(\frac{u_i}{P(A_i)}\right)^2\\&amp;=\sum_i\frac{u_i^2}{P(A_i)}.\end{aligned}</div>
 <p><span class="inline-math" data-tex="L(0)=0">L(0)=0</span> で、一階の変化も0なので、出発点の近くでは <span class="inline-math" data-tex="L(s)=\tfrac12 s^2L^{\prime\prime}(0)+O(s^3)">L(s)=\tfrac12 s^2L^{\prime\prime}(0)+O(s^3)</span> です。同じ小さな <span class="inline-math" data-tex="s">s</span> だけ動かしたとき、<span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> が大きい方向ほど平均損失が急に増えます。そこで、この値を方向 <span class="inline-math" data-tex="U">U</span> の長さの二乗 <span class="inline-math" data-tex="g_P(U,U)">g_P(U,U)</span> とします。</p>
+<figure class="explain-figure">
+<figcaption>予測に使う分布をずらしたとき、平均損失のどの項が効くか</figcaption>
+<table class="explain-table"><thead><tr><th scope="col">次数</th><th scope="col">値</th><th scope="col">出発点で分かること</th></tr></thead><tbody><tr><th scope="row">0次</th><td><span class="inline-math" data-tex="L(0)=0">L(0)=0</span></td><td>ずれがない</td></tr><tr><th scope="row">1次</th><td><span class="inline-math" data-tex="L&#x27;(0)=0">L′(0) = 0</span></td><td>確率の変化率が相殺される</td></tr><tr><th scope="row">2次</th><td><span class="inline-math" data-tex="L&#x27;&#x27;(0)=g_P(U,U)">L″(0) = gₚ(U,U)</span></td><td>最初に現れる損失の増加</td></tr></tbody></table>
+</figure>
 <h3>長さの二乗から、2本の内積へ</h3>
 <p>もう1本の接ベクトル <span class="inline-math" data-tex="V\in T_PM_3">V\in T_PM_3</span> を取り、<span class="inline-math" data-tex="v_i=V(\rho_i)">v_i=V(\rho_i)</span> とします。<span class="inline-math" data-tex="U+V">U+V</span> の長さの二乗を展開すると、各項に <span class="inline-math" data-tex="(u_i+v_i)^2=u_i^2+2u_iv_i+v_i^2">(u_i+v_i)^2=u_i^2+2u_iv_i+v_i^2</span> が現れます。<span class="inline-math" data-tex="U">U</span> と <span class="inline-math" data-tex="V">V</span> の長さの二乗をそれぞれ引き、2で割ると、2本の内積が得られます。</p>
 <div class="equation" data-tex="g_P(U,V)=\tfrac12\bigl[g_P(U+V,U+V)-g_P(U,U)-g_P(V,V)\bigr].">g_P(U,V)=\tfrac12\bigl[g_P(U+V,U+V)-g_P(U,U)-g_P(V,V)\bigr].</div>
@@ -265,6 +311,11 @@
 <div class="equation" data-tex="F(P)=2\bigl(\sqrt{P(A_1)},\sqrt{P(A_2)},\sqrt{P(A_3)}\bigr),\qquad \|F(P)\|^2=4.">F(P)=2\bigl(\sqrt{P(A_1)},\sqrt{P(A_2)},\sqrt{P(A_3)}\bigr),\qquad \|F(P)\|^2=4.</div>
 <p>半径2の球面のうち、3成分がすべて正の部分に分布が移ります。各成分を微分すると <span class="inline-math" data-tex="(\mathrm dF_P U)_i=u_i/\sqrt{P(A_i)}">(\mathrm dF_P U)_i=u_i/\sqrt{P(A_i)}</span> なので、球面での通常の内積が前節の <span class="inline-math" data-tex="g_P(U,V)">g_P(U,V)</span> と一致します。</p>
 <div class="equation" data-tex="\mathrm dF_P(U)\cdot\mathrm dF_P(V)=g_P(U,V).">\mathrm dF_P(U)\cdot\mathrm dF_P(V)=g_P(U,V).</div>
+<figure class="explain-figure">
+<figcaption>同じ点と速度を、確率三角形と球面で対応させる</figcaption>
+<div class="explain-row"><div class="explain-box "><span>分布の空間の点</span><strong><span class="inline-math" data-tex="P">P</span></strong></div><div class="explain-arrow"><span>平方根の写像</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box "><span>球面上の点</span><strong><span class="inline-math" data-tex="F(P)">F(P)</span></strong></div></div>
+<div class="explain-row"><div class="explain-box blue"><span>点 P での接ベクトル</span><strong><span class="inline-math" data-tex="U">U</span></strong></div><div class="explain-arrow"><span>写像を微分</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box gold"><span>点 F(P) での接ベクトル</span><strong><span class="inline-math" data-tex="\mathrm dF_P(U)">dFₚ(U)</span></strong></div></div>
+</figure>
 <p>出発点を <span class="inline-math" data-tex="P=(0.20,0.30,0.50)">P=(0.20,0.30,0.50)</span>、終点を <span class="inline-math" data-tex="Q=(0.78,0.02,0.20)">Q=(0.78,0.02,0.20)</span> とします。以下は分布を確率の組で表した記法です。球面上の最短経路は、球の中心と両端を通る平面で切った大円の短い弧です。</p>
 <figure class="geometry-lab" id="sphere-lab">
 <h3>分布の空間（確率座標）</h3>
@@ -295,6 +346,10 @@
 <svg data-plot viewBox="0 0 350 205" role="img" aria-label="確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。"></svg>
 <figcaption>確率座標で重ねた2本の測地線。実線・丸が m 接続、破線・四角が e 接続です。</figcaption><p class="reading" data-reading></p>
 </figure>
+<figure class="explain-figure">
+<figcaption>中間点をどの座標で作るかで、通る分布が変わる</figcaption>
+<div class="explain-row explain-side"><div class="explain-box blue"><span>m 接続 · 確率の算術平均</span><strong>(0.49, 0.16, 0.35)</strong></div><div class="explain-box gold"><span>e 接続 · 確率の幾何平均を正規化</span><strong>(0.50, 0.10, 0.40)</strong></div></div>
+</figure>
 <p>両端では分布が一致します。途中の <span class="inline-math" data-tex="t=1/2">t=1/2</span> では、混合接続は確率の算術平均、指数接続は幾何平均を正規化した分布を通ります。前節の大円弧は、フィッシャー計量のレヴィ＝チヴィタ接続に対応します。</p>
 </section>
 <section id="relative-entropy"><h2>10. KLダイバージェンスと計量の関係</h2>
@@ -314,6 +369,15 @@
 </figure>
 <p><span class="inline-math" data-tex="s=0">s=0</span> で値と一階微分がともにゼロです。二階微分には、第7節で求めた基底の長さの二乗が現れます。</p>
 <div class="equation" data-tex="D^{\prime\prime}(0)=\frac{1}{0.20}+\frac{1}{0.50}=g_P(e_1,e_1)=7,\qquad D(s)=\frac{7}{2}s^2+O(s^3).">D^{\prime\prime}(0)=\frac{1}{0.20}+\frac{1}{0.50}=g_P(e_1,e_1)=7,\qquad D(s)=\frac{7}{2}s^2+O(s^3).</div>
+<figure class="explain-figure">
+<figcaption>図の初期値 s = 0.10。事象ごとの寄与を足すと KL の値になる</figcaption>
+<div class="explain-row explain-side">
+  <div class="explain-box blue"><span>A₁ の確率が 0.20 → 0.30</span><strong>−0.08109 nat</strong></div>
+  <div class="explain-box gold"><span>A₃ の確率が 0.50 → 0.40</span><strong>+0.11157 nat</strong></div>
+</div>
+<div class="explain-arrow">↓　A₂ の寄与は 0</div>
+<div class="explain-box"><span>合計</span><strong>0.03048 nat</strong></div>
+</figure>
 <p>スライダーを0に近づけると2つの値が近づきます。離れた2点のKLは順序にも依存し、一般に <span class="inline-math" data-tex="D_{\rm KL}(P\Vert Q)\ne D_{\rm KL}(Q\Vert P)">D_{\rm KL}(P\Vert Q)\ne D_{\rm KL}(Q\Vert P)</span> です。</p>
 </section>
 <footer>参考文献　藤岡敦『入門 情報幾何』共立出版。 <a href="https://www.kyoritsu-pub.co.jp/bookdetail/9784320114456">書籍情報</a> · <a href="https://franknielsen.github.io/InvitationIG4ML-NeuripsMeetupJapan-14DEC2021.pdf">F. Nielsen の講義資料（フィッシャー・ラオ距離）</a></footer>

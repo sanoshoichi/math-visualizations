@@ -76,3 +76,99 @@
   .map-branches {grid-template-columns:1fr;}
   .map-branch svg[role="img"] {max-width:20rem;margin:auto;}
 }
+
+.explain-figure {
+  margin: 1rem 0 1.25rem;
+  padding: .75rem;
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  background: var(--wash);
+}
+.explain-figure > figcaption {
+  margin: 0 0 .55rem;
+  color: var(--ink);
+  font-weight: 650;
+}
+.explain-row {
+  display: flex;
+  align-items: stretch;
+  gap: .45rem;
+}
+.explain-row + .explain-row { margin-top: .45rem; }
+.explain-box, .explain-stack { flex: 1; min-width: 0; }
+.explain-stack { display: grid; gap: .35rem; }
+.explain-box {
+  display: grid;
+  align-content: center;
+  gap: .2rem;
+  padding: .4rem .55rem;
+  border: 1px solid var(--line);
+  border-radius: .35rem;
+  text-align: center;
+  background: var(--paper);
+}
+.explain-box > span { font-size: .81rem; color: var(--muted); }
+.explain-box strong { font-weight: 550; overflow-wrap: anywhere; }
+.explain-figure .blue { color: var(--blue); }
+.explain-figure .gold { color: var(--gold); }
+.explain-arrow {
+  align-self: center;
+  text-align: center;
+  color: var(--muted);
+  font-size: .75rem;
+  line-height: 1.35;
+}
+.explain-arrow .arrow-side, .explain-arrow .arrow-down {
+  color: var(--ink);
+  font-size: 1.25rem;
+  display: block;
+}
+.explain-arrow .arrow-down { display: none; }
+.explain-scale {
+  display: grid;
+  grid-template-columns: 5.8rem 1fr;
+  align-items: center;
+  gap: .45rem;
+  padding: .35rem .5rem;
+  font-size: .83rem;
+}
+.explain-track { position: relative; height: 2.8rem; }
+.explain-track::before {
+  content: "";
+  position: absolute;
+  top: 1.32rem;
+  left: var(--track-start);
+  right: 0;
+  border-top: 2px solid var(--muted);
+}
+.explain-marker, .explain-scale-value, .explain-tick {
+  position: absolute;
+  transform: translateX(-50%);
+}
+.explain-marker {
+  left: var(--marker);
+  top: 1.08rem;
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  background: var(--blue);
+}
+.explain-scale-value { left: var(--marker); top: -.125rem; color: var(--blue); }
+.explain-tick { top: 1.48rem; color: var(--muted); }
+.explain-probability { display: grid; grid-template-columns: 2fr 3fr 5fr; margin-bottom: .55rem; }
+.explain-probability div {
+  padding: .35rem .1rem;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--blue);
+  text-align: center;
+  font-size: .85rem;
+}
+.explain-probability div:last-child { border-top-color: var(--gold); }
+.explain-table { width: 100%; background: var(--paper); }
+.explain-table th, .explain-table td { padding: .35rem; text-align: center; }
+.explain-table tr > :first-child { text-align: left; }
+@media (max-width: 600px) {
+  .explain-row:not(.explain-side) { flex-direction: column; gap: .25rem; }
+  .explain-arrow .arrow-side { display: none; }
+  .explain-arrow .arrow-down { display: block; }
+}
