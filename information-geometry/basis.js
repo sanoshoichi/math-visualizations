@@ -79,7 +79,7 @@
         polygon(manifold, vertices);
         vertices.forEach(([x, y], i) => {
           const dx = x - origin[0], dy = y - origin[1], d = Math.hypot(dx, dy) || 1;
-          label(manifold, [x + 14 * dx / d, y + 13 * dy / d + 4], ['p₁','p₂','p₃'][i]);
+          label(manifold, [x + 14 * dx / d, y + 13 * dy / d + 4], ['x¹','x²','x³'][i]);
         });
         drawCurves(manifold, map, s, true);
       }
@@ -91,8 +91,8 @@
         polygon(coordinates, [O, X, Y]);
         line(coordinates, O, [X[0] + 16, X[1]]);
         line(coordinates, O, [Y[0], Y[1] - 7]);
-        label(coordinates, [X[0] + 24, X[1] + 4], 'p₁');
-        label(coordinates, [Y[0] - 15, Y[1] + 4], 'p₂');
+        label(coordinates, [X[0] + 24, X[1] + 4], 'x¹');
+        label(coordinates, [Y[0] - 15, Y[1] + 4], 'x²');
         label(coordinates, [O[0] - 9, O[1] + 15], '0');
         label(coordinates, [X[0], X[1] + 17], '1');
         label(coordinates, [Y[0] - 8, Y[1] + 17], '1');

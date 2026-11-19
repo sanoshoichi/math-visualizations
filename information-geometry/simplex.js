@@ -33,8 +33,8 @@
       line(X(0)-3,Y(t),X(0)+3,Y(t),'#71849c',1);
       if(k%1===0){txt(X(t),Y(0)+17,t.toFixed(1),10,'#8094ad'); if(k>0)txt(X(0)-8,Y(t)+3,t.toFixed(1),10,'#8094ad','end')}
     }
-    txt(322,303,'p₁',16,'#e1eaf5','middle','650');txt(37,17,'p₂',16,'#e1eaf5','middle','650');
-    txt(260,92,'p₃ = 0',13,'#ffbf7a','middle','650');
+    txt(322,303,'x¹',16,'#e1eaf5','middle','650');txt(37,17,'x²',16,'#e1eaf5','middle','650');
+    txt(260,92,'x³ = 0',13,'#ffbf7a','middle','650');
     const x=X(a/100),y=Y(b/100);
     line(x,Y(0),x,y,'#65bcf9',1.25,'3 3');line(X(0),y,x,y,'#65bcf9',1.25,'3 3');
     circle(x,y,12,'#5fbdff20','#5fbdff60',1);circle(x,y,6.7,'#55b6ff','#e4f5ff',1.5);
@@ -53,7 +53,7 @@
     };
     const O=project([0,0,0]), V1=project([1,0,0]), V2=project([0,1,0]), V3=project([0,0,1]);
     // Axis lines from the origin to each unit vector
-    for(const [p,label] of [[V1,'p₁'],[V2,'p₂'],[V3,'p₃']]){
+    for(const [p,label] of [[V1,'x¹'],[V2,'x²'],[V3,'x³']]){
       line(O[0],O[1],p[0],p[1],'#627790',1.4);
       const dx=p[0]-O[0],dy=p[1]-O[1],len=Math.hypot(dx,dy)||1;
       txt(p[0]+10*dx/len,p[1]+10*dy/len,label,12,'#94aac3');
@@ -74,18 +74,18 @@
       xx=Math.max(36,Math.min(324,xx));yy=Math.max(14,Math.min(317,yy));
       txt(xx,yy,label,11,'#e9b585','middle','550');
     }
-    txt(180,17,'p₁ + p₂ + p₃ = 1',14,'#d7e6f6','middle','650');
+    txt(180,17,'x¹ + x² + x³ = 1',14,'#d7e6f6','middle','650');
     svg.dataset.map='3d';
   }
   function render(){
     a=Math.max(1,Math.min(a,99-b));b=Math.max(1,Math.min(b,99-a));
     s1.max=String(99-b);s2.max=String(99-a);
     s1.value=String(a);s2.value=String(b);
-    el('limit1').textContent='上限 '+fmt(99-b)+'（p₂ 固定）';
-    el('limit2').textContent='上限 '+fmt(99-a)+'（p₁ 固定）';
-    el('p1value').textContent='p₁ = '+fmt(a);el('p2value').textContent='p₂ = '+fmt(b);el('p3value').textContent='p₃ = '+fmt(100-a-b);
+    el('limit1').textContent='上限 '+fmt(99-b)+'（x² 固定）';
+    el('limit2').textContent='上限 '+fmt(99-a)+'（x¹ 固定）';
+    el('p1value').textContent='x¹ = '+fmt(a);el('p2value').textContent='x² = '+fmt(b);el('p3value').textContent='x³ = '+fmt(100-a-b);
     el('out1').textContent=fmt(a);el('out2').textContent=fmt(b);
-    el('coordinate').textContent='(p₁(P), p₂(P), p₃(P)) = ('+[fmt(a),fmt(b),fmt(100-a-b)].join(', ')+')';
+    el('coordinate').textContent='(x¹, x², x³) = ('+[fmt(a),fmt(b),fmt(100-a-b)].join(', ')+')';
     const is3=mode.checked;el('modeTitle').textContent=is3?'3次元空間 ℝ³ での表示':'2次元座標表示';el('visualPanel').classList.toggle('threeActive',is3);
     svg.replaceChildren(make('title',{},'分布 P の'+(is3?'三次元':'二次元')+'表示'));
     if(is3)draw3d();else draw2d();

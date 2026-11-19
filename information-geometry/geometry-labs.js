@@ -62,7 +62,7 @@
     const probabilities = u => spherePoint(u).map(x=>x*x);
     path(domain,[[88,6],[88,178],[260,178]]);
     path(domain,[[88,6],[260,178]],muted,1,'4 3');
-    label(domain,[69,20],'p₂'); label(domain,[276,181],'p₁');
+    label(domain,[69,20],'x²'); label(domain,[276,181],'x¹');
     path(domain,sample(u=>toChart(probabilities(u))),blue,2.7);
     for(const [p,name] of [[P,'P'],[Q,'Q']]) {
       const at = toChart(p);
@@ -104,7 +104,7 @@
     const map=([x,y])=>[88+172*x,178-172*y];
     path(svg,[[88,6],[260,178]],muted,1,'4 3');
     path(svg,[[88,6],[88,178],[266,178]]);
-    label(svg,[68,20],'p₂'); label(svg,[280,185],'p₁'); label(svg,[79,196],'0');
+    label(svg,[68,20],'x²'); label(svg,[280,185],'x¹'); label(svg,[79,196],'0');
     label(svg,[260,196],'1'); label(svg,[80,14],'1');
     path(svg,sample(u=>map(mixture(u))),blue,2.5);
     path(svg,sample(u=>map(exponential(u))),gold,2.5,'5 3');
