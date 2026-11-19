@@ -3,17 +3,36 @@
   const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
   const picker = document.getElementById('chapter-select');
 
+  let activePanel;
+
+  function showChapters(panel) {
+    const placeholder = new Option('項目を選ぶ', '');
+    const chapters = [...panel.querySelectorAll(':scope > section[id]')];
+    const options = chapters.map(chapter => new Option(
+      chapter.querySelector(':scope > h2').textContent.trim(),
+      chapter.id
+    ));
+    picker.replaceChildren(placeholder, ...options);
+  }
+
   function syncCourse(scroll) {
     const target = document.getElementById(location.hash.slice(1));
-    const activePanel = panels.find(panel => panel.contains(target)) ?? panels[0];
-    tabs.forEach((tab, i) => {
-      const active = panels[i] === activePanel;
-      tab.tabIndex = active ? 0 : -1;
-      tab.setAttribute('aria-selected', String(active));
-      panels[i].hidden = !active;
-    });
-    picker.value = [...picker.options].some(option => option.value === target?.id) ? target.id : '';
-    if (scroll && activePanel.contains(target)) target.scrollIntoView({block: 'start'});
+    const panel = panels.find(course => course.contains(target)) ?? panels[0];
+
+    if (panel !== activePanel) {
+      tabs.forEach((tab, i) => {
+        const active = panels[i] === panel;
+        tab.tabIndex = active ? 0 : -1;
+        tab.setAttribute('aria-selected', String(active));
+        panels[i].hidden = !active;
+      });
+      showChapters(panel);
+      activePanel = panel;
+    }
+
+    const chapter = target?.closest('.information-course > section[id]');
+    picker.value = chapter?.parentElement === panel ? chapter.id : '';
+    if (scroll && panel.contains(target)) target.scrollIntoView({block: 'start'});
   }
 
   tabs.forEach((tab, index) => {

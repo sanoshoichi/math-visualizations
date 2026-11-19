@@ -28,6 +28,10 @@
   clip-path: inset(50%);
 }
 
+.information-course :is(h3, div)[id] {
+  scroll-margin-top: calc(var(--chapter-bar-height, 3rem) + .6rem);
+}
+
 .information-course > section {
   scroll-margin-top: calc(var(--chapter-bar-height, 3rem) + .6rem);
   margin: 1.6rem 0 2.1rem;
