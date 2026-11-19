@@ -5,8 +5,7 @@
 
   function syncCourse(scroll) {
     const target = document.getElementById(location.hash.slice(1));
-    const generalPanel = panels[1];
-    const activePanel = generalPanel.contains(target) ? generalPanel : panels[0];
+    const activePanel = panels.find(panel => panel.contains(target)) ?? panels[0];
     tabs.forEach((tab, i) => {
       const active = panels[i] === activePanel;
       tab.tabIndex = active ? 0 : -1;
@@ -23,7 +22,11 @@
       location.hash = panels[index].firstElementChild.id;
     });
     tab.addEventListener('keydown', event => {
-      const destination = {ArrowRight: 1 - index, ArrowLeft: 1 - index, Home: 0, End: 1}[event.key];
+      const destination = {
+        ArrowRight: (index + 1) % tabs.length,
+        ArrowLeft: (index + tabs.length - 1) % tabs.length,
+        Home: 0, End: tabs.length - 1
+      }[event.key];
       if (destination === undefined) return;
       event.preventDefault();
       tabs[destination].focus();

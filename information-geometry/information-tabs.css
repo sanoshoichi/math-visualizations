@@ -1,10 +1,17 @@
 .information-navigation {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  gap: .3rem;
 }
 
 .information-navigation .tabs {
   margin: 0;
+}
+
+.distribution-sliders {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
 }
 
 .chapter-picker {
@@ -37,18 +44,39 @@
 }
 
 @media (max-width: 600px) {
-  .information-navigation {
-    grid-template-columns: 1fr;
+  .information-navigation .tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .2rem;
+  }
+
+  #general-tab {
+    grid-column: span 2;
   }
 
   .information-navigation .tabs button {
     min-height: 34px;
-    padding-block: .15rem;
+    padding: .12rem .2rem;
+    min-width: 0;
+    white-space: normal;
+    line-height: 1.2;
+    font-size: .8rem;
   }
 
   .information-navigation select {
     height: 32px;
     min-height: 32px;
     padding-block: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .distribution-sliders label {
+    font-size: .78rem;
+  }
+
+  .distribution-sliders output {
+    float: none;
+    display: block;
   }
 }
