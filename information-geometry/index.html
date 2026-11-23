@@ -26,7 +26,7 @@
     #coin-tangent-coordinates .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
   </style>
 <link rel="stylesheet" href="geometry-labs.css?v=visual-legends">
-<link rel="stylesheet" href="information-tabs.css?v=general-roadmap">
+<link rel="stylesheet" href="information-tabs.css?v=roadmap-slide">
 <script defer src="information-tabs.js?v=axis-labels"></script>
 <script defer src="distribution-labs.js?v=axis-labels"></script>
 <script defer src="information-examples.js"></script>
@@ -1077,85 +1077,12 @@
 <div id="general-course" class="information-course" role="tabpanel" aria-labelledby="general-tab" tabindex="0">
 <section id="general-roadmap">
 <h2>統計多様体のロードマップ</h2>
-<p>分布を点として扱うところから始めます。フィッシャー計量までが共通で、そこから「長さと距離を測る」道と「接続を選んで測地線を調べる」道に分かれます。矢印に沿って読み、ボックスを押すと対応する節に移動できます。</p>
-<nav class="general-roadmap" aria-label="統計多様体の各節へのロードマップ">
-<div class="roadmap-start">
-<a class="roadmap-card" href="#general-model">
-  <strong>1. 統計モデルと局所座標</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\vartheta\longmapsto P_\vartheta\in\mathcal M">\vartheta\longmapsto P_\vartheta\in\mathcal M</span></span>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\theta(P_\vartheta)=\vartheta">\theta(P_\vartheta)=\vartheta</span></span>
-  <span class="roadmap-note">座標値を選ぶと分布が一つ決まり、分布から座標値を読み取れます。</span>
-</a>
-<div class="roadmap-edge">分布を曲線に沿って動かす</div>
-<a class="roadmap-card" href="#general-tangent">
-  <strong>2. 接ベクトル</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="P=\gamma(0)">P=\gamma(0)</span></span>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="U=\dot\gamma(0)\in T_P\mathcal M">U=\dot\gamma(0)\in T_P\mathcal M</span></span>
-  <span class="roadmap-note">分布を動かす曲線を <span class="inline-math" data-tex="\gamma">\gamma</span> とし、パラメータ <span class="inline-math" data-tex="0">0</span> での速度を取ります。</span>
-</a>
-<div class="roadmap-edge">曲線に沿った KL を二階微分する</div>
-<a class="roadmap-card" href="#general-fisher">
-  <strong>3. フィッシャー計量</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="L(s)=D_{\rm KL}(P\Vert\gamma(s))">L(s)=D_{\rm KL}(P\Vert\gamma(s))</span></span>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="g_P(U,U)=L^{\prime\prime}(0)">g_P(U,U)=L^{\prime\prime}(0)</span></span>
-  <span class="roadmap-note">分布 <span class="inline-math" data-tex="P">P</span> を固定し、KLダイバージェンスの二階微分から <span class="inline-math" data-tex="U">U</span> の長さの二乗を得ます。</span>
-</a>
-</div>
-<div class="roadmap-paths">
-<div class="roadmap-path roadmap-distance">
-<h3>第3節から · 長さと距離を測る</h3>
-<div class="roadmap-edge">平方根で内積を保つ</div>
-<a class="roadmap-card" href="#general-sphere">
-  <strong>4. 平方根写像と球面</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="F(P)=2\sqrt{p_P}">F(P)=2\sqrt{p_P}</span></span>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\|F(P)\|=2">\|F(P)\|=2</span></span>
-  <span class="roadmap-note">確率または密度 <span class="inline-math" data-tex="p_P">p_P</span> の平方根を使い、接ベクトルの内積を保つ写像を作ります。</span>
-</a>
-<div class="roadmap-edge">正規分布で二通りの距離を比べる</div>
-<a class="roadmap-card" href="#general-normal-example">
-  <strong>5. 正規分布で計量と距離を計算</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="G=\sigma^{-2}\operatorname{diag}(1,2)">G=\sigma^{-2}\operatorname{diag}(1,2)</span></span>
-  <span class="roadmap-note">平均 <span class="inline-math" data-tex="\mu">\mu</span> と標準偏差 <span class="inline-math" data-tex="\sigma">\sigma</span> の座標で計量行列 <span class="inline-math" data-tex="G">G</span> を求め、モデル内の距離を球面上の距離と比べます。</span>
-</a>
-</div>
-<div class="roadmap-path roadmap-connection">
-<h3>第3節から · 接続と測地線を調べる</h3>
-<div class="roadmap-edge">計量と対数密度の微分から接続を定める</div>
-<a class="roadmap-card" href="#general-connections">
-  <strong>6. 接続と測地線</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\nabla^{(e)},\;\nabla^{(m)},\;\nabla^{\rm LC}">\nabla^{(e)},\;\nabla^{(m)},\;\nabla^{\rm LC}</span></span>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\nabla_{\dot c}\dot c=0">\nabla_{\dot c}\dot c=0</span></span>
-  <span class="roadmap-note">指数・混合・レヴィ＝チヴィタ接続を比べ、曲線 <span class="inline-math" data-tex="c">c</span> の測地線方程式を書きます。</span>
-</a>
-<div class="roadmap-edge">ここから指数型分布族に絞って調べる</div>
-<a class="roadmap-card" href="#general-exponential">
-  <strong>7. 指数型分布族</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="p_\theta=h\,e^{\theta\cdot T-\psi(\theta)}">p_\theta=h\,e^{\theta\cdot T-\psi(\theta)}</span></span>
-  <span class="roadmap-note">自然パラメータ <span class="inline-math" data-tex="\theta">\theta</span> と統計量 <span class="inline-math" data-tex="T">T</span> で確率や密度を書きます。<span class="inline-math" data-tex="h">h</span> は固定の因子、<span class="inline-math" data-tex="\psi">\psi</span> は確率の総和や密度の積分を1にするための対数正規化定数です。</span>
-</a>
-<div class="roadmap-edge">正規化の対数を微分する</div>
-<a class="roadmap-card" href="#general-dual-coordinates">
-  <strong>8. 自然座標と期待値座標</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\eta_a=\partial_a\psi=\mathbb E_{P_\theta}[T_a]">\eta_a=\partial_a\psi=\mathbb E_{P_\theta}[T_a]</span></span>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="g_{ab}=\partial_a\partial_b\psi">g_{ab}=\partial_a\partial_b\psi</span></span>
-  <span class="roadmap-note">正規化の対数を一度微分すると期待値座標、二度微分するとフィッシャー計量の成分が出ます。</span>
-</a>
-<div class="roadmap-edge">座標ごとにどの測地線が直線になるか調べる</div>
-<a class="roadmap-card" href="#general-three-geodesics">
-  <strong>9. 3種類の測地線</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\nabla^{(e)}:\,\ddot\theta=0">\nabla^{(e)}:\,\ddot\theta=0</span></span>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\nabla^{(m)}:\,\ddot\eta=0">\nabla^{(m)}:\,\ddot\eta=0</span></span>
-  <span class="roadmap-note">自然座標で直線になる指数測地線、期待値座標で直線になる混合測地線、計量に基づく測地線を比べます。</span>
-</a>
-<div class="roadmap-edge">期待値座標に制約を置いて KL を最小化する</div>
-<a class="roadmap-card" href="#general-kl-projection">
-  <strong>10. KL射影とピタゴラスの等式</strong>
-  <span class="roadmap-formula"><span class="inline-math" data-tex="\begin{aligned}D(Q\Vert P)&amp;=D(Q\Vert Q_*)\\&amp;\quad+D(Q_*\Vert P)\end{aligned}">\begin{aligned}D(Q\Vert P)&amp;=D(Q\Vert Q_*)\\&amp;\quad+D(Q_*\Vert P)\end{aligned}</span></span>
-  <span class="roadmap-note">期待値座標のアフィン制約の下で <span class="inline-math" data-tex="D(Q\Vert P)">D(Q\Vert P)</span> を最小化します。<span class="inline-math" data-tex="D">D</span> はKLの略、<span class="inline-math" data-tex="Q_*">Q_*</span> は制約内の最小点です。等式は最小点が制約の相対的内部にある場合に成り立ちます。</span>
-</a>
-</div>
-</div>
-</nav>
+<figure class="roadmap-slide">
+<object type="image/svg+xml" data="statistical-manifold-roadmap.svg" aria-label="統計多様体の全10節をつなぐ図">
+<a href="statistical-manifold-roadmap.svg">統計多様体のロードマップ（SVG）</a>
+</object>
+<figcaption>ボックスを押すと対応する節に移動します。<a href="statistical-manifold-roadmap.svg">SVGを別画面で開いて拡大</a></figcaption>
+</figure>
 </section>
 
 <section id="general-model"><h2>1. 統計モデルを多様体として見る</h2>
