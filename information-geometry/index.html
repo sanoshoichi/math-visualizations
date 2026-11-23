@@ -198,6 +198,30 @@
 <p>座標を取り替えたときの数も、初期値で確認できます。曲線に沿う表の確率は <span class="inline-math" data-tex="0.20+0.15s">0.20+0.15s</span>。表と裏の差は <span class="inline-math" data-tex="(0.20+0.15s)-(0.80-0.15s)=-0.60+0.30s">(0.20+0.15s)-(0.80-0.15s)=-0.60+0.30s</span> です。<span class="inline-math" data-tex="s=0">s=0</span> の値は図の点の位置、<span class="inline-math" data-tex="s">s</span> の係数は矢印に対応します。</p>
 </section>
 <section id="binomial-metric"><h2>3. 二項分布のフィッシャー計量</h2>
+<h3>分布を動かして KL を作る</h3>
+<p>試行回数 <span class="inline-math" data-tex="n">n</span> と実際の成功確率 <span class="inline-math" data-tex="p">p</span> を固定します。第2章と同じように、座標を少し動かして予測の分布を作ります。出発点は実際の分布で、座標の変化率はあらかじめ固定します。</p>
+<div class="equation" data-tex="P=P_p,\quad Q_s=\gamma(s)=P_{p+as}">P=P_p,\quad Q_s=\gamma(s)=P_{p+as}</div>
+<p><span class="inline-math" data-tex="s">s</span> は座標が許される範囲で0の近くに取ります。曲線の初速度 <span class="inline-math" data-tex="U">U</span> は次の接ベクトルです。</p>
+<div class="equation" data-tex="U=\dot\gamma(0)=a\left.\frac{\partial}{\partial p}\right|_P">U=\dot\gamma(0)=a\left.\frac{\partial}{\partial p}\right|_P</div>
+<p>観測された結果に予測が小さな確率を与えたときほど、損失を大きくします。独立な観測の尤度は各観測の確率の積です。負の対数を取ると、低い尤度ほど損失が大きくなり、積だった尤度から観測ごとの損失の和が得られます。密度を使う分布でも、尤度の積を損失の和に変える手順は同じです。</p>
+<p>実際の分布を固定し、予測をずらした場合の平均損失から、実際の分布そのもので予測した場合の平均損失を引きます。二つの損失は同じ分布で平均するので、平均の中で負の対数の差を取れます。これが KL ダイバージェンスです。</p>
+<p><span class="inline-math" data-tex="b_j(t)=P_t(X=j)">b_j(t)=P_t(X=j)</span> は成功確率が <span class="inline-math" data-tex="t">t</span> のときに成功回数 <span class="inline-math" data-tex="X">X</span> が <span class="inline-math" data-tex="j">j</span> になる確率です。各 <span class="inline-math" data-tex="j=0,\ldots,n">j=0,\ldots,n</span>での実際の分布での値を <span class="inline-math" data-tex="p_P=b_j(p)">p_P=b_j(p)</span>、予測側を <span class="inline-math" data-tex="q_s=b_j(p+as)">q_s=b_j(p+as)</span> と書きます。<span class="inline-math" data-tex="\mathbb E_P">\mathbb E_P</span> は、それぞれの観測値に <span class="inline-math" data-tex="p_P">p_P</span> を重みとして掛けて平均する記号です。</p>
+<div class="equation" data-tex="\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}">\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}</div>
+<div class="equation" data-tex="L(s)=\sum_{j=0}^n b_j(p)\log\frac{b_j(p)}{b_j(p+as)}.">L(s)=\sum_{j=0}^n b_j(p)\log\frac{b_j(p)}{b_j(p+as)}.</div>
+<h3>なぜ二階微分を取るか</h3>
+<p><span class="inline-math" data-tex="s=0">s=0</span> では確率または密度の比がどの観測値でも1なので、<span class="inline-math" data-tex="L(0)=0">L(0)=0</span> です。予測が少しずれたときに損失がどう増えるかを見るには、次に一次と二次の項を調べます。</p>
+<p>一次の項は0です。この後に確かめるように、<span class="inline-math" data-tex="L^{\prime}(0)">L^{\prime}(0)</span> は予測の確率の総和（連続分布なら密度の積分）を微分した値のマイナスになります。その総和や積分は曲線上のどこでも1です。</p>
+<div class="equation" data-tex="L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).">L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).</div>
+<p><span class="inline-math" data-tex="o(s^2)">o(s^2)</span> は <span class="inline-math" data-tex="s^2">s^2</span> で割ると0に近づく余りです。したがって、近くの分布をどれだけ区別しやすいかは、まず <span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> に現れます。係数が大きい方向ほど、同じ小さな <span class="inline-math" data-tex="s">s</span> で平均損失が大きく増えます。この二階微分が初速度の成分の二次式になり、正則なモデルでは非零の初速度に対して正なので、計量で測る長さの二乗に使えます。</p>
+<p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
+<p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
+<div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
+<div class="equation" data-tex="\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}">\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}</div>
+<p>期待値の重み <span class="inline-math" data-tex="p_P">p_P</span> と分母の <span class="inline-math" data-tex="p_P">p_P</span> が消える項では、残るのは <span class="inline-math" data-tex="\dot q_0">\dot q_0</span> または <span class="inline-math" data-tex="\ddot q_0">\ddot q_0</span> の和や積分です。正規化の式の一階・二階微分なので、どちらも0です。残った項では、<span class="inline-math" data-tex="\dot q_0/p_P">\dot q_0/p_P</span> が <span class="inline-math" data-tex="s=0">s=0</span> での対数確率または対数密度の変化率になります。これを方向 <span class="inline-math" data-tex="U">U</span> のスコア <span class="inline-math" data-tex="S_U">S_U</span> と書くと、</p>
+<div class="equation" data-tex="\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}">\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}</div>
+<p>座標基底のスコアを <span class="inline-math" data-tex="S_p">S_p</span> とすると <span class="inline-math" data-tex="S_U=aS_p">S_U=aS_p</span> です。基底の長さの二乗 <span class="inline-math" data-tex="g_{pp}=\mathbb E_P[S_p^2]">g_{pp}=\mathbb E_P[S_p^2]</span> を求めるため、成功回数の平均と分散を先に出します。 <a href="#general-fisher">一般論で微分の各項を追う</a></p>
+<h3>この分布で計量を計算する</h3>
+
 <h3>1回ごとの成否から成功回数を作る</h3>
 <p>試行回数 <span class="inline-math" data-tex="n">n</span> と1回あたりの成功確率 <span class="inline-math" data-tex="p">p</span> は固定します。第 <span class="inline-math" data-tex="i">i</span> 回に成功したら <span class="inline-math" data-tex="Y_i=1">Y_i=1</span>、失敗したら <span class="inline-math" data-tex="Y_i=0">Y_i=0</span> とします。成功した回だけが合計に1を足すので、成功回数は <span class="inline-math" data-tex="X=\sum_{i=1}^nY_i">X=\sum_{i=1}^nY_i</span> です。各回の平均は、二つの値をそれぞれの確率で重み付けして求めます。</p>
 <div class="equation" data-tex="\begin{aligned}\mathbb E_{P_p}[Y_i]&amp;=1\cdot p+0\cdot(1-p)=p,\\ \mathbb E_{P_p}[X]&amp;=\sum_{i=1}^n\mathbb E_{P_p}[Y_i]=np.\end{aligned}">\begin{aligned}\mathbb E_{P_p}[Y_i]&amp;=1\cdot p+0\cdot(1-p)=p,\\ \mathbb E_{P_p}[X]&amp;=\sum_{i=1}^n\mathbb E_{P_p}[Y_i]=np.\end{aligned}</div>
@@ -414,7 +438,7 @@
 </div>
 
 <p>第2章では、確率の変化を接ベクトルで表しました。ここでは、その変化が予測の正確さにどれだけ影響するかを使って、接ベクトルの長さを決めます。分布 <span class="inline-math" data-tex="P">P</span> を実際の分布として固定し、予測に使う分布だけを <span class="inline-math" data-tex="P">P</span> から少しずらします。</p>
-<h3>予測を少しずらしたときの損失</h3>
+<h3>分布を動かして KL を作る</h3>
 <p>同じ分布モデル <span class="inline-math" data-tex="Q">Q</span> で、独立な2回の試行を予測します。実際の結果が1回目は <span class="inline-math" data-tex="A_1">A_1</span>、2回目は <span class="inline-math" data-tex="A_2">A_2</span> だったとします。モデルがこの並びに与えた確率は、各回に与えた確率の積 <span class="inline-math" data-tex="Q(A_1)Q(A_2)">Q(A_1)Q(A_2)</span> です。この積が大きいほど、観測された並びに高い確率を与えたことになります。</p>
 <p>実際に観測した結果に低い確率を付けたときに大きくなり、試行ごとに足せる量を作ります。そこで、この積に負の対数を取ります。対数は積を和に変え、マイナスを付けると、観測に与えた確率が低いほど損失が大きくなります。</p>
 <div class="equation" data-tex="-\log\!\bigl[Q(A_1)Q(A_2)\bigr]=-\log Q(A_1)-\log Q(A_2).">-\log\!\bigl[Q(A_1)Q(A_2)\bigr]=-\log Q(A_1)-\log Q(A_2).</div>
@@ -441,6 +465,12 @@
 <p>図と同じ初期値なら、確率を動かすのは第1・第3事象だけです。3つの項を順に書くと、どこが動いているか確認できます。</p>
 <div class="equation" data-tex="\begin{aligned}L(s)&amp;=0.20\log\frac{0.20}{0.20+s}\\&amp;\quad+0.30\log\frac{0.30}{0.30}\\&amp;\quad+0.50\log\frac{0.50}{0.50-s}.\end{aligned}">\begin{aligned}L(s)&amp;=0.20\log\frac{0.20}{0.20+s}\\&amp;\quad+0.30\log\frac{0.30}{0.30}\\&amp;\quad+0.50\log\frac{0.50}{0.50-s}.\end{aligned}</div>
 <p>第2項は常に0です。第1・第3項の外側の重みも固定して、分母だけを動かします。</p>
+<p>この損失の差を KL ダイバージェンスと呼びます。いま求めたのは <span class="inline-math" data-tex="L(s)=D_{\rm KL}(P\Vert Q_s)">L(s)=D_{\rm KL}(P\Vert Q_s)</span> です。</p>
+<h3>なぜ二階微分を取るか</h3>
+<p><span class="inline-math" data-tex="s=0">s=0</span> では確率または密度の比がどの観測値でも1なので、<span class="inline-math" data-tex="L(0)=0">L(0)=0</span> です。予測が少しずれたときに損失がどう増えるかを見るには、次に一次と二次の項を調べます。</p>
+<p>一次の項は0です。この後に確かめるように、<span class="inline-math" data-tex="L^{\prime}(0)">L^{\prime}(0)</span> は予測の確率の総和（連続分布なら密度の積分）を微分した値のマイナスになります。その総和や積分は曲線上のどこでも1です。</p>
+<div class="equation" data-tex="L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).">L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).</div>
+<p><span class="inline-math" data-tex="o(s^2)">o(s^2)</span> は <span class="inline-math" data-tex="s^2">s^2</span> で割ると0に近づく余りです。したがって、近くの分布をどれだけ区別しやすいかは、まず <span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> に現れます。係数が大きい方向ほど、同じ小さな <span class="inline-math" data-tex="s">s</span> で平均損失が大きく増えます。この二階微分が初速度の成分の二次式になり、正則なモデルでは非零の初速度に対して正なので、計量で測る長さの二乗に使えます。</p>
 <h3>損失を微分して、長さの二乗を求める</h3>
 <p>予測をどれだけずらしたかを表す <span class="inline-math" data-tex="s">s</span> で微分します。まず各項の対数確率を微分すると、ここで元の確率で割る式が出てきます。</p>
 <div class="equation" data-tex="\left.\frac{\mathrm d}{\mathrm ds}\log Q_s(A_i)\right|_{s=0}=\left.\frac{u_i}{P(A_i)+su_i}\right|_{s=0}=\frac{u_i}{P(A_i)}.">\left.\frac{\mathrm d}{\mathrm ds}\log Q_s(A_i)\right|_{s=0}=\left.\frac{u_i}{P(A_i)+su_i}\right|_{s=0}=\frac{u_i}{P(A_i)}.</div>
@@ -616,7 +646,7 @@
 </div>
 
 <p>ここで第3章の問いに戻ります。実際の分布を <span class="inline-math" data-tex="P">P</span> に固定したまま、予測だけを <span class="inline-math" data-tex="Q">Q</span> に変えたとき、平均損失の差 <span class="inline-math" data-tex="C_P(Q)-C_P(P)">C_P(Q)-C_P(P)</span> はどれだけになるでしょうか。第4・6章のように2点を結ぶ道を選ぶ必要はなく、両端の分布を指定すれば計算できます。</p>
-<p>この差に付いた名前がKLダイバージェンスです。第3章の平均対数損失の式を使うと次のように書けます。</p>
+<p>第3章で導入した KL ダイバージェンスを、ここでは離れた二つの分布について計算します。</p>
 <div class="equation" data-tex="D_{\rm KL}(P\Vert Q)=\sum_i P(A_i)\log\frac{P(A_i)}{Q(A_i)}.">D_{\rm KL}(P\Vert Q)=\sum_i P(A_i)\log\frac{P(A_i)}{Q(A_i)}.</div>
 <p>事象ごとの寄与は負にもなりますが、和は必ず0以上です。実際、<span class="inline-math" data-tex="x&gt;0">x&gt;0</span> に対して <span class="inline-math" data-tex="-\log x\ge 1-x">-\log x\ge 1-x</span> です。差 <span class="inline-math" data-tex="x-1-\log x">x-1-\log x</span> の導関数は <span class="inline-math" data-tex="1-1/x">1-1/x</span> で、最小値は <span class="inline-math" data-tex="x=1">x=1</span> のときの0です。<span class="inline-math" data-tex="x=Q(A_i)/P(A_i)">x=Q(A_i)/P(A_i)</span> を入れて両辺に <span class="inline-math" data-tex="P(A_i)">P(A_i)</span> を掛け、足し合わせると</p>
 <div class="equation" data-tex="D_{\rm KL}(P\Vert Q)\ge\sum_{i=1}^3\bigl(P(A_i)-Q(A_i)\bigr)=1-1=0.">D_{\rm KL}(P\Vert Q)\ge\sum_{i=1}^3\bigl(P(A_i)-Q(A_i)\bigr)=1-1=0.</div>
@@ -741,6 +771,30 @@
 <div class="equation" data-tex="U(\rho_4)=U(1-\rho_1-\rho_2-\rho_3)=0-a_1-a_2-a_3.">U(\rho_4)=U(1-\rho_1-\rho_2-\rho_3)=0-a_1-a_2-a_3.</div>
 </section>
 <section id="four-metric"><h2>3. フィッシャー計量</h2>
+<h3>分布を動かして KL を作る</h3>
+<p>実際の分布 <span class="inline-math" data-tex="P">P</span> を固定します。第2章と同じように、座標を少し動かして予測の分布を作ります。出発点は実際の分布で、座標の変化率はあらかじめ固定します。</p>
+<div class="equation" data-tex="\begin{aligned} p_i&amp;=P(A_i),\quad Q_0=P,\\ Q_s(A_i)&amp;=p_i+sa_i,\\ a_4&amp;=-a_1-a_2-a_3.\end{aligned}">\begin{aligned} p_i&amp;=P(A_i),\quad Q_0=P,\\ Q_s(A_i)&amp;=p_i+sa_i,\\ a_4&amp;=-a_1-a_2-a_3.\end{aligned}</div>
+<p><span class="inline-math" data-tex="s">s</span> は座標が許される範囲で0の近くに取ります。曲線の初速度 <span class="inline-math" data-tex="U">U</span> は次の接ベクトルです。</p>
+<div class="equation" data-tex="U=\dot Q_0=\sum_{i=1}^3 a_i\left.\frac{\partial}{\partial\rho_i}\right|_P">U=\dot Q_0=\sum_{i=1}^3 a_i\left.\frac{\partial}{\partial\rho_i}\right|_P</div>
+<p>観測された結果に予測が小さな確率を与えたときほど、損失を大きくします。独立な観測の尤度は各観測の確率の積です。負の対数を取ると、低い尤度ほど損失が大きくなり、積だった尤度から観測ごとの損失の和が得られます。密度を使う分布でも、尤度の積を損失の和に変える手順は同じです。</p>
+<p>実際の分布を固定し、予測をずらした場合の平均損失から、実際の分布そのもので予測した場合の平均損失を引きます。二つの損失は同じ分布で平均するので、平均の中で負の対数の差を取れます。これが KL ダイバージェンスです。</p>
+<p>事象 <span class="inline-math" data-tex="A_i">A_i</span>での実際の分布での値を <span class="inline-math" data-tex="p_P=p_i">p_P=p_i</span>、予測側を <span class="inline-math" data-tex="q_s=p_i+sa_i">q_s=p_i+sa_i</span> と書きます。<span class="inline-math" data-tex="\mathbb E_P">\mathbb E_P</span> は、それぞれの観測値に <span class="inline-math" data-tex="p_P">p_P</span> を重みとして掛けて平均する記号です。</p>
+<div class="equation" data-tex="\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}">\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}</div>
+<div class="equation" data-tex="L(s)=\sum_{i=1}^4 p_i\log\frac{p_i}{p_i+sa_i}.">L(s)=\sum_{i=1}^4 p_i\log\frac{p_i}{p_i+sa_i}.</div>
+<h3>なぜ二階微分を取るか</h3>
+<p><span class="inline-math" data-tex="s=0">s=0</span> では確率または密度の比がどの観測値でも1なので、<span class="inline-math" data-tex="L(0)=0">L(0)=0</span> です。予測が少しずれたときに損失がどう増えるかを見るには、次に一次と二次の項を調べます。</p>
+<p>一次の項は0です。この後に確かめるように、<span class="inline-math" data-tex="L^{\prime}(0)">L^{\prime}(0)</span> は予測の確率の総和（連続分布なら密度の積分）を微分した値のマイナスになります。その総和や積分は曲線上のどこでも1です。</p>
+<div class="equation" data-tex="L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).">L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).</div>
+<p><span class="inline-math" data-tex="o(s^2)">o(s^2)</span> は <span class="inline-math" data-tex="s^2">s^2</span> で割ると0に近づく余りです。したがって、近くの分布をどれだけ区別しやすいかは、まず <span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> に現れます。係数が大きい方向ほど、同じ小さな <span class="inline-math" data-tex="s">s</span> で平均損失が大きく増えます。この二階微分が初速度の成分の二次式になり、正則なモデルでは非零の初速度に対して正なので、計量で測る長さの二乗に使えます。</p>
+<p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
+<p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
+<div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
+<div class="equation" data-tex="\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}">\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}</div>
+<p>期待値の重み <span class="inline-math" data-tex="p_P">p_P</span> と分母の <span class="inline-math" data-tex="p_P">p_P</span> が消える項では、残るのは <span class="inline-math" data-tex="\dot q_0">\dot q_0</span> または <span class="inline-math" data-tex="\ddot q_0">\ddot q_0</span> の和や積分です。正規化の式の一階・二階微分なので、どちらも0です。残った項では、<span class="inline-math" data-tex="\dot q_0/p_P">\dot q_0/p_P</span> が <span class="inline-math" data-tex="s=0">s=0</span> での対数確率または対数密度の変化率になります。これを方向 <span class="inline-math" data-tex="U">U</span> のスコア <span class="inline-math" data-tex="S_U">S_U</span> と書くと、</p>
+<div class="equation" data-tex="\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}">\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}</div>
+<p><span class="inline-math" data-tex="S_U(A_i)=a_i/p_i">S_U(A_i)=a_i/p_i</span> なので、二乗して <span class="inline-math" data-tex="p_i">p_i</span> を掛けると各項は <span class="inline-math" data-tex="a_i^2/p_i">a_i^2/p_i</span> です。二つの方向 <span class="inline-math" data-tex="U,V">U,V</span> の内積は、スコアの二乗を積 <span class="inline-math" data-tex="S_U S_V">S_U S_V</span> に置き換えた平均です。その式に座標基底を入れます。 <a href="#general-fisher">一般論で微分の各項を追う</a></p>
+<h3>この分布で計量を計算する</h3>
+
 <p><span class="inline-math" data-tex="p_i=P(A_i)">p_i=P(A_i)</span> と置きます。前の章で計算した <span class="inline-math" data-tex="e_a(\rho_i)">e_a(\rho_i)</span> をフィッシャー内積の4項に入れます。</p>
 
 <div class="equation" data-tex="g_{ab}(P)=\frac{\delta_{ab}}{P(A_a)}+\frac1{P(A_4)},\qquad a,b=1,2,3.">g_{ab}(P)=\frac{\delta_{ab}}{P(A_a)}+\frac1{P(A_4)},\qquad a,b=1,2,3.</div>
@@ -804,6 +858,30 @@
 <p>例えば <span class="inline-math" data-tex="j=0">j=0</span> なら <span class="inline-math" data-tex="p_\lambda(0)=e^{-\lambda}">p_\lambda(0)=e^{-\lambda}</span> なので、曲線に沿って <span class="inline-math" data-tex="e^{-(\lambda+as)}">e^{-(\lambda+as)}</span> を微分すると <span class="inline-math" data-tex="-ae^{-\lambda}">-ae^{-\lambda}</span> です。上の一般式に <span class="inline-math" data-tex="j=0">j=0</span> を入れても、括弧が <span class="inline-math" data-tex="-1">-1</span> になり同じ結果が得られます。</p>
 </section>
 <section id="poisson-metric"><h2>3. フィッシャー計量</h2>
+<h3>分布を動かして KL を作る</h3>
+<p>実際の平均回数 <span class="inline-math" data-tex="\lambda">\lambda</span> を固定します。第2章と同じように、座標を少し動かして予測の分布を作ります。出発点は実際の分布で、座標の変化率はあらかじめ固定します。</p>
+<div class="equation" data-tex="P=P_\lambda,\quad Q_s=\gamma(s)=P_{\lambda+as}">P=P_\lambda,\quad Q_s=\gamma(s)=P_{\lambda+as}</div>
+<p><span class="inline-math" data-tex="s">s</span> は座標が許される範囲で0の近くに取ります。曲線の初速度 <span class="inline-math" data-tex="U">U</span> は次の接ベクトルです。</p>
+<div class="equation" data-tex="U=\dot\gamma(0)=a\left.\frac{\partial}{\partial\lambda}\right|_P">U=\dot\gamma(0)=a\left.\frac{\partial}{\partial\lambda}\right|_P</div>
+<p>観測された結果に予測が小さな確率を与えたときほど、損失を大きくします。独立な観測の尤度は各観測の確率の積です。負の対数を取ると、低い尤度ほど損失が大きくなり、積だった尤度から観測ごとの損失の和が得られます。密度を使う分布でも、尤度の積を損失の和に変える手順は同じです。</p>
+<p>実際の分布を固定し、予測をずらした場合の平均損失から、実際の分布そのもので予測した場合の平均損失を引きます。二つの損失は同じ分布で平均するので、平均の中で負の対数の差を取れます。これが KL ダイバージェンスです。</p>
+<p>観測回数 <span class="inline-math" data-tex="j=0,1,\ldots">j=0,1,\ldots</span>での実際の分布での値を <span class="inline-math" data-tex="p_P=p_\lambda(j)">p_P=p_\lambda(j)</span>、予測側を <span class="inline-math" data-tex="q_s=p_{\lambda+as}(j)">q_s=p_{\lambda+as}(j)</span> と書きます。<span class="inline-math" data-tex="\mathbb E_P">\mathbb E_P</span> は、それぞれの観測値に <span class="inline-math" data-tex="p_P">p_P</span> を重みとして掛けて平均する記号です。</p>
+<div class="equation" data-tex="\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}">\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}</div>
+<div class="equation" data-tex="L(s)=\sum_{j=0}^\infty p_\lambda(j)\log\frac{p_\lambda(j)}{p_{\lambda+as}(j)}.">L(s)=\sum_{j=0}^\infty p_\lambda(j)\log\frac{p_\lambda(j)}{p_{\lambda+as}(j)}.</div>
+<h3>なぜ二階微分を取るか</h3>
+<p><span class="inline-math" data-tex="s=0">s=0</span> では確率または密度の比がどの観測値でも1なので、<span class="inline-math" data-tex="L(0)=0">L(0)=0</span> です。予測が少しずれたときに損失がどう増えるかを見るには、次に一次と二次の項を調べます。</p>
+<p>一次の項は0です。この後に確かめるように、<span class="inline-math" data-tex="L^{\prime}(0)">L^{\prime}(0)</span> は予測の確率の総和（連続分布なら密度の積分）を微分した値のマイナスになります。その総和や積分は曲線上のどこでも1です。</p>
+<div class="equation" data-tex="L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).">L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).</div>
+<p><span class="inline-math" data-tex="o(s^2)">o(s^2)</span> は <span class="inline-math" data-tex="s^2">s^2</span> で割ると0に近づく余りです。したがって、近くの分布をどれだけ区別しやすいかは、まず <span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> に現れます。係数が大きい方向ほど、同じ小さな <span class="inline-math" data-tex="s">s</span> で平均損失が大きく増えます。この二階微分が初速度の成分の二次式になり、正則なモデルでは非零の初速度に対して正なので、計量で測る長さの二乗に使えます。</p>
+<p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
+<p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
+<div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
+<div class="equation" data-tex="\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}">\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}</div>
+<p>期待値の重み <span class="inline-math" data-tex="p_P">p_P</span> と分母の <span class="inline-math" data-tex="p_P">p_P</span> が消える項では、残るのは <span class="inline-math" data-tex="\dot q_0">\dot q_0</span> または <span class="inline-math" data-tex="\ddot q_0">\ddot q_0</span> の和や積分です。正規化の式の一階・二階微分なので、どちらも0です。残った項では、<span class="inline-math" data-tex="\dot q_0/p_P">\dot q_0/p_P</span> が <span class="inline-math" data-tex="s=0">s=0</span> での対数確率または対数密度の変化率になります。これを方向 <span class="inline-math" data-tex="U">U</span> のスコア <span class="inline-math" data-tex="S_U">S_U</span> と書くと、</p>
+<div class="equation" data-tex="\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}">\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}</div>
+<p>第2章で出した座標基底のスコア <span class="inline-math" data-tex="S_\lambda(j)=(j-\lambda)/\lambda">S_\lambda(j)=(j-\lambda)/\lambda</span> を二乗して平均します。<span class="inline-math" data-tex="(j-\lambda)^2">(j-\lambda)^2</span> の平均を計算するために、一乗と二乗の平均を求めます。 <a href="#general-fisher">一般論で微分の各項を追う</a></p>
+<h3>この分布で計量を計算する</h3>
+
 <p>平均を計算するとき、<span class="inline-math" data-tex="j\ge1">j\ge1</span> なら <span class="inline-math" data-tex="j/j!=1/(j-1)!">j/j!=1/(j-1)!</span> なので、</p>
 <div class="equation" data-tex="\mathbb E[X]=e^{-\lambda}\lambda\sum_{j=1}^{\infty}\frac{\lambda^{j-1}}{(j-1)!}=\lambda.">\mathbb E[X]=e^{-\lambda}\lambda\sum_{j=1}^{\infty}\frac{\lambda^{j-1}}{(j-1)!}=\lambda.</div>
 <p>二つずつ選ぶ積 <span class="inline-math" data-tex="j(j-1)">j(j-1)</span> が出てくる理由は、階乗の先頭二つと約分できるためです。<span class="inline-math" data-tex="j=0,1">j=0,1</span> の項は0なので、<span class="inline-math" data-tex="j=2">j=2</span> から足します。</p>
@@ -890,6 +968,30 @@
 <p>例えば <span class="inline-math" data-tex="x=\mu">x=\mu</span> で密度を読みます。平均を動かす方向の変化率は <span class="inline-math" data-tex="\partial_\mu p_{\mu,\sigma}(x)=p_{\mu,\sigma}(x)(x-\mu)/\sigma^2">\partial_\mu p_{\mu,\sigma}(x)=p_{\mu,\sigma}(x)(x-\mu)/\sigma^2</span> に <span class="inline-math" data-tex="x=\mu">x=\mu</span> を入れると0です。密度の山の頂上では、横に少しずらしても高さは一次では変化しません。幅を変える方向では <span class="inline-math" data-tex="\partial_\sigma p_{\mu,\sigma}(x)">\partial_\sigma p_{\mu,\sigma}(x)</span> に <span class="inline-math" data-tex="x=\mu">x=\mu</span> を入れると <span class="inline-math" data-tex="-p_{\mu,\sigma}(\mu)/\sigma">-p_{\mu,\sigma}(\mu)/\sigma</span> です。こちらは一次で変わります。</p>
 </section>
 <section id="normal-metric"><h2>3. フィッシャー計量</h2>
+<h3>分布を動かして KL を作る</h3>
+<p>実際の平均 <span class="inline-math" data-tex="\mu">\mu</span> と標準偏差 <span class="inline-math" data-tex="\sigma">\sigma</span> を固定します。第2章と同じように、座標を少し動かして予測の分布を作ります。出発点は実際の分布で、座標の変化率はあらかじめ固定します。</p>
+<div class="equation" data-tex="\begin{aligned}P&amp;=P_{\mu,\sigma},\\ Q_s&amp;=\gamma(s)=P_{\mu+as,\sigma+bs}.\end{aligned}">\begin{aligned}P&amp;=P_{\mu,\sigma},\\ Q_s&amp;=\gamma(s)=P_{\mu+as,\sigma+bs}.\end{aligned}</div>
+<p><span class="inline-math" data-tex="s">s</span> は座標が許される範囲で0の近くに取ります。曲線の初速度 <span class="inline-math" data-tex="U">U</span> は次の接ベクトルです。</p>
+<div class="equation" data-tex="U=\dot\gamma(0)=a\left.\frac{\partial}{\partial\mu}\right|_P+b\left.\frac{\partial}{\partial\sigma}\right|_P">U=\dot\gamma(0)=a\left.\frac{\partial}{\partial\mu}\right|_P+b\left.\frac{\partial}{\partial\sigma}\right|_P</div>
+<p>観測された結果に予測が小さな確率を与えたときほど、損失を大きくします。独立な観測の尤度は各観測の確率の積です。負の対数を取ると、低い尤度ほど損失が大きくなり、積だった尤度から観測ごとの損失の和が得られます。密度を使う分布でも、尤度の積を損失の和に変える手順は同じです。</p>
+<p>実際の分布を固定し、予測をずらした場合の平均損失から、実際の分布そのもので予測した場合の平均損失を引きます。二つの損失は同じ分布で平均するので、平均の中で負の対数の差を取れます。これが KL ダイバージェンスです。</p>
+<p>観測値 <span class="inline-math" data-tex="x\in\mathbb R">x\in\mathbb R</span>での実際の分布での値を <span class="inline-math" data-tex="p_P=p_{\mu,\sigma}(x)">p_P=p_{\mu,\sigma}(x)</span>、予測側を <span class="inline-math" data-tex="q_s=p_{\mu+as,\sigma+bs}(x)">q_s=p_{\mu+as,\sigma+bs}(x)</span> と書きます。<span class="inline-math" data-tex="\mathbb E_P">\mathbb E_P</span> は、それぞれの観測値に <span class="inline-math" data-tex="p_P">p_P</span> を重みとして掛けて平均する記号です。</p>
+<div class="equation" data-tex="\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}">\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}</div>
+<div class="equation" data-tex="L(s)=\int_{\mathbb R}p_{\mu,\sigma}(x)\log\frac{p_{\mu,\sigma}(x)}{p_{\mu+as,\sigma+bs}(x)}\,\mathrm dx.">L(s)=\int_{\mathbb R}p_{\mu,\sigma}(x)\log\frac{p_{\mu,\sigma}(x)}{p_{\mu+as,\sigma+bs}(x)}\,\mathrm dx.</div>
+<h3>なぜ二階微分を取るか</h3>
+<p><span class="inline-math" data-tex="s=0">s=0</span> では確率または密度の比がどの観測値でも1なので、<span class="inline-math" data-tex="L(0)=0">L(0)=0</span> です。予測が少しずれたときに損失がどう増えるかを見るには、次に一次と二次の項を調べます。</p>
+<p>一次の項は0です。この後に確かめるように、<span class="inline-math" data-tex="L^{\prime}(0)">L^{\prime}(0)</span> は予測の確率の総和（連続分布なら密度の積分）を微分した値のマイナスになります。その総和や積分は曲線上のどこでも1です。</p>
+<div class="equation" data-tex="L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).">L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).</div>
+<p><span class="inline-math" data-tex="o(s^2)">o(s^2)</span> は <span class="inline-math" data-tex="s^2">s^2</span> で割ると0に近づく余りです。したがって、近くの分布をどれだけ区別しやすいかは、まず <span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> に現れます。係数が大きい方向ほど、同じ小さな <span class="inline-math" data-tex="s">s</span> で平均損失が大きく増えます。この二階微分が初速度の成分の二次式になり、正則なモデルでは非零の初速度に対して正なので、計量で測る長さの二乗に使えます。</p>
+<p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
+<p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
+<div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
+<div class="equation" data-tex="\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}">\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}</div>
+<p>期待値の重み <span class="inline-math" data-tex="p_P">p_P</span> と分母の <span class="inline-math" data-tex="p_P">p_P</span> が消える項では、残るのは <span class="inline-math" data-tex="\dot q_0">\dot q_0</span> または <span class="inline-math" data-tex="\ddot q_0">\ddot q_0</span> の和や積分です。正規化の式の一階・二階微分なので、どちらも0です。残った項では、<span class="inline-math" data-tex="\dot q_0/p_P">\dot q_0/p_P</span> が <span class="inline-math" data-tex="s=0">s=0</span> での対数確率または対数密度の変化率になります。これを方向 <span class="inline-math" data-tex="U">U</span> のスコア <span class="inline-math" data-tex="S_U">S_U</span> と書くと、</p>
+<div class="equation" data-tex="\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}">\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}</div>
+<p>平均方向と標準偏差方向のスコアを <span class="inline-math" data-tex="S_\mu,S_\sigma">S_\mu,S_\sigma</span> とすると、<span class="inline-math" data-tex="S_U=aS_\mu+bS_\sigma">S_U=aS_\mu+bS_\sigma</span> です。二乗すると <span class="inline-math" data-tex="a^2S_\mu^2+2abS_\mu S_\sigma+b^2S_\sigma^2">a^2S_\mu^2+2abS_\mu S_\sigma+b^2S_\sigma^2</span>。この3種類の積を平均すれば、計量の3成分がそろいます。 <a href="#general-fisher">一般論で微分の各項を追う</a></p>
+<h3>この分布で計量を計算する</h3>
+
 <p>前章の二つの座標基底を <span class="inline-math" data-tex="e_\mu=\left.\frac{\partial}{\partial\mu}\right|_P">e_\mu=\left.\frac{\partial}{\partial\mu}\right|_P</span>、<span class="inline-math" data-tex="e_\sigma=\left.\frac{\partial}{\partial\sigma}\right|_P">e_\sigma=\left.\frac{\partial}{\partial\sigma}\right|_P</span> と書きます。スコアは、各基底を対数密度に作用させた値です。まず対数密度を三項に分けます。</p>
 <div class="equation" data-tex="\ell(x)=\log p_{\mu,\sigma}(x)=-\tfrac12\log(2\pi)-\log\sigma-\frac{(x-\mu)^2}{2\sigma^2}.">\ell(x)=\log p_{\mu,\sigma}(x)=-\tfrac12\log(2\pi)-\log\sigma-\frac{(x-\mu)^2}{2\sigma^2}.</div>
 <p>平均で微分するときは <span class="inline-math" data-tex="x,\sigma">x,\sigma</span> を固定します。最後の項の <span class="inline-math" data-tex="(x-\mu)^2">(x-\mu)^2</span> だけが動きます。二乗の微分で <span class="inline-math" data-tex="2(x-\mu)">2(x-\mu)</span>、内側の微分で <span class="inline-math" data-tex="-1">-1</span> が出ます。</p>
@@ -1023,6 +1125,30 @@
 <p>例えば尺度の方向だけを取るなら <span class="inline-math" data-tex="a=0,b=1">a=0,b=1</span> です。図の初期値 <span class="inline-math" data-tex="k=2,\theta=1">k=2,\theta=1</span> を入れると、<span class="inline-math" data-tex="U\ell=x-2">U\ell=x-2</span>。<span class="inline-math" data-tex="x=1">x=1</span> では <span class="inline-math" data-tex="-1">-1</span>、<span class="inline-math" data-tex="x=3">x=3</span> では <span class="inline-math" data-tex="+1">+1</span> と、観測値によって符号が変わります。</p>
 </section>
 <section id="gamma-metric"><h2>3. フィッシャー計量と基底の角度</h2>
+<h3>分布を動かして KL を作る</h3>
+<p>実際の形状 <span class="inline-math" data-tex="k">k</span> と尺度 <span class="inline-math" data-tex="\theta">\theta</span> を固定します。第2章と同じように、座標を少し動かして予測の分布を作ります。出発点は実際の分布で、座標の変化率はあらかじめ固定します。</p>
+<div class="equation" data-tex="\begin{aligned}P&amp;=P_{k,\theta},\\ Q_s&amp;=\gamma(s)=P_{k+as,\theta+bs}.\end{aligned}">\begin{aligned}P&amp;=P_{k,\theta},\\ Q_s&amp;=\gamma(s)=P_{k+as,\theta+bs}.\end{aligned}</div>
+<p><span class="inline-math" data-tex="s">s</span> は座標が許される範囲で0の近くに取ります。曲線の初速度 <span class="inline-math" data-tex="U">U</span> は次の接ベクトルです。</p>
+<div class="equation" data-tex="U=\dot\gamma(0)=a\left.\frac{\partial}{\partial k}\right|_P+b\left.\frac{\partial}{\partial\theta}\right|_P">U=\dot\gamma(0)=a\left.\frac{\partial}{\partial k}\right|_P+b\left.\frac{\partial}{\partial\theta}\right|_P</div>
+<p>観測された結果に予測が小さな確率を与えたときほど、損失を大きくします。独立な観測の尤度は各観測の確率の積です。負の対数を取ると、低い尤度ほど損失が大きくなり、積だった尤度から観測ごとの損失の和が得られます。密度を使う分布でも、尤度の積を損失の和に変える手順は同じです。</p>
+<p>実際の分布を固定し、予測をずらした場合の平均損失から、実際の分布そのもので予測した場合の平均損失を引きます。二つの損失は同じ分布で平均するので、平均の中で負の対数の差を取れます。これが KL ダイバージェンスです。</p>
+<p>観測値 <span class="inline-math" data-tex="x&gt;0">x&gt;0</span>での実際の分布での値を <span class="inline-math" data-tex="p_P=p_{k,\theta}(x)">p_P=p_{k,\theta}(x)</span>、予測側を <span class="inline-math" data-tex="q_s=p_{k+as,\theta+bs}(x)">q_s=p_{k+as,\theta+bs}(x)</span> と書きます。<span class="inline-math" data-tex="\mathbb E_P">\mathbb E_P</span> は、それぞれの観測値に <span class="inline-math" data-tex="p_P">p_P</span> を重みとして掛けて平均する記号です。</p>
+<div class="equation" data-tex="\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}">\begin{aligned}L(s)&amp;=\mathbb E_P[-\log q_s]-\mathbb E_P[-\log p_P]\\&amp;=\mathbb E_P[\log(p_P/q_s)]\\&amp;=D_{\rm KL}(P\Vert Q_s).\end{aligned}</div>
+<div class="equation" data-tex="L(s)=\int_0^\infty p_{k,\theta}(x)\log\frac{p_{k,\theta}(x)}{p_{k+as,\theta+bs}(x)}\,\mathrm dx.">L(s)=\int_0^\infty p_{k,\theta}(x)\log\frac{p_{k,\theta}(x)}{p_{k+as,\theta+bs}(x)}\,\mathrm dx.</div>
+<h3>なぜ二階微分を取るか</h3>
+<p><span class="inline-math" data-tex="s=0">s=0</span> では確率または密度の比がどの観測値でも1なので、<span class="inline-math" data-tex="L(0)=0">L(0)=0</span> です。予測が少しずれたときに損失がどう増えるかを見るには、次に一次と二次の項を調べます。</p>
+<p>一次の項は0です。この後に確かめるように、<span class="inline-math" data-tex="L^{\prime}(0)">L^{\prime}(0)</span> は予測の確率の総和（連続分布なら密度の積分）を微分した値のマイナスになります。その総和や積分は曲線上のどこでも1です。</p>
+<div class="equation" data-tex="L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).">L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).</div>
+<p><span class="inline-math" data-tex="o(s^2)">o(s^2)</span> は <span class="inline-math" data-tex="s^2">s^2</span> で割ると0に近づく余りです。したがって、近くの分布をどれだけ区別しやすいかは、まず <span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> に現れます。係数が大きい方向ほど、同じ小さな <span class="inline-math" data-tex="s">s</span> で平均損失が大きく増えます。この二階微分が初速度の成分の二次式になり、正則なモデルでは非零の初速度に対して正なので、計量で測る長さの二乗に使えます。</p>
+<p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
+<p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
+<div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
+<div class="equation" data-tex="\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}">\begin{aligned} L^{\prime}(0)&amp;=-\mathbb E_P[\dot q_0/p_P],\\ L^{\prime\prime}(0)&amp;=\mathbb E_P[(\dot q_0/p_P)^2]-\mathbb E_P[\ddot q_0/p_P].\end{aligned}</div>
+<p>期待値の重み <span class="inline-math" data-tex="p_P">p_P</span> と分母の <span class="inline-math" data-tex="p_P">p_P</span> が消える項では、残るのは <span class="inline-math" data-tex="\dot q_0">\dot q_0</span> または <span class="inline-math" data-tex="\ddot q_0">\ddot q_0</span> の和や積分です。正規化の式の一階・二階微分なので、どちらも0です。残った項では、<span class="inline-math" data-tex="\dot q_0/p_P">\dot q_0/p_P</span> が <span class="inline-math" data-tex="s=0">s=0</span> での対数確率または対数密度の変化率になります。これを方向 <span class="inline-math" data-tex="U">U</span> のスコア <span class="inline-math" data-tex="S_U">S_U</span> と書くと、</p>
+<div class="equation" data-tex="\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}">\begin{aligned}S_U&amp;=\left.\frac{\mathrm d}{\mathrm ds}\log q_s\right|_{s=0}=\dot q_0/p_P,\\g_P(U,U)&amp;=L^{\prime\prime}(0)=\mathbb E_P[S_U^2].\end{aligned}</div>
+<p>形状と尺度の二つのスコアから計量の3成分が決まります。この例では二つのスコアの積を直接積分する代わりに、KLの定義で <span class="inline-math" data-tex="s">s</span> に依存する <span class="inline-math" data-tex="-\log q_s">-\log q_s</span> を二度微分した形を使うと計算しやすくなります。下で両者が一致する理由も確認します。 <a href="#general-fisher">一般論で微分の各項を追う</a></p>
+<h3>この分布で計量を計算する</h3>
+
 <p><span class="inline-math" data-tex="e_k=\left.\partial/\partial k\right|_P">e_k=\left.\partial/\partial k\right|_P</span> と <span class="inline-math" data-tex="e_\theta=\left.\partial/\partial\theta\right|_P">e_\theta=\left.\partial/\partial\theta\right|_P</span> を、同じ点 <span class="inline-math" data-tex="P=P_{k,\theta}">P=P_{k,\theta}</span> で取ります。密度の対数を <span class="inline-math" data-tex="\ell=(k-1)\log x-x/\theta-\log\Gamma(k)-k\log\theta">\ell=(k-1)\log x-x/\theta-\log\Gamma(k)-k\log\theta</span> と置きます。フィッシャー行列は、スコアの積を平均するほかに、次の形でも計算できます。</p>
 <div class="equation" data-tex="0=\int_0^\infty\partial_a\partial_b p\,\mathrm dx=\mathbb E_P[(\partial_a\ell)(\partial_b\ell)+\partial_a\partial_b\ell].">0=\int_0^\infty\partial_a\partial_b p\,\mathrm dx=\mathbb E_P[(\partial_a\ell)(\partial_b\ell)+\partial_a\partial_b\ell].</div>
 <p>最初の等号は <span class="inline-math" data-tex="\int p\,\mathrm dx=1">\int p\,\mathrm dx=1</span> を二度微分した結果です。次の等号では <span class="inline-math" data-tex="\partial_b p=p\partial_b\ell">\partial_b p=p\partial_b\ell</span> を積の微分で展開しました。従って <span class="inline-math" data-tex="g_{ab}=-\mathbb E_P[\partial_a\partial_b\ell]">g_{ab}=-\mathbb E_P[\partial_a\partial_b\ell]</span> です。</p>
@@ -1124,11 +1250,19 @@
 <p>座標基底ごとの対数密度の変化率 <span class="inline-math" data-tex="S_a(x)=\partial_a\log p_\vartheta(x)">S_a(x)=\partial_a\log p_\vartheta(x)</span> をスコアと呼びます。以降、<span class="inline-math" data-tex="\partial_a">\partial_a</span> は座標値 <span class="inline-math" data-tex="\vartheta^a">\vartheta^a</span> での偏微分です。したがって <span class="inline-math" data-tex="U\log p(x)=\sum_a u^a S_a(x)">U\log p(x)=\sum_a u^a S_a(x)</span> です。</p>
 </section>
 <section id="general-fisher"><h2>3. KLの二階微分からフィッシャー計量へ</h2>
+<h3>分布を動かして KL を作る</h3>
+<p>観測された結果に予測が小さな確率を与えたときほど、損失を大きくします。独立な観測の尤度は各観測の確率の積です。負の対数を取ると、低い尤度ほど損失が大きくなり、積だった尤度から観測ごとの損失の和が得られます。密度を使う分布でも、尤度の積を損失の和に変える手順は同じです。</p>
+<p>実際の分布を固定し、予測をずらした場合の平均損失から、実際の分布そのもので予測した場合の平均損失を引きます。二つの損失は同じ分布で平均するので、平均の中で負の対数の差を取れます。これが KL ダイバージェンスです。</p>
 <p><span class="inline-math" data-tex="P">P</span> を実際の分布として固定し、予測に使う分布を <span class="inline-math" data-tex="Q_s=\gamma(s)">Q_s=\gamma(s)</span> とします。<span class="inline-math" data-tex="q_s(x)=p_{Q_s}(x)">q_s(x)=p_{Q_s}(x)</span> と置くと、<span class="inline-math" data-tex="q_0(x)=p_P(x)">q_0(x)=p_P(x)</span>、<span class="inline-math" data-tex="\dot q_0(x)=Up(x)">\dot q_0(x)=Up(x)</span> です。<a href="#fisher-metric">3カテゴリの第3章</a>と同様、予測を <span class="inline-math" data-tex="P">P</span> から <span class="inline-math" data-tex="Q_s">Q_s</span> に変えたときの平均対数損失の差を取ります。</p>
 <div class="equation" data-tex="\begin{aligned}L(s)&amp;=D_{\mathrm{KL}}(P\Vert Q_s)\\&amp;=\mathcal I\!\left[p_P(x)\bigl[\log p_P(x)-\log q_s(x)\bigr]\right].\end{aligned}">\begin{aligned}L(s)&amp;=D_{\mathrm{KL}}(P\Vert Q_s)\\&amp;=\mathcal I\!\left[p_P(x)\bigl[\log p_P(x)-\log q_s(x)\bigr]\right].\end{aligned}</div>
 <p>この式の出発点を分けて書くと、実際の分布が <span class="inline-math" data-tex="P">P</span> のときにモデル <span class="inline-math" data-tex="R">R</span> を使う平均損失は <span class="inline-math" data-tex="C_P(R)=\mathcal I[p_P(-\log p_R)]">C_P(R)=\mathcal I[p_P(-\log p_R)]</span> です。<span class="inline-math" data-tex="R">R</span> に <span class="inline-math" data-tex="Q_s">Q_s</span> と <span class="inline-math" data-tex="P">P</span> を入れ、差を取ります。</p>
 <div class="equation" data-tex="\begin{aligned}L(s)&amp;=C_P(Q_s)-C_P(P)\\ &amp;=-\mathcal I[p_P\log q_s]+\mathcal I[p_P\log p_P]\\ &amp;=\mathcal I[p_P\,\log(p_P/q_s)].\end{aligned}">\begin{aligned}L(s)&amp;=C_P(Q_s)-C_P(P)\\ &amp;=-\mathcal I[p_P\log q_s]+\mathcal I[p_P\log p_P]\\ &amp;=\mathcal I[p_P\,\log(p_P/q_s)].\end{aligned}</div>
 <p>この割り算は、二つの予測の対数を引いた結果です。微分で出てくる <span class="inline-math" data-tex="1/p_P">1/p_P</span> とは、この後の計算でつながります。</p>
+<h3>なぜ二階微分を取るか</h3>
+<p><span class="inline-math" data-tex="s=0">s=0</span> では確率または密度の比がどの観測値でも1なので、<span class="inline-math" data-tex="L(0)=0">L(0)=0</span> です。予測が少しずれたときに損失がどう増えるかを見るには、次に一次と二次の項を調べます。</p>
+<p>一次の項は0です。この後に確かめるように、<span class="inline-math" data-tex="L^{\prime}(0)">L^{\prime}(0)</span> は予測の確率の総和（連続分布なら密度の積分）を微分した値のマイナスになります。その総和や積分は曲線上のどこでも1です。</p>
+<div class="equation" data-tex="L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).">L(s)=\tfrac12s^2 L^{\prime\prime}(0)+o(s^2).</div>
+<p><span class="inline-math" data-tex="o(s^2)">o(s^2)</span> は <span class="inline-math" data-tex="s^2">s^2</span> で割ると0に近づく余りです。したがって、近くの分布をどれだけ区別しやすいかは、まず <span class="inline-math" data-tex="L^{\prime\prime}(0)">L^{\prime\prime}(0)</span> に現れます。係数が大きい方向ほど、同じ小さな <span class="inline-math" data-tex="s">s</span> で平均損失が大きく増えます。この二階微分が初速度の成分の二次式になり、正則なモデルでは非零の初速度に対して正なので、計量で測る長さの二乗に使えます。</p>
 <p>外側の重み <span class="inline-math" data-tex="p_P">p_P</span> は実際の分布なので固定です。予測の密度だけを微分すると、</p>
 <div class="equation" data-tex="\begin{aligned}L&#x27;(s)&amp;=-\mathcal I\!\left[p_P\frac{\dot q_s}{q_s}\right],\\L&#x27;(0)&amp;=-\mathcal I\!\left[Up\right]=0.\end{aligned}">\begin{aligned}L&#x27;(s)&amp;=-\mathcal I\!\left[p_P\frac{\dot q_s}{q_s}\right],\\L&#x27;(0)&amp;=-\mathcal I\!\left[Up\right]=0.\end{aligned}</div>
 <p>一項ずつ見ると、最初の微分では <span class="inline-math" data-tex="\log p_P">\log p_P</span> が定数なので消えます。残る <span class="inline-math" data-tex="-\log q_s">-\log q_s</span> の微分は <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。この式に <span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を入れると、外側の <span class="inline-math" data-tex="p_P">p_P</span> と分母が約分されます。</p>
