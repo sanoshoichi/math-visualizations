@@ -106,3 +106,43 @@
 .roadmap-slide figcaption a {
   white-space: nowrap;
 }
+
+.symbol-key {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: .65rem 0 .9rem;
+  border: 1px solid var(--line);
+  border-radius: .45rem;
+  background: var(--wash);
+}
+
+.symbol-key > div {
+  min-width: 0;
+  padding: .4rem .65rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.symbol-key dt {
+  color: var(--blue);
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.symbol-key dd {
+  margin: 0;
+  overflow-x: auto;
+  padding-block: .1rem;
+}
+
+.symbol-key small {
+  display: block;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 560px) {
+  .symbol-key {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
