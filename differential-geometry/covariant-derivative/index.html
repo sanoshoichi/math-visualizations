@@ -101,8 +101,8 @@
 <details><summary>式と記号</summary>
 <p>円周上の角度を <span class="inline-math" data-tex="\theta"><i>θ</i></span>、接ベクトルの長さを <span class="inline-math" data-tex="f"><i>f</i></span> とする。単位接ベクトルを <span class="inline-math" data-tex="T"><i>T</i></span>、外向き単位法線を <span class="inline-math" data-tex="N"><i>N</i></span> とする。微分はラジアンで測った角度について行う。</p>
 <div class="formula" data-tex="Y = fT\qquad f = 1 + a \sin  \theta"><i>Y</i> = <i>fT</i>　　<i>f</i> = 1 + <i>a</i> sin <i>θ</i></div>
-<div class="formula" data-tex="\mathrm d Y/d\theta  = f&#x27;T - fN">d<i>Y</i>/d<i>θ</i> = <i>f′T</i> − <i>fN</i></div>
-<div class="formula" data-tex="\mathrm D Y/d\theta  = f&#x27;T">D<i>Y</i>/d<i>θ</i> = <i>f′T</i></div>
+<div class="formula" data-tex="\frac{\mathrm dY}{\mathrm d\theta}=\textcolor{#83dfb2}{\underbrace{f&#x27;T}_{\text{接線方向}}}-\textcolor{#ff9aaf}{\underbrace{fN}_{\text{法線方向}}}">d<i>Y</i>/d<i>θ</i> = <i>f′T</i> − <i>fN</i></div>
+<div class="formula" data-tex="\frac{\mathrm DY}{\mathrm d\theta}=\textcolor{#83dfb2}{\underbrace{f&#x27;T}_{\text{接線方向だけ残す}}}">D<i>Y</i>/d<i>θ</i> = <i>f′T</i></div>
 <p>長さが一定でも、矢印の向きは回る。その変化は法線方向に現れる。接線方向に残るのは、長さの変化による成分である。</p>
 </details>
 </section>
@@ -159,11 +159,11 @@
     <details class="sphere-derivation"><summary>計量とクリストッフェル記号の導出</summary>
     <div class="sphere-formulas">
       <p>単位球面の計量成分は次のとおり。</p><div class="display-equation" data-tex="g_{\theta \theta} = \cos ^{2}\phi ,\quad g_{\phi \phi} = 1,\quad g_{\theta \phi} = 0"><span><i>g</i><sub><i>θθ</i></sub> = cos²<i>φ</i></span>、<span><i>g</i><sub><i>φφ</i></sub> = 1</span>、<span><i>g</i><sub><i>θφ</i></sub> = 0</span></div>
-      <div class="display-equation" data-tex="\Gamma ^{\phi}_{\theta \theta} = -\tfrac12  \partial _{\phi}g_{\theta \theta} = \sin \phi  \cos \phi">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = −½ ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = sin<i>φ</i> cos<i>φ</i></div>
+      <div class="display-equation" data-tex="\begin{aligned}\Gamma^\phi_{\theta\theta}&amp;=-\tfrac12\,\textcolor{#8bc5ff}{\underbrace{\partial_\phi g_{\theta\theta}}_{\text{経度方向の計量を微分}}}\\&amp;=-\tfrac12\bigl(\textcolor{#ff9aaf}{\underbrace{-2\sin\phi\cos\phi}_{\text{余弦の二乗の微分}}}\bigr)\\&amp;=\sin\phi\cos\phi\end{aligned}">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = −½ ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = sin<i>φ</i> cos<i>φ</i></div>
       <div class="display-equation" data-tex="\Gamma ^{\theta}_{\theta \phi} = \tfrac12  g^{\theta \theta} \partial _{\phi}g_{\theta \theta} = -\tan \phi">Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = ½ <i>g</i><sup><i>θθ</i></sup> ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = −tan<i>φ</i></div>
       <p>緯度を固定して経度だけを変える。接ベクトルの座標成分を次のように表す。</p><div class="display-equation" data-tex="Y^{\theta} = f / \cos \phi ,\quad Y^{\phi} = 0,\quad f = 1 + a \sin \theta"><span><i>Y</i><sup><i>θ</i></sup> = <i>f</i> / cos<i>φ</i></span>、<span><i>Y</i><sup><i>φ</i></sup> = 0</span>、<span><i>f</i> = 1 + <i>a</i> sin<i>θ</i></span></div>
       <div class="display-equation" data-tex="(\mathrm D Y/d\theta )^{\theta} = \mathrm d Y^{\theta}/d\theta  + 0 = f&#x27; / \cos \phi">(D<i>Y</i>/d<i>θ</i>)<sup><i>θ</i></sup> = d<i>Y</i><sup><i>θ</i></sup>/d<i>θ</i> + 0 = <i>f</i>′ / cos<i>φ</i></div>
-      <div class="display-equation" data-tex="(\mathrm D Y/d\theta )^{\phi} = 0 + \Gamma ^{\phi}_{\theta \theta} Y^{\theta} = f \sin \phi">(D<i>Y</i>/d<i>θ</i>)<sup><i>φ</i></sup> = 0 + Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> <i>Y</i><sup><i>θ</i></sup> = <i>f</i> sin<i>φ</i></div>
+      <div class="display-equation" data-tex="\begin{aligned}\left(\frac{\mathrm DY}{\mathrm d\theta}\right)^\phi&amp;=\textcolor{#ffd479}{\underbrace{0}_{\text{成分の微分}}}+\textcolor{#d9b8ff}{\underbrace{\Gamma^\phi_{\theta\theta}Y^\theta}_{\text{基底の変化}}}\\&amp;=(\sin\phi\cos\phi)\frac{f}{\cos\phi}\\&amp;=f\sin\phi\end{aligned}">(D<i>Y</i>/d<i>θ</i>)<sup><i>φ</i></sup> = 0 + Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> <i>Y</i><sup><i>θ</i></sup> = <i>f</i> sin<i>φ</i></div>
       <p>現在の設定を <span class="inline-math" data-tex="\phi"><i>φ</i></span> 成分の式に代入する。</p><div class="display-equation"><output data-phi-equation></output></div>
     </div>
     </details>

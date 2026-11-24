@@ -66,7 +66,7 @@
   <section id="simultaneity">
     <h2>二つの発光が同時になる速さ</h2>
     <p>「同時になる速さに合わせる」を押すと、<var>F</var> と <var>E</var> を結ぶ青い矢印が <var>x′</var> 軸と平行になり、時間方向の矢印が消える。地上の座標で見た線 <var>FE</var> の傾きに、<var>x′</var> 軸の傾きが一致した状態だ。</p>
-    <div class="equation" data-tex="\beta=\frac{c\Delta t}{\Delta x}=\frac{1.25}{2.75}=\frac{5}{11}\approx0.4545.">β = 1.25 / 2.75 = 5/11 ≈ 0.4545</div>
+    <div class="equation" data-tex="\begin{aligned}\beta&amp;=\frac{c\Delta t}{\Delta x}=\frac{1.25}{2.75}\\&amp;=\textcolor{#ffd479}{\underbrace{\frac{5}{11}}_{\text{約分}}}\approx0.4545.\end{aligned}">β = 1.25 / 2.75 = 5/11 ≈ 0.4545</div>
     <p>この速さより遅い列車では <var>F</var> が先、速い列車では <var>E</var> が先。図の <var>F,E</var> は同じ発光なので、変わっているのは、離れた場所の二つの出来事にどの時刻を付けるかだ。</p>
   </section>
 
@@ -75,14 +75,14 @@
     <p><var>F</var> から <var>E</var> への差を、時間成分から並べる。<span class="inline-math" data-tex="\gamma=1/\sqrt{1-\beta^2}">γ = 1 / √(1−β²)</span> とすると、地上 <var>S</var> から列車 <var>S′</var> への変換は次の式になる。</p>
     <div class="equation" data-tex="\begin{pmatrix}c\Delta t'\\\Delta x'\end{pmatrix}=\gamma\begin{pmatrix}1&-\beta\\-\beta&1\end{pmatrix}\begin{pmatrix}c\Delta t\\\Delta x\end{pmatrix}.">(cΔt′, Δx′) = γ(cΔt − βΔx, Δx − βcΔt)</div>
     <p><span class="inline-math" data-tex="\beta=0.60">β = 0.60</span> なら <span class="inline-math" data-tex="\gamma=1.25">γ = 1.25</span>。光秒を単位に、行列の各行を計算すると、</p>
-    <div class="equation" data-tex="\begin{aligned}c\Delta t'&amp;=1.25(1.25-0.60\times2.75)=-0.50,\\\Delta x'&amp;=1.25(2.75-0.60\times1.25)=+2.50.\end{aligned}">cΔt′ = −0.50 光秒、Δx′ = +2.50 光秒</div>
+    <div class="equation" data-tex="\begin{aligned}c\Delta t&#x27;&amp;=1.25\bigl(1.25-\textcolor{#d9b8ff}{\underbrace{0.60\times2.75}_{\text{空間差が入る}}}\bigr)=-0.50,\\\Delta x&#x27;&amp;=1.25\bigl(2.75-\textcolor{#8bc5ff}{\underbrace{0.60\times1.25}_{\text{時間差が入る}}}\bigr)=+2.50.\end{aligned}">cΔt′ = −0.50 光秒、Δx′ = +2.50 光秒</div>
     <p>時刻差の式で <span class="inline-math" data-tex="c\Delta t'=0">cΔt′ = 0</span> と置くと、図で使った同時の条件が出る。空間が1次元なら、この条件を満たす慣性系があるのは <span class="inline-math" data-tex="|\Delta x|&gt;c|\Delta t|">|Δx| &gt; c|Δt|</span> の場合だ。そうすれば求めた <var>β</var> が <span class="inline-math" data-tex="|\beta|&lt;1">|β| &lt; 1</span> に収まる。</p>
   </section>
 
   <section id="interval">
     <h2>どちらの系でも同じ値</h2>
     <p>位置差と時刻差は変わるが、時空間隔の二乗は同じ。光秒を単位に計算すると、</p>
-    <div class="equation" data-tex="\begin{aligned}S:\quad &amp;2.75^2-1.25^2=6,\\S'\ (\beta=0.60):\quad &amp;2.50^2-(-0.50)^2=6.\end{aligned}">S: 2.75² − 1.25² = 6。S′: 2.50² − (−0.50)² = 6。</div>
+    <div class="equation" data-tex="\begin{aligned}S:\quad &amp;\textcolor{#8bc5ff}{\underbrace{2.75^2-1.25^2}_{\text{変換前}}}=6,\\S&#x27;\ (\beta=0.60):\quad &amp;\textcolor{#83dfb2}{\underbrace{2.50^2-(-0.50)^2}_{\text{変換後}}}=6.\end{aligned}">S: 2.75² − 1.25² = 6。S′: 2.50² − (−0.50)² = 6。</div>
     <p>地上では、光でも1.25秒で2.75光秒は進めない。二つの発光は空間的に隔たっているので、発光の順番が変わる慣性系がある。同時になる系では時間の差がゼロになり、二点の距離は <span class="inline-math" data-tex="\sqrt6">√6</span> 光秒になる。</p>
   </section>
 </main>

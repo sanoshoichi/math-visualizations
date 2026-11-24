@@ -81,9 +81,9 @@
 <section id="covariant" class="sr-topic">
 <h2>5.1 共変微分は何を足しているか</h2>
 <p>座標基底を <span class="inline-math" data-tex="e_i=\partial_i">e_i=\partial_i</span> とし、ベクトルを <span class="inline-math" data-tex="Y=Y^j e_j">Y=Y^j e_j</span> と書く。曲線に沿って動くと成分 <span class="inline-math" data-tex="Y^j">Y^j</span> と基底 <span class="inline-math" data-tex="e_j">e_j</span> がともに変わる。積の微分を行い、基底の変化を <span class="inline-math" data-tex="\nabla_i e_j=\Gamma^k_{ij}e_k">\nabla_i e_j=\Gamma^k_{ij}e_k</span> で表す。</p>
-<div class="equation" data-tex="\left(\frac{DY}{Dt}\right)^k=\underbrace{\frac{\mathrm dY^k}{\mathrm dt}}_{\text{成分の変化}}+\underbrace{\Gamma^k_{ij}\dot x^iY^j}_{\text{基底の変化}}.">\left(\frac{DY}{Dt}\right)^k=\underbrace{\frac{\mathrm dY^k}{\mathrm dt}}_{\text{成分の変化}}+\underbrace{\Gamma^k_{ij}\dot x^iY^j}_{\text{基底の変化}}.</div>
+<div class="equation" data-tex="\left(\frac{DY}{Dt}\right)^k=\textcolor{#8bc5ff}{\underbrace{\frac{\mathrm dY^k}{\mathrm dt}}_{\text{成分の変化}}}+\textcolor{#d9b8ff}{\underbrace{\Gamma^k_{ij}\dot x^iY^j}_{\text{基底の変化}}}.">\left(\frac{DY}{Dt}\right)^k=\underbrace{\frac{\mathrm dY^k}{\mathrm dt}}_{\text{成分の変化}}+\underbrace{\Gamma^k_{ij}\dot x^iY^j}_{\text{基底の変化}}.</div>
 <p>単位球を三次元に埋め込み、余緯度 <span class="inline-math" data-tex="\theta">\theta</span> を固定して経度 <span class="inline-math" data-tex="\phi=t">\phi=t</span> に沿う。<span class="inline-math" data-tex="Y=e_\phi=(-\sin\theta\sin\phi,\sin\theta\cos\phi,0)">Y=e_\phi=(-\sin\theta\sin\phi,\sin\theta\cos\phi,0)</span> とすると座標成分は <span class="inline-math" data-tex="(0,1)">(0,1)</span> で一定。三次元で微分して <span class="inline-math" data-tex="e_\theta">e_\theta</span> と単位法線 <span class="inline-math" data-tex="n">n</span> への成分を取ると、</p>
-<div class="equation" data-tex="\frac{\mathrm dY}{\mathrm dt}=\underbrace{-\sin\theta\cos\theta\,e_\theta}_{DY/Dt}+\underbrace{-\sin^2\theta\,n}_{\text{法線成分}}.">\frac{\mathrm dY}{\mathrm dt}=\underbrace{-\sin\theta\cos\theta\,e_\theta}_{DY/Dt}+\underbrace{-\sin^2\theta\,n}_{\text{法線成分}}.</div>
+<div class="equation" data-tex="\begin{aligned}\frac{\mathrm dY}{\mathrm dt}&amp;=\textcolor{#83dfb2}{\underbrace{-\sin\theta\cos\theta\,e_\theta}_{\text{接平面に残る}}}\\&amp;\quad+\textcolor{#ff9aaf}{\underbrace{(-\sin^2\theta\,n)}_{\text{法線成分}}}.\end{aligned}">\frac{\mathrm dY}{\mathrm dt}=\underbrace{-\sin\theta\cos\theta\,e_\theta}_{DY/Dt}+\underbrace{-\sin^2\theta\,n}_{\text{法線成分}}.</div>
 <p><span class="inline-math" data-tex="e_\theta">e_\theta</span> の係数は <span class="inline-math" data-tex="\Gamma^\theta_{\phi\phi}=-\sin\theta\cos\theta">\Gamma^\theta_{\phi\phi}=-\sin\theta\cos\theta</span>。ここで接平面への射影を使えるのは、球面の計量が三次元の内積から誘導されているため。一般の計量でも上の成分式で共変微分を計算できる。</p>
 <figure class="sr-lab" data-gr-lab="covariant">
   <figcaption>球面の微分を接線と法線に分ける</figcaption>
@@ -165,9 +165,9 @@
 <section id="tensor-derivative" class="sr-topic">
 <h2>5.5 テンソルでは添字ごとに補正する</h2>
 <p>ベクトルと共変ベクトルの縮約 <span class="inline-math" data-tex="\omega_iV^i">\omega_iV^i</span> はスカラー。その微分に接続の項が残らないよう、下付き添字には上付き添字と逆の符号で接続を入れる。混合テンソル <span class="inline-math" data-tex="A^i{}_j">A^i{}_j</span> なら、</p>
-<div class="equation" data-tex="\nabla_k A^i{}_j=\partial_k A^i{}_j+\Gamma^i_{k\ell} A^\ell{}_j-\Gamma^\ell_{kj} A^i{}_\ell.">\nabla_k A^i{}_j=\partial_k A^i{}_j+\Gamma^i_{k\ell} A^\ell{}_j-\Gamma^\ell_{kj} A^i{}_\ell.</div>
+<div class="equation" data-tex="\begin{aligned}\nabla_k A^i{}_j&amp;=\textcolor{#8bc5ff}{\underbrace{\partial_k A^i{}_j}_{\text{成分を微分}}}\\&amp;\quad+\textcolor{#d9b8ff}{\underbrace{\Gamma^i_{k\ell} A^\ell{}_j}_{\text{上付き添字}}}-\textcolor{#ff9aaf}{\underbrace{\Gamma^\ell_{kj} A^i{}_\ell}_{\text{下付き添字}}}.\end{aligned}">\nabla_k A^i{}_j=\partial_k A^i{}_j+\Gamma^i_{k\ell} A^\ell{}_j-\Gamma^\ell_{kj} A^i{}_\ell.</div>
 <p>計量に適合する接続では <span class="inline-math" data-tex="\nabla g=0">\nabla g=0</span>。極座標で <span class="inline-math" data-tex="g_{\phi\phi}=r^2">g_{\phi\phi}=r^2</span> を <span class="inline-math" data-tex="r">r</span> 方向に微分して確かめる。下付きの <span class="inline-math" data-tex="\phi">\phi</span> が二つあり、それぞれから <span class="inline-math" data-tex="-(1/r)r^2">-(1/r)r^2</span> が出る。</p>
-<div class="equation" data-tex="\nabla_r g_{\phi\phi}=2r-r-r=0.">\nabla_r g_{\phi\phi}=2r-r-r=0.</div>
+<div class="equation" data-tex="\begin{aligned}\nabla_r g_{\phi\phi}&amp;=\textcolor{#8bc5ff}{\underbrace{2r}_{\text{計量成分の微分}}}-\textcolor{#d9b8ff}{\underbrace{(r+r)}_{\text{二つの基底の変化}}}\\&amp;=0.\end{aligned}">\nabla_r g_{\phi\phi}=2r-r-r=0.</div>
 <figure class="sr-lab" data-gr-lab="tensor">
   <figcaption>偏微分に下付き添字二つの補正を足す</figcaption>
   <div class="controls sr-controls">
@@ -261,7 +261,7 @@
  <div class="legend"><span><i class="key" aria-hidden="true"></i>A　半径・経線 → 円弧・緯線</span><span><i class="key second" aria-hidden="true"></i>B　円弧・緯線 → 半径・経線</span></div>
  <output class="answer tabular-nums" aria-live="polite"></output>
  <p>同じ矢印を二つの経路で運び、右側の <span class="inline-math" data-tex="T_QM">T_QM</span> で比べます。単位球面で囲む面積は、北極からの角度の範囲にも依存します。式では <span class="inline-math" data-tex="\Delta\phi">Δφ</span> をラジアンで代入します。</p>
- <div class="equation" data-tex="A=\Delta\phi\bigl(\cos\theta_P-\cos(\theta_P+\Delta\theta)\bigr).">A = Δφ［cos θP − cos(θP + Δθ)］。</div>
+ <div class="equation" data-tex="A=\textcolor{#8bc5ff}{\underbrace{\Delta\phi}_{\text{経度の幅}}}\textcolor{#d9b8ff}{\underbrace{\bigl(\cos\theta_P-\cos(\theta_P+\Delta\theta)\bigr)}_{\text{緯度方向の積分}}}.">A = Δφ［cos θP − cos(θP + Δθ)］。</div>
  <p>単位球面では、図の向きで測った二本の角度差はラジアンで <span class="inline-math" data-tex="A">A</span> に等しく、平面ではゼロです。<span class="inline-math" data-tex="\Delta\theta=0">Δθ = 0</span> では二つの道が重なり、囲む面積がゼロになるので比は定まりません。</p>
 </section>
 <section id="tc-scalar" role="tabpanel" aria-labelledby="tc-tab-scalar" hidden>
@@ -307,7 +307,7 @@
 <section id="newton" class="sr-topic">
 <h2>5.9 低速・弱い重力で Newton の運動に戻る</h2>
 <p>静的な弱い重力場で、時間成分を <span class="inline-math" data-tex="g_{00}\simeq-(1+2\Phi/c^2)">g_{00}\simeq-(1+2\Phi/c^2)</span> と置く。<span class="inline-math" data-tex="g_{0i}">g_{0i}</span> を無視し、空間の逆計量を <span class="inline-math" data-tex="\delta^{ij}">\delta^{ij}</span> で近似する。計量に時間依存がないため、<span class="inline-math" data-tex="\Gamma^i_{00}">\Gamma^i_{00}</span> には空間微分だけが残る。</p>
-<div class="equation" data-tex="\Gamma^i_{00}\simeq-\tfrac12\delta^{ij}\partial_j g_{00}=\frac{\partial_i\Phi}{c^2}.">\Gamma^i_{00}\simeq-\tfrac12\delta^{ij}\partial_j g_{00}=\frac{\partial_i\Phi}{c^2}.</div>
+<div class="equation" data-tex="\Gamma^i_{00}\simeq-\tfrac12\delta^{ij}\textcolor{#d9b8ff}{\underbrace{\partial_j g_{00}}_{\text{重力ポテンシャルを代入}}}=\frac{\partial_i\Phi}{c^2}.">\Gamma^i_{00}\simeq-\tfrac12\delta^{ij}\partial_j g_{00}=\frac{\partial_i\Phi}{c^2}.</div>
 <p>低速なら四元速度の時間成分は <span class="inline-math" data-tex="U^0\simeq c">U^0\simeq c</span> で、空間成分を含む項は小さい。測地線の式に残る <span class="inline-math" data-tex="-c^2\Gamma^i_{00}">-c^2\Gamma^i_{00}</span> が <span class="inline-math" data-tex="\mathrm d^2 x^i/\mathrm dt^2\simeq-\partial_i\Phi">\mathrm d^2 x^i/\mathrm dt^2\simeq-\partial_i\Phi</span> になる。球対称な天体の外なら <span class="inline-math" data-tex="\Phi=-GM/r">\Phi=-GM/r</span> なので加速度は内向き。</p>
 <figure class="sr-lab" data-gr-lab="newton">
   <figcaption>ポテンシャルの傾きから落下の向きを読む</figcaption>
