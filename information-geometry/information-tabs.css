@@ -28,7 +28,7 @@
   clip-path: inset(50%);
 }
 
-.information-course :is(h3, div)[id] {
+.information-course :is(h3, h4, div)[id] {
   scroll-margin-top: calc(var(--chapter-bar-height, 3rem) + .6rem);
 }
 
