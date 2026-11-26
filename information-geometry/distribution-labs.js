@@ -109,10 +109,12 @@
     tetrahedron.slice(0,3).forEach((vertex, i) => {
       const end = at.map((coord, axis) => coord + .14*(vertex[axis]-tetrahedron[3][axis]));
       arrow(svg, at, end, gold);
-      text(svg, end[0] + [-11,11,0][i], end[1] - 7, ['ρ₁','ρ₂','ρ₃'][i]);
+      text(svg, end[0] + [-11,11,0][i], end[1] - 7, ['+p₁','+p₂','+p₃'][i]);
     });
     point(svg, at);
-    return '(P(A₁), P(A₂), P(A₃), P(A₄)) = ' + tuple(probs) + '　g₁₂ = 1 / P(A₄) = ' + number(1/probs[3]);
+    document.querySelector('#four-lab [data-metric-values]').textContent =
+      'g₁₂ = 1 / P(A₄) = ' + number(1/probs[3]);
+    return '(P(A₁), P(A₂), P(A₃), P(A₄)) = ' + tuple(probs);
   });
 
   figures('poisson', ([svg], [lambda]) => {
@@ -120,8 +122,9 @@
     for (let j=1; j<=18; j++) probabilities.push(probabilities[j-1]*lambda/j);
     bars(svg, probabilities, 195, 'j（観測した回数）', 'λ = ' + number(lambda, 2));
     const tail=1-probabilities.reduce((sum, p) => sum+p, 0);
-    return '19回以上の確率 ' + Math.max(0,tail).toExponential(3) +
-      '　∂/∂λ の長さ ' + number(1/Math.sqrt(lambda)) + '　計量の成分 gλλ = ' + number(1/lambda);
+    document.querySelector('#poisson-lab [data-metric-values]').textContent =
+      '基底の長さ ' + number(1/Math.sqrt(lambda)) + '　長さの二乗 ' + number(1/lambda);
+    return '19回以上の確率 ' + Math.max(0,tail).toExponential(3);
   });
 
   // Recurrence to a large argument, then the Stirling expansion for log Γ.
@@ -169,6 +172,8 @@
     arrow(tangent, origin, [origin[0]+scale*thetaLength*Math.cos(angle),origin[1]-scale*thetaLength*Math.sin(angle)], gold,'6 4');
     const degrees=angle*180/Math.PI;
     text(tangent, 180, 171, 'フィッシャー計量で測った角度 α = ' + number(degrees,1) + '°');
-    return '形状基底の長さ ' + number(kLength) + '　尺度基底の長さ ' + number(thetaLength) + '　内積 ' + number(gkt);
+    document.querySelector('#gamma-lab [data-metric-values]').textContent =
+      '形状基底の長さ ' + number(kLength) + '　尺度基底の長さ ' + number(thetaLength) + '　内積 ' + number(gkt);
+    return '形状 k = ' + number(k,2) + '　尺度 θ = ' + number(theta,2);
   });
 })();

@@ -86,8 +86,9 @@
     const xpEnd = [5.18, beta * 5.18];
     const tpEnd = [beta * 6.03, 6.03];
     const axis = (end, color) => line(map(o), map(end), color, 1.25, "", .65);
-    const trainAxes = beta < .025 ? "" : axis(xpEnd, blue) + axis(tpEnd, blue) +
-      label(xpEnd, "x′", 5, -6, true) + label(tpEnd, "ct′", 4, -6, true);
+    const framesCoincide = beta === 0;
+    const trainAxes = framesCoincide ? "" : axis(xpEnd, blue) + axis(tpEnd, blue) +
+      label(xpEnd, "x′", -10, -8, true) + label(tpEnd, "ct′", 8, 5, true);
 
     svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
     svg.setAttribute("height", height);
@@ -95,8 +96,8 @@
       arrow(f, trainCorner, blue) + arrow(trainCorner, e, blue) +
       arrow(f, groundCorner, ink, "5 5") + arrow(groundCorner, e, ink, "5 5") +
       dot(f) + dot(e) + label(f, "F", -15, 4) + label(e, "E", 8, -5) + label(o, "O", -13, 15) +
-      label([5.18, 0], beta < .025 ? "x, x′" : "x", 0, 16, true) +
-      label([0, 6.03], beta < .025 ? "ct, ct′" : "ct", -8, -5, true);
+      label([5.18, 0], framesCoincide ? "x, x′" : "x", 0, 16, true) +
+      label([0, 6.03], framesCoincide ? "ct, ct′" : "ct", -8, -5, true);
   }
 
   function setSpeed(value) {

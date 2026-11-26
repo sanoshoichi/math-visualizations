@@ -38,7 +38,8 @@
 
   <section id="polar">
     <h2>1. 平面上の自由粒子を極座標で追う</h2>
-    <p>力を受けない粒子が、平らな面の上を右向きに等速で進むとします。図の二点で、原点から外へ向かう青い方向と、偏角を増やす金色の方向を比べます。軌道は直線のままですが、粒子が移動すると、この二方向は回ります。</p>
+    <p>力を受けない粒子が平面上を右へ等速で進みます。原点からの距離を <span class="inline-math" data-tex="r&gt;0">r &gt; 0</span>、正の横軸から反時計回りに測った角度を <span class="inline-math" data-tex="\varphi">φ</span> とします。点の直交座標は <span class="inline-math" data-tex="(x,y)=(r\cos\varphi,r\sin\varphi)">(x,y) = (r cos φ, r sin φ)</span> です。</p>
+    <p>図の点 <var>P</var> と点 <var>Q</var> で、半径が増える方向と偏角が増える方向を比べてください。粒子の進行方向は一定でも、この二方向は回ります。</p>
     <figure class="mechanics-figure">
       <svg viewBox="0 0 400 193" role="img" aria-labelledby="polar-title polar-desc">
         <title id="polar-title">直線上の二点で極座標の方向を比べる</title>
@@ -64,7 +65,7 @@
           <li><span class="figure-key arrow" style="--key:var(--gold)" aria-hidden="true"></span>偏角が増える向き</li>
         </ul>
       </div>
-      <figcaption>青と金の矢印は方向を比べるため同じ長さで表示。実際の座標基底の長さは、半径方向が <span class="inline-math" data-tex="1">1</span>、偏角方向が <span class="inline-math" data-tex="r">r</span> です。</figcaption>
+      <figcaption>点 <span class="inline-math" data-tex="p\in\{P,Q\}">p ∈ {P,Q}</span> から出る二本は、それぞれ単位長さにそろえた矢印です。青は <span class="inline-math" data-tex="\left.\frac{\partial}{\partial r}\right|_p">∂/∂r at p</span>。金は <span class="inline-math" data-tex="\frac{1}{r(p)}\left.\frac{\partial}{\partial\varphi}\right|_p">(1/r(p)) ∂/∂φ at p</span> です。半径を固定すると弧長の増分は半径と角度変化の積なので、偏角の座標基底そのものの長さは <span class="inline-math" data-tex="r(p)">r(p)</span> になります。</figcaption>
     </figure>
     <p>時刻 <span class="inline-math" data-tex="t">t</span> で微分した量をドットで表します。半径が <span class="inline-math" data-tex="r">r</span> の円では、角度の変化率 <span class="inline-math" data-tex="\dot\phi">φ̇</span> に <span class="inline-math" data-tex="r">r</span> を掛けると円周方向の速度成分になります。二方向は直交するので、単位質量あたりの運動エネルギーを自由粒子のラグランジアンに取ると、次の式になります。</p>
     <div class="equation" data-tex="L=\tfrac12\bigl(\dot r^2+r^2\dot\phi^2\bigr)">L=\tfrac12\bigl(\dot r^2+r^2\dot\phi^2\bigr)</div>

@@ -12,23 +12,24 @@ body{max-width:55rem;margin:auto;padding:1rem;font:1rem/1.55 system-ui,sans-seri
 <link rel="stylesheet" href="../../assets/math-layout.css">
 </head><body><main>
 <nav><a href="../../">数学の可視化一覧</a></nav><h1>微分幾何学を三つの分野で比べる</h1>
-<p>同じ数の組を接ベクトルの成分として与え、それぞれの計量で測る。青い矢印は各図で同じ成分を表す。図ごとに点や座標の意味は異なる。</p>
+<p>図の中央を、それぞれの点でのゼロベクトルとする。スライダーの角度 <span class="inline-math" data-tex="\theta">θ</span> は、横成分と縦成分にどの数を入れるかを指定する。青い矢印の始点を動かさず、三つの接空間に同じ成分の組を入れて比べよう。</p>
 <div class="controls">
 <label>成分の角度 <output id="angle-value"></output><input id="angle" type="range" min="0" max="180" value="30"></label>
 <label>成功確率 <span class="inline-math" data-tex="p"><i>p</i></span> <output id="prob-value"></output><input id="prob" type="range" min=".02" max=".98" step=".01" value=".2"></label>
 </div>
-<div class="formula" data-tex="v = (\cos  \theta , \sin  \theta )"><i>v</i> = (cos <i>θ</i>, sin <i>θ</i>)</div>
+<div class="formula" data-tex="(\text{横成分},\text{縦成分})=(\cos\theta,\sin\theta)">(横成分, 縦成分) = (cos θ, sin θ)</div>
+<p>図で動かすベクトルを <span class="inline-math" data-tex="v">v</span>、二本の接ベクトルを受け取る計量を <span class="inline-math" data-tex="g">g</span> と書く。各図の数値は <span class="inline-math" data-tex="g(v,v)">g(v,v)</span>。ユークリッド平面と統計モデルでは長さの二乗、時空では符号をもつ二次形式の値になる。</p>
 <div class="views">
 <figure><figcaption>純粋数学：Euclid 平面</figcaption><svg id="euclid" viewBox="0 0 220 155" role="img" aria-label="Euclid 計量の単位円と接ベクトル"></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>Euclid 計量の単位円</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="e"></output></div><p>赤は長さ 1 のベクトルの集合。方向を変えても、青い矢印の長さは 1。</p></figure>
-<figure><figcaption>相対論：Minkowski 時空</figcaption><svg id="lorentz" viewBox="0 0 220 155" role="img" aria-label="横が空間、縦が時間の光円錐と接ベクトル"></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>光的な方向</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="l"></output> <output id="kind"></output></div><p>赤は光的な方向。計量の符号で方向を分類する。</p></figure>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>Euclid 計量の単位円</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>接ベクトルの成分軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="e"></output></div><p>赤は長さ 1 のベクトルの集合。方向を変えても、青い矢印の長さは 1。</p></figure>
+<figure><figcaption>相対論：Minkowski 時空</figcaption><svg id="lorentz" viewBox="0 0 220 155" role="img" aria-label="横は空間成分、縦は光速を掛けた時間成分。光的な方向と接ベクトル"></svg>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>光的な方向</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>接ベクトルの成分軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="l"></output> <output id="kind"></output></div><p>横は空間成分 <span class="inline-math" data-tex="v^x">vˣ</span>、縦は <span class="inline-math" data-tex="c\,v^t">c vᵗ</span>。時間の成分に光速 <span class="inline-math" data-tex="c">c</span> を掛けて二軸の単位をそろえる。赤い二直線では両成分の絶対値が等しく、計量の値がゼロになる。</p></figure>
 <figure><figcaption>情報幾何：Fisher 計量</figcaption><svg id="fisher" viewBox="0 0 220 155" role="img" aria-label="Fisher 計量の単位楕円と接ベクトル"></svg>
-<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>Fisher 計量の単位楕円</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>座標軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="f"></output></div><p>赤は Fisher 計量で長さ 1 の集合。二つの成功確率を <span class="inline-math" data-tex="p"><i>p</i></span> と <span class="inline-math" data-tex="q"><i>q</i></span> とし、計量を評価する点では <span class="inline-math" data-tex="q = 0.5"><i>q</i> = 0.5</span> に固定する。</p></figure>
+<div class="figure-legend" role="group" aria-label="図の凡例"><strong>凡例</strong><ul><li><span class="figure-key arrow" style="--key:var(--v)" aria-hidden="true"></span><span>接ベクトル <span class="inline-math" data-tex="v">v</span></span></li><li><span class="figure-key " style="--key:var(--level)" aria-hidden="true"></span><span>Fisher 計量の単位楕円</span></li><li><span class="figure-key " style="--key:var(--muted)" aria-hidden="true"></span><span>接ベクトルの成分軸</span></li></ul></div><div class="formula"><span class="inline-math" data-tex="g(v,v) ="><i>g</i>(<i>v</i>,<i>v</i>) =</span> <output id="f"></output></div><p>赤は Fisher 計量で長さ 1 の集合。独立な二つのベルヌーイ試行の組を観測し、それぞれの成功確率を <span class="inline-math" data-tex="p"><i>p</i></span> と <span class="inline-math" data-tex="q"><i>q</i></span> とし、計量を評価する点では <span class="inline-math" data-tex="q = 0.5"><i>q</i> = 0.5</span> に固定する。</p></figure>
 </div>
 <details><summary>三つの計量の式</summary>
-<div class="formula" data-tex="g_E(v,v)=\textcolor{#8bc5ff}{\underbrace{(v^1)^2}_{\text{第1成分}}}+\textcolor{#83dfb2}{\underbrace{(v^2)^2}_{\text{第2成分}}}"><i>g</i><sub>E</sub>(<i>v</i>,<i>v</i>) = (<i>v</i>¹)² + (<i>v</i>²)²</div>
-<div class="formula" data-tex="g_M(v,v)=\textcolor{#8bc5ff}{\underbrace{(v^x)^2}_{\text{空間成分}}}-\textcolor{#ff9aaf}{\underbrace{(v^t)^2}_{\text{時間成分}}}"><i>g</i><sub>M</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>x</sup>)² − (<i>v</i><sup>t</sup>)²</div>
+<div class="formula" data-tex="g_E(v,v)=\textcolor{#8bc5ff}{\underbrace{(v^x)^2}_{\text{第1成分}}}+\textcolor{#83dfb2}{\underbrace{(v^y)^2}_{\text{第2成分}}}"><i>g</i><sub>E</sub>(<i>v</i>,<i>v</i>) = (<i>v</i>ˣ)² + (<i>v</i>ʸ)²</div>
+<div class="formula" data-tex="g_M(v,v)=\textcolor{#8bc5ff}{\underbrace{(v^x)^2}_{\text{空間成分}}}-\textcolor{#ff9aaf}{\underbrace{(c\,v^t)^2}_{\text{時間成分}}}"><i>g</i><sub>M</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>x</sup>)² − (<i>c v</i><sup>t</sup>)²</div>
 <div class="formula" data-tex="g_F(v,v)=\textcolor{#8bc5ff}{\underbrace{\frac{(v^p)^2}{p(1-p)}}_{\text{成功確率の方向}}}+\textcolor{#d9b8ff}{\underbrace{\frac{(v^q)^2}{q(1-q)}}_{\text{もう一方の方向}}}"><i>g</i><sub>F</sub>(<i>v</i>,<i>v</i>) = (<i>v</i><sup>p</sup>)² / [<i>p</i>(1−<i>p</i>)] + (<i>v</i><sup>q</sup>)² / [<i>q</i>(1−<i>q</i>)]</div>
 <p>成功確率が端に近づくほど、同じ母数の変化が Fisher 計量では大きく測られる。角度を <span class="inline-math" data-tex="0^{\circ}">0°</span> にして <span class="inline-math" data-tex="p"><i>p</i></span> を動かすと、その違いが見やすい。</p>
 </details>
@@ -39,10 +40,15 @@ body{max-width:55rem;margin:auto;padding:1rem;font:1rem/1.55 system-ui,sans-seri
 const get=id=>document.getElementById(id);
 const angle=get("angle"),prob=get("prob");
 const line=(x,y,X,Y,color="GrayText",w=1)=>'<line x1="'+x+'" y1="'+y+'" x2="'+X+'" y2="'+Y+'" stroke="'+color+'" stroke-width="'+w+'"/>';
+function componentLabel(coordinate) {
+ const axis = coordinate === "ct" ? "t" : coordinate;
+ const factor = coordinate === "ct" ? "c " : "";
+ return factor + 'v<tspan baseline-shift="super" font-size="8">' + axis + '</tspan>';
+}
 function diagram(x,y,h,v,level){
  const X=110+53*x,Y=77-53*y,dx=X-110,dy=Y-77;
  const head=(a,b)=>line(X,Y,X-7*dx/53+a*dy/53,Y-7*dy/53+b*dx/53,"var(--v)",2.5);
- return line(30,77,190,77)+line(110,8,110,146)+'<text x="195" y="81">'+h+'</text><text x="115" y="13">'+v+'</text>'+level+line(110,77,X,Y,"var(--v)",2.5)+head(4,-4)+head(-4,4);
+ return line(30,77,190,77)+line(110,8,110,146)+'<text x="195" y="81">'+componentLabel(h)+'</text><text x="115" y="13">'+componentLabel(v)+'</text>'+level+line(110,77,X,Y,"var(--v)",2.5)+head(4,-4)+head(-4,4);
 }
 const ellipse=(x,y)=>'<ellipse cx="110" cy="77" rx="'+x+'" ry="'+y+'" fill="none" stroke="var(--level)" stroke-width="2"/>';
 const fmt=x=>(Math.abs(x)<.0005?0:x).toFixed(3);
@@ -51,7 +57,7 @@ function draw(){
  const x=Math.cos(theta),y=Math.sin(theta),l=x*x-y*y;
  get("angle-value").textContent=angle.value+"°";get("prob-value").textContent=p.toFixed(2);
  get("euclid").innerHTML=diagram(x,y,"x","y",ellipse(53,53));
- get("lorentz").innerHTML=diagram(x,y,"x","t",line(50,137,170,17,"var(--level)",2)+line(50,17,170,137,"var(--level)",2));
+ get("lorentz").innerHTML=diagram(x,y,"x","ct",line(50,137,170,17,"var(--level)",2)+line(50,17,170,137,"var(--level)",2));
  get("fisher").innerHTML=diagram(x,y,"p","q",ellipse(53*Math.sqrt(p*(1-p)),26.5));
  get("e").textContent=fmt(1);get("l").textContent=fmt(l);
  get("kind").textContent=Math.abs(l)<1e-8?"（光的）":l<0?"（時間的）":"（空間的）";

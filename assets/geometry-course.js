@@ -51,7 +51,7 @@
       const total=end(at,[-s,0],50);
       const tangent=end(at,[-s*c*c,-s*s*c],50);
       const normal=end(at,[-s*s*s,s*s*c],50);
-      const key=[["全微分 dY/dt",s],["接成分の長さ",Math.abs(s*c)],["法線成分の長さ",s*s]];
+      const key=[["全微分の長さ ‖dY/dt‖",s],["接成分の長さ",Math.abs(s*c)],["法線成分の長さ",s*s]];
       return {
         svg:ring(center,61)+line([77,90],[199,90],ink,1,"3 3")+line(center,at,ink)+point(at,ink)+label([at[0]+8,at[1]-5],"P")+
           line(tangent,total,colors[2],1,"3 3")+line(normal,total,colors[1],1,"3 3")+

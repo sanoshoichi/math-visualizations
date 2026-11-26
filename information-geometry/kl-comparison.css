@@ -1,0 +1,13 @@
+.kl-compare {margin:1.3rem 0; padding:clamp(.65rem,2vw,1.2rem); background:#0c141d; border:1px solid #334456; border-radius:.7rem; color:#e5edf5}
+.kl-compare figcaption {font-weight:650; margin-bottom:.6rem}
+.kl-control {display:flex; align-items:center; gap:.8rem; position:sticky; top:var(--chapter-bar-height,3rem); background:#101a25; padding:.35rem; z-index:2}
+.kl-control label {white-space:nowrap;font-size:.84rem}
+.kl-control input {flex:1;min-width:0}
+.kl-control output {font-variant-numeric:tabular-nums}
+.kl-compare svg {display:block;width:100%;height:auto;max-width:580px;margin:auto}
+.kl-legend {display:flex;flex-wrap:wrap;gap:.25rem 1.2rem}
+.kl-legend span:first-child {color:#8bc5ff}.kl-legend span:last-child {color:#ffd389}
+.kl-compare [data-kl-reading] {font-variant-numeric:tabular-nums}
+.derivation-notes {margin:1.3rem 0;padding:.65rem .85rem;border:1px solid #44505c;border-radius:.5rem}
+.derivation-notes > summary {cursor:pointer}
+

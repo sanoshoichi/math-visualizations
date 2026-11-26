@@ -23,11 +23,18 @@
 
 <section aria-labelledby="general-equation">
 <h3 id="general-equation">1. 一般の測地線方程式</h3>
-<p>時空の曲線を <span class="inline-math" data-tex="x^\mu(\lambda)">x^\mu(\lambda)</span> と書く。<span class="inline-math" data-tex="\lambda">\lambda</span> は曲線上の点を順に指定するアフィンパラメータで、自由落下する質量のある物体なら固有時 <span class="inline-math" data-tex="\tau">\tau</span> を使える。ドットは <span class="inline-math" data-tex="\lambda">\lambda</span> による微分を表す。</p>
-<div class="equation" data-tex="\ddot x^\mu+\sum_{\alpha,\beta}\Gamma^\mu_{\alpha\beta}\,\dot x^\alpha\dot x^\beta=0.">座標の二階微分 ＋ 接続による補正 ＝ 0</div>
-<p>自由落下では、世界線の速度ベクトル <var>W</var> を世界線に沿って共変微分した結果がゼロになる。積の微分則を使うと、上の式の第一項は速度の係数を微分したもの、第二項は座標基底を共変微分したものから出る。クリストッフェル記号は、各点 <var>p</var> でこの基底の共変微分を表す係数。</p>
+<p>時空を <span class="inline-math" data-tex="M">M</span>、時間のパラメータが動く区間を <span class="inline-math" data-tex="I\subset\mathbb R">I ⊂ ℝ</span> とする。世界線 <span class="inline-math" data-tex="\gamma:I\to M">γ : I → M</span> は、一つの値 <span class="inline-math" data-tex="\lambda\in I">λ ∈ I</span> に一つの事象 <span class="inline-math" data-tex="p=\gamma(\lambda)\in M">p = γ(λ) ∈ M</span> を対応させる。局所座標関数 <span class="inline-math" data-tex="x^\mu">x^μ</span> は事象に数を付ける。第 <span class="inline-math" data-tex="\mu">μ</span> 座標の速度は次の二つの写像を順にたどった値の微分である。</p>
+<div class="equation" data-tex="\lambda\longmapsto\gamma(\lambda)\longmapsto x^\mu(\gamma(\lambda)),\qquad \dot x^\mu=\frac{\mathrm d(x^\mu\circ\gamma)}{\mathrm d\lambda}.">λ → γ(λ) → x^μ(γ(λ))。座標速度はこの合成の微分。</div>
+<p>その点の座標基底に座標速度を掛けて足すと、世界線に接する速度ベクトルを得る。</p>
+<div class="equation" data-tex="W(\lambda)=\dot\gamma(\lambda)=\sum_\mu\dot x^\mu\left.\frac{\partial}{\partial x^\mu}\right|_{p}\in T_pM.">W(λ) = γ̇(λ) = Σ ẋᵘ (∂/∂x^μ) at p ∈ TₚM.</div>
+<p>時空計量 <span class="inline-math" data-tex="g">g</span> のレヴィ＝チヴィタ接続を <span class="inline-math" data-tex="\nabla">∇</span> とする。これはベクトルを曲線に沿って微分するための、計量を保ち、ねじれのない接続である。自由落下の測地線では、速度自身の共変微分 <span class="inline-math" data-tex="\nabla_W W">∇_W W</span> がゼロになるように <span class="inline-math" data-tex="\lambda">λ</span> を取れる。これをアフィンパラメータと呼ぶ。質量のある物体では固有時 <span class="inline-math" data-tex="\tau">τ</span> を使える。</p>
+<p>基底の微分も同じ点の基底で展開できる。その係数をクリストッフェル記号と呼ぶ。</p>
 <div class="equation" data-tex="\left.\nabla_{\partial/\partial x^\alpha}\frac{\partial}{\partial x^\beta}\right|_p=\sum_\mu\Gamma^\mu_{\alpha\beta}(p)\left.\frac{\partial}{\partial x^\mu}\right|_p.">座標基底の共変微分を、同じ点の座標基底で展開する。</div>
-<p><span class="inline-math" data-tex="\mu">\mu</span> は「どの座標の式か」を指定する。一方、<span class="inline-math" data-tex="\alpha,\beta">\alpha,\beta</span> は速度のどの二成分を掛けるかを表し、全ての組について足す。<span class="inline-math" data-tex="\Gamma^\mu_{\alpha\beta}">\Gamma^\mu_{\alpha\beta}</span> はその積に掛けるクリストッフェル記号。計量 <span class="inline-math" data-tex="g_{\mu\nu}">g_{\mu\nu}</span> とその逆行列 <span class="inline-math" data-tex="g^{\mu\nu}">g^{\mu\nu}</span> から、次の式で求める。</p>
+<p>速度の展開を曲線に沿って微分する。係数を微分すると座標加速度、基底を微分すると上のクリストッフェル記号が現れる。</p>
+<div class="equation" data-tex="\nabla_W W=\sum_\mu\left(\textcolor{#8bc5ff}{\ddot{x}^\mu}+\textcolor{#d9b8ff}{\sum_{\alpha,\beta}\Gamma^\mu_{\alpha\beta}(p)\dot{x}^\alpha\dot{x}^\beta}\right)\left.\frac{\partial}{\partial x^\mu}\right|_p.">各基底の係数＝座標加速度＋基底の変化から出る補正。</div>
+<p>基底は一次独立だから、このベクトルがゼロになるには、各基底の係数がそれぞれゼロになればよい。各 <span class="inline-math" data-tex="\mu">μ</span> について一本の方程式を得る。</p>
+<div class="equation" data-tex="\ddot x^\mu+\sum_{\alpha,\beta}\Gamma^\mu_{\alpha\beta}\,\dot x^\alpha\dot x^\beta=0.">座標の二階微分 ＋ 接続による補正 ＝ 0</div>
+<p>足し合わせる添字 <span class="inline-math" data-tex="\alpha,\beta">α, β</span> は座標のすべての組を動く。計量成分 <span class="inline-math" data-tex="g_{\mu\nu}">gμν</span> を行列に並べ、その逆行列の成分を <span class="inline-math" data-tex="g^{\mu\nu}">g^μν</span> とする。記号 <span class="inline-math" data-tex="\partial_\alpha">∂α</span> は座標 <span class="inline-math" data-tex="x^\alpha">xᵅ</span> による偏微分。これで接続係数を次のように計算できる。</p>
 <div class="equation" data-tex="\Gamma^\mu_{\alpha\beta}=\tfrac12\sum_\nu g^{\mu\nu}\bigl(\partial_\alpha g_{\nu\beta}+\partial_\beta g_{\nu\alpha}-\partial_\nu g_{\alpha\beta}\bigr).">クリストッフェル記号の計算式</div>
 </section>
 

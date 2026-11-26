@@ -30,6 +30,9 @@
       activePanel = panel;
     }
 
+    for (let parent = target?.parentElement; parent && parent !== panel; parent = parent.parentElement) {
+      if (parent.tagName === 'DETAILS') parent.open = true;
+    }
     const chapter = target?.closest('.information-course > section[id]');
     picker.value = chapter?.parentElement === panel ? chapter.id : '';
     if (scroll && panel.contains(target)) target.scrollIntoView({block: 'start'});
@@ -38,7 +41,14 @@
   tabs.forEach((tab, index) => {
     tab.addEventListener('click', () => {
       if (tab.getAttribute('aria-selected') === 'true') return;
-      location.hash = panels[index].firstElementChild.id;
+      const target = panels[index];
+      const previous = document.getElementById(picker.value);
+      const sameStage = previous?.querySelector(':scope > h2')?.textContent.match(/^(\d+)\./);
+      const concrete = ![activePanel.id, target.id].includes('general-course');
+      const match = concrete && sameStage && [...target.querySelectorAll(':scope > section[id]')].find(
+        section => section.querySelector('h2').textContent.startsWith(sameStage[1] + '.')
+      );
+      location.hash = (match || target.firstElementChild).id;
     });
     tab.addEventListener('keydown', event => {
       const destination = {

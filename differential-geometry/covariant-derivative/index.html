@@ -113,7 +113,8 @@
     <label class="sphere-control"><span><span class="inline-math" data-tex="Y"><i>Y</i></span> の長さの最大変化 <span class="inline-math" data-tex="a"><i>a</i></span> <output data-out="amplitude"></output></span><input class="form-range" type="range" min="0" max="0.9" step="0.1" value="0" data-input="amplitude"></label>
   </div>
   <div class="sphere-values text-small">
-    <p>経度を <span class="inline-math" data-tex="\theta"><i>θ</i></span> とする。接ベクトル <span class="inline-math" data-tex="Y"><i>Y</i></span> の長さは、基準値 1 から最大で <span class="inline-math" data-tex="a"><i>a</i></span> だけ増減する。</p>
+    <p>この図では経度を <span class="inline-math" data-tex="\theta">θ</span>、緯度を <span class="inline-math" data-tex="\phi">φ</span> とし、赤道を緯度ゼロとする。緯度を固定して経度を増すと、点 <span class="inline-math" data-tex="P">P</span> は一本の緯線を東に進む。</p>
+    <p>東向きの接ベクトル <span class="inline-math" data-tex="Y\in T_PS^2">Y ∈ TₚS²</span> の長さは、基準値 1 から最大で <span class="inline-math" data-tex="a">a</span> だけ増減する。</p>
     <div class="display-equation" data-tex="\lVert Y\rVert = 1 + a \sin  \theta">‖<i>Y</i>‖ = 1 + <i>a</i> sin <i>θ</i></div>
     <p>現在の設定における長さの範囲</p>
     <div class="display-equation"><output data-length-range></output></div>
@@ -158,6 +159,11 @@
     </table>
     <details class="sphere-derivation"><summary>計量とクリストッフェル記号の導出</summary>
     <div class="sphere-formulas">
+    <p>経度と緯度から、単位球面上の点の位置を次の写像で表す。緯度 <span class="inline-math" data-tex="\phi">φ</span> での緯線の半径が <span class="inline-math" data-tex="\cos\phi">cos φ</span> になる。</p>
+    <div class="equation" data-tex="F(\theta,\phi)=(\cos\phi\cos\theta,\cos\phi\sin\theta,\sin\phi),\qquad P=F(\theta,\phi).">F(θ,φ) = (cos φ cos θ, cos φ sin θ, sin φ), P = F(θ,φ).</div>
+    <p>点 <span class="inline-math" data-tex="P">P</span> の座標基底を <span class="inline-math" data-tex="e_\theta=\left.\partial/\partial\theta\right|_P">eθ = ∂/∂θ at P</span>、<span class="inline-math" data-tex="e_\phi=\left.\partial/\partial\phi\right|_P">eφ = ∂/∂φ at P</span> とする。図の三次元空間での表示は、それぞれ <span class="inline-math" data-tex="F">F</span> を経度と緯度で偏微分した矢印になる。</p>
+    <div class="equation" data-tex="\begin{aligned}\partial_\theta F&amp;=(-\cos\phi\sin\theta,\cos\phi\cos\theta,0),\\ \partial_\phi F&amp;=(-\sin\phi\cos\theta,-\sin\phi\sin\theta,\cos\phi).\end{aligned}">∂θF = (−cos φ sin θ, cos φ cos θ, 0)；∂φF = (−sin φ cos θ, −sin φ sin θ, cos φ).</div>
+    <p>二本は直交する。点 <span class="inline-math" data-tex="P">P</span> で各二本の内積を取れば計量の成分を得る。経度方向の矢印の長さは <span class="inline-math" data-tex="\cos\phi">cos φ</span>、緯度方向は 1。<a href="../general-relativity/#sphere-basis">本編の座標基底の図</a>と比べると、本編の余緯度はこの図の <span class="inline-math" data-tex="\pi/2-\phi">π/2 − φ</span>、本編の経度はこの図の <span class="inline-math" data-tex="\theta">θ</span> に当たる。</p>
       <p>単位球面の計量成分は次のとおり。</p><div class="display-equation" data-tex="g_{\theta \theta} = \cos ^{2}\phi ,\quad g_{\phi \phi} = 1,\quad g_{\theta \phi} = 0"><span><i>g</i><sub><i>θθ</i></sub> = cos²<i>φ</i></span>、<span><i>g</i><sub><i>φφ</i></sub> = 1</span>、<span><i>g</i><sub><i>θφ</i></sub> = 0</span></div>
       <div class="display-equation" data-tex="\begin{aligned}\Gamma^\phi_{\theta\theta}&amp;=-\tfrac12\,\textcolor{#8bc5ff}{\underbrace{\partial_\phi g_{\theta\theta}}_{\text{経度方向の計量を微分}}}\\&amp;=-\tfrac12\bigl(\textcolor{#ff9aaf}{\underbrace{-2\sin\phi\cos\phi}_{\text{余弦の二乗の微分}}}\bigr)\\&amp;=\sin\phi\cos\phi\end{aligned}">Γ<sup><i>φ</i></sup><sub><i>θθ</i></sub> = −½ ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = sin<i>φ</i> cos<i>φ</i></div>
       <div class="display-equation" data-tex="\Gamma ^{\theta}_{\theta \phi} = \tfrac12  g^{\theta \theta} \partial _{\phi}g_{\theta \theta} = -\tan \phi">Γ<sup><i>θ</i></sup><sub><i>θφ</i></sub> = ½ <i>g</i><sup><i>θθ</i></sup> ∂<sub><i>φ</i></sub><i>g</i><sub><i>θθ</i></sub> = −tan<i>φ</i></div>

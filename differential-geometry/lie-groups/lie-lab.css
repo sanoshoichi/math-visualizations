@@ -1,0 +1,37 @@
+.twist-lab {
+  --twist-ink: #e8eff2; --twist-muted: #a7b7c1; --twist-border: #33434d; --twist-panel: #10181e;
+  color: var(--twist-ink); margin: 1.3rem 0; min-width: 0;
+}
+.twist-lab figcaption { font-weight: 700; font-size: 1.14rem; }
+.twist-lab .twist-intro, .twist-lab .twist-note { margin: .5rem 0 .8rem; }
+.twist-lab .twist-controls { position: sticky; top: var(--twist-sticky-top,0px); z-index: 4; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .55rem; padding: .45rem .65rem; border: 1px solid var(--twist-border); border-radius: .6rem; background: #121d24; }
+.twist-controls label { display: block; min-width: 0; font-size: .83rem; }
+.twist-controls output { display: block; font-variant-numeric: tabular-nums; font-weight: 650; color: #c1e7ff; }
+.twist-controls input[type=range] { display: block; box-sizing: border-box; padding: 0; margin: 0; width: 100%; min-width: 0; height: 28px; accent-color: #88d5ff; }
+.twist-panels { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,260px),1fr)); gap: .7rem; margin-top: .65rem; }
+.twist-panel { box-sizing: border-box; padding: .75rem; background: var(--twist-panel); border: 1px solid var(--twist-border); border-radius: .7rem; min-width: 0; }
+.twist-panel h4 { margin: 0; font-size: .98rem; }
+.twist-panel svg { width: 100%; max-width: 460px; height: auto; max-height: none; display: block; margin: 0 auto; }
+.twist-lab svg text { font: 11px system-ui,sans-serif; fill: var(--twist-muted); }
+.twist-lab svg .twist-speed-label { fill: #8bd9ff; font-weight: 650; }
+.twist-grid { stroke: #27343c; stroke-width: .85; }
+.twist-axis { stroke: #879aa6; stroke-width: 1; fill: none; }
+.twist-axis-head { fill: #879aa6; }
+.twist-track { fill: none; stroke: #f2b870; stroke-width: 2.5; stroke-dasharray: 4 3; }
+.twist-chassis { fill: #68808c; stroke: #d2e2e8; stroke-width: 1.1; }
+.twist-v { stroke: #8bd9ff; stroke-width: 2.5; }
+.twist-point { fill: #eaf8fe; stroke: #162b38; stroke-width: 1.4; }
+.twist-start { fill: #10181e; stroke: #f2b870; stroke-width: 1.8; }
+.twist-lab .twist-legend { padding: 0; margin: .2rem 0 .65rem; display: flex; flex-wrap: wrap; gap: .1rem .85rem; font-size: .81rem; list-style: none; }
+.twist-legend li { display: inline-flex; align-items: center; gap: .35rem; }
+.twist-key { display: inline-block; width: 15px; }
+.twist-key.path { border-top: 2px dashed #f2b870; }
+.twist-key.point { width: 7px; height: 7px; border-radius: 50%; background: #eaf8fe; }
+.twist-key.arrow { border-top: 2px solid #8bd9ff; position: relative; }
+.twist-key.arrow::after { content: ""; position: absolute; top: -4px; right: -1px; border: 3px solid transparent; border-right: 0; border-left: 5px solid #8bd9ff; }
+.twist-lab .twist-data { display: block; margin: .3rem 0 0; padding: 0; }
+.twist-data > div { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .15rem .5rem; padding: .25rem 0; border-top: 1px solid var(--twist-border); }
+.twist-data dt, .twist-data dd { margin: 0; font-size: .83rem; }
+.twist-data dt { color: var(--twist-muted); }
+.twist-data dd { font-variant-numeric: tabular-nums; }
+.twist-lab .twist-note { color: var(--twist-muted); font-size: .86rem; }
