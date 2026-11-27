@@ -497,6 +497,8 @@ const firstExperiments = [
 function show(i){
  current=i;select.value=String(i);
  const [name,intro,param,min,max,step,value]=topics[i];
+ const flow=document.querySelector('template[data-space-flow="'+(i+1)+'"]');
+ get("space-flow").replaceChildren(...(flow ? [flow.content.cloneNode(true)] : []));
  const notes=document.querySelectorAll("template[data-chapter]")[i].content;
  for(const [id,part] of [["where","where"],["guide-read","read"],["connect","connect"]]){
    get(id).replaceChildren(...Array.from(notes.querySelector("."+part).childNodes,node=>node.cloneNode(true)));

@@ -1,0 +1,12 @@
+.space-flow { margin:1.3rem 0; }
+.space-flow figcaption {font-weight:650;margin-bottom:.55rem}
+.space-flow ol {list-style:none;padding:0;margin:0;max-width:34rem}
+.space-flow li {margin:0}
+.space-flow .map-node {padding:.38rem .7rem;border-inline-start:3px solid var(--blue);background:var(--wash);min-width:0}
+.space-flow .map-node > div,.space-flow .map-link > div {overflow-x:auto;min-width:0}
+.space-flow .map-node > span {color:var(--muted);font-size:.82em}
+.space-flow .map-node + .map-node {margin-top:.6rem;border-inline-start-color:var(--gold)}
+.space-flow .map-link {display:flex;align-items:center;color:var(--green);gap:.65rem;padding:.3rem .65rem;line-height:1.4}
+.space-flow .map-link i {font-size:1.6rem;font-style:normal}
+.space-flow .map-link small {display:block;color:var(--ink)}
+#sphere-chart-map svg {display:block;width:min(100%,300px);height:auto}

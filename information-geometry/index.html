@@ -34,6 +34,7 @@
 <script defer src="geometry-labs.js?v=coordinate-notation"></script>
 <link rel="stylesheet" href="kl-comparison.css">
 <script defer src="kl-comparison.js"></script>
+<link rel="stylesheet" href="coin-chart-mapping.css"><script defer src="coin-chart-mapping.js"></script>
 </head>
 <body>
 <main>
@@ -124,10 +125,22 @@
 <p>今の <span class="inline-math" data-tex="a">a</span> は表の確率がパラメータ1単位あたりに変わる速さです。</p>
 <p>表の確率を返す関数 <span class="inline-math" data-tex="\pi">π</span> と裏の確率を返す関数 <span class="inline-math" data-tex="1-\pi">1 − π</span> を入れると、表の変化率と裏の変化率がそれぞれ得られます。</p>
 <div class="equation" data-tex="\begin{aligned}W(\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(r+as)\right|_{s=0}=a,\\ W(1-\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(1-r-as)\right|_{s=0}=-a.\end{aligned}">\begin{aligned}W(\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(r+as)\right|_{s=0}=a,\\ W(1-\pi)&amp;=\left.\frac{\mathrm d}{\mathrm ds}(1-r-as)\right|_{s=0}=-a.\end{aligned}</div>
-<figure class="explain-figure">
-<figcaption>曲線の速度に関数を渡すと、出発点での変化率が返る</figcaption>
-<div class="explain-row"><div class="explain-box "><span>出発点を通る曲線</span><strong><span class="inline-math" data-tex="\gamma(s)=\pi^{-1}(r+as)">γ(s) = π⁻¹(r + as)</span></strong></div><div class="explain-arrow"><span>各点で表の確率を読む</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box blue"><span>実数値の関数</span><strong><span class="inline-math" data-tex="\pi(\gamma(s))=r+as">π(γ(s)) = r + as</span></strong></div><div class="explain-arrow"><span>s = 0 で微分</span><span class="arrow-side" aria-hidden="true">→</span><span class="arrow-down" aria-hidden="true">↓</span></div><div class="explain-box gold"><span>接ベクトルの作用</span><strong><span class="inline-math" data-tex="W(\pi)=a">W(π) = a</span></strong></div></div>
+<figure id="coin-chart-mapping" aria-labelledby="coin-map-label">
+  <figcaption id="coin-map-label">曲線上の点と、その座標</figcaption>
+  <label class="form-label" for="coin-map-s">曲線をたどる位置　<i>s</i> = <output class="tabular-nums" data-s-out>0.60</output></label>
+  <input id="coin-map-s" class="form-range" type="range" min="-1" max="1" step=".05" value=".60">
+  <div class="map-stage">
+    <svg class="space-map" role="img" aria-label="入力の点から分布へ写す矢印γと、分布から座標へ写す矢印π"></svg>
+  </div>
+  <div class="text-small chart-map-key"><span><i class="moving"></i>選択中</span><span><i class="origin"></i>出発時（s = 0）</span><span><i class="range"></i>座標近傍 U</span></div>
+  <hr>
+  <p class="coin-speed-heading">出発点の接空間にある速度 <i>W</i></p>
+  <label class="form-label" for="coin-map-a">速度の係数　<i>a</i> = <output class="tabular-nums" data-a-out>+0.15</output></label>
+  <input id="coin-map-a" class="form-range" type="range" min="-.25" max=".25" step=".05" value=".15">
+  <svg class="velocity" role="img" aria-label="出発点における接空間の座標基底で表した速度W"></svg>
+  <div class="text-small tabular-nums" data-result aria-live="polite"></div>
 </figure>
+<p>図では出発点の表の確率を <span class="inline-math" data-tex="r=0.50">r=0.50</span> に固定します。<span class="inline-math" data-tex="U=\{P_q\mid 0.20&lt;q&lt;0.80\}">U</span> を座標近傍として太く描いています。</p>
 <h3>二項分布の接ベクトル</h3>
 <p>二項分布でも、曲線 <span class="inline-math" data-tex="s\mapsto P_{p+as}">s\mapsto P_{p+as}</span> に沿って成功確率を動かすと、初速度は <span class="inline-math" data-tex="a\left.\frac{\partial}{\partial p}\right|_{P_p}">a\left.\frac{\partial}{\partial p}\right|_{P_p}</span> です。<span class="inline-math" data-tex="b_j(P)=P(X=j)">b_j(P)=P(X=j)</span> という関数に作用させると、成功回数が <span class="inline-math" data-tex="j">j</span> になる確率の変化率が得られます。第1章の <span class="inline-math" data-tex="n=2">n=2</span> の例では、</p>
 <div class="equation" data-tex="\begin{aligned}

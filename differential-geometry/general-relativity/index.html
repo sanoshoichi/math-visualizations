@@ -42,6 +42,7 @@
 #three-curvatures .angle-labels text {paint-order:stroke;stroke:var(--paper);stroke-width:3;stroke-linejoin:round}
 </style>
 <script defer src="../../assets/curvature-lab.js"></script>
+<link rel="stylesheet" href="../../assets/space-flow.css"><script defer src="sphere-chart.js"></script>
 </head><body data-legacy="geometry"><main>
 <nav aria-label="学習ページ"><a href="../../">数学の可視化一覧</a><a href="../../relativity/special/">特殊相対性理論</a><a href="../../relativity/general/">一般相対性理論 · 測地線</a><a href="backup/">旧版のバックアップ</a></nav>
 <h1>微分幾何学</h1>
@@ -72,6 +73,29 @@
     <span><i class="sphere-key sphere-phi" aria-hidden="true"></i><span class="inline-math" data-tex="e_\phi">eφ</span> の長さ <output id="sphere-phi-length" class="tabular-nums">0.819</output></span>
   </div>
   <div class="sphere-status text-small" aria-live="polite"></div>
+</figure>
+<figure class="space-flow" id="sphere-chart-map">
+  <figcaption>上の球面の点を、二つの座標で読む</figcaption>
+  <ol>
+    <li class="map-node"><span>上の球面で選んだ点</span><div class="inline-math" data-tex="Pin S^2">P ∈ S²</div></li>
+    <li class="map-link"><i aria-hidden="true">↓</i><div><span class="inline-math" data-tex="Pmapsto(	heta(P),phi(P))">P ↦ (θ(P), φ(P))</span><small>緯度の代わりに、北極からの角度 θ を使う</small></div></li>
+    <li class="map-node">
+      <span>座標値の長方形</span>
+      <div class="tabular-nums" data-sphere-coordinates aria-live="polite"></div>
+      <svg viewBox="0 0 300 153" width="300" height="153" role="img" aria-label="横軸が経度φ、縦軸が北極からの角度θの座標図">
+        <rect x="39" y="16" width="224" height="94" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <text x="7" y="25" fill="currentColor" font-size="13">180°</text>
+        <text x="17" y="112" fill="currentColor" font-size="13">0°</text>
+        <text x="40" y="132" fill="currentColor" font-size="13">0°</text>
+        <text x="263" y="132" text-anchor="end" fill="currentColor" font-size="13">360°</text>
+        <text x="150" y="147" text-anchor="middle" fill="currentColor" font-size="13">経度 φ</text>
+        <line data-sphere-h stroke="var(--blue)" stroke-dasharray="3 3"/>
+        <line data-sphere-v stroke="var(--gold)" stroke-dasharray="3 3"/>
+        <circle data-sphere-point r="4.5" fill="var(--green)"/>
+      </svg>
+    </li>
+  </ol>
+  <p>局所座標として使う範囲は <span class="inline-math" data-tex="0&lt;	heta&lt;pi,quad 0&lt;phi&lt;2pi">0 &lt; θ &lt; π、0 &lt; φ &lt; 2π</span> です。長方形の縦の両端は球面上では同じ経線に対応し、上辺と下辺ではそれぞれ南極と北極に点が集まります。</p>
 </figure>
 <p>青の <span class="inline-math" data-tex="e_\theta">eθ</span> は経線に沿う。金の <span class="inline-math" data-tex="e_\phi">eφ</span> は緯線に沿う。緯線の半径は <span class="inline-math" data-tex="\sin\theta">sin θ</span> なので、極に近づくほど、同じ角度だけ経度を変えたときの移動距離が短くなる。角度はスライダーでは度で表示し、偏微分はラジアンで取っている。長さの数値は三次元での長さで、画面上では見る角度によって矢印が短く見える。</p>
 <p>極以外では二本が直交する。基底同士の内積を取ると、球面の計量の成分が分かる。</p>

@@ -1,0 +1,17 @@
+#coin-chart-mapping{--foreground:var(--ink);--muted-foreground:var(--muted);--background:var(--paper);--viz-series-1:var(--blue);--viz-series-2:var(--gold);--viz-series-3:var(--green);margin:1rem auto}
+#coin-chart-mapping input{width:100%}
+#coin-chart-mapping .chart-map-key i{flex:none}
+
+#coin-chart-mapping{max-width:45rem;margin:auto}
+#coin-chart-mapping .space-map,#coin-chart-mapping .velocity{display:block;width:100%;overflow:visible}
+#coin-chart-mapping .space-map text,#coin-chart-mapping .velocity text{font-family:inherit;fill:var(--foreground);font-size:12px;font-variant-numeric:tabular-nums}
+#coin-chart-mapping svg .math{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:16px}
+#coin-chart-mapping svg .name{font-size:13px;font-weight:500}
+#coin-chart-mapping svg .subtle{fill:var(--muted-foreground)}
+#coin-chart-mapping svg .callout{paint-order:stroke;stroke:var(--background);stroke-width:5px;stroke-linejoin:round}
+#coin-chart-mapping .chart-map-key{display:flex;gap:.35em 1em;flex-wrap:wrap;align-items:center}
+#coin-chart-mapping .chart-map-key span{display:inline-flex;align-items:center;gap:.35em}
+#coin-chart-mapping .origin,#coin-chart-mapping .moving{width:.68em;height:.68em;border-radius:50%;display:inline-block}
+#coin-chart-mapping .origin{border:1.6px solid var(--foreground)}
+#coin-chart-mapping .moving{background:var(--viz-series-1)}
+#coin-chart-mapping .range{width:1.15em;border-top:3px solid var(--viz-series-1)}
