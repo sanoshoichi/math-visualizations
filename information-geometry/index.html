@@ -258,7 +258,27 @@
 <div class="equation" data-tex="\begin{aligned}L_{\rm 表}&#x27;(s)&amp;=-0.50\frac{+0.15}{0.50+0.15s},\\ L_{\rm 裏}&#x27;(s)&amp;=-0.50\frac{-0.15}{0.50-0.15s}.\end{aligned}">\begin{aligned}L_{\rm 表}&#x27;(s)&amp;=-0.50\frac{+0.15}{0.50+0.15s},\\ L_{\rm 裏}&#x27;(s)&amp;=-0.50\frac{-0.15}{0.50-0.15s}.\end{aligned}</div>
 <p>微分を終えてから <span class="inline-math" data-tex="s=0">s=0</span> を入れます。どちらも重みと分母の <span class="inline-math" data-tex="0.50">0.50</span> が約分されるので、表の損失が減る傾きと、裏の損失が増える傾きの絶対値がそろいます。</p>
 <div class="equation" data-tex="L&#x27;(0)=\textcolor{#8bc5ff}{\underbrace{-0.15}_{\text{表の傾き}}}+\textcolor{#ffd389}{\underbrace{(+0.15)}_{\text{裏の傾き}}}=0.">L&#x27;(0)=\textcolor{#8bc5ff}{\underbrace{-0.15}_{\text{表の傾き}}}+\textcolor{#ffd389}{\underbrace{(+0.15)}_{\text{裏の傾き}}}=0.</div>
-<p>一般の <span class="inline-math" data-tex="n">n</span> に戻ると、成功確率を <span class="inline-math" data-tex="p">p</span> に固定し、予測だけを <span class="inline-math" data-tex="q=p+as">q=p+as</span> と動かします。上の二項分布のKLにこの <span class="inline-math" data-tex="q">q</span> を入れた <span class="inline-math" data-tex="L(s)=D(p,p+as)">L(s)=D(p,p+as)</span> でも、高さと傾きは <span class="inline-math" data-tex="s=0">s=0</span> でゼロです。高さは二つの分布の一致から、傾きは以下の偏微分でも確かめられます。</p>
+<h4 id="binomial-kl-at-zero">試行回数が一般の二項分布で確かめる</h4>
+<p><span class="inline-math" data-tex="n">n</span> と実際の成功確率 <span class="inline-math" data-tex="p">p</span> を固定し、予測の成功確率を <span class="inline-math" data-tex="q(s)=p+as">q(s)=p+as</span> と動かします。<span class="inline-math" data-tex="a">a</span> は成功確率の変化率です。</p>
+<div class="equation" data-tex="\begin{aligned}
+L(s)&amp;=np\log\frac{p}{p+as}\\
+    &amp;\quad+n(1-p)\log\frac{1-p}{1-p-as},\\
+L(0)&amp;=np\log 1+n(1-p)\log 1=0.
+\end{aligned}">\begin{aligned}
+L(s)&amp;=np\log\frac{p}{p+as}\\
+    &amp;\quad+n(1-p)\log\frac{1-p}{1-p-as},\\
+L(0)&amp;=np\log 1+n(1-p)\log 1=0.
+\end{aligned}</div>
+<p>対数の分母の微分は、成功の項が <span class="inline-math" data-tex="a">a</span>、失敗の項が <span class="inline-math" data-tex="-a">-a</span> です。微分してから <span class="inline-math" data-tex="s=0">s=0</span> を代入すると、成功確率と失敗確率がそれぞれ約分されます。</p>
+<div class="equation" data-tex="\begin{aligned}
+L&#x27;(s)&amp;=-np\frac{a}{p+as}\\ &amp;\quad+n(1-p)\frac{a}{1-p-as},\\
+L&#x27;(0)&amp;=\underbrace{-na}_{\text{成功の項}}+\underbrace{na}_{\text{失敗の項}}=0.
+\end{aligned}">\begin{aligned}
+L&#x27;(s)&amp;=-np\frac{a}{p+as}\\ &amp;\quad+n(1-p)\frac{a}{1-p-as},\\
+L&#x27;(0)&amp;=\underbrace{-na}_{\text{成功の項}}+\underbrace{na}_{\text{失敗の項}}=0.
+\end{aligned}</div>
+<p><strong>第7章と同じ数値で確認。</strong> <span class="inline-math" data-tex="n=4,\ p=0.4,\ a=0.1">n=4,\ p=0.4,\ a=0.1</span> とします。第7章では、このずれを <span class="inline-math" data-tex="t">t</span> と書きます。</p>
+<div class="equation" data-tex="\begin{aligned}L(0)&amp;=1.6\log 1+2.4\log 1=0,\\ L&#x27;(0)&amp;=-0.4+0.4=0.\end{aligned}">\begin{aligned}L(0)&amp;=1.6\log 1+2.4\log 1=0,\\ L&#x27;(0)&amp;=-0.4+0.4=0.\end{aligned}</div>
 <p>高さと傾きだけでは、どれほど急に損失が増える方向か読めません。出発点付近をテイラー展開すると、その違いは次の項に初めて現れます。</p>
 <div class="equation" data-tex="L(s)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}s+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)s^2}_{\text{最初に残る項}}}+o(s^2).">L(s)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}s+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)s^2}_{\text{最初に残る項}}}+o(s^2).</div>
 <p><span class="inline-math" data-tex="o(s^2)">o(s^2)</span> は <span class="inline-math" data-tex="s^2">s^2</span> で割ると <span class="inline-math" data-tex="s\to0">s\to0</span> で消える残りです。たとえば <span class="inline-math" data-tex="s">s</span> を半分にすると、二次の項は4分の1。逆に、非常に小さいずれでKLを測れば、<span class="inline-math" data-tex="2L(s)/s^2">2L(s)/s^2</span> が <span class="inline-math" data-tex="L&#x27;&#x27;(0)">L&#x27;&#x27;(0)</span> に近づきます。これをその方向の速さの二乗として使います。</p>
@@ -294,7 +314,7 @@
 <p>損失の式に戻ると、<span class="inline-math" data-tex="s">s</span> が小さい範囲で、最初に残る項は次のようになります。</p>
 <div class="equation" data-tex="L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.">L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.</div>
 <p><span class="inline-math" data-tex="\tfrac12">\tfrac12</span> が付くのは、<span class="inline-math" data-tex="s^2">s^2</span> を二度微分すると2になるからです。例えば <span class="inline-math" data-tex="L^{\prime\prime}(0)=4">L^{\prime\prime}(0)=4</span> なら、二次の部分は <span class="inline-math" data-tex="2s^2">2s^2</span>。その方向に予測を2倍ずらすと、平均損失はおよそ4倍になります。フィッシャー計量は、この二階微分が出発点と曲線の初速度だけで決まることを利用して、初速度の長さの二乗を定めます。</p>
-<p><a href="#why-second-coin">コインの数値とグラフで確かめる</a></p>
+<p><a href="#binomial-kl-at-zero">この分布で出発点の値と傾きを計算する</a></p>
 <p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
 <p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
 <div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
@@ -590,8 +610,22 @@
 <div class="equation" data-tex="D(P,Q)=\mathbb E_P\!\left[\underbrace{-\log p_Q(X)+\log p_P(X)}_{\text{同じ観測に対する損失の差}}\right].">D(P,Q)=\mathbb E_P\!\left[\underbrace{-\log p_Q(X)+\log p_P(X)}_{\text{同じ観測に対する損失の差}}\right].</div>
 <p>結果 <span class="inline-math" data-tex="A_i">A_i</span> の対数比は <span class="inline-math" data-tex="\log(p_i/q_i)">\log(p_i/q_i)</span>。これに実際にその結果が出る確率 <span class="inline-math" data-tex="p_i">p_i</span> を掛け、最後の結果も含めて足します。</p>
 <div class="equation" data-tex="D(p,q)=\sum_{i=1}^2p_i\log\frac{p_i}{q_i}+p_3\log\frac{p_3}{q_3}.">D(p,q)=\sum_{i=1}^2p_i\log\frac{p_i}{q_i}+p_3\log\frac{p_3}{q_3}.</div><h3>なぜ二階微分を取るのか</h3>
-<p>まったく同じ予測から始めます。予測側の座標を、決めた向きに小さく <span class="inline-math" data-tex="t\in\mathbb R">t\in\mathbb R</span> だけ動かした分布を <span class="inline-math" data-tex="Q_t">Q_t</span> とし、<span class="inline-math" data-tex="Q_0=P">Q_0=P</span> とします。<span class="inline-math" data-tex="L(t)=D(P,Q_t)">L(t)=D(P,Q_t)</span> をグラフにすると、横軸はこのずれ、縦軸は余分に払う平均損失です。</p>
-<p>出発点では対数比が <span class="inline-math" data-tex="\log 1=0">\log 1=0</span> なので高さは0。KLはどちらにずれても0以上です（<span class="inline-math" data-tex="-\log z\ge1-z">-\log z\ge1-z</span> に <span class="inline-math" data-tex="z=p_Q/p_P">z=p_Q/p_P</span> を代入して <span class="inline-math" data-tex="P">P</span> で平均すれば、右辺は <span class="inline-math" data-tex="1-1=0">1-1=0</span>）。したがって滑らかなグラフの底の傾きも0です。</p>
+<h3 id="simplex-kl-at-zero">出発点での値と傾きを計算する</h3>
+<p>実際の確率 <span class="inline-math" data-tex="p_i">p_i</span> を固定し、予測の確率を <span class="inline-math" data-tex="q_i(t)=p_i+u_it">q_i(t)=p_i+u_it</span> と動かします。<span class="inline-math" data-tex="u_i">u_i</span> はカテゴリごとの確率の変化率です。最後のカテゴリは残りの確率を受け持つので、<span class="inline-math" data-tex="u_3=-\sum_{i=1}^2u_i">u_3=-\sum_{i=1}^2u_i</span> です。</p>
+<p><span class="inline-math" data-tex="t=0">t=0</span> では、すべてのカテゴリで <span class="inline-math" data-tex="q_i(0)=p_i">q_i(0)=p_i</span> です。上のKLに代入します。</p>
+<div class="equation" data-tex="L(0)=\sum_{i=1}^3 p_i\log\frac{p_i}{p_i}=\sum_{i=1}^3 p_i\log 1=0.">L(0)=\sum_{i=1}^3 p_i\log\frac{p_i}{p_i}=\sum_{i=1}^3 p_i\log 1=0.</div>
+<p>傾きを求めるときは、先に <span class="inline-math" data-tex="-\log q_i(t)">-\log q_i(t)</span> を微分します。分子に確率の変化率 <span class="inline-math" data-tex="u_i">u_i</span> が出ます。</p>
+<div class="equation" data-tex="\begin{aligned}
+L&#x27;(t)&amp;=-\sum_{i=1}^3 p_i\frac{u_i}{q_i(t)},\\
+L&#x27;(0)&amp;=-\sum_{i=1}^3 \frac{p_i}{p_i}u_i\\
+     &amp;=-\underbrace{\Bigl(\sum_{i=1}^2 u_i+u_3\Bigr)}_{\text{確率の増減の合計は0}}=0.
+\end{aligned}">\begin{aligned}
+L&#x27;(t)&amp;=-\sum_{i=1}^3 p_i\frac{u_i}{q_i(t)},\\
+L&#x27;(0)&amp;=-\sum_{i=1}^3 \frac{p_i}{p_i}u_i\\
+     &amp;=-\underbrace{\Bigl(\sum_{i=1}^2 u_i+u_3\Bigr)}_{\text{確率の増減の合計は0}}=0.
+\end{aligned}</div>
+<p><strong>第7章と同じ数値で確認。</strong> 実際の確率を <span class="inline-math" data-tex="p=(0.2,0.3,0.5)">p=(0.2,0.3,0.5)</span>、変化率を <span class="inline-math" data-tex="u=(0.1,0,-0.1)">u=(0.1,0,-0.1)</span> とします。</p>
+<div class="equation" data-tex="\begin{aligned}L(0)&amp;=(0.2+0.3+0.5)\log 1=0,\\L&#x27;(0)&amp;=(-0.1)+0+0.1=0.\end{aligned}">\begin{aligned}L(0)&amp;=(0.2+0.3+0.5)\log 1=0,\\L&#x27;(0)&amp;=(-0.1)+0+0.1=0.\end{aligned}</div>
 <p>高さと傾きだけでは、どれほど急に損失が増える方向か読めません。出発点付近をテイラー展開すると、その違いは次の項に初めて現れます。</p>
 <div class="equation" data-tex="L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).">L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).</div>
 <p><span class="inline-math" data-tex="o(t^2)">o(t^2)</span> は <span class="inline-math" data-tex="t^2">t^2</span> で割ると <span class="inline-math" data-tex="t\to0">t\to0</span> で消える残りです。たとえば <span class="inline-math" data-tex="t">t</span> を半分にすると、二次の項は4分の1。逆に、非常に小さいずれでKLを測れば、<span class="inline-math" data-tex="2L(t)/t^2">2L(t)/t^2</span> が <span class="inline-math" data-tex="L&#x27;&#x27;(0)">L&#x27;&#x27;(0)</span> に近づきます。これをその方向の速さの二乗として使います。</p>
@@ -653,7 +687,7 @@
 <p>損失の式に戻ると、<span class="inline-math" data-tex="s">s</span> が小さい範囲で、最初に残る項は次のようになります。</p>
 <div class="equation" data-tex="L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.">L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.</div>
 <p><span class="inline-math" data-tex="\tfrac12">\tfrac12</span> が付くのは、<span class="inline-math" data-tex="s^2">s^2</span> を二度微分すると2になるからです。例えば <span class="inline-math" data-tex="L^{\prime\prime}(0)=4">L^{\prime\prime}(0)=4</span> なら、二次の部分は <span class="inline-math" data-tex="2s^2">2s^2</span>。その方向に予測を2倍ずらすと、平均損失はおよそ4倍になります。フィッシャー計量は、この二階微分が出発点と曲線の初速度だけで決まることを利用して、初速度の長さの二乗を定めます。</p>
-<p><a href="#why-second-coin">コインの数値とグラフで確かめる</a></p>
+<p><a href="#simplex-kl-at-zero">この分布で出発点の値と傾きを計算する</a></p>
 <h3>損失を微分して、長さの二乗を求める</h3>
 <p>予測をどれだけずらしたかを表す <span class="inline-math" data-tex="s">s</span> で微分します。まず各項の対数確率を微分すると、ここで元の確率で割る式が出てきます。</p>
 <div class="equation" data-tex="\left.\frac{\mathrm d}{\mathrm ds}\log Q_s(A_i)\right|_{s=0}=\left.\frac{u_i}{P(A_i)+su_i}\right|_{s=0}=\frac{u_i}{P(A_i)}.">\left.\frac{\mathrm d}{\mathrm ds}\log Q_s(A_i)\right|_{s=0}=\left.\frac{u_i}{P(A_i)+su_i}\right|_{s=0}=\frac{u_i}{P(A_i)}.</div>
@@ -1032,8 +1066,22 @@
 <div class="equation" data-tex="D(P,Q)=\mathbb E_P\!\left[\underbrace{-\log p_Q(X)+\log p_P(X)}_{\text{同じ観測に対する損失の差}}\right].">D(P,Q)=\mathbb E_P\!\left[\underbrace{-\log p_Q(X)+\log p_P(X)}_{\text{同じ観測に対する損失の差}}\right].</div>
 <p>結果 <span class="inline-math" data-tex="A_i">A_i</span> の対数比は <span class="inline-math" data-tex="\log(p_i/q_i)">\log(p_i/q_i)</span>。これに実際にその結果が出る確率 <span class="inline-math" data-tex="p_i">p_i</span> を掛け、最後の結果も含めて足します。</p>
 <div class="equation" data-tex="D(p,q)=\sum_{i=1}^3p_i\log\frac{p_i}{q_i}+p_4\log\frac{p_4}{q_4}.">D(p,q)=\sum_{i=1}^3p_i\log\frac{p_i}{q_i}+p_4\log\frac{p_4}{q_4}.</div><h3>なぜ二階微分を取るのか</h3>
-<p>まったく同じ予測から始めます。予測側の座標を、決めた向きに小さく <span class="inline-math" data-tex="t\in\mathbb R">t\in\mathbb R</span> だけ動かした分布を <span class="inline-math" data-tex="Q_t">Q_t</span> とし、<span class="inline-math" data-tex="Q_0=P">Q_0=P</span> とします。<span class="inline-math" data-tex="L(t)=D(P,Q_t)">L(t)=D(P,Q_t)</span> をグラフにすると、横軸はこのずれ、縦軸は余分に払う平均損失です。</p>
-<p>出発点では対数比が <span class="inline-math" data-tex="\log 1=0">\log 1=0</span> なので高さは0。KLはどちらにずれても0以上です（<span class="inline-math" data-tex="-\log z\ge1-z">-\log z\ge1-z</span> に <span class="inline-math" data-tex="z=p_Q/p_P">z=p_Q/p_P</span> を代入して <span class="inline-math" data-tex="P">P</span> で平均すれば、右辺は <span class="inline-math" data-tex="1-1=0">1-1=0</span>）。したがって滑らかなグラフの底の傾きも0です。</p>
+<h3 id="four-kl-at-zero">出発点での値と傾きを計算する</h3>
+<p>実際の確率 <span class="inline-math" data-tex="p_i">p_i</span> を固定し、予測の確率を <span class="inline-math" data-tex="q_i(t)=p_i+u_it">q_i(t)=p_i+u_it</span> と動かします。<span class="inline-math" data-tex="u_i">u_i</span> はカテゴリごとの確率の変化率です。最後のカテゴリは残りの確率を受け持つので、<span class="inline-math" data-tex="u_4=-\sum_{i=1}^3u_i">u_4=-\sum_{i=1}^3u_i</span> です。</p>
+<p><span class="inline-math" data-tex="t=0">t=0</span> では、すべてのカテゴリで <span class="inline-math" data-tex="q_i(0)=p_i">q_i(0)=p_i</span> です。上のKLに代入します。</p>
+<div class="equation" data-tex="L(0)=\sum_{i=1}^4 p_i\log\frac{p_i}{p_i}=\sum_{i=1}^4 p_i\log 1=0.">L(0)=\sum_{i=1}^4 p_i\log\frac{p_i}{p_i}=\sum_{i=1}^4 p_i\log 1=0.</div>
+<p>傾きを求めるときは、先に <span class="inline-math" data-tex="-\log q_i(t)">-\log q_i(t)</span> を微分します。分子に確率の変化率 <span class="inline-math" data-tex="u_i">u_i</span> が出ます。</p>
+<div class="equation" data-tex="\begin{aligned}
+L&#x27;(t)&amp;=-\sum_{i=1}^4 p_i\frac{u_i}{q_i(t)},\\
+L&#x27;(0)&amp;=-\sum_{i=1}^4 \frac{p_i}{p_i}u_i\\
+     &amp;=-\underbrace{\Bigl(\sum_{i=1}^3 u_i+u_4\Bigr)}_{\text{確率の増減の合計は0}}=0.
+\end{aligned}">\begin{aligned}
+L&#x27;(t)&amp;=-\sum_{i=1}^4 p_i\frac{u_i}{q_i(t)},\\
+L&#x27;(0)&amp;=-\sum_{i=1}^4 \frac{p_i}{p_i}u_i\\
+     &amp;=-\underbrace{\Bigl(\sum_{i=1}^3 u_i+u_4\Bigr)}_{\text{確率の増減の合計は0}}=0.
+\end{aligned}</div>
+<p><strong>第7章と同じ数値で確認。</strong> 実際の確率を <span class="inline-math" data-tex="p=(0.2,0.3,0.1,0.4)">p=(0.2,0.3,0.1,0.4)</span>、変化率を <span class="inline-math" data-tex="u=(0.1,0,0,-0.1)">u=(0.1,0,0,-0.1)</span> とします。</p>
+<div class="equation" data-tex="\begin{aligned}L(0)&amp;=(0.2+0.3+0.1+0.4)\log 1=0,\\L&#x27;(0)&amp;=(-0.1)+0+0+0.1=0.\end{aligned}">\begin{aligned}L(0)&amp;=(0.2+0.3+0.1+0.4)\log 1=0,\\L&#x27;(0)&amp;=(-0.1)+0+0+0.1=0.\end{aligned}</div>
 <p>高さと傾きだけでは、どれほど急に損失が増える方向か読めません。出発点付近をテイラー展開すると、その違いは次の項に初めて現れます。</p>
 <div class="equation" data-tex="L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).">L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).</div>
 <p><span class="inline-math" data-tex="o(t^2)">o(t^2)</span> は <span class="inline-math" data-tex="t^2">t^2</span> で割ると <span class="inline-math" data-tex="t\to0">t\to0</span> で消える残りです。たとえば <span class="inline-math" data-tex="t">t</span> を半分にすると、二次の項は4分の1。逆に、非常に小さいずれでKLを測れば、<span class="inline-math" data-tex="2L(t)/t^2">2L(t)/t^2</span> が <span class="inline-math" data-tex="L&#x27;&#x27;(0)">L&#x27;&#x27;(0)</span> に近づきます。これをその方向の速さの二乗として使います。</p>
@@ -1071,7 +1119,7 @@
 <p>損失の式に戻ると、<span class="inline-math" data-tex="s">s</span> が小さい範囲で、最初に残る項は次のようになります。</p>
 <div class="equation" data-tex="L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.">L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.</div>
 <p><span class="inline-math" data-tex="\tfrac12">\tfrac12</span> が付くのは、<span class="inline-math" data-tex="s^2">s^2</span> を二度微分すると2になるからです。例えば <span class="inline-math" data-tex="L^{\prime\prime}(0)=4">L^{\prime\prime}(0)=4</span> なら、二次の部分は <span class="inline-math" data-tex="2s^2">2s^2</span>。その方向に予測を2倍ずらすと、平均損失はおよそ4倍になります。フィッシャー計量は、この二階微分が出発点と曲線の初速度だけで決まることを利用して、初速度の長さの二乗を定めます。</p>
-<p><a href="#why-second-coin">コインの数値とグラフで確かめる</a></p>
+<p><a href="#four-kl-at-zero">この分布で出発点の値と傾きを計算する</a></p>
 <p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
 <p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
 <div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
@@ -1221,8 +1269,25 @@
 <p>結果に依存するのは <span class="inline-math" data-tex="j">j</span> だけです。その平均は、和の始点を一つずらして計算できます。</p>
 <div class="equation" data-tex="\mathbb E_\lambda[X]=\sum_{j=1}^\infty e^{-\lambda}\frac{j\lambda^j}{j!}=\lambda\sum_{i=0}^\infty e^{-\lambda}\frac{\lambda^i}{i!}=\lambda.">\mathbb E_\lambda[X]=\sum_{j=1}^\infty e^{-\lambda}\frac{j\lambda^j}{j!}=\lambda\sum_{i=0}^\infty e^{-\lambda}\frac{\lambda^i}{i!}=\lambda.</div>
 <div class="equation" data-tex="D(\lambda,\kappa)=\kappa-\lambda+\lambda\log(\lambda/\kappa).">D(\lambda,\kappa)=\kappa-\lambda+\lambda\log(\lambda/\kappa).</div><h3>なぜ二階微分を取るのか</h3>
-<p>まったく同じ予測から始めます。予測側の座標を、決めた向きに小さく <span class="inline-math" data-tex="t\in\mathbb R">t\in\mathbb R</span> だけ動かした分布を <span class="inline-math" data-tex="Q_t">Q_t</span> とし、<span class="inline-math" data-tex="Q_0=P">Q_0=P</span> とします。<span class="inline-math" data-tex="L(t)=D(P,Q_t)">L(t)=D(P,Q_t)</span> をグラフにすると、横軸はこのずれ、縦軸は余分に払う平均損失です。</p>
-<p>出発点では対数比が <span class="inline-math" data-tex="\log 1=0">\log 1=0</span> なので高さは0。KLはどちらにずれても0以上です（<span class="inline-math" data-tex="-\log z\ge1-z">-\log z\ge1-z</span> に <span class="inline-math" data-tex="z=p_Q/p_P">z=p_Q/p_P</span> を代入して <span class="inline-math" data-tex="P">P</span> で平均すれば、右辺は <span class="inline-math" data-tex="1-1=0">1-1=0</span>）。したがって滑らかなグラフの底の傾きも0です。</p>
+<h3 id="poisson-kl-at-zero">出発点での値と傾きを計算する</h3>
+<p>実際の平均回数 <span class="inline-math" data-tex="\lambda">\lambda</span> を固定し、予測の平均回数を <span class="inline-math" data-tex="\kappa(t)=\lambda+at">\kappa(t)=\lambda+at</span> と動かします。<span class="inline-math" data-tex="a">a</span> は平均回数の変化率です。上のKLに代入すると、</p>
+<div class="equation" data-tex="\begin{aligned}
+L(t)&amp;=at+\lambda\log\frac{\lambda}{\lambda+at},\\
+L(0)&amp;=0+\lambda\log 1=0.
+\end{aligned}">\begin{aligned}
+L(t)&amp;=at+\lambda\log\frac{\lambda}{\lambda+at},\\
+L(0)&amp;=0+\lambda\log 1=0.
+\end{aligned}</div>
+<p>第1項 <span class="inline-math" data-tex="at">at</span> の傾きは <span class="inline-math" data-tex="a">a</span>。対数の項では、<span class="inline-math" data-tex="-\log(\lambda+at)">-\log(\lambda+at)</span> を微分して <span class="inline-math" data-tex="-a/(\lambda+at)">-a/(\lambda+at)</span> が出ます。</p>
+<div class="equation" data-tex="\begin{aligned}
+L&#x27;(t)&amp;=a-\lambda\frac{a}{\lambda+at},\\
+L&#x27;(0)&amp;=a-\frac{\lambda}{\lambda}a=a-a=0.
+\end{aligned}">\begin{aligned}
+L&#x27;(t)&amp;=a-\lambda\frac{a}{\lambda+at},\\
+L&#x27;(0)&amp;=a-\frac{\lambda}{\lambda}a=a-a=0.
+\end{aligned}</div>
+<p><strong>第7章と同じ数値で確認。</strong> <span class="inline-math" data-tex="\lambda=2,\ a=0.4">\lambda=2,\ a=0.4</span> とします。</p>
+<div class="equation" data-tex="\begin{aligned}L(0)&amp;=0+2\log 1=0,\\L&#x27;(0)&amp;=0.4-2(0.4/2)=0.\end{aligned}">\begin{aligned}L(0)&amp;=0+2\log 1=0,\\L&#x27;(0)&amp;=0.4-2(0.4/2)=0.\end{aligned}</div>
 <p>高さと傾きだけでは、どれほど急に損失が増える方向か読めません。出発点付近をテイラー展開すると、その違いは次の項に初めて現れます。</p>
 <div class="equation" data-tex="L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).">L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).</div>
 <p><span class="inline-math" data-tex="o(t^2)">o(t^2)</span> は <span class="inline-math" data-tex="t^2">t^2</span> で割ると <span class="inline-math" data-tex="t\to0">t\to0</span> で消える残りです。たとえば <span class="inline-math" data-tex="t">t</span> を半分にすると、二次の項は4分の1。逆に、非常に小さいずれでKLを測れば、<span class="inline-math" data-tex="2L(t)/t^2">2L(t)/t^2</span> が <span class="inline-math" data-tex="L&#x27;&#x27;(0)">L&#x27;&#x27;(0)</span> に近づきます。これをその方向の速さの二乗として使います。</p>
@@ -1257,7 +1322,7 @@
 <p>損失の式に戻ると、<span class="inline-math" data-tex="s">s</span> が小さい範囲で、最初に残る項は次のようになります。</p>
 <div class="equation" data-tex="L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.">L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.</div>
 <p><span class="inline-math" data-tex="\tfrac12">\tfrac12</span> が付くのは、<span class="inline-math" data-tex="s^2">s^2</span> を二度微分すると2になるからです。例えば <span class="inline-math" data-tex="L^{\prime\prime}(0)=4">L^{\prime\prime}(0)=4</span> なら、二次の部分は <span class="inline-math" data-tex="2s^2">2s^2</span>。その方向に予測を2倍ずらすと、平均損失はおよそ4倍になります。フィッシャー計量は、この二階微分が出発点と曲線の初速度だけで決まることを利用して、初速度の長さの二乗を定めます。</p>
-<p><a href="#why-second-coin">コインの数値とグラフで確かめる</a></p>
+<p><a href="#poisson-kl-at-zero">この分布で出発点の値と傾きを計算する</a></p>
 <p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
 <p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
 <div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
@@ -1430,8 +1495,29 @@
 <p><span class="inline-math" data-tex="X-m=(X-\mu)+(\mu-m)">X-m=(X-\mu)+(\mu-m)</span> と分けます。平方を展開して平均を取ると交差項は消えます。以下、<span class="inline-math" data-tex="A">A</span> はこの平均を表します。</p>
 <div class="equation" data-tex="\begin{aligned}A&amp;=\mathbb E_P[(X-m)^2]\\&amp;=\sigma^2+2(\mu-m)\underbrace{\mathbb E_P[X-\mu]}_{0}+(\mu-m)^2.\end{aligned}">\begin{aligned}A&amp;=\mathbb E_P[(X-m)^2]\\&amp;=\sigma^2+2(\mu-m)\underbrace{\mathbb E_P[X-\mu]}_{0}+(\mu-m)^2.\end{aligned}</div>
 <div class="equation" data-tex="D((\mu,\sigma),(m,r))=\log(r/\sigma)+\frac{A}{2r^2}-\frac12.">D((\mu,\sigma),(m,r))=\log(r/\sigma)+\frac{A}{2r^2}-\frac12.</div><h3>なぜ二階微分を取るのか</h3>
-<p>まったく同じ予測から始めます。予測側の座標を、決めた向きに小さく <span class="inline-math" data-tex="t\in\mathbb R">t\in\mathbb R</span> だけ動かした分布を <span class="inline-math" data-tex="Q_t">Q_t</span> とし、<span class="inline-math" data-tex="Q_0=P">Q_0=P</span> とします。<span class="inline-math" data-tex="L(t)=D(P,Q_t)">L(t)=D(P,Q_t)</span> をグラフにすると、横軸はこのずれ、縦軸は余分に払う平均損失です。</p>
-<p>出発点では対数比が <span class="inline-math" data-tex="\log 1=0">\log 1=0</span> なので高さは0。KLはどちらにずれても0以上です（<span class="inline-math" data-tex="-\log z\ge1-z">-\log z\ge1-z</span> に <span class="inline-math" data-tex="z=p_Q/p_P">z=p_Q/p_P</span> を代入して <span class="inline-math" data-tex="P">P</span> で平均すれば、右辺は <span class="inline-math" data-tex="1-1=0">1-1=0</span>）。したがって滑らかなグラフの底の傾きも0です。</p>
+<h3 id="normal-kl-at-zero">出発点での値と傾きを計算する</h3>
+<p>実際の平均と標準偏差 <span class="inline-math" data-tex="(\mu,\sigma)">(\mu,\sigma)</span> は固定します。予測の平均を <span class="inline-math" data-tex="m(t)=\mu+at">m(t)=\mu+at</span>、標準偏差を <span class="inline-math" data-tex="r(t)=\sigma+bt">r(t)=\sigma+bt</span> とします。<span class="inline-math" data-tex="a,b">a,b</span> はそれぞれの変化率です。上の <span class="inline-math" data-tex="A">A</span> はこの経路では <span class="inline-math" data-tex="A(t)=\sigma^2+a^2t^2">A(t)=\sigma^2+a^2t^2</span> になります。</p>
+<div class="equation" data-tex="\begin{aligned}
+L(t)&amp;=\log\frac{r(t)}{\sigma}+\frac{A(t)}{2r(t)^2}-\frac12,\\
+L(0)&amp;=\log 1+\frac{\sigma^2}{2\sigma^2}-\frac12\\
+    &amp;=0+\frac12-\frac12=0.
+\end{aligned}">\begin{aligned}
+L(t)&amp;=\log\frac{r(t)}{\sigma}+\frac{A(t)}{2r(t)^2}-\frac12,\\
+L(0)&amp;=\log 1+\frac{\sigma^2}{2\sigma^2}-\frac12\\
+    &amp;=0+\frac12-\frac12=0.
+\end{aligned}</div>
+<p>対数の微分から <span class="inline-math" data-tex="b/r(t)">b/r(t)</span> が出ます。分数では分子 <span class="inline-math" data-tex="A(t)">A(t)</span> と <span class="inline-math" data-tex="r(t)^{-2}">r(t)^{-2}</span> の両方を微分します。分子の微分は <span class="inline-math" data-tex="A&#x27;(t)=2a^2t">A&#x27;(t)=2a^2t</span> です。</p>
+<div class="equation" data-tex="\begin{aligned}
+L&#x27;(t)&amp;=\frac{b}{r(t)}+\frac{a^2t}{r(t)^2}\\ &amp;\quad-\frac{bA(t)}{r(t)^3},\\
+L&#x27;(0)&amp;=\frac b\sigma+\underbrace{0}_{\text{平均の項}}-\frac{b\sigma^2}{\sigma^3}\\
+     &amp;=\frac b\sigma-\frac b\sigma=0.
+\end{aligned}">\begin{aligned}
+L&#x27;(t)&amp;=\frac{b}{r(t)}+\frac{a^2t}{r(t)^2}\\ &amp;\quad-\frac{bA(t)}{r(t)^3},\\
+L&#x27;(0)&amp;=\frac b\sigma+\underbrace{0}_{\text{平均の項}}-\frac{b\sigma^2}{\sigma^3}\\
+     &amp;=\frac b\sigma-\frac b\sigma=0.
+\end{aligned}</div>
+<p><strong>第7章と同じ数値で確認。</strong> <span class="inline-math" data-tex="(\mu,\sigma)=(0,1),\ (a,b)=(0.3,0.2)">(\mu,\sigma)=(0,1),\ (a,b)=(0.3,0.2)</span> とします。</p>
+<div class="equation" data-tex="\begin{aligned}L(0)&amp;=\log 1+\tfrac12-\tfrac12=0,\\L&#x27;(0)&amp;=0.2+0-0.2=0.\end{aligned}">\begin{aligned}L(0)&amp;=\log 1+\tfrac12-\tfrac12=0,\\L&#x27;(0)&amp;=0.2+0-0.2=0.\end{aligned}</div>
 <p>高さと傾きだけでは、どれほど急に損失が増える方向か読めません。出発点付近をテイラー展開すると、その違いは次の項に初めて現れます。</p>
 <div class="equation" data-tex="L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).">L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).</div>
 <p><span class="inline-math" data-tex="o(t^2)">o(t^2)</span> は <span class="inline-math" data-tex="t^2">t^2</span> で割ると <span class="inline-math" data-tex="t\to0">t\to0</span> で消える残りです。たとえば <span class="inline-math" data-tex="t">t</span> を半分にすると、二次の項は4分の1。逆に、非常に小さいずれでKLを測れば、<span class="inline-math" data-tex="2L(t)/t^2">2L(t)/t^2</span> が <span class="inline-math" data-tex="L&#x27;&#x27;(0)">L&#x27;&#x27;(0)</span> に近づきます。これをその方向の速さの二乗として使います。</p>
@@ -1468,7 +1554,7 @@
 <p>損失の式に戻ると、<span class="inline-math" data-tex="s">s</span> が小さい範囲で、最初に残る項は次のようになります。</p>
 <div class="equation" data-tex="L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.">L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.</div>
 <p><span class="inline-math" data-tex="\tfrac12">\tfrac12</span> が付くのは、<span class="inline-math" data-tex="s^2">s^2</span> を二度微分すると2になるからです。例えば <span class="inline-math" data-tex="L^{\prime\prime}(0)=4">L^{\prime\prime}(0)=4</span> なら、二次の部分は <span class="inline-math" data-tex="2s^2">2s^2</span>。その方向に予測を2倍ずらすと、平均損失はおよそ4倍になります。フィッシャー計量は、この二階微分が出発点と曲線の初速度だけで決まることを利用して、初速度の長さの二乗を定めます。</p>
-<p><a href="#why-second-coin">コインの数値とグラフで確かめる</a></p>
+<p><a href="#normal-kl-at-zero">この分布で出発点の値と傾きを計算する</a></p>
 <p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
 <p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
 <div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
@@ -1691,8 +1777,37 @@
 <div class="equation" data-tex="\mathbb E[\log Y]=\frac{\Gamma&#x27;(k)}{\Gamma(k)}=:\psi(k),\qquad \mathbb E[\log X]=\log\theta+\psi(k).">\mathbb E[\log Y]=\frac{\Gamma&#x27;(k)}{\Gamma(k)}=:\psi(k),\qquad \mathbb E[\log X]=\log\theta+\psi(k).</div>
 <p>対数比の <span class="inline-math" data-tex="x,\log x">x,\log x</span> にこの二つの平均を入れ、尺度の対数をまとめます。</p>
 <div class="equation" data-tex="\begin{aligned}D((k,\theta),(h,r))&amp;=(k-h)\psi(k)+\log\Gamma(h)-\log\Gamma(k)\\&amp;\quad+h\log(r/\theta)+k(\theta/r-1).\end{aligned}">\begin{aligned}D((k,\theta),(h,r))&amp;=(k-h)\psi(k)+\log\Gamma(h)-\log\Gamma(k)\\&amp;\quad+h\log(r/\theta)+k(\theta/r-1).\end{aligned}</div><h3>なぜ二階微分を取るのか</h3>
-<p>まったく同じ予測から始めます。予測側の座標を、決めた向きに小さく <span class="inline-math" data-tex="t\in\mathbb R">t\in\mathbb R</span> だけ動かした分布を <span class="inline-math" data-tex="Q_t">Q_t</span> とし、<span class="inline-math" data-tex="Q_0=P">Q_0=P</span> とします。<span class="inline-math" data-tex="L(t)=D(P,Q_t)">L(t)=D(P,Q_t)</span> をグラフにすると、横軸はこのずれ、縦軸は余分に払う平均損失です。</p>
-<p>出発点では対数比が <span class="inline-math" data-tex="\log 1=0">\log 1=0</span> なので高さは0。KLはどちらにずれても0以上です（<span class="inline-math" data-tex="-\log z\ge1-z">-\log z\ge1-z</span> に <span class="inline-math" data-tex="z=p_Q/p_P">z=p_Q/p_P</span> を代入して <span class="inline-math" data-tex="P">P</span> で平均すれば、右辺は <span class="inline-math" data-tex="1-1=0">1-1=0</span>）。したがって滑らかなグラフの底の傾きも0です。</p>
+<h3 id="gamma-kl-at-zero">出発点での値と傾きを計算する</h3>
+<p>実際の形状と尺度 <span class="inline-math" data-tex="(k,\theta)">(k,\theta)</span> は固定します。予測の形状を <span class="inline-math" data-tex="h(t)=k+at">h(t)=k+at</span>、尺度を <span class="inline-math" data-tex="r(t)=\theta+bt">r(t)=\theta+bt</span> とします。<span class="inline-math" data-tex="a,b">a,b</span> はそれぞれの変化率です。上のKLで <span class="inline-math" data-tex="h(0)=k,\ r(0)=\theta">h(0)=k,\ r(0)=\theta</span> を代入すると、</p>
+<div class="equation" data-tex="\begin{aligned}
+L(0)&amp;=(k-k)\psi(k)+\log\Gamma(k)-\log\Gamma(k)\\
+    &amp;\quad+k\log 1+k(1-1)=0.
+\end{aligned}">\begin{aligned}
+L(0)&amp;=(k-k)\psi(k)+\log\Gamma(k)-\log\Gamma(k)\\
+    &amp;\quad+k\log 1+k(1-1)=0.
+\end{aligned}</div>
+<p>形状と尺度が動く分を分けて微分します。<span class="inline-math" data-tex="(\log\Gamma)&#x27;(h)=\psi(h)">(\log\Gamma)&#x27;(h)=\psi(h)</span> で、<span class="inline-math" data-tex="h\log(r/\theta)">h\log(r/\theta)</span> は積なので、形状の変化と尺度の変化の両方が出ます。</p>
+<div class="equation" data-tex="\begin{aligned}
+L&#x27;(t)&amp;=a\left[-\psi(k)+\psi(h(t))+\log\frac{r(t)}{\theta}\right]\\
+     &amp;\quad+b\left[\frac{h(t)}{r(t)}-\frac{k\theta}{r(t)^2}\right],\\
+L&#x27;(0)&amp;=a\underbrace{[-\psi(k)+\psi(k)+\log 1]}_{\text{形状の寄与は0}}\\
+     &amp;\quad+b\underbrace{\left[\frac{k}{\theta}-\frac{k\theta}{\theta^2}\right]}_{\text{尺度の寄与は0}}=0.
+\end{aligned}">\begin{aligned}
+L&#x27;(t)&amp;=a\left[-\psi(k)+\psi(h(t))+\log\frac{r(t)}{\theta}\right]\\
+     &amp;\quad+b\left[\frac{h(t)}{r(t)}-\frac{k\theta}{r(t)^2}\right],\\
+L&#x27;(0)&amp;=a\underbrace{[-\psi(k)+\psi(k)+\log 1]}_{\text{形状の寄与は0}}\\
+     &amp;\quad+b\underbrace{\left[\frac{k}{\theta}-\frac{k\theta}{\theta^2}\right]}_{\text{尺度の寄与は0}}=0.
+\end{aligned}</div>
+<p><strong>第7章と同じ数値で確認。</strong> <span class="inline-math" data-tex="(k,\theta)=(2,1),\ (a,b)=(0.2,0.2)">(k,\theta)=(2,1),\ (a,b)=(0.2,0.2)</span> とします。</p>
+<div class="equation" data-tex="\begin{aligned}
+L(0)&amp;=0+\log\Gamma(2)-\log\Gamma(2)\\
+    &amp;\quad+2\log 1+2(1-1)=0,\\
+L&#x27;(0)&amp;=0.2[-\psi(2)+\psi(2)+0]+0.2[2-2]=0.
+\end{aligned}">\begin{aligned}
+L(0)&amp;=0+\log\Gamma(2)-\log\Gamma(2)\\
+    &amp;\quad+2\log 1+2(1-1)=0,\\
+L&#x27;(0)&amp;=0.2[-\psi(2)+\psi(2)+0]+0.2[2-2]=0.
+\end{aligned}</div>
 <p>高さと傾きだけでは、どれほど急に損失が増える方向か読めません。出発点付近をテイラー展開すると、その違いは次の項に初めて現れます。</p>
 <div class="equation" data-tex="L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).">L(t)=\underbrace{L(0)}_{0}+\underbrace{L&#x27;(0)}_{0}t+\textcolor{#ffd389}{\underbrace{\tfrac12L&#x27;&#x27;(0)t^2}_{\text{最初に残る項}}}+o(t^2).</div>
 <p><span class="inline-math" data-tex="o(t^2)">o(t^2)</span> は <span class="inline-math" data-tex="t^2">t^2</span> で割ると <span class="inline-math" data-tex="t\to0">t\to0</span> で消える残りです。たとえば <span class="inline-math" data-tex="t">t</span> を半分にすると、二次の項は4分の1。逆に、非常に小さいずれでKLを測れば、<span class="inline-math" data-tex="2L(t)/t^2">2L(t)/t^2</span> が <span class="inline-math" data-tex="L&#x27;&#x27;(0)">L&#x27;&#x27;(0)</span> に近づきます。これをその方向の速さの二乗として使います。</p>
@@ -1729,7 +1844,7 @@
 <p>損失の式に戻ると、<span class="inline-math" data-tex="s">s</span> が小さい範囲で、最初に残る項は次のようになります。</p>
 <div class="equation" data-tex="L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.">L(s)\approx\textcolor{#8bc5ff}{\underbrace{\tfrac12 L^{\prime\prime}(0)}_{\text{二次の係数}}}s^2.</div>
 <p><span class="inline-math" data-tex="\tfrac12">\tfrac12</span> が付くのは、<span class="inline-math" data-tex="s^2">s^2</span> を二度微分すると2になるからです。例えば <span class="inline-math" data-tex="L^{\prime\prime}(0)=4">L^{\prime\prime}(0)=4</span> なら、二次の部分は <span class="inline-math" data-tex="2s^2">2s^2</span>。その方向に予測を2倍ずらすと、平均損失はおよそ4倍になります。フィッシャー計量は、この二階微分が出発点と曲線の初速度だけで決まることを利用して、初速度の長さの二乗を定めます。</p>
-<p><a href="#why-second-coin">コインの数値とグラフで確かめる</a></p>
+<p><a href="#gamma-kl-at-zero">この分布で出発点の値と傾きを計算する</a></p>
 <p>以下では、確率や密度の正の範囲は共通です。和や積分がある場合は、一般論の正則性の条件のもとで微分と和や積分を交換します。</p>
 <p>予測側の <span class="inline-math" data-tex="q_s">q_s</span> だけを微分します。点は観測値を固定した <span class="inline-math" data-tex="s">s</span> 微分です。負の対数を一度微分すると <span class="inline-math" data-tex="-\dot q_s/q_s">-\dot q_s/q_s</span>。これをさらに微分してから、<span class="inline-math" data-tex="q_0=p_P">q_0=p_P</span> を代入します。</p>
 <div class="equation" data-tex="\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.">\frac{\mathrm d}{\mathrm ds}(-\dot q_s/q_s)=(\dot q_s/q_s)^2-\ddot q_s/q_s.</div>
@@ -1931,6 +2046,7 @@
 <p>この割り算は、二つの予測の対数を引いた結果です。微分で出てくる <span class="inline-math" data-tex="1/p_P">1/p_P</span> とは、この後の計算でつながります。</p>
 <h3 id="why-second-general">なぜ二階微分を取るか</h3>
 <p><strong>まず、何を動かすか。</strong> 実際の分布 <span class="inline-math" data-tex="P">P</span> は固定し、予測の分布 <span class="inline-math" data-tex="Q_s">Q_s</span> だけを少し動かします。<span class="inline-math" data-tex="s">s</span> はずらすためのつまみ、<span class="inline-math" data-tex="L(s)">L(s)</span> は平均でどれだけ損失が増えたかです。出発点では予測が実際と一致するので <span class="inline-math" data-tex="L(0)=0">L(0)=0</span> です。</p>
+<div class="equation" data-tex="L(0)=\mathcal I[p_P\log(p_P/p_P)]=\mathcal I[p_P\log 1]=0.">L(0)=\mathcal I[p_P\log(p_P/p_P)]=\mathcal I[p_P\log 1]=0.</div>
 <p><strong>一階微分は、グラフの傾き。</strong> <span class="inline-math" data-tex="L^\prime(0)">L^\prime(0)</span> は、つまみを動かした直後に、ずらした量に比例する損失が出るかを調べます。出発点では各結果の計算で分母と重みが約分され、残るのは確率の増減を全部足した値のマイナスです。ある結果に確率を足した分は、別の結果から引かれます。足し引きが打ち消し合うので <span class="inline-math" data-tex="L^\prime(0)=0">L^\prime(0)=0</span> です。連続分布でも、同じ理由は「密度の積分がいつも1」と書けます。</p>
 <p><strong>二階微分は、その傾きが変わる速さ。</strong> 底で傾きが0でも、少し動いた先で傾きが急に立ち上がることはあります。たとえば、同じ点から始まる <span class="inline-math" data-tex="s^2">s^2</span> と <span class="inline-math" data-tex="4s^2">4s^2</span> は、どちらも出発点で傾き0です。傾きは順に <span class="inline-math" data-tex="2s">2s</span> と <span class="inline-math" data-tex="8s">8s</span> なので、後者のほうが4倍の速さで立ち上がります。</p>
 <p>損失の式に戻ると、<span class="inline-math" data-tex="s">s</span> が小さい範囲で、最初に残る項は次のようになります。</p>
