@@ -49,7 +49,7 @@
     update();
   }
 
-  function bars(svg, probabilities, height, horizontalLabel, parameters) {
+  function bars(svg, probabilities, height, horizontalLabel, parameters, digits = 3) {
     const bottom = height - 46, top = 28;
     const step = 283 / probabilities.length;
     const y = probability => bottom - probability * (bottom - top);
@@ -67,15 +67,21 @@
       const width = Math.min(step * .68, 43);
       mark(svg, 'rect', {x: x - width / 2, y: y(p), width, height: bottom - y(p), fill: blue});
       text(svg, x, bottom + 19, i);
-      if (probabilities.length <= 4) text(svg, x, y(p) - 5, number(p));
+      if (probabilities.length <= 4) text(svg, x, y(p) - 5, number(p, digits));
     });
   }
 
   const binomial = p => [(1-p)**2, 2*p*(1-p), p*p];
   figures('binomial', ([histogram], [p]) => {
     const probs = binomial(p);
-    bars(histogram, probs, 190, 'j（成功回数）', 'n = 2（試行回数）');
-    return '確率 (0回, 1回, 2回) ' + tuple(probs);
+    bars(histogram, probs, 190, 'j（成功回数）', 'n = 2（試行回数）', 4);
+    const success = number(p, 2);
+    const failure = number(1-p, 2);
+    return [
+      '0回　(1 − p)² = '+failure+'² = '+number(probs[0], 4),
+      '1回　2p(1 − p) = 2 × '+success+' × '+failure+' = '+number(probs[1], 4),
+      '2回　p² = '+success+'² = '+number(probs[2], 4)
+    ].join('\n');
   });
 
   figures('simplex-binomial', ([simplex], [p]) => {

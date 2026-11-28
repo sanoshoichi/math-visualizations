@@ -28,13 +28,13 @@
 <link rel="stylesheet" href="geometry-labs.css?v=visual-legends">
 <link rel="stylesheet" href="information-tabs.css?v=why-second">
 <script defer src="information-tabs.js?v=axis-labels"></script>
-<script defer src="distribution-labs.js?v=guided-models"></script>
+<script defer src="distribution-labs.js?v=figure-formulas"></script>
 <script defer src="information-examples.js"></script>
 <script defer src="basis.js?v=coordinate-notation"></script>
 <script defer src="geometry-labs.js?v=coordinate-notation"></script>
 <link rel="stylesheet" href="kl-comparison.css">
-<script defer src="kl-comparison.js"></script>
-<link rel="stylesheet" href="coin-chart-mapping.css"><script defer src="coin-chart-mapping.js"></script>
+<script defer src="kl-comparison.js?v=figure-formulas"></script>
+<link rel="stylesheet" href="coin-chart-mapping.css?v=figure-formulas"><script defer src="coin-chart-mapping.js?v=figure-formulas"></script>
 </head>
 <body>
 <main>
@@ -98,7 +98,7 @@
 <li><svg aria-hidden="true" viewBox="0 0 28 14"><rect x="10" y="1" width="8" height="12" fill="var(--blue)"/></svg><span>成功回数ごとの確率</span></li>
 </ul>
 <figcaption>横軸の <span class="inline-math" data-tex="j">j</span> は成功回数、縦軸の <span class="inline-math" data-tex="P(X=j)">P(X=j)</span> はその確率です。試行回数は <span class="inline-math" data-tex="n=2">n=2</span> に固定しています。つまみで動かすのは1回あたりの成功確率 <span class="inline-math" data-tex="p">p</span> です。</figcaption>
-<p class="reading" data-values></p>
+<p class="reading" style="white-space:pre-line" data-values aria-live="polite"></p>
 </figure>
 
 </section>
@@ -133,12 +133,17 @@
     <svg class="space-map" role="img" aria-label="入力の点から分布へ写す矢印γと、分布から座標へ写す矢印π"></svg>
   </div>
   <div class="text-small chart-map-key"><span><i class="moving"></i>選択中</span><span><i class="origin"></i>出発時（s = 0）</span><span><i class="range"></i>座標近傍 U</span></div>
+  <div class="text-small tabular-nums coin-map-calculations" aria-live="polite">
+    <div><span class="inline-math" data-tex="r+as">r + as</span> = <span data-coordinate>0.5 + 0.15 × 0.6 = 0.59</span></div>
+    <div>表 <span class="inline-math" data-tex="r+as">r + as</span> = <span data-heads>0.59 = 59%</span></div>
+    <div>裏 <span class="inline-math" data-tex="1-(r+as)">1 − (r + as)</span> = <span data-tails>1 − 0.59 = 41%</span></div>
+  </div>
   <hr>
   <p class="coin-speed-heading">出発点の接空間にある速度 <i>W</i></p>
   <label class="form-label" for="coin-map-a">速度の係数　<i>a</i> = <output class="tabular-nums" data-a-out>+0.15</output></label>
   <input id="coin-map-a" class="form-range" type="range" min="-.25" max=".25" step=".05" value=".15">
   <svg class="velocity" role="img" aria-label="出発点における接空間の座標基底で表した速度W"></svg>
-  <div class="text-small tabular-nums" data-result aria-live="polite"></div>
+  <div class="text-small tabular-nums" aria-live="polite"><span class="inline-math" data-tex="W(\pi)=\left.\frac{\mathrm d}{\mathrm ds}(r+as)\right|_{s=0}=a">W(π) = (d/ds)(r + as) at s = 0 = a</span> = <span data-speed>+0.15</span></div>
 </figure>
 <p>図では出発点の表の確率を <span class="inline-math" data-tex="r=0.50">r=0.50</span> に固定します。<span class="inline-math" data-tex="U=\{P_q\mid 0.20&lt;q&lt;0.80\}">U</span> を座標近傍として太く描いています。</p>
 <h3>二項分布の接ベクトル</h3>
@@ -386,7 +391,7 @@
 <tr><td>期待値座標 <span class="inline-math" data-tex="\eta">\eta</span> の中点</td><td><span class="inline-math" data-tex="(0.1+0.6)/2=0.350">(0.1+0.6)/2=0.350</span></td></tr>
 <tr><td>計量座標 <span class="inline-math" data-tex="u">u</span> の中点</td><td><span class="inline-math" data-tex="\sin^2[(\arcsin\sqrt{0.1}+\arcsin\sqrt{0.6})/2]\approx0.322">\sin^2[(\arcsin\sqrt{0.1}+\arcsin\sqrt{0.6})/2]\approx0.322</span></td></tr>
 </table>
-<figure class="geometry-lab"><h4>同じ時刻で、分布の座標を一つ読む</h4><svg viewBox="0 0 320 180" role="img" aria-label="横軸は経路の時刻 t、縦軸はp（成功確率）。三つの接続を同じ時刻で比較"><g fill="var(--muted)" font-size="11"><text x="10" y="17">p（成功確率）</text><text x="286" y="174" text-anchor="end">t（経路上の時刻）</text><text x="37" y="145.0" text-anchor="end">0.1</text><path d="M43 141.0H299" stroke="var(--muted)" opacity=".25"/><text x="37" y="94.5" text-anchor="end">0.35</text><path d="M43 90.5H299" stroke="var(--muted)" opacity=".25"/><text x="37" y="44.0" text-anchor="end">0.6</text><path d="M43 40.0H299" stroke="var(--muted)" opacity=".25"/><text x="46" y="158" text-anchor="middle">0</text><text x="172.5" y="158" text-anchor="middle">0.5</text><text x="299" y="158" text-anchor="middle">1</text></g><path d="M46 34V141H299" fill="none" stroke="var(--muted)"/><path d="M172.5 34v107" stroke="var(--muted)" stroke-dasharray="2 5" opacity=".45"/><polyline points="46.0,141.0 50.2,140.2 54.4,139.4 58.6,138.5 62.9,137.6 67.1,136.7 71.3,135.8 75.5,134.8 79.7,133.8 83.9,132.7 88.2,131.6 92.4,130.5 96.6,129.4 100.8,128.2 105.0,127.0 109.2,125.7 113.5,124.4 117.7,123.1 121.9,121.8 126.1,120.4 130.3,118.9 134.6,117.5 138.8,116.0 143.0,114.4 147.2,112.8 151.4,111.2 155.6,109.6 159.9,107.9 164.1,106.2 168.3,104.4 172.5,102.6 176.7,100.8 180.9,99.0 185.2,97.1 189.4,95.2 193.6,93.2 197.8,91.3 202.0,89.3 206.2,87.2 210.5,85.2 214.7,83.1 218.9,81.0 223.1,78.9 227.3,76.8 231.5,74.7 235.8,72.5 240.0,70.4 244.2,68.2 248.4,66.0 252.6,63.8 256.8,61.6 261.0,59.4 265.3,57.2 269.5,55.1 273.7,52.9 277.9,50.7 282.1,48.5 286.4,46.4 290.6,44.2 294.8,42.1 299.0,40.0" fill="none" stroke="#82c7ff" stroke-width="2.4" stroke-dasharray=""/><circle cx="172.5" cy="102.64" r="3" fill="#82c7ff"/><polyline points="46.0,141.0 50.2,139.3 54.4,137.6 58.6,135.9 62.9,134.3 67.1,132.6 71.3,130.9 75.5,129.2 79.7,127.5 83.9,125.9 88.2,124.2 92.4,122.5 96.6,120.8 100.8,119.1 105.0,117.4 109.2,115.8 113.5,114.1 117.7,112.4 121.9,110.7 126.1,109.0 130.3,107.3 134.6,105.7 138.8,104.0 143.0,102.3 147.2,100.6 151.4,98.9 155.6,97.2 159.9,95.5 164.1,93.9 168.3,92.2 172.5,90.5 176.7,88.8 180.9,87.1 185.2,85.4 189.4,83.8 193.6,82.1 197.8,80.4 202.0,78.7 206.2,77.0 210.5,75.4 214.7,73.7 218.9,72.0 223.1,70.3 227.3,68.6 231.5,66.9 235.8,65.2 240.0,63.6 244.2,61.9 248.4,60.2 252.6,58.5 256.8,56.8 261.0,55.1 265.3,53.5 269.5,51.8 273.7,50.1 277.9,48.4 282.1,46.7 286.4,45.1 290.6,43.4 294.8,41.7 299.0,40.0" fill="none" stroke="#ffc480" stroke-width="2.4" stroke-dasharray="7 3"/><circle cx="172.5" cy="90.50" r="3" fill="#ffc480"/><polyline points="46.0,141.0 50.2,139.8 54.4,138.7 58.6,137.5 62.9,136.2 67.1,135.0 71.3,133.7 75.5,132.3 79.7,131.0 83.9,129.6 88.2,128.2 92.4,126.8 96.6,125.4 100.8,123.9 105.0,122.4 109.2,120.9 113.5,119.4 117.7,117.9 121.9,116.3 126.1,114.7 130.3,113.1 134.6,111.5 138.8,109.8 143.0,108.1 147.2,106.5 151.4,104.8 155.6,103.1 159.9,101.3 164.1,99.6 168.3,97.8 172.5,96.1 176.7,94.3 180.9,92.5 185.2,90.7 189.4,88.9 193.6,87.0 197.8,85.2 202.0,83.4 206.2,81.5 210.5,79.6 214.7,77.8 218.9,75.9 223.1,74.0 227.3,72.1 231.5,70.2 235.8,68.4 240.0,66.5 244.2,64.6 248.4,62.7 252.6,60.8 256.8,58.9 261.0,57.0 265.3,55.1 269.5,53.2 273.7,51.3 277.9,49.4 282.1,47.5 286.4,45.6 290.6,43.7 294.8,41.9 299.0,40.0" fill="none" stroke="#c8a8ff" stroke-width="2.4" stroke-dasharray="2 3"/><circle cx="172.5" cy="96.06" r="3" fill="#c8a8ff"/></svg><figcaption>中央の点は各経路を半分まで進んだときの値。左右の端では三つの曲線が重なります。</figcaption><ul class="ig-legend" aria-label="各曲線と時刻0.5での座標値"><li><svg viewBox="0 0 28 14" aria-hidden="true"><path d="M1 7H27" stroke="#82c7ff" stroke-dasharray="" stroke-width="2.4"/></svg>指数接続 0.290</li><li><svg viewBox="0 0 28 14" aria-hidden="true"><path d="M1 7H27" stroke="#ffc480" stroke-dasharray="7 3" stroke-width="2.4"/></svg>混合接続 0.350</li><li><svg viewBox="0 0 28 14" aria-hidden="true"><path d="M1 7H27" stroke="#c8a8ff" stroke-dasharray="2 3" stroke-width="2.4"/></svg>計量の接続 0.322</li></ul></figure>
+<figure class="geometry-lab"><h4>同じ時刻で、分布の座標を一つ読む</h4><svg viewBox="0 0 320 180" role="img" aria-label="横軸は経路の時刻 t、縦軸はp（成功確率）。三つの接続を同じ時刻で比較"><g fill="var(--muted)" font-size="11"><text x="10" y="17">p（成功確率）</text><text x="286" y="174" text-anchor="end">t（経路上の時刻）</text><text x="37" y="145.0" text-anchor="end">0.1</text><path d="M43 141.0H299" stroke="var(--muted)" opacity=".25"/><text x="37" y="94.5" text-anchor="end">0.35</text><path d="M43 90.5H299" stroke="var(--muted)" opacity=".25"/><text x="37" y="44.0" text-anchor="end">0.6</text><path d="M43 40.0H299" stroke="var(--muted)" opacity=".25"/><text x="46" y="158" text-anchor="middle">0</text><text x="172.5" y="158" text-anchor="middle">0.5</text><text x="299" y="158" text-anchor="middle">1</text></g><path d="M46 34V141H299" fill="none" stroke="var(--muted)"/><path d="M172.5 34v107" stroke="var(--muted)" stroke-dasharray="2 5" opacity=".45"/><polyline points="46.0,141.0 50.2,140.2 54.4,139.4 58.6,138.5 62.9,137.6 67.1,136.7 71.3,135.8 75.5,134.8 79.7,133.8 83.9,132.7 88.2,131.6 92.4,130.5 96.6,129.4 100.8,128.2 105.0,127.0 109.2,125.7 113.5,124.4 117.7,123.1 121.9,121.8 126.1,120.4 130.3,118.9 134.6,117.5 138.8,116.0 143.0,114.4 147.2,112.8 151.4,111.2 155.6,109.6 159.9,107.9 164.1,106.2 168.3,104.4 172.5,102.6 176.7,100.8 180.9,99.0 185.2,97.1 189.4,95.2 193.6,93.2 197.8,91.3 202.0,89.3 206.2,87.2 210.5,85.2 214.7,83.1 218.9,81.0 223.1,78.9 227.3,76.8 231.5,74.7 235.8,72.5 240.0,70.4 244.2,68.2 248.4,66.0 252.6,63.8 256.8,61.6 261.0,59.4 265.3,57.2 269.5,55.1 273.7,52.9 277.9,50.7 282.1,48.5 286.4,46.4 290.6,44.2 294.8,42.1 299.0,40.0" fill="none" stroke="#82c7ff" stroke-width="2.4" stroke-dasharray=""/><circle cx="172.5" cy="102.64" r="3" fill="#82c7ff"/><polyline points="46.0,141.0 50.2,139.3 54.4,137.6 58.6,135.9 62.9,134.3 67.1,132.6 71.3,130.9 75.5,129.2 79.7,127.5 83.9,125.9 88.2,124.2 92.4,122.5 96.6,120.8 100.8,119.1 105.0,117.4 109.2,115.8 113.5,114.1 117.7,112.4 121.9,110.7 126.1,109.0 130.3,107.3 134.6,105.7 138.8,104.0 143.0,102.3 147.2,100.6 151.4,98.9 155.6,97.2 159.9,95.5 164.1,93.9 168.3,92.2 172.5,90.5 176.7,88.8 180.9,87.1 185.2,85.4 189.4,83.8 193.6,82.1 197.8,80.4 202.0,78.7 206.2,77.0 210.5,75.4 214.7,73.7 218.9,72.0 223.1,70.3 227.3,68.6 231.5,66.9 235.8,65.2 240.0,63.6 244.2,61.9 248.4,60.2 252.6,58.5 256.8,56.8 261.0,55.1 265.3,53.5 269.5,51.8 273.7,50.1 277.9,48.4 282.1,46.7 286.4,45.1 290.6,43.4 294.8,41.7 299.0,40.0" fill="none" stroke="#ffc480" stroke-width="2.4" stroke-dasharray="7 3"/><circle cx="172.5" cy="90.50" r="3" fill="#ffc480"/><polyline points="46.0,141.0 50.2,139.8 54.4,138.7 58.6,137.5 62.9,136.2 67.1,135.0 71.3,133.7 75.5,132.3 79.7,131.0 83.9,129.6 88.2,128.2 92.4,126.8 96.6,125.4 100.8,123.9 105.0,122.4 109.2,120.9 113.5,119.4 117.7,117.9 121.9,116.3 126.1,114.7 130.3,113.1 134.6,111.5 138.8,109.8 143.0,108.1 147.2,106.5 151.4,104.8 155.6,103.1 159.9,101.3 164.1,99.6 168.3,97.8 172.5,96.1 176.7,94.3 180.9,92.5 185.2,90.7 189.4,88.9 193.6,87.0 197.8,85.2 202.0,83.4 206.2,81.5 210.5,79.6 214.7,77.8 218.9,75.9 223.1,74.0 227.3,72.1 231.5,70.2 235.8,68.4 240.0,66.5 244.2,64.6 248.4,62.7 252.6,60.8 256.8,58.9 261.0,57.0 265.3,55.1 269.5,53.2 273.7,51.3 277.9,49.4 282.1,47.5 286.4,45.6 290.6,43.7 294.8,41.9 299.0,40.0" fill="none" stroke="#c8a8ff" stroke-width="2.4" stroke-dasharray="2 3"/><circle cx="172.5" cy="96.06" r="3" fill="#c8a8ff"/></svg><figcaption>中央の点は <span class="inline-math" data-tex="t=0.5">t = 0.5</span>。各曲線の両端は <span class="inline-math" data-tex="p_0=0.1,\ p_1=0.6">p₀ = 0.1, p₁ = 0.6</span>。</figcaption><ul class="ig-legend" aria-label="各曲線と時刻0.5での座標値"><li><svg viewBox="0 0 28 14" aria-hidden="true"><path d="M1 7H27" stroke="#82c7ff" stroke-dasharray="" stroke-width="2.4"/></svg><div>指数接続<br><span class="inline-math" data-tex="\frac{B}{1+B}\approx0.290,\quad B=\sqrt{\frac{0.1}{0.9}\cdot\frac{0.6}{0.4}}">B/(1 + B) ≈ 0.290, B = √[(0.1/0.9) × (0.6/0.4)]</span></div></li><li><svg viewBox="0 0 28 14" aria-hidden="true"><path d="M1 7H27" stroke="#ffc480" stroke-dasharray="7 3" stroke-width="2.4"/></svg><div>混合接続<br><span class="inline-math" data-tex="\frac{0.1+0.6}{2}=0.350">(0.1 + 0.6)/2 = 0.350</span></div></li><li><svg viewBox="0 0 28 14" aria-hidden="true"><path d="M1 7H27" stroke="#c8a8ff" stroke-dasharray="2 3" stroke-width="2.4"/></svg><div>計量の接続<br><span class="inline-math" data-tex="\sin^2\!\Bigl(\frac{\arcsin\sqrt{0.1}+\arcsin\sqrt{0.6}}{2}\Bigr)\approx0.322">sin²[(arcsin √0.1 + arcsin √0.6)/2] ≈ 0.322</span></div></li></ul></figure>
 </section>
 <section id="binomial-kl">
 <h2>7. 有限のずれでKLと二次近似を比べる</h2>
@@ -406,7 +411,12 @@
 <line data-cursor x1="252.0" x2="252.0" y1="23" y2="142" stroke="#d7dee3" stroke-dasharray="2 3"/>
 <circle data-kl-dot cx="252.0" cy="118.41909285816664" r="4" fill="#8bc5ff"/><rect data-quad-dot x="248.8" y="114.68798943551938" width="6.4" height="6.4" fill="none" stroke="#ffd389"/></svg>
 <p class="kl-legend"><span>━ ●　KL（厳密値）</span> <span>┄ □　二次近似</span></p>
-<p data-kl-reading>厳密値 0.020374 ／ 二次近似 0.020833 nat</p></figure>
+<div class="text-small">
+  <div><span class="inline-math" data-tex="q=0.4+0.1t">q = 0.4 + 0.1t</span> = <span data-kl-binomial-q>0.45</span></div>
+  <div>厳密値 <span class="inline-math" data-tex="D(0.4,q)=1.6\log\frac{0.4}{q}+2.4\log\frac{0.6}{1-q}">D(0.4,q) = 1.6 log(0.4/q) + 2.4 log(0.6/(1 − q))</span> ≈ <span data-kl-exact>0.020374</span> nat</div>
+  <div>二次近似 <span class="inline-math" data-tex="\frac12 g_P(U,U)t^2=\frac{t^2}{12}">½ gₚ(U,U)t² = t²/12</span> ≈ <span data-kl-quadratic>0.020833</span> nat</div>
+</div>
+</figure>
 <table><thead><tr><th>ずれ <i>t</i></th><th>KL（nat）</th><th>二次近似（nat）</th></tr></thead><tbody><tr><td>1</td><td>0.080542</td><td>0.083333</td></tr><tr><td>0.5</td><td>0.020374</td><td>0.020833</td></tr><tr><td>0.1</td><td>0.000829</td><td>0.000833</td></tr></tbody></table>
 <details class="derivation-notes"><summary>別の端点や方向での計算・図を開く</summary>
 
@@ -2214,7 +2224,7 @@
     ]) {
       const {y,name,coordinate,component,symbol,min,max} = row;
       parts.push(text(start,y-24,name));
-      parts.push(text(finish,y-24,symbol+" = "+format(coordinate),"end"));
+      parts.push(text(finish,y-24,(symbol==="π"?"r":"2r − 1")+" = "+format(coordinate),"end"));
       parts.push(line(toX(min),y,toX(max),y,neutral,1));
       const tickValues = width<365 ? [-1,0,1] : [-1,-.5,0,.5,1];
       for (const t of tickValues.filter(value=>value>=min && value<=max)) {
@@ -2225,7 +2235,7 @@
       for(const bound of [min,max]) parts.push(circle(toX(bound),y,3,"var(--paper)",neutral));
       const x = toX(coordinate), end = toX(coordinate+component);
       parts.push(vectorArrow(x,end,y),circle(x,y,3.7,fg));
-      parts.push(text(finish,y+41,"W("+symbol+") = "+format(component,true),"end"));
+      parts.push(text(finish,y+41,"W("+symbol+") = "+(symbol==="π"?"a":"2a")+" = "+format(component,true),"end"));
     }
     svg.innerHTML = parts.join("");
   }

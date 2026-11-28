@@ -5,6 +5,7 @@
  const map=get('.space-map'),vel=get('.velocity'),input=get('#coin-map-s'),rate=get('#coin-map-a');
  const ink='var(--foreground)',muted='var(--muted-foreground)',color='var(--viz-series-1)',chart='var(--viz-series-3)',speed='var(--viz-series-2)';
  const number=x=>Number(x.toFixed(4)).toString().replace('-','−');
+ const r=.5;
  const signed=x=>(x>0?'+':'')+x.toFixed(2).replace('-','−');
  function node(svg,tag,attrs,text){
    const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
@@ -28,7 +29,7 @@
    node(svg,'path',{d:'M '+(x-6*ux+3*uy)+' '+(y-6*uy-3*ux)+' L '+x+' '+y+' L '+(x-6*ux-3*uy)+' '+(y-6*uy+3*ux),fill:'none',stroke:col,'stroke-width':1.8});
  }
  function pointLabel(p,s,w){
-   const right=p.x<w*.62;
+   const right=p.x<w*.5;
    text(map,p.x+(right?9:-9),p.y-11,s,'name callout',right?'start':'end');
  }
  function mapping(p,q,col,y,name,description,w){
@@ -45,11 +46,11 @@
  function draw(){
    const w=root.clientWidth||350, narrow=w<480, gutter=narrow?72:99;
    const left=gutter+7,right=w-14,span=right-left;
-   const s=Number(input.value),a=Number(rate.value),q=.5+a*s;
+   const s=Number(input.value),a=Number(rate.value),q=r+a*s;
    const pp=x=>({x:left+x*span,y:165-20*Math.sin(2*Math.PI*(x-.14))});
    const ip=x=>({x:left+(x+1)*span/2,y:41});
    const jp=x=>({x:left+(x-.2)*span/.6,y:286});
-   const p=pp(q),p0=pp(.5),i=ip(s),j=jp(q);
+   const p=pp(q),p0=pp(r),i=ip(s),j=jp(q);
    map.replaceChildren();map.setAttribute('viewBox','0 0 '+w+' 311');
    function arc(lo,hi,stroke,thick){
      const d=Array.from({length:65},(_,k)=>{const z=pp(lo+(hi-lo)*k/64);return (k?'L':'M')+z.x+' '+z.y}).join(' ');
@@ -66,16 +67,22 @@
    line(map,left,286,right,286,chart,1.8);
    for(const x of [.2,.8]){const z=jp(x);circle(map,z,3,chart,'var(--background)');text(map,z.x,305,x.toFixed(2),'subtle','middle')}
    // Ring plus dot is intentional when the chosen point coincides with the starting point.
-   for(const [origin,selected] of [[ip(0),i],[p0,p],[jp(.5),j]]){
+   for(const [origin,selected] of [[ip(0),i],[p0,p],[jp(r),j]]){
      circle(map,origin,6.8,ink,'none');circle(map,selected,4,color,color);
    }
    pointLabel(i,'s = '+number(s),w);
-   const mathSub=number(q).replace(/[0-9]/g,d=>'₀₁₂₃₄₅₆₇₈₉'[Number(d)]);
-   pointLabel(p,'γ(s) = P'+mathSub,w);
-   const atOrigin=Math.abs(q-.5)<1e-10;
+   const distributionLabel=text(map,p.x,p.y-12,'γ(s) = P','name callout');
+   const subscript={class:'distribution-index','baseline-shift':'sub'};
+   node(distributionLabel,'tspan',subscript,'r+as');
+   node(distributionLabel,'tspan',{},' = P');
+   node(distributionLabel,'tspan',subscript,number(q));
+   const labelWidth=distributionLabel.getComputedTextLength();
+   const labelX=p.x+9+labelWidth<=w-4?p.x+9:p.x-9-labelWidth;
+   distributionLabel.setAttribute('x',Math.max(4,labelX));
+   const atOrigin=Math.abs(q-r)<1e-10;
    const refSide=p0.x>p.x?'start':'end';
    text(map,p0.x+(refSide==='start'?7:-7),p0.y+22,atOrigin?'γ(s) = γ(0)':'γ(0)','callout',refSide);
-   pointLabel(j,'π(γ(s)) = '+number(q),w);
+   pointLabel(j,'π(γ(s)) = r + as = '+number(q),w);
    get('[data-s-out]').value=s.toFixed(2).replace('-','−');get('[data-a-out]').value=signed(a);
    vel.replaceChildren();vel.setAttribute('viewBox','0 0 '+w+' 59');
    const cx=w*.53,scale=(w*.80)/.52,tx=cx+a*scale;
@@ -84,7 +91,11 @@
    circle(vel,{x:cx,y:31},3,ink,'var(--background)');
    text(vel,tx,20,a===0?'W = 0':'W','math','middle');text(vel,cx,52,'0','subtle','middle');
    text(vel,cx-.25*scale,52,'−0.25','subtle','middle');text(vel,cx+.25*scale,52,'+0.25','subtle','middle');
-   get('[data-result]').textContent='γ(s)：表 '+number(100*q)+'%・裏 '+number(100*(1-q))+'% の分布　／　W(π) = '+signed(a);
+   const product=number(Math.abs(a))+' × '+(s<0?'('+number(s)+')':number(s));
+   get('[data-coordinate]').textContent=number(r)+(a<0?' − ':' + ')+product+' = '+number(q);
+   get('[data-heads]').textContent=number(q)+' = '+number(100*q)+'%';
+   get('[data-tails]').textContent='1 − '+number(q)+' = '+number(100*(1-q))+'%';
+   get('[data-speed]').textContent=signed(a);
  }
  input.addEventListener('input',draw);rate.addEventListener('input',draw);new ResizeObserver(draw).observe(root);draw();
 })();

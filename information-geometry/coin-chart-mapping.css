@@ -15,3 +15,6 @@
 #coin-chart-mapping .origin{border:1.6px solid var(--foreground)}
 #coin-chart-mapping .moving{background:var(--viz-series-1)}
 #coin-chart-mapping .range{width:1.15em;border-top:3px solid var(--viz-series-1)}
+
+#coin-chart-mapping svg .distribution-index{font-size:9px}
+#coin-chart-mapping .coin-map-calculations{display:grid;gap:.2rem;margin:.45rem 0;color:var(--ink)}
